@@ -1,0 +1,70 @@
+{
+    "total": 32,
+    "data": [
+        {
+            "id":"1",
+            "loginname": "12342",
+            "name": "刘梅",
+            "sexName": "男",
+            "usertype": "20",
+            "sex":"26",
+            "deptName": "六年级二班发反反复复",
+            "statusName": "可用",
+            "email": "235655@qq.com",
+            "usertypeName": "老师、管理员",
+            "schoolyear": "2014",
+            "remark": "",
+            "sort": "0",
+            "phone": ""
+        },{
+            "loginname": "12342",
+            "name": "刘梅",
+            "sexName": "男",
+            "deptName": "六年级二班",
+            "statusName": "可用",
+            "email": "235655@qq.com",
+            "usertypeName": "老师、管理员",
+            "schoolyear": "2014",
+            "remark": "个人介绍",
+            "sort": "0",
+            "phone": "151"
+        },{
+            "loginname": "12342",
+            "name": "刘梅",
+            "sexName": "男",
+            "deptName": "六年级二班",
+            "statusName": "可用",
+            "email": "235655@qq.com",
+            "usertypeName": "老师、管理员",
+            "schoolyear": "2014",
+            "remark": "个人介绍",
+            "sort": "0",
+            "phone": "151"
+        },{
+            "loginname": "12342",
+            "name": "刘梅",
+            "sexName": "男",
+            "deptName": "六年级二班",
+            "usertypeName": "可用",
+            "email": "235655@qq.com",
+            "usertype": "老师、管理员",
+            "schoolyear": "2014",
+            "remark": "个人介绍",
+            "sort": "0",
+            "phone": "151"
+        },{
+            "loginname": "12342",
+            "name": "刘梅",
+            "sexName": "男",
+            "deptName": "六年级二班",
+            "statusName": "可用",
+            "email": "235655@qq.com",
+            "usertypeName": "老师、管理员",
+            "schoolyear": "2014",
+            "remark": "个人介绍",
+            "sort": "0",
+            "phone": "151"
+        }
+
+    ]
+}

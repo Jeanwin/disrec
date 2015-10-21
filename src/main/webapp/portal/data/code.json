@@ -1,0 +1,206 @@
+{
+    "reinstType.":{
+      "data":[
+          {"id":"1","value":"恢复1"},
+          {"id":"2","value":"恢复2"},
+          {"id":"3","value":"恢复3"},
+          {"id":"4","value":"恢复4"}
+      ]
+    },
+    "currency." :{
+    "data": [
+        {"id": "CNY", "value": "人民币"},
+        {"id": "USD", "value": "美元"},
+        {"id": "JPY" ,"value": "日元"},
+        {"id": "EUR", "value": "欧元"}
+    ]
+},
+    "classCode.": {
+        "data": [
+            {"id": "PL","value": "EPL"},
+            {"id": "09","value": "核能保险"},
+            {"id": "11","value": "货运险"},
+            {"id": "1501","value": "意外伤害险－个人"},
+            {"id": "03", "value": "机损险" }
+
+        ]
+    },
+
+    "riskCode.PL" : {
+        "data":[
+            {"id": "1", "value": "财产一切险"},
+            {"id": "2", "value": "财产基本险"}
+        ]
+    } ,
+    "riskCode.09" :{
+        "data": [
+            {"id": "3" ,"value": "核力险"},
+            {"id": "4" ,"value": "核动力险"}
+        ]
+    } ,
+    "riskCode.11" :{
+        "data":[
+            {"id": "5" ,"value": "装货"},
+            {"id": "6" ,"value": "收货"}
+        ]
+    },
+    "riskCode.1501" :{
+        "data":[
+            {"id": "7" ,"value": "交通意外"},
+            {"id": "8" ,"value": "人为事故"}
+        ]
+    },
+    "riskCode.03" :{
+        "data":  [
+            {"id": "9" ,"value": "人员机制"},
+            {"id": "0" ,"value": "其他机制"}
+        ]
+    },
+    "kindCode.1":{
+        "data":[
+            {"id" : "a", "value" : "地震险三级a1"},
+            {"id" : "b", "value" : "地震险三级b2"},
+            {"id" : "e", "value" : "地震险三级E5"}
+        ]
+    },
+    "kindCode.2":{
+        "data":[
+            {"id" : "f", "value" : "地震险基本1"},
+            {"id" : "g", "value" : "地震险基本2"}
+        ]
+    },
+    "kindCode.3":{
+        "data":[
+            {"id" : "h", "value" : "核力"},
+            {"id" : "i", "value" : "核不利"}
+        ]
+    },
+    "kindCode.4":{
+        "data":[
+            {"id" : "j", "value" : "和能动"},
+            {"id" : "k", "value" : "喝不动"}
+        ]
+    },
+    "kindCode.6":{
+        "data":[
+            {"id" : "l", "value" : "受到"},
+            {"id" : "m", "value" : "收不到"}
+        ]
+    },
+    "kindCode.9":{
+        "data":[
+            {"id" : "n", "value" : "人员到位"},
+            {"id" : "o", "value" : "人员不到位"}
+        ]
+    },
+    "kindCode.8":{
+        "data":[
+            {"id" : "p", "value" : "人为纵火"},
+            {"id" : "q", "value" : "人为交通事故"}
+        ]
+    },
+    "kindCode.7":{
+        "data":[
+            {"id" : "r", "value" : "闯红灯"},
+            {"id" : "s", "value" : "骑车交通事故"}
+        ]
+    },
+    "kindCode.0":{
+        "data":[
+            {"id" : "t", "value" : "其他1"},
+            {"id" : "u", "value" : "其他2"}
+        ]
+    },
+    "kindCode.5":{
+        "data":[
+            {"id" : "v", "value" : "能装上"},
+            {"id" : "w", "value" : "装不上"},
+            {"id" : "x", "value" : "等待装货"}
+        ]
+    },
+    "riskLvlCde.":{
+        "data":[
+            {"id":"123","value":"一类风险"},
+            {"id":"2","value":"二类风险"},
+            {"id":"3","value":"三类风险"}
+        ]
+    },
+    "propSettleTypCde.":{
+        "data":[
+            {"id": "0" ,"value": "RunOff"},
+            {"id": "1" ,"value": "CleanCut"}
+        ]
+    } ,
+
+    "riskCode.": {
+        "data": [
+            {"id" : "1","value":"chu"},
+            {"id" : "2","value":"wai"},
+            {"id" : "3","value":"ze"},
+            {"id" : "4","value":"ren"}
+        ]
+    },
+
+    "objTypeCde.": {
+        "data": [
+            {"id" : "1","value":"chu"},
+            {"id" : "2","value":"wai"},
+            {"id" : "3","value":"ze"},
+            {"id" : "4","value":"ren"}
+        ]
+    },
+    "location." :{
+        "data": [
+            {"id": "1", "value": "境内"},
+            {"id": "2", "value": "境外"}
+        ]
+    },
+    "reinsType." :{
+        "data": [
+            {"id": "0", "value": "直保公司"},
+            {"id": "1", "value": "纪纪公司"},
+            {"id": "2", "value": "专业再保"},
+            {"id": "3", "value": "自保公司"}
+        ]
+    },
+    "flag." :{
+        "data":[
+            {"id": "0", "value": "无效"},
+            {"id": "1", "value": "有效"}
+        ]
+    },
+
+    "assessType." :{
+        "data":[
+            {"id": "01", "value": "穆迪评级"}
+        ]
+    },
+
+    "fReinsCode.":{
+        "data":[
+            {"id":"11", "value" : "haha"},
+            {"id" : "1001", "value": "tomcat"},
+            {"id" : "2345", "value": "zxcvbht"}
+        ]
+    },
+    "reinsCode.":{
+        "data":[
+            {"id":"01","value":"人寿"},
+            {"id":"20","value":"华泰"},
+            {"id":"23","value":"zhonghua"},
+            {"id":"30","value":"US"}
+        ]
+    },
+    "contBaseCde.":{
+        "data":[
+            {"id":"12","value":"基础一"},
+            {"id":"13","value":"基础二"}
+        ]
+    },
+    "feeBaseCde." :{
+        "data":[
+            {"id":"A","value":"feeBaseCdes001"},
+            {"id":"B","value":"feeBaseCdes002"}
+        ]
+    }
+}

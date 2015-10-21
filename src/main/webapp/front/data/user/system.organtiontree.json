@@ -1,0 +1,397 @@
+﻿[
+    {
+        "id": "1",
+        "title": "五十六中学",
+        "attribute": null,
+        "sort": "0",
+        "innerid": null,
+        "nodes": [
+            {
+                "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                "title": "测试1",
+                "attribute": "16",
+                "sort": "0",
+                "innerid": null,
+                "nodes": []
+            },
+            {
+                "id": "2",
+                "title": "高中部",
+                "attribute": "16",
+                "sort": "0",
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "3",
+                        "title": "高一",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": [
+                            {
+                                "id": "6",
+                                "title": "一十班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "9",
+                                "title": "四班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "501bcf9b32154a64a90376a1ee9ca41d",
+                                "title": "一十二",
+                                "attribute": "16",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "8",
+                                "title": "三班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "6f9f27a414b5427fb1b832a518ce2af0",
+                                "title": "一十三",
+                                "attribute": "16",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "7",
+                                "title": "二二班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "4f3e073072a24b9a8e67ef22fcd2d50a",
+                                "title": "mmm",
+                                "attribute": "16",
+                                "sort": "1",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "5493e16b343846b1b585c64c58ed00d1",
+                                "title": "zz",
+                                "attribute": "16",
+                                "sort": "2",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "ab4057d9c4694e3d9d2da2305a48a8c7",
+                                "title": "1eeee",
+                                "attribute": "16",
+                                "sort": "4",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "0f7fd6cb080d4b39a0f61f9ddbe5c47c",
+                                "title": "nnn",
+                                "attribute": "16",
+                                "sort": "11",
+                                "innerid": null,
+                                "nodes": [
+                                    {
+                                        "id": "38aba8b57c5241e38811fe2f284cdbd0",
+                                        "title": "高中部2",
+                                        "attribute": "15",
+                                        "sort": null,
+                                        "innerid": null,
+                                        "nodes": []
+                                    },
+                                    {
+                                        "id": "62685d9c9a0448d0b690d9fcccf10747",
+                                        "title": "高一2",
+                                        "attribute": "16",
+                                        "sort": null,
+                                        "innerid": null,
+                                        "nodes": []
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "3bfb844fda82459897535404a8895faa",
+                                "title": "bbb",
+                                "attribute": "15",
+                                "sort": "11",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "d1a09b0d7d124d37a15ca68ebc76afb4",
+                                "title": "asd",
+                                "attribute": "15",
+                                "sort": "11",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "17",
+                                "title": "七十七班",
+                                "attribute": "17",
+                                "sort": "22",
+                                "innerid": null,
+                                "nodes": []
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4",
+                        "title": "高二",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": [
+                            {
+                                "id": "16",
+                                "title": "五班",
+                                "attribute": "17",
+                                "sort": "1",
+                                "innerid": null,
+                                "nodes": []
+                            }
+                        ]
+                    },
+                    {
+                        "id": "5",
+                        "title": "高三",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": [
+                            {
+                                "id": "22",
+                                "title": "五班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "23",
+                                "title": "六班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "24",
+                                "title": "七班",
+                                "attribute": "17",
+                                "sort": "0",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "19",
+                                "title": "二班",
+                                "attribute": "17",
+                                "sort": "3",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "21",
+                                "title": "四班",
+                                "attribute": "17",
+                                "sort": "4",
+                                "innerid": null,
+                                "nodes": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "20fc4eb9546d4e4b9e31b44e67623396",
+                "title": "测试",
+                "attribute": "16",
+                "sort": "0",
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "519e143821414348817601000a39733c",
+                        "title": "测试教室",
+                        "attribute": "17",
+                        "sort": null,
+                        "innerid": null,
+                        "nodes": []
+                    },
+                    {
+                        "id": "a6a8c9fb8b094588bc31799649e02615",
+                        "title": "测试教室2",
+                        "attribute": "17",
+                        "sort": null,
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            },
+            {
+                "id": "dd117d9e79b94adebec60aa8b9eebee6",
+                "title": "1",
+                "attribute": "15",
+                "sort": "1",
+                "innerid": null,
+                "nodes": []
+            },
+            {
+                "id": "9eb088834754455ebba6682cdf86c3d7",
+                "title": "外国语学院",
+                "attribute": "17",
+                "sort": "2",
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "a0ba8c54a5d14879aeae3eee8262c046",
+                        "title": "英语专业",
+                        "attribute": "ce0ac8e324d64b76b26cb628f3746f49",
+                        "sort": "2",
+                        "innerid": null,
+                        "nodes": [
+                            {
+                                "id": "5fb7f971a1c84c0ea5e38c1aa485914b",
+                                "title": "10英语1班",
+                                "attribute": "17",
+                                "sort": "1",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "4219f8a08a704c1494301ed4d7abca6f",
+                                "title": "13英语1班",
+                                "attribute": "17",
+                                "sort": "2",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "65dd09603a6843379f02532fa8426e44",
+                                "title": "13英语2班",
+                                "attribute": "17",
+                                "sort": "3",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "7cddb8f143834adea67d64599a93a6b9",
+                                "title": "14英语1班",
+                                "attribute": "17",
+                                "sort": "4",
+                                "innerid": null,
+                                "nodes": []
+                            },
+                            {
+                                "id": "609adaba258c4c8bb9733b93b745982f",
+                                "title": "11英语1班",
+                                "attribute": "17",
+                                "sort": "5",
+                                "innerid": null,
+                                "nodes": []
+                            }
+                        ]
+                    },
+                    {
+                        "id": "32cbe7941fe9494894c0b67147351feb",
+                        "title": "德语教研室",
+                        "attribute": "7f433e7bb4ad47128b606793f6e50bd7",
+                        "sort": "3",
+                        "innerid": null,
+                        "nodes": []
+                    },
+                    {
+                        "id": "478945d2058144e2aa9917e4c9e6b1e7",
+                        "title": "英语教研室",
+                        "attribute": "7f433e7bb4ad47128b606793f6e50bd7",
+                        "sort": "3",
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            },
+            {
+                "id": "f12fe7ba556f46b6bc41c34e0dd4e65c",
+                "title": "初中部",
+                "attribute": "420f2d6f5d2e4582afbdf58d69a08bbe",
+                "sort": "2",
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "067f18e3c97c412f88dcb8a742f5f678",
+                        "title": "初中一年",
+                        "attribute": "16",
+                        "sort": "3",
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            },
+            {
+                "id": "39f2649424434931a6381a7c1189be1f",
+                "title": "文学与新闻传播学院",
+                "attribute": "420f2d6f5d2e4582afbdf58d69a08bbe",
+                "sort": "5",
+                "innerid": null,
+                "nodes": []
+            },
+            {
+                "id": "49dbed8686324c60be91a2b392dfb664",
+                "title": "中国少数民族语言文学学院",
+                "attribute": "420f2d6f5d2e4582afbdf58d69a08bbe",
+                "sort": "6",
+                "innerid": null,
+                "nodes": []
+            },
+            {
+                "id": "73ab9287586a44de95707a353e2ae2d4",
+                "title": "现教中心",
+                "attribute": "86106bbc2b914a1aa5a03c81b34cc16c",
+                "sort": null,
+                "innerid": null,
+                "nodes": []
+            },
+            {
+                "id": "1a4b24f62dcb4f869e75a8917956c39f",
+                "title": "理学院",
+                "attribute": "420f2d6f5d2e4582afbdf58d69a08bbe",
+                "sort": null,
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "b57cc2aba93a4e039318588b0b8013ac",
+                        "title": "光信息科学与技术专业",
+                        "attribute": "ce0ac8e324d64b76b26cb628f3746f49",
+                        "sort": "7",
+                        "innerid": null,
+                        "nodes": []
+                    },
+                    {
+                        "id": "2aa7f4cf86bf4bed863b01f22a4ed9fd",
+                        "title": "统计学",
+                        "attribute": "ce0ac8e324d64b76b26cb628f3746f49",
+                        "sort": null,
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,66 @@
+<style type="text/css">
+	.modal-dialog {
+		width: 1000px;
+	}
+</style>
+<div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3 ng-if="opera === 'edit'">编辑听课模板</h3>
+            <h3 ng-if="opera !== 'edit'">新建听课模板</h3>
+        </span>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" name="listenNewForm">
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">名称：</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" ng-model="newlistendata.lectureName" placeholder="" required>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">描述：</label>
+		    <div class="col-sm-8">
+		      <textarea class="form-control" ng-model="newlistendata.description"></textarea>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">内容：</label>
+		    <div class="col-sm-10 col-xs-offset-2" style="border-top:1px #ccc dashed;margin-top:10px;">
+		    	
+			    	<table style="width:100%;">
+			    		<thead style="color: #fac77a;background: none;border-bottom: 1px solid;line-height: 45px;">
+			    			<tr>
+			    				<td style="width:70px;text-align:center;">排序</td>
+			    				<td style="width:230px;text-align:center;">字段</td>
+			    				<td class="text-center">内容</td>
+			    				<td style="width:30px;"></td>
+			    			</tr>
+			    		</thead>
+			    		<tbody>
+			    			<tr ng-repeat="data in newlistendata.childList" style="border-bottom: 1px solid #ccc;line-height: 55px;">
+			    				<td><input type="text" class="form-control" style="width:65px;" ng-model="data.sort"/></td>
+			    				<td><input type="text" class="form-control" placeholder="限制字数为10" style="width:220px;" ng-model="data.childKey"/></td>
+			    				<td><input type="text" class="form-control" ng-model="data.childValue"/></td>
+			    				<td style="width:30px;text-align:center;" ng-click="newlistendata.childList.splice($index,1)"><i class="icon-delete orange-color cursor-pointer"></i></td>
+			    			</tr>
+			    			<tr style="border-bottom: 1px solid #ccc;line-height:55px;">
+			    				<td colspan="4" >
+			    					<span class="orange-color cursor-pointer" ng-click="newdata()"><i class="icon-nexttip"></i><i class="icon-add"></i>增加新字段</span>
+			    				</td>
+			    			</tr>		    			
+			    		</tbody>
+			    	</table>
+			    
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-4 col-sm-offset-5">
+		      <button class="btn btn-primary" ng-click="save()" ng-disabled="listenNewForm.$pristine || listenNewForm.$invalid" disabled="disabled">保存</button>
+		      <button class="btn btn-default" ng-click="cancel()">返回</button>
+		    </div>
+		</div>
+	</form>
+</div>

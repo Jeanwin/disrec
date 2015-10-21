@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+    <div ui-view="main">
+        <div class="panel-body">
+            <div class="whiteframe" style="margin:auto; width:auto;height:auto;padding:24px;padding-top:0px;">
+                <div class="panel panel-default  border-none">
+                    <div class="panel-body">
+                        <tabset>
+                            <tab heading="日常策略" ng-click="initTatics()">
+                                <div ng-include="'classrooms/tactics/classrooms.uploadStrategy.html'"></div>
+                            </tab>
+                          
+                            <!-- <tab heading="录播方案" ng-click="initPlayScheam()">
+                                <div ng-include="'classrooms/tactics/classrooms.recordedScheme.html'"></div>
+                            </tab>
+                            <tab heading="录像方案" ng-click="initVideoScheam()">
+                                <div ng-include="'classrooms/tactics/classrooms.videoSolutions.html'"></div>
+                            </tab>
+                            <tab heading="RTSP方案" ng-click="initRTSPSchem()">
+                                <div ng-include="'classrooms/tactics/classrooms.rtspScheme.html'"></div>
+                            </tab>
+                            <tab heading="RTMP方案" ng-click="initRTMPSchem()">
+                                <div ng-include="'classrooms/tactics/classrooms.rtmpScheme.html'"></div>
+                            </tab> -->
+                            <!-- <tab heading="中控参数同步" ng-click="">
+                                <div ng-include="'classrooms/tactics/classrooms.controlParamset.html'"></div>
+                            </tab>
+                            <tab heading="开关机设置" ng-click="">
+                                <div ng-include="'classrooms/tactics/classrooms.turnOffOn.html'"></div>
+                            </tab> 
+                            -->
+                            <tab heading="灯泡设置" ng-click="initLightSet()">
+                                <div ng-include="'classrooms/tactics/classrooms.light.html'"></div>
+                            </tab>
+                            
+                            <!-- <tab heading="IP号码设置" ng-click="">
+                                <div ng-include="'classrooms/tactics/classrooms.IP.html'"></div>
+                            </tab> -->
+                            <!--<tab heading="报警策略">
+                                <div ng-include="'classrooms/tactics/classrooms.warningStrategy.html'"></div>
+                            </tab>-->
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

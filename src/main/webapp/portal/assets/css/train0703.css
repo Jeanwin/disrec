@@ -1,0 +1,122 @@
+@keyframes round {
+from{
+    -webkit-transform: rotate(36deg);
+    -webkit-border-radius: 2px;
+}
+10%{
+    -webkit-transform: rotate(72deg);
+    -webkit-border-radius: 4px;
+}
+20% {
+    -webkit-transform: rotate(108deg);
+    -webkit-border-radius: 6px;
+}
+30% {
+    -webkit-transform: rotate(144deg);
+    -webkit-border-radius: 9px;
+}
+40%{
+    -webkit-transform: rotate(180deg);
+    -webkit-border-radius: 12px;
+}
+50%{
+    -webkit-transform: rotate(216deg);
+    -webkit-border-radius: 14px;
+}
+60% {
+    -webkit-transform: rotate(252deg);
+    -webkit-border-radius: 16px;
+}
+70% {
+    -webkit-transform: rotate(288deg);
+    -webkit-border-radius: 19px;
+}
+80%{
+    -webkit-transform: rotate(324deg);
+    -webkit-border-radius: 22px;
+}
+to {
+    -webkit-transform: rotate(360deg);
+    -webkit-border-radius: 25px;
+}
+    }
+
+@-webkit-keyframes round {
+    from{
+        -webkit-transform: rotate(36deg);
+        -webkit-border-radius: 2px;
+    }
+    10%{
+        -webkit-transform: rotate(72deg);
+        -webkit-border-radius: 4px;
+    }
+    20% {
+        -webkit-transform: rotate(108deg);
+        -webkit-border-radius: 6px;
+    }
+    30% {
+        -webkit-transform: rotate(144deg);
+        -webkit-border-radius: 9px;
+    }
+    40%{
+        -webkit-transform: rotate(180deg);
+        -webkit-border-radius: 12px;
+    }
+    50%{
+        -webkit-transform: rotate(216deg);
+        -webkit-border-radius: 14px;
+    }
+    60% {
+        -webkit-transform: rotate(252deg);
+        -webkit-border-radius: 16px;
+    }
+    70% {
+        -webkit-transform: rotate(288deg);
+        -webkit-border-radius: 19px;
+    }
+    80%{
+        -webkit-transform: rotate(324deg);
+        -webkit-border-radius: 22px;
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -webkit-border-radius: 25px;
+    }
+}
+/*给方型box一个初步样式*/
+a.box {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: red;
+    margin-bottom: 20px;
+}
+/*圆型box的样式，并在这里应用animation*/
+a.round {
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    background: green;
+    -webkit-animation-name: 'round'; /*动画名称*/
+    -webkit-animation-duration: 60s;/*播放一次所持续时间*/
+    -webkit-animation-timing-function: ease;/*动画播放频率*/
+    -webkit-animation-iteration-count: infinite;/*动画播放次涒为无限次*/
+}
+
+/*click button效果*/
+.click-btn {
+    background: rgba(125,220,80,0.8);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 8px rgba(255,255,255,0.8),0 0 10px rgba(10,255,120,0.3);
+    -moz-box-shadow: inset 0 0 8px rgba(255,255,255,0.8),0 0 10px rgba(10,255,120,0.3);
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.8),0 0 10px rgba(10,255,120,0.3);
+    padding: 5px 10px;
+    color: #369;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+    cursor: pointer;
+}

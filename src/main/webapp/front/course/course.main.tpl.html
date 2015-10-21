@@ -1,0 +1,56 @@
+<div>
+    <div ui-view="main">
+    <!--tree-->
+    <div class="col-md-2 font coursemainleft">
+        <div style="padding-top: 40px">
+            <div ui-tree id="tree-root">
+                <ol ui-tree-nodes ng-model="data">
+                    <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!--右边区域-->
+    <div class="col-md-10 coursemainright">
+        <div class="modal-header">
+            <div class="courseheader">
+                <form>
+                    <button class="btn btn-default btn-sm" ng-click="openPatrolOptionModal()">设置轮巡</button>
+                    <a class="btn btn-primary btn-sm" ng-href="#/course/courseTV">开始轮巡</a>
+                    　　　　　<select style="border-radius:4px;width: 72px">
+                                        <option>2 * 2</option>
+                                        <option>3 * 3</option>
+                                        <option>4 * 4</option>
+                              </select>
+                </form>
+            </div>
+        </div>
+        <div style="padding-top: 32px">
+                <ul class="classroom-list" ng-repeat="video in videoList">
+                    <a ng-href="#/course/scrn">
+                        <li class="course-img-top-right">
+                            <div class="course-type-top">{{video.name}} 教师机 {{video.username}} {{video.subject}} {{video.deptName}}</div>
+                            <div class="course-button">
+                                <button class="btn btn-primary">抓拍</button>　　
+                                <button class="btn btn-primary">导播</button>
+                            </div>
+                        </li>
+                    </a>
+                    <!--<a ng-href="#/course/scrn">-->
+                        <!--<li class="course-img-top-left">-->
+                            <!--<div class="course-type-top">103教室 教师机 刘梅数学高一（1）班</div>-->
+                            <!--<div class="course-button">-->
+                                <!--<button class="btn btn-primary">抓拍</button>　　-->
+                                <!--<button class="btn btn-primary">导播</button>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                    <!--</a>-->
+                </ul>
+                <!--<ul class="classroom-lists">-->
+                    <!--<a ng-href="#/course/scrn"><li class="course-img-bottom-left"><div class="course-type-top">103教室 教师机 刘梅数学高一（1）班</div><div class="course-button"><button class="btn btn-primary">抓拍</button>　　<button class="btn btn-primary">导播</button></div></li></a><a ng-href="#/course/scrn"><li class="course-img-bottom-right"><div class="course-type-top">103教室 教师机 刘梅数学高一（1）班</div><div class="course-button"><button class="btn btn-primary">抓拍</button>　　<button class="btn btn-primary">导播</button></div></li></a>-->
+                <!--</ul>-->
+            </div>
+        <!--<div style="margin-left:800px"><a ng-href="">上一组</a> <a ng-href="">下一组</a></div>-->
+    </div>
+</div>
+</div>

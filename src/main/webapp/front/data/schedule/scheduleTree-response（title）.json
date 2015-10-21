@@ -1,0 +1,81 @@
+﻿[
+    {
+        "id": "33",
+        "title": "学校",
+        "attribute": "N",
+        "innerid":"1",
+        "sort": "1",
+        "nodes": [
+            {
+                "id": "11",
+                "title": "一校区",
+                "attribute": "N",
+                "innerid":"11",
+                "sort": "1",
+                "nodes": [
+                    {
+                        "id": "12",
+                        "title": "一号楼",
+                        "attribute": "N",
+                        "innerid":"111",
+                        "sort": "1",
+                        "nodes": [
+                            {
+                                "id": "111",
+                                "title": "一层",
+                                "attribute": "N",
+                                "innerid":"1111",
+                                "sort": "1",
+                                "nodes": [
+                                    {
+                                        "id": "1",
+                                        "title": "01教室",
+                                        "attribute": "Y",
+                                        "innerid":"2",
+                                        "sort": "1",
+                                        "nodes": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "title": "一校区",
+                "attribute": "N",
+                "innerid":"11",
+                "sort": "1",
+                "nodes": [
+                    {
+                        "id": 22,
+                        "title": "一号楼",
+                        "attribute": "N",
+                        "innerid":"111",
+                        "sort": "1",
+                        "nodes": [
+                            {
+                                "id": 222,
+                                "title": "一层",
+                                "attribute": "N",
+                                "innerid":"1111",
+                                "sort": "1",
+                                "nodes": [
+                                    {
+                                        "id": "2",
+                                        "title": "02教室",
+                                        "attribute": "Y",
+                                        "innerid":"1",
+                                        "sort": "1",
+                                        "nodes": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

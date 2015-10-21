@@ -1,0 +1,112 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </button>
+        <div class="modal-title">
+            <h3>应用到</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form name="frmAreaEditor" class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属区域</label>
+                <div class="col-sm-10">
+
+
+                    <div class="input-group">
+                        <input ng-if="editingMode != 'update'" class="form-control" placeholder="所属区域" ng-model="classroom.parentname" ng-click="toggleTree()" required>
+                        <input ng-if="editingMode==='update'" class="form-control" ng-model="classroom.parentname" ng-click="toggleTree()" required>
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-list" ng-click="toggleTree()"></i>
+                        </span>
+                    </div>
+
+
+                    <div collapse="hideTree" class="dropdown-tree-wrapper">
+                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                            <ol ui-tree-nodes ng-model="areaTree">
+                                <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaTitle">教室名称</label>
+                <div class="col-sm-10">
+                    <input name="name" class="form-control" id="areaTitle" placeholder="请输入教室名称"
+                           validate-on="blur"
+                           ng-change="checkClassroomName()"
+                           ng-model="classroom.name"
+                           required>
+                    <span ng-show="showClassroomNameError">
+                        <div style="color: red">教室名称不能重复</div>
+                    </span>
+                    <span ng-show="frmAreaEditor.name.$dirty && frmAreaEditor.name.$error.required">
+                        <div style="color: red">教室名称不能为空</div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="classroomOrder">教室编码</label>
+                <div class="col-sm-10">
+                    <input name="innerid" class="form-control" id="classroomOrder" placeholder="请输入教室编码"
+                           ng-change="checkClassroomNum()"
+                           ng-model="classroom.innerid" required>
+                    <span ng-show="showClassroomNumError">
+                        <div style="color: red">教室编码不能重复</div>
+                    </span>
+                    <span ng-show="frmAreaEditor.innerid.$dirty && frmAreaEditor.innerid.$error.required">
+                    	<div style="color: red">必须输入教室编码</div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaOrder">显示顺序</label>
+                <div class="col-sm-10">
+                    <input type="number" step="1" min="0" class="form-control" id="areaOrder" placeholder="请输入显示顺序" ng-model="classroom.sort">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaOrder">状态</label>
+                <div class="col-sm-10">
+                    <div class="btn-group">
+                    	<label ng-repeat="state in deviceDepartment" class="btn btn-default"  ng-model="classroom.state" btn-radio="state.id">{{state.value}}</label>
+                    </div>
+                    <!--<toggle-switch on-label="有效" off-label="无效" ng-model="state">
+                        <span class="switch-left ng-binding" ng-bind="onLabel">有效</span>
+                        <span class="knob ng-binding" ng-bind="knobLabel">&nbsp;</span>
+                        <span class="switch-right ng-binding" ng-bind="offLabel">无效</span>
+                    </toggle-switch>-->
+                </div>
+            </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-default" type="reset" ng-click="">重填</button>
+            <button class="btn btn-primary" ng-disabled="frmAreaEditor.$pristine || frmAreaEditor.$invalid || showClassroomNameError" ng-click="save(editMode)">保存</button>
+            <button class="btn btn-default" ng-click="cancel()">取消</button>
+        </div>
+
+    </form>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle class="tree-node tree-node-content" ng-class="{'tree-node-active':node.id===activeArea.id}">
+        <a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)">
+            <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+        <span ng-click="setActiveAreaTreeNode(this)">{{node.title}}</span>
+        <!--<a class="pull-right btn btn-danger btn-xs" nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>-->
+        <!--<a class="pull-right btn btn-primary btn-xs" nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>-->
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>

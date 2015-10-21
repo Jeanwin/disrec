@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.SysRoleMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.SysRole">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="role_type" property="roleType" jdbcType="CHAR" />
+		<result column="createuser" property="createuser" jdbcType="CHAR" />
+		<result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+		<result column="modifyuser" property="modifyuser" jdbcType="CHAR" />
+		<result column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+	</resultMap>
+	<resultMap type="map" id="data">
+		<result property="id" column="id"/>
+		<association property="functions" column="id" select="getData"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, role_code, role_name, createtime, role_type, createuser, modifydate,
+		modifyuser,
+		deleteflag
+	</sql>
+	
+	<select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where id = #{id,jdbcType=CHAR}
+	</select>
+
+	<select id="findByPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_role
+		LIMIT #{offset} ,#{limit}
+	</select>
+	
+	<select id="getRoles" resultMap="data">
+		SELECT id,role_name roleName,enable
+		FROM sys_role where deleteflag=0
+	</select>
+	<select id="getData" resultType="map">
+		select functionid id from sys_role_function where roleid=#{id} and deleteflag=0
+	</select>
+	<select id="count" resultType="long">
+		SELECT count(*) FROM sys_role
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="com.zonekey.disrec.entity.SysRole">
+		update sys_role set
+		deleteflag='1',modifyuser=#{modifyuser,jdbcType=CHAR},modifydate=sysDate()
+		where id =#{id,jdbcType=CHAR}
+	</update>
+	
+	<insert id="insert" parameterType="com.zonekey.disrec.entity.SysRole">
+		insert into sys_role (id, role_code, role_name,
+		createtime, role_type, createuser
+		)
+		values (#{id,jdbcType=CHAR}, #{roleCode,jdbcType=VARCHAR},
+		#{roleName,jdbcType=VARCHAR},
+		sysDate(), #{roleType,jdbcType=CHAR}, #{createuser,jdbcType=CHAR}
+		)
+	</insert>
+	<delete id="deleteRoleFunction" parameterType="com.zonekey.disrec.vo.SysRoleView">
+		delete from sys_role_function  where roleid=#{id} and deleteflag=0
+	</delete> 
+	<insert id="insertRoleFunction" parameterType="com.zonekey.disrec.vo.SysRoleView">
+		insert into sys_role_function(id,roleid,functionid,createdate,createuser) values
+		<foreach collection="functions"  item="item" separator=",">
+			(#{item.role_function_id},#{id},#{item.id},sysDate(),#{createuser})
+		</foreach>
+	</insert>
+	<insert id="insertSelective" parameterType="com.zonekey.disrec.entity.SysRole">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="roleCode != null">
+				role_code,
+			</if>
+			<if test="roleName != null">
+				role_name,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="roleType != null">
+				role_type,
+			</if>
+			<if test="createuser != null">
+				createuser,
+			</if>
+			<if test="modifydate != null">
+				modifydate,
+			</if>
+			<if test="modifyuser != null">
+				modifyuser,
+			</if>
+			<if test="deleteflag != null">
+				deleteflag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=CHAR},
+			</if>
+			<if test="roleCode != null">
+				#{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="roleType != null">
+				#{roleType,jdbcType=CHAR},
+			</if>
+			<if test="createuser != null">
+				#{createuser,jdbcType=CHAR},
+			</if>
+			<if test="modifydate != null">
+				#{modifydate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyuser != null">
+				#{modifyuser,jdbcType=CHAR},
+			</if>
+			<if test="deleteflag != null">
+				#{deleteflag,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.zonekey.disrec.entity.SysRole">
+		update sys_role
+		<set>
+			<if test="roleCode != null">
+				role_code = #{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="roleName != null">
+				role_name = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleType != null">
+				role_type = #{roleType,jdbcType=CHAR},
+			</if>
+				modifydate = sysDate(),
+				modifyuser = #{modifyuser,jdbcType=CHAR}
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zonekey.disrec.entity.SysRole">
+		update sys_role
+		set role_code = #{roleCode,jdbcType=VARCHAR},
+		role_name = #{roleName,jdbcType=VARCHAR},
+		createtime = #{createtime,jdbcType=TIMESTAMP},
+		role_type = #{roleType,jdbcType=CHAR},
+		createuser = #{createuser,jdbcType=CHAR},
+		modifydate = #{modifydate,jdbcType=TIMESTAMP},
+		modifyuser = #{modifyuser,jdbcType=CHAR},
+		deleteflag = #{deleteflag,jdbcType=CHAR}
+		where id = #{id,jdbcType=CHAR}
+	</update>
+	<!-- 使用该角色的用户数量 -->
+	<select id="findUserCount" parameterType="com.zonekey.disrec.vo.SysRoleView" resultType="int">
+		select count(*) from user_role a,sys_user b where a.roleid = #{id} and a.deleteflag='0' and a.userid=b.loginname and b.deleteflag='0'
+	</select>
+</mapper>

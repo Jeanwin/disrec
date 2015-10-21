@@ -1,0 +1,263 @@
+<div class="panel panel-default" style="border:none;box-shadow:none">
+    <div class="panel-body">
+        <div class="col-xs-10">
+            <div class="col-xs-2 padding-right-none padding-left-none text-right">                
+                 <h5>资源上传策略:</h5>                
+            </div>
+            <div class="col-xs-10 padding-right-none padding-left-none">
+                <div ng-if="upload.typeid==='1'">                  
+                      <form name="formUpload" class="form-inline" role="form" style="padding:8px">
+                            <div class="form-group">
+                                <!--<label class="form-label">创建时间</label>-->
+                                <div class="margin-bottom-5">
+	                                <input name="typeid" value="1" ng-model="upload.typeid" type="radio"  checked>&nbsp;每天
+	                                <input type="time" name="starttime" class="form-control" ng-model="upload.starttime" value="12:00" required style="height: 24px;padding:0 2px;margin-bottom:5px;width:76px;">
+	                                <span ng-show="formUpload.starttime.$error.required" style="color:red">此项必须输入</span>
+	                               	 到
+	                                <input type="time" name="endtime" class="form-control" ng-model="upload.endtime" value="13:00" required style="height: 24px;padding:0 2px;margin-bottom:5px;width:76px;">
+	                                <span ng-show="formUpload.endtime.$error.required" style="color:red">此项必须输入</span>
+	                                 	和
+	                                <input type="time" name="starttime" class="form-control" value="17:00" required style="height: 24px;padding:0 2px;width:76px;">
+	                                <span ng-show="formUpload.starttime1.$error.required" style="color:red">此项必须输入</span>
+	                               	 到
+	                                <input type="time" name="endtime" class="form-control" value="19:00" required style="height: 24px;padding:0 2px;width:76px;">
+	                                <span ng-show="formUpload.endtime1.$error.required" style="color:red">此项必须输入</span>
+                                </div>
+
+                                <!--<div>
+                                    <input name="typeid" value="1" ng-model="upload.typeid" type="radio"  checked>每天
+                                    <input type="time" name="starttime" class="form-control" ng-model="upload.starttime" required>
+                                    <span ng-show="formUpload.starttime.$error.required" style="color:red">此项必须输入</span>
+                                  	  到
+                                    <input type="time" name="endtime" class="form-control" ng-model="upload.endtime" required>
+                                    <span ng-show="formUpload.endtime.$error.required" style="color:red">此项必须输入</span>
+                                </div>-->
+
+                                <div>
+                                    <input name="typeid" value="2" ng-model="upload.typeid" type="radio"  >
+                                  	  录像结束后，立即上传
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <div ng-if="upload.typeid==='2'">
+                    <form name="formUpload" class="form-inline" role="form" style="padding:8px">
+                        <div class="form-group">
+                            <!--<label class="form-label">创建时间</label>-->
+                            <div>
+                            <input name="typeid" value="1" ng-model="upload.typeid" type="radio"  >每天
+                            <input type="time" class="form-control" ng-model="upload.starttime">
+                        	    到
+                            <input type="time" class="form-control" ng-model="upload.endtime">
+                            </div>
+                            <div>
+                            <input name="typeid" value="2" ng-model="upload.typeid" type="radio"  checked>
+                         	   录像结束后，立即上传
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xs-10">
+            <div class="col-xs-2 padding-right-none padding-left-none text-right">                
+                <h5>报警策略:</h5>                
+            </div>
+            <div class="col-xs-10 padding-right-none padding-left-none">
+                <div ng-if="warm.typeid==='1'">
+                    <form name="formWarm" class="form-inline" role="form" style="padding:8px">
+                        <div class="form-group">
+                            <div class="margin-bottom-5">
+	                            <input name= "alarm" value="1" ng-model="warm.typeid" type="radio" checked>&nbsp;剩余磁盘空间不足
+	                            <input name="space" ng-pattern=/^[1-9]\d{2,}/ class="form-control" style="width: 60px;height:24px;padding-top:0;padding-bottom:0;" ng-model="warm.space" value="40960" required>MB时报警
+	                            <span ng-show="formWarm.space.$error.pattern" style="color:red">请输入100以上的数字</span>
+                            </div>
+                            <div>
+	                            <input name= "alarm" value="2" ng-model="warm.typeid" type="radio" >&nbsp;剩余录制时间不足
+	                            <input class="form-control" style="width: 50px;height:22px;padding-top:0;padding-bottom:0;" ng-model="warm.times" value="10">小时报警
+                            </div>
+                        </div>
+                    </form>                  
+                </div>
+                <div ng-if="warm.typeid==='2'">
+                     <form name="formWarm" class="form-inline" role="form" style="padding:8px">
+                         <div class="form-group">
+                             <div>
+                                 <input name= "alarm" value="1" ng-model="warm.typeid" type="radio" >&nbsp;剩余磁盘空间不足
+                                 <input class="form-control" style="width: 60px" ng-model="warm.space" value="40960">MB时报警
+                             </div>
+                             <div>
+                                 <input name= "alarm" value="2" ng-model="warm.typeid" type="radio" checked>&nbsp;剩余录制时间不足
+                                 <input name="times" ng-pattern=/[1-9]\d{0,1}/ class="form-control" style="width: 60px" ng-model="warm.times" value="10" required>小时报警
+                                 <span ng-show="formWarm.times.$error.pattern" style="color:red">请输入1-99的数字</span>
+                             </div>
+                         </div>
+                     </form>
+                </div>
+            </div>
+        </div> -->
+        
+        <div class="col-xs-10">
+            <div class="col-xs-2 padding-right-none padding-left-none text-right">
+                <h5>录播机资源删除策略:</h5>               
+            </div>
+            <div class="col-xs-10 padding-right-none padding-left-none">
+                <div ng-if="strategy.typeid==='1'">
+                    <form name="formStrategy" class="form-inline" role="form" style="padding:8px">
+                        <div class="form-group">
+                            <div class="margin-bottom-5">	                            
+	                            <input name= "delTypeid" value="1" ng-model="strategy.typeid" type="radio" checked>&nbsp;磁盘空间剩余
+	                            <input name="space" ng-pattern=/^([1-9]+(\.\d)?)$|(0(\.\d)?)$/ class="form-control" style="width: 60px;height:24px;padding-top:0;padding-bottom:0;" ng-model="strategy.space" value="100" required>GB
+	                            <span ng-show="formStrategy.space.$error.pattern" style="color:red">请输入数字</span>
+	                            <span ng-show="formStrategy.space.$error.required" style="color:red">此项不能为空</span>
+                            </div>
+                            <div>
+	                            <input name= "delTypeid" value="2" ng-model="strategy.typeid" type="radio" >&nbsp;录像存储满
+	                            <input class="form-control" style="width: 50px;height:22px;padding-top:0;padding-bottom:0;" ng-model="strategy.days" value="30">天
+                            </div>
+                        </div>
+                    </form>
+                 </div>
+                <div ng-if="strategy.typeid==='2'">
+                    <form name="formStrategy" class="form-inline" role="form" style="padding:8px">
+                        <div class="form-group">
+                            <div class="margin-bottom-5">	                            
+	                            <input name= "delTypeid" value="1" ng-model="strategy.typeid" type="radio">&nbsp;磁盘空间剩余
+	                            <input  class="form-control" style="width: 60px" ng-model="strategy.space" value="100">GB
+                            </div>
+                            <div>
+                            <input name= "delTypeid" value="2" ng-model="strategy.typeid" type="radio" checked>&nbsp;录像存储满
+                            <input name="days" ng-pattern=/^\d{0,1}$/ class="form-control" style="width: 50px;padding-top:0;padding-bottom:0;" ng-model="strategy.days" value="30" required>天
+                            <span ng-show="formStrategy.days.$error.pattern" style="color:red">请输入0-9的数字</span>
+                            <span ng-show="formStrategy.days.$error.required" style="color:red">此项不能为空</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xs-10">
+            <div class="col-xs-2 padding-right-none padding-left-none text-right">                
+                 <h5>报警方式：</h5>                
+            </div>
+            <div class="col-xs-10 padding-right-none padding-left-none margin-top-5 margin-bottom-20">
+                <div class="col-xs-12 padding-left-none">
+                            <span style="width:90px;text-align:right;display:inline-block">弹出框报警：</span>
+                            <div class="btn-group">
+                                <label class="btn btn-default btn-sm" ng-model="radioModelDialog" btn-radio="'Left'">是</label>
+                                <label class="btn btn-default btn-sm" ng-model="radioModelDialog" btn-radio="'Middle'">否</label>
+                            </div>
+            
+                            <div class="inline-block margin-left-15">
+                                <input type="text" style="width:38px;height:30px;" class="form-control inline-block" />
+                                        次
+                            </div>
+                </div>
+                <div class="col-xs-12 padding-left-none margin-top-5">
+                            <span style="width:90px;text-align:right;display:inline-block">邮件报警：</span>
+                            <div class="btn-group">
+                                <label class="btn btn-default btn-sm" ng-model="radioModelEmail" btn-radio="'Left'">是</label>
+                                <label class="btn btn-default btn-sm" ng-model="radioModelEmail" btn-radio="'Middle'">否</label>
+                            </div>
+            
+                            <div class="inline-block margin-left-15">
+                                <input type="text" style="width:38px;height:30px;" class="form-control inline-block" />
+                                        次
+                            </div>
+                </div>
+                <div class="col-xs-12 padding-left-right-none margin-top-5">
+                    <button class="btn btn-default" ng-click="editEmail()">编辑邮箱</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10">
+            <div class="col-xs-2 padding-right-none padding-left-none text-right">                
+                 <h5>刷卡模式选择：</h5>                
+            </div>
+            <div class="col-xs-10 padding-right-none padding-left-none margin-top-5">
+                <select class="form-control" style="width:35%">
+                    <option>教室模式: 卡绑定到教室</option>
+                </select>
+            </div>
+        </div> -->
+        <!-- <div class="col-xs-10">
+            <div class="col-xs-2 padding-right-none padding-left-none text-right">                
+               <h5>课表同步:</h5>                
+            </div>
+            <div class="col-xs-10 padding-right-none padding-left-none">
+                <div ng-if="schedule.typeid==='1'">
+                        <form name="formSchedule" class="form-inline" role="form" style="padding:8px">
+                            <div class="form-group">
+                                <div class="margin-bottom-5">
+                                     <input name="schedume" value="1" ng-model="schedule.typeid" type="radio" checked>&nbsp;每天开机同步
+                                </div>
+                                <div class="margin-bottom-5">
+                                    <input name="schedume" value="2" ng-model="schedule.typeid" type="radio" >&nbsp;每周
+                                    <select ng-model="schedule.week" style="font-size:12px;width:50px;">
+                                        <option value="7">日</option>
+                                        <option value="1" selected>一</option>
+                                        <option value="2">二</option>
+                                        <option value="3">三</option>
+                                        <option value="4">四</option>
+                                        <option value="5">五</option>
+                                        <option value="6">六</option>
+                                    </select>开机同步
+                                </div>
+                                <input name="schedume" value="3" ng-model="schedule.typeid" type="radio" >&nbsp;录像任务有更新时，立即同步
+                            </div>
+                        </form>                   
+                </div>
+                <div ng-if="schedule.typeid==='2'">
+                     <form name="formSchedule" class="form-inline" role="form" style="padding:8px">
+                         <div class="form-group">
+                             <div class="margin-bottom-5">
+                                <input name="schedume" value="1" ng-model="schedule.typeid" type="radio" >&nbsp;每天开机同步
+                             </div>
+                             <div class="margin-bottom-5">
+                                 <input name="schedume" value="2" ng-model="schedule.typeid" type="radio" checked>&nbsp;每周
+                                 <select name="week" ng-model="schedule.week" required style="font-size:12px;width:50px;">
+                                     <option value="7">日</option>
+                                     <option value="1" selected>一</option>
+                                     <option value="2">二</option>
+                                     <option value="3">三</option>
+                                     <option value="4">四</option>
+                                     <option value="5">五</option>
+                                     <option value="6">六</option>
+                                 </select>开机同步
+                                 <span ng-show="formSchedule.week.$error.required" style="color:red">必须输入</span>
+                             </div>
+                             <input name="schedume" value="3" ng-model="schedule.typeid" type="radio" >&nbsp;录像任务有更新时，立即同步
+                         </div>
+                     </form>
+                </div>
+                <div ng-if="schedule.typeid==='3'">
+                     <form name="formSchedule" class="form-inline" role="form" style="padding:8px">
+                         <div class="form-group">
+                             <div>
+                             <input name="schedume" value="1" ng-model="schedule.typeid" type="radio" >&nbsp;每天开机同步
+                             </div>
+                             <div>
+                             <input name="schedume" value="2" ng-model="schedule.typeid" type="radio" >&nbsp;每周
+                             <select ng-model="schedule.week" style="height:22px;font-size:12px;width:50px;">
+                                 <option value="7">日</option>
+                                 <option value="1" selected>一</option>
+                                 <option value="2">二</option>
+                                 <option value="3">三</option>
+                                 <option value="4">四</option>
+                                 <option value="5">五</option>
+                                 <option value="6">六</option>
+                             </select>开机同步
+                             </div>
+                             <input name="schedume" value="3" ng-model="schedule.typeid" type="radio" checked>&nbsp;录像任务有更新时，立即同步
+                         </div>
+                     </form>
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+    <div class="panel-footer" style="border:none;text-align:center;">
+        <button class="btn btn-primary" ng-disabled=" formUpload.$pristine || formUpload.$invalid ||  formStrategy.$pristine || formStrategy.$invalid || formSchedule.$pristine || formSchedule.$invalid || formWarm.$pristine || formWarm.$invalid"  ng-click="save()">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

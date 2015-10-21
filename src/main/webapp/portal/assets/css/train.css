@@ -1,0 +1,676 @@
+/* CSS3 Gradient */
+
+ /* common: rotateCD */
+  @-webkit-keyframes myrotate{
+      0%{
+          -webkit-transform : rotate(0deg);
+      }    
+      100%{
+          -webkit-transform : rotate(360deg);
+     }
+ }
+ @-moz-keyframes myrotate{
+     0%{
+         -moz-transform : rotate(0deg);
+     }
+     100%{
+         -moz-transform : rotate(360deg);
+     }
+ }
+ @-ms-keyframes myrotate{
+     0%{
+         -ms-transform : rotate(0deg);
+     }
+     100%{
+         -ms-transform : rotate(360deg);
+     }
+ }
+ @-o-keyframes myrotate{
+     0%{
+         -o-transform : rotate(0deg);
+     }
+     100%{
+         -o-transform : rotate(360deg);
+     }
+ }
+ @keyframes myrotate{
+     0%{
+         transform : rotate(0deg);
+     }
+     100%{
+         transform : rotate(360deg);
+     }
+ }
+ .rotateCD{
+     
+     -webkit-animation: myrotate 9.5s infinite linear;
+     -moz-animation: myrotate 9.5s infinite linear;
+     -ms-animation: myrotate 9.5s infinite linear;
+     -o-animation: myrotate 9.5s infinite linear;
+     animation: myrotate 9.5s infinite linear;
+     
+     -webkit-animation-play-state: running;
+     -moz-animation-play-state: running;
+     -ms-animation-play-state: running;
+     -o-animation-play-state: running;
+     animation-play-state: running;
+
+ }
+
+/* module: bd */
+#bd{width: 960px;margin: 200px auto 0;}
+ 
+/* module: musicBox */
+#musicBox{position: relative;width: 430px;height: 430px;margin: 0 auto;overflow: hidden;}
+#musicBox .cover{width: 300px;height: 300px;margin: 65px;background: url(../img/2012120714341237.png) 0 0 no-repeat;}
+#musicBox .mask{position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: url(../img/2012120714325381.png) 0 0 no-repeat;}
+
+/*simple animate*/
+@-webkit-keyframes glow {
+    0% {
+        -webkit-box-shadow: 0 0 12px rgba(72, 106, 170, 0.5);
+        border-color: rgba(160, 179, 214, 0.5);         
+    }
+    100% {
+        -webkit-box-shadow: 0 0 12px rgba(72, 106, 170, 1.0), 0 0 18px rgba(0, 140, 255, 1.0);
+        border-color: rgba(160, 179, 214, 1.0); 
+    }
+}
+.anim_image {
+    padding:3px;
+    border:1px solid #beceeb;
+    background-color:white;
+    -moz-box-shadow: 0 0 8px rgba(72, 106, 170, 0.5);
+    -webkit-box-shadow: 0 0 8px rgba(72, 106, 170, 0.5);
+    box-shadow: 0 0 8px rgba(72, 106, 170, 0.5);
+}
+
+.anim_image:hover {
+    background-color:#f0f3f9;
+    -webkit-animation-name: glow;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;    
+}
+
+#sun.animate {
+	animation-name: sunrise;
+	animation-duration: 10s;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;	
+	animation-direction: normal;
+	animation-delay: 0;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+}
+
+@keyframes sunrise {
+
+	0% {
+		bottom: 0;
+		left: 340px;
+		background: #f00;
+	}
+	
+	33% {
+		bottom: 340px;
+		left: 340px;
+		background: #ffd630;
+	}
+
+	66% {
+		bottom: 340px;
+		left: 40px;
+		background: #ffd630;
+	}
+
+	100% {
+		bottom: 0;
+		left: 40px;
+		background: #f00;
+	}
+
+}
+#sky.animate {
+	animation-name: sky;
+	animation-duration: 10s;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;	
+	animation-direction: normal;
+	animation-delay: 0;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+}
+
+@keyframes sky {
+
+	0% {
+		background-color: #525252;
+	}
+	
+	33% {
+		background-color: #6293e5;
+	}
+
+	66% {
+		background-color: #6293e5;
+	}
+
+	100% {
+		background-color: #525252;
+	}
+
+}
+#ground.animate {
+	animation-name: ground;
+	animation-duration: 10s;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;	
+	animation-direction: normal;
+	animation-delay: 0;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+}
+
+@keyframes ground {
+
+	0% {
+		background: #6c5228;
+	}
+	
+	33% {
+		background: #48a037;
+	}
+
+	66% {
+		background: #48a037;
+	}
+
+	100% {
+		background: #6c5228;
+	}
+
+}
+#cloud.animate {
+	animation-name: cloud;
+	animation-duration: 12s;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;	
+	animation-direction: normal;
+	animation-delay: 0;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+}
+
+@keyframes cloud {
+
+	0% {
+		opacity: 0;
+		left: -100px;
+	}
+	
+	50% {
+		opacity: 1;
+	}
+	
+	75% {
+		opacity: 1;
+		left: 100px;
+	}
+	
+	100% {
+		opacity: 0;
+		left: 500px;
+	}
+
+}
+#moon.animate {
+	animation-name: moon;
+	animation-duration: 10s;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-delay: 0;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+}
+
+@keyframes moon {
+
+	0% {
+		opacity: 0;
+		left: -100px;
+	}
+	
+	50% {
+		opacity: 0;
+		left: -100px;
+	}
+	
+	90% {
+		opacity: 0;
+		left: -100px;
+	}
+	
+	100% {
+		opacity: 1;
+		left: 50px;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.search-toggle {
+    position:absolute;
+    margin-left:50%;
+    left:-30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #B7CCE2;
+    top: -40px;
+    color:#fff;
+    padding-top:34px;
+    transition: all 1.2s linear;
+    text-align:left;
+    box-shadow: inset 0 0 11px rgba(22, 39, 107, 0.6), 1px 1px 0 #FFF;
+}
+
+.search-toggle:hover {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    background-color: #4584D3;
+    cursor:pointer;
+    top: -35px;
+    left:-35px;
+    padding-top: 43px;
+}
+
+
+
+.demo-box {
+   width: 100px;
+   height: 50px;
+   text-align: center;
+   line-height: 50px;
+   text-align: center;
+   color: #fff;
+   background: #96c;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+   -moz-box-shadow: inset 0 0 5px rgba(102, 153, 0,0.5);
+   -webkit-box-shadow: inset 0 0 5px rgba(102, 153, 0,0.5);
+   box-shadow: inset 0 0 5px rgba(102, 153, 0,0.5);
+   margin-bottom: 10px;
+}
+
+#ease {
+   -moz-transition: all 5s ease 0.3s;
+   -webkit-transition: all 5s ease 0.3s;
+   -o-transition: all 5s ease 0.3s;
+   transition: all 5s ease 0.3s;
+   background: #f36;      
+}
+
+
+.demo-box:hover {
+    -moz-transform: rotate(360deg) scale(1.2);
+    -webkit-transform: rotate(360deg) scale(1.2);
+    -o-transform: rotate(360deg) scale(1.2);
+    transform: rotate(360deg) scale(1.2);
+    background: #369;
+    border: 1px solid rgba(255,230,255,08);
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    margin-left: 280px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 15px;
+  }
+
+button {
+ 	width: 199px;
+	height: 58px;
+	border: none;
+	padding: 0.6em 1.2em;
+	background: #ed8151;
+	color: #fff;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	font-size: 1em;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	cursor: pointer;
+	display: inline-block;
+	margin: 10px;
+	border-radius: 2px;
+	font-weight: 400;
+	outline: none;
+	-webkit-transition: background 0.5s ease-in,color 0.3s ease-out;
+}
+
+button:hover, button:active {
+	-webkit-transform: translate(-10px,-10px);
+	background:#e86a32;
+}
+
+
+
+.example {
+   width: 150px;
+   height: 80px;
+ }
+ 
+.example1 {
+   
+   /* Firefox 3.6+ ��ʼ��left��ˮƽ���򣩺�top����ֱ����*/ 
+   background: -moz-linear-gradient(left top, #ace, #f96);
+   background: -webkit-linear-gradient(left top, #ace, #f96);
+   background: -o-linear-gradient(left top, #ace, #f96);
+   
+   /* Firefox 3.6+ Linear Gradient (with Even Stops)*/ 
+   background: -moz-linear-gradient(left, #ace, #f96, #ace, #f96, #ace); 
+   /* Safari 4-5, Chrome 1-9 */ 
+   background: -webkit-gradient(linear, left top, right top, from(#ace), color-stop(0.25, #f96), color-stop(0.5, #ace), color-stop(0.75, #f96), to(#ace)); 
+   /* Safari 5.1+, Chrome 10+ */ 
+   background: -webkit-linear-gradient(left, #ace, #f96, #ace, #f96, #ace); 
+   /* Opera 11.10+ */ 
+   background: -o-linear-gradient(left, #ace, #f96, #ace, #f96, #ace);
+   
+    /* Firefox 3.6+ with Specified Arbitrary Stops*/ 
+	background: -moz-linear-gradient(left, #ace, #f96 5%, #ace, #f96 95%, #ace); 
+	/* Safari 4-5, Chrome 1-9 */ 
+	background: -webkit-gradient(linear, left top, right top, from(#ace), color-stop(0.05, #f96), color-stop(0.5, #ace), color-stop(0.95, #f96), to(#ace)); 
+	/* Safari 5.1+, Chrome 10+ */ 
+	background: -webkit-linear-gradient(left, #ace, #f96 5%, #ace, #f96 95%, #ace); 
+	/* Opera 11.10+ */ 
+	background: -o-linear-gradient(left, #ace, #f96 5%, #ace, #f96 95%, #ace);
+ 	
+ 	/* Firefox 3.6+ 30�ȵĽǶ�*/ 
+ 	background: -moz-linear-gradient(left 30deg, #ace, #f96);
+	background: -webkit-gradient(linear, 0 0, 100% 100%, from(#ace),to(#f96));
+	background: -o-linear-gradient(30deg, #ace, #f96);
+	
+	/* Firefox 3.6+ ��ͬ����ַɫ*/ 
+	background: -moz-linear-gradient(top, #ace, #f96 80%, #f96);
+	background: -webkit-linear-gradient(top,#ace,#f96 80%,#f96);
+	background: -o-linear-gradient(top, #ace, #f96 80%, #f96);
+	
+	/* Firefox 3.6+ ���û��ָ��λ�ã���ɫ����ȷֲ�*/ 
+	background: -moz-linear-gradient(left, red, #f96, yellow, green, #ace);
+	background: -webkit-linear-gradient(left,red,#f96,yellow,green,#ace);
+	background: -o-linear-gradient(left, red, #f96, yellow, green, #ace);
+	
+	/* Firefox 3.6+ ͸���Ȼ�֧��͸������*/ 
+	background: -moz-linear-gradient(right, rgba(255,255,255,0), rgba(255,255,255,1)),url(../img/sativa.png);
+	background: -webkit-linear-gradient(right, rgba(255,255,255,0), rgba(255,255,255,1)),url(../img/sativa.png);
+	background: -o-linear-gradient(right, rgba(255,255,255,0), rgba(255,255,255,1)),url(../img/sativa.png);
+
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(#ace, #f96, #1E90FF);
+ 	background: -webkit-radial-gradient(#ace, #f96, #1E90FF);
+ 	
+ 	/* Firefox 3.6+ ���򽥱�*/ 
+ 	background: -moz-radial-gradient(#ace 5%, #f96 25%, #1E90FF 50%);
+ 	background: -webkit-radial-gradient(#ace 5%, #f96 25%, #1E90FF 50%);
+ 	
+ 	/* Firefox 3.6+ ���򽥱�*/ 
+ 	background: -moz-radial-gradient(bottom left, circle, #ace, #f96, #1E90FF);
+  	background: -webkit-radial-gradient(bottom left, circle, #ace, #f96, #1E90FF);
+  	
+  	/* Firefox 3.6+ ���򽥱�*/ 
+  	background: -moz-radial-gradient(bottom left, ellipse, #ace, #f96, #1E90FF);
+	background: -webkit-radial-gradient(bottom left, ellipse, #ace, #f96, #1E90FF);
+	
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(ellipse closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -webkit-radial-gradient(ellipse closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(ellipse farthest-corner, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -webkit-radial-gradient(ellipse farthest-corner, #ace, #f96 10%, #1E90FF 50%, #f96);
+	
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(circle closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -webkit-radial-gradient(circle closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(circle farthest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	background: -webkit-radial-gradient(circle farthest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+	
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(#ace, #f96, #1E90FF);
+	background: -webkit-radial-gradient(#ace, #f96, #1E90FF);
+	
+	/* Firefox 3.6+ ���򽥱�*/ 
+	background: -moz-radial-gradient(contain, #ace, #f96, #1E90FF);
+	background: -webkit-radial-gradient(contain, #ace, #f96, #1E90FF);
+	
+	/* Firefox 3.6+ ���򽥱� ���Ķ�λ��full sized*/ 
+	background: -moz-radial-gradient(circle, #ace, #f96); 
+	/* Safari 4-5, Chrome 1-9 */ 
+	/* Can't specify a percentage size? Laaaaaame. */ 
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#ace), to(#f96)); 
+	/* Safari 5.1+, Chrome 10+ */ 
+	background: -webkit-radial-gradient(circle, #ace, #f96); 
+	 
+	/* Firefox 3.6+ ���򽥱� Positioned, Sized */ 
+	/* -moz-radial-gradient( [ || ,]? [ || ,]? , [, ]* ) */
+	background: -moz-radial-gradient(80% 20%, closest-corner, #ace, #f96); 
+	/* Safari 4-5, Chrome 1-9 */
+	background: -webkit-gradient(radial, 80% 20%, 0, 80% 40%, 100, from(#ace), to(#f96)); 
+	/* Safari 5.1+, Chrome 10+ */
+	background: -webkit-radial-gradient(80% 20%, closest-corner, #ace, #f96);
+	
+	/* Firefox 3.6+ ������ֹ��ɫ���������ظ� */
+	background: -moz-repeating-radial-gradient(#ace, #ace 5px, #f96 5px, #f96 10px);
+	background: -webkit-repeating-radial-gradient(#ace, #ace 5px, #f96 5px, #f96 10px);
+	
+	/* Firefox 3.6+ ������ֹ��ɫ���������ظ� ������	
+	background: -moz-repeating-linear-gradient(top left -45deg, #ace, #ace 5px, #f96 5px, #f96 10px);
+	background: -webkit-repeating-linear-gradient(top left -45deg, #ace, #ace 5px, #f96 5px, #f96 10px);*/ 
+ 
+   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#1471da, endColorstr=#1C85FB);/*IE<9>*/
+   -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#1471da, endColorstr=#1C85FB)";/*IE8+*/
+}
+
+/* CSS3 Gradient*/
+ul {
+  overflow: hidden;
+  margin-top: 20px;
+}
+li{
+  width: 150px;
+  height: 80px;
+  margin-bottom: 10px;
+  float: left;
+  margin-right: 5px;
+  background: #ace;
+  /*Controls the size*/
+  -webkit-background-size: 20px 20px;
+  -moz-background-size: 20px 20px;
+  background-size: 20px 20px; 
+}
+    
+li.gradient1 {
+  background-image: -webkit-gradient(
+    linear,
+    0 100%, 100% 0,
+    color-stop(.25, rgba(255, 255, 255, .2)), 
+    color-stop(.25, transparent),
+    color-stop(.5, transparent), 
+    color-stop(.5, rgba(255, 255, 255, .2)),
+    color-stop(.75, rgba(255, 255, 255, .2)), 
+    color-stop(.75, transparent),
+    to(transparent)
+    );
+  background-image: -moz-linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%,
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%, 
+    transparent
+    );
+  background-image: -o-linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%,
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%, 
+    transparent
+  );
+  background-image: linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%,
+    transparent 50%, 
+    gba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%, 
+    transparent
+    );
+}
+
+li.gradient2 {
+   background-image: -webkit-gradient(linear, 0 0, 100% 100%,
+      color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
+      color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
+      color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
+      to(transparent));
+   background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+      transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+      transparent 75%, transparent);
+   background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+      transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+      transparent 75%, transparent);
+   background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+      transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+      transparent 75%, transparent);
+}
+    
+li.gradient3 {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
+  background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+  background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+  background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+}
+    
+li.gradient4 {
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, color-stop(.5, rgba(255, 255, 255, .2)), color-stop(.5, transparent), to(transparent));
+  background-image: -moz-linear-gradient(0deg, rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+  background-image: -o-linear-gradient(0deg, rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+  background-image: linear-gradient(0deg, rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+}
+    
+li.gradient5 {
+  background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, #555), color-stop(.25, transparent), to(transparent)),
+      -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, #555), color-stop(.25, transparent), to(transparent)),
+      -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, #555)),
+      -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, #555));
+  background-image: -moz-linear-gradient(45deg, #555 25%, transparent 25%, transparent),
+     -moz-linear-gradient(-45deg, #555 25%, transparent 25%, transparent),
+     -moz-linear-gradient(45deg, transparent 75%, #555 75%),
+     -moz-linear-gradient(-45deg, transparent 75%, #555 75%);
+  background-image: -o-linear-gradient(45deg, #555 25%, transparent 25%, transparent),
+     -o-linear-gradient(-45deg, #555 25%, transparent 25%, transparent),
+     -o-linear-gradient(45deg, transparent 75%, #555 75%),
+     -o-linear-gradient(-45deg, transparent 75%, #555 75%);
+  background-image: linear-gradient(45deg, #555 25%, transparent 25%, transparent),
+    linear-gradient(-45deg, #555 25%, transparent 25%, transparent),
+    linear-gradient(45deg, transparent 75%, #555 75%),
+    linear-gradient(-45deg, transparent 75%, #555 75%);
+}
+    
+li.gradient6 {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.5, transparent), color-stop(.5, rgba(200, 0, 0, .5)), to(rgba(200, 0, 0, .5))),
+     -webkit-gradient(linear, 0 0, 100% 0, color-stop(.5, transparent), color-stop(.5, rgba(200, 0, 0, .5)), to(rgba(200, 0, 0, .5)));
+  background-image: -moz-linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+     -moz-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+  background-image: -o-linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+     -o-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+  background-image: linear-gradient(transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5)),
+     linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .5) 50%, rgba(200, 0, 0, .5));
+}
+
+/* CSS RGDB */
+/* ���Ԫ��Ҳ��͸�� opacity
+.bg-box {
+   width: 200px;
+   height: 100px;
+   border: 1px solid #ccc;
+   background: red;
+   position: relative;
+ }
+.bg {
+   background: black;
+   opacity: 0.5;
+   filter:alpha(opacity=50);
+   width: 100%;
+   height: 50px;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+ }
+
+ .bg p {
+   padding: 5px 10px;
+   color: white;
+ }*/
+ 
+ /* CSS opacity �������:
+ ������Ҫ���bg-content��bg���غ����������仰˵���ǰ�͸�������㵥����������һ��div��
+ Ȼ������ݲ�ͱ������ص���
+ ������֮��
+ ������Ҫ��bg���div������͸��ɫ��
+ ����bg-content���div�Ϸ������ݣ�
+ ���Ҷ�ʹ�ö�λ��
+ ��֤bg���div��bg-content���div���� */
+ .bg-box {
+   width: 200px;
+   height: 100px;
+   border: 1px solid #ccc;
+   background: red;
+   position: relative;
+ }
+ .bg {
+   background: black;
+   opacity: 0.5;
+   filter:alpha(opacity=50);
+   width: 100%;
+   height: 50px;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   z-index: 1;
+  }
+  .bg-content {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+  }
+  .bg-content p {
+     padding: 5px 10px;
+     color: white;
+  }

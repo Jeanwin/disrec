@@ -1,0 +1,126 @@
+[
+    {
+        "itemKind": "M001",
+        "description": "Obligatory reinsurances, XOL Insurance or Reinsurance and treaty reinsurance and retrocession business unless specially agreed"
+    },
+	{
+        "itemKind": "M005",
+        "description": "Loss, damage or expense merely arising from insolvency, financial default. non-fulfilment of financial obligations, or the impossibility of financial transfer"
+    },
+    {
+        "itemKind": "0104",
+        "description": "财产一切险"
+    },
+    {
+        "itemKind": "0107",
+        "description": "营业中断保险"
+    },
+    {
+        "itemKind": "0111",
+        "description": "机器损坏险"
+    },
+    {
+        "itemKind": "0112",
+        "description": "特殊设备险"
+    },
+    {
+        "itemKind": "0113",
+        "description": "工程机械保险"
+    },
+    {
+        "itemKind": "0122",
+        "description": "办公室综合险"
+    },
+    {
+        "itemKind": "0124",
+        "description": "电脑险"
+    },
+    {
+        "itemKind": "0125",
+        "description": "现金险"
+    },
+    {
+        "itemKind": "0301",
+        "description": "家庭财产综合保险"
+    },
+    {
+        "itemKind": "0399",
+        "description": "个人抵押贷款房屋保险"
+    },
+    {
+        "itemKind": "0501",
+        "description": "机动车辆保险"
+    },
+    {
+        "itemKind": "0507",
+        "description": "交强险"
+    },
+    {
+        "itemKind": "0701",
+        "description": "建筑工程一切险"
+    },
+    {
+        "itemKind": "0914",
+        "description": "货物运输保险"
+    },
+    {
+        "itemKind": "0915",
+        "description": "进出口货物运输保险"
+    },
+    {
+        "itemKind": "0918",
+        "description": "承运人赔偿责任保险"
+    },
+    {
+        "itemKind": "0988",
+        "description": "通用货运险（分入）"
+    },
+    {
+        "itemKind": "1101",
+        "description": "船舶保险"
+    },
+    {
+        "itemKind": "1188",
+        "description": "船舶建造保险"
+    },
+    {
+        "itemKind": "1501",
+        "description": "公众责任险"
+    },
+    {
+        "itemKind": "1502",
+        "description": "保管人赔偿责任险"
+    },
+    {
+        "itemKind": "1504",
+        "description": "综合赔偿责任险"
+    },
+    {
+        "itemKind": "1505",
+        "description": "综合赔偿责任险(CGLISO)"
+    },
+    {
+        "itemKind": "1506",
+        "description": "产品召回费用险"
+    },
+    {
+        "itemKind": "1507",
+        "description": "第三者综合责任险"
+    },
+    {
+        "itemKind": "1511",
+        "description": "机动车辆延长保修责任险"
+    },
+    {
+        "itemKind": "1519",
+        "description": "产品责任险"
+    },
+    {
+        "itemKind": "1525",
+        "description": "高尔夫球员综合险"
+    },
+    {
+        "itemKind": "1532",
+        "description": "职业赔偿责任险"
+    }
+]

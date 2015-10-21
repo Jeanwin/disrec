@@ -1,0 +1,105 @@
+<style>
+	.advSearchPanel{
+		background-color:#fff;
+		}
+		.advSearchPanel label{
+			color:#000;
+		}
+</style>
+<div class="container-fluid" style="position: absolute;top: 0;left: 0;width: 100%;min-height:300px;background: #e3e3e3;z-index: 1001;">
+
+    <div class="row" style="margin-top:16px">
+        
+        <!--右边区域-->
+        <div class="col-xs-12 ">
+            <div class="whiteframe" style="margin-left:-16px">
+                
+                <div class="advSearchPanel">
+                    <form class="form-inline" role="form">
+
+                        <div class="form-group">
+                            <label class="form-label">服务类型：</label>
+                            <select class="form-control" ng-model="project">
+                                <option value="">全部</option>
+                                <option value="dm">dm</option>
+                                <option value="ptz">ptz</option>
+                                <option value="reght">reght</option> 
+                                <option value="recording">recording</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" ng-model="level">
+                            <label class="form-label">级别</label>
+                            <select class="form-control" ng-model="level">
+                                <option value="">全部</option>
+                                <option value="0">1</option>
+                                <option value="1">2</option>
+                                <option value="2">3</option>
+                                <option value="3">4</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" >
+                            <label class="form-label" style="width: 65px">时间</label>
+	                        <input type="date" datepicker3 class="form-control" ng-model="stamp_begin" />
+	                        <label style="padding:0;margin:0">至</label>
+	                        <input type="text" datepicker3 class="form-control" ng-model="stamp_end"/>
+                            
+                        </div>
+                        
+                        <button class="btn btn-primary pull-right" ng-click="searchLog()">
+                            <span class="glyphicon glyphicon-search"></span>
+                            查询</button>
+                    </form>
+
+                </div>
+                <div>
+                    <!--<div style="border-top: solid 2px #c0c0c0;padding:8px;text-align:center">-->
+                    <div class="panel panel-default">
+                        <div class="panel-body padding-left-10 padding-top-10" id="rightContent-height">
+                        <table class="table table-striped" style="text-align:center">
+                            <thead style="background-color: #ceecff;font-weight:bold">
+                            <tr>
+                                <td style="WORD-WRAP: break-word" width="80">
+                                        服务类型
+                                </td>
+                                 <td style="WORD-WRAP: break-word" width="60">级别</td>
+                                <td style="WORD-WRAP: break-word" width="180" ng-click="asc=!asc;reverse=!reverse;order('stamp',reverse)">
+                                     	 <span> 时间</span> 
+                                        <span> 
+                                             <a href="" ng-show="!asc" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up"> 
+                                             </a> 
+                                             <a href="" ng-show="asc" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down"> 
+                                             </a>
+                                        </span>
+                                </td>
+                                    
+                               
+                                <td class="text-center">描述</td>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="logData in logDatas | orderBy:logData.stamp">
+                                <td><span>{{logData.project}}</span></td>
+                                <td><span>{{logData.level}}</span></td>
+                                <td><span>{{logData.stamp}}</span></td>
+                                <td class="text-left"><span>{{logData.content}}</span></td>
+                            </tr>
+                        </table> 
+                        <!-- <div class="log1" ng-repeat="logData in logDatas">
+                            <span>{{logData.project}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>{{logData.level}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>{{logData.stamp}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>{{logData.content}}</span>
+                        </div> -->
+                        <button ng-if="pagination.totalItems === 0" class="ondata">
+                            <span class="ondatatext">找不到您搜索的信息！</span>
+                        </button>
+                    </div>
+
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

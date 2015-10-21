@@ -1,0 +1,58 @@
+[
+    {
+        "id": "3bc052115a12450ca933ad95a1b33220",
+        "innerid": "3",
+        "value": "4",
+        "name": "一tbtbt班",
+        "childs": []
+    },
+    {
+        "id": "00a9156526bb4f93967c35d8d49103b5",
+        "innerid": "2014103105",
+        "value": "测试004教室",
+        "name": "二班",
+        "childs": []
+    },
+    {
+        "id": "6858962639a948ba9643434fe2829c38",
+        "innerid": "lz404",
+        "value": "理综404录播室",
+        "name": "三班",
+        "childs": []
+    },
+    {
+        "id": "860e181fda834d2095971335f56f64de",
+        "innerid": "lz405",
+        "value": "理405录播室",
+        "name": "四班",
+        "childs": []
+    },
+    {
+        "id": "878b0b32acac4525af6c88c23da1d1c4",
+        "innerid": "lz304",
+        "value": "理综304教室",
+        "name": "五班",
+        "childs": []
+    },
+    {
+        "id": "d105e810d2ea43598db3a1d515ed91c0",
+        "innerid": "lz4042",
+        "value": "理36录播室",
+        "name": "六班",
+        "childs": []
+    },
+    {
+        "id": "d9aa7f8deb9c45e69328665dda17e77a",
+        "innerid": "lz406",
+        "value": "理406录播室",
+        "name": "七班",
+        "childs": []
+    },
+    {
+        "id": "f3fd645c0bd6408ab92936efe943ffea",
+        "innerid": "4",
+        "value": "4",
+        "name": "超人班",
+        "childs": []
+    }
+]

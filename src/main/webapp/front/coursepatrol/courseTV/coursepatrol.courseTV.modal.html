@@ -1,0 +1,23 @@
+<a class="glyphicon glyphicon-off" ng-href="#/coursepatrol"></a>
+<div style="padding-top: 32px;" class="col-md-12 container-fluid">
+    <div class="row">
+        <ul class="coursetourTV">
+             <li class="col-md-6" style="margin-top:10px" ng-class="{'col-md-3':pagination.pageSize==='16','col-md-4':pagination.pageSize==='9'}" ng-repeat="video in videoList">
+                 <!--<a ng-href="#/scrn/{{video}}">-->
+                     <div class="course-type-top" ng-class="{'course-type-top-xs':pagination.pageSize==='16','course-type-top-sm':pagination.pageSize==='9'}">
+                         {{video.name}} 教师机 {{video.username}} {{video.subject}} {{video.deptName}}
+                     </div>
+                     <div class="video-wrapper">
+                         <img src="/assets/img/lemon-pages.jpg" style="height:100%;width:100%;">
+                         <div class="video-toolbar">
+                             <div style="margin-top:10px;float:right">
+                                 <button ng-class="{'btn btn-primary btn-sm':pagination.pageSize==='9','btn btn-primary btn-xs':pagination.pageSize==='16'}" ng-click="photograph(video.id)" class="btn btn-primary"  style="margin-right: 20px">抓拍</button>
+                                 <button ng-class="{'btn btn-primary btn-sm':pagination.pageSize==='9','btn btn-primary btn-xs':pagination.pageSize==='16'}" ng-click="openConsole(video.name)"   class="btn btn-primary">导播</button>
+                             </div>
+                         </div>
+                     </div>
+                 <!--</a>-->
+             </li>
+        </ul>
+    </div>
+</div>

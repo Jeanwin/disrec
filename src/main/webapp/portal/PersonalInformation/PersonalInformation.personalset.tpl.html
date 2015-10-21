@@ -1,0 +1,97 @@
+<style>
+    input{
+        height: 30px;
+    }
+</style>
+<div class="container-fluid message-myinfo" style="padding-bottom:20px;">
+    <div class="modal-body">
+        <div style="height: 24px;width: 8px;background-color: #fcb750"></div>
+        <div style="margin:-30px 0 32px 20px;font-size: 24px">个人设置</div>
+        <div class="header">
+            <ul class="top-nav">
+                <li class="pull-left big" ng-class="{'colorShow':Myinformation === '1'}">
+                    <a href ng-click="showmodal('1')" ng-class="{'fontwhite':Myinformation === '1'}">个人信息</a>
+                </li>
+                <li class="big" ng-class="{'colorShow':Mypassword === '2'}">
+                    <a href ng-click="showmodal('2')"  ng-class="{'fontwhite':Mypassword === '2'}">密码修改</a>
+                </li>
+            </ul>
+        </div>
+            <div ng-show="Myinformation === '1'">                
+                <div class="col-xs-4" style="margin-top: 80px">
+
+                    <div class="drop-box col-xs-6" style="width:160px;height:186px"
+                         ng-file-drop="onFileSelect($files)">
+
+                        <div ng-if="!file" style="padding-top:82px;color:#c0c0c0">
+                            照片
+                        </div>
+
+                        <div ng-if="img">
+                            <img style="width:168px;height:220px;" ng-src="{{img}}">
+                        </div>
+                        <div ng-if="!img">
+                            <img style="width:100%;" ng-src="{{live.imageurl}}">
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-xs-offset-2">
+                        <button class="btn btn-default">修改</button>
+                    </div>
+
+                    <!--<div class="form-group">-->
+                        <!--<div class="btn-group">-->
+                            <!--<label ng-repeat="usrsex in sexList" class="btn btn-default" ng-model="user.sex"-->
+                                   <!--btn-radio="'{{usrsex.id}}'">{{usrsex.value}}</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<div class="js-fileapi-wrapper upload-btn">-->
+                            <!--<input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" />-->
+                        <!--</div>-->
+                    </div>
+                <div class="col-xs-6" style="text-align: right;color: #595757;margin-top: 80px;">
+                        <div>
+                            <span style="padding-right:16px">性别</span>
+                            <span style="padding-right:54px"><input style="height: 13px;" type="radio" name="sex" checked>男</span>
+                            <span style="padding-right:120px"><input style="height: 13px;" type="radio" name="sex">女</span>
+                        </div>
+                        <div style="margin-top: 20px">电话
+                            <span style="padding-left: 16px"><input style="width: 232px"></span>
+                        </div>
+                        <div style="margin-top: 20px">Email
+                            <span style="padding-left: 16px"><input style="width: 232px"></span>
+                        </div>
+                        <div style="margin-top: 20px">
+                            <div style="margin-right: 252px;margin-bottom: -16px">个人介绍</div>
+                            <div style="padding-left: 16px;padding-top: -24px"><textarea style="width: 232px"></textarea></div>
+                        </div>
+                        <div style="margin-top: 40px">
+                            <button class="btn btn-primary" style="width: 232px;box-shadow:#cecece 2px 2px 3px;">保存</button>
+                        </div>
+                    </div>
+               
+            </div>
+            <div  ng-show="Mypassword === '2'">
+                <div style="margin: 80px 0 0 80px">
+                    <div class="row" style="margin-bottom: 16px">
+                       <div class="col-xs-2">当前密码</div><div class="col-xs-6"><input style="width: 232px;margin-left: -60px;"></div>
+                    </div>
+                    <div class="row"  style="margin-bottom: 16px">
+                        <div class="col-xs-2" style="margin-left: 15px">新密码</div>
+                        <div class="col-xs-6" style="margin-left: -15px;">
+                            <input style="width: 232px;margin-left: -60px;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">确认密码</div><div class="col-xs-6"><input style="width: 232px;margin-left: -60px;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-6" style="margin: 32px 0 0 0;margin-left: -60px;">
+                            <button style="width: 232px;box-shadow:#cecece 2px 2px 3px;" class="btn btn-primary">发送</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+[
+    {
+        "classtype":"测试1",
+        "datebegin":"2014-11-2",
+        "dateend":"2014-11-20"
+    },{
+        "classtype":"测试2",
+        "datebegin":"2014-12-2",
+        "dateend":"2014-12-20"
+    }
+]

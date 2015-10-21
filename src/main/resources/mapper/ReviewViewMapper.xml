@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.ReviewViewMapper" >
+
+  <sql id="Base_Column_List" >
+    id, name, description, usetimes, assess,markType, createtime,modifytime, 
+    createuser, modifyuser, deleteflag
+  </sql>
+	  <resultMap type="com.zonekey.disrec.vo.ReviewView"  id="data" >
+	   <association property="childList" column="id" select="getChildList"/>
+	  </resultMap>
+
+	<select id="getChildList" resultType="com.zonekey.disrec.entity.ReviewChildren">
+		select
+		 id,parentid,reviewid, childKey, childValue, sort, deleteflag
+		from zonekey_review_children
+		where id = #{id} and deleteflag ='0'
+	</select>
+	<select id="findOne" parameterType="java.lang.String" resultMap="data">
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_review
+		where id = #{id,jdbcType=CHAR} and deleteflag ='0'
+	</select>
+
+	<select id="findByPage" resultMap="data" >
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM zonekey_review
+		where deleteflag ='0'
+		LIMIT #{offset} ,#{limit}
+	</select>
+
+	<select id="count" resultType="long">
+		SELECT count(*) FROM
+		zonekey_review where deleteflag ='0'
+	</select>
+	 <select id="findCount"  parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		SELECT count(*) FROM
+		zonekey_review where deleteflag ='0'
+		<if test="keywords != null">
+			<if test="keywords.name != null and keywords.name != '' ">and name like concat('%',#{keywords.name},'%')</if>
+		</if>
+	 </select>
+		 <select id="findPageByPageBean"  parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.ReviewView">
+			SELECT
+		<include refid="Base_Column_List" />
+		FROM zonekey_review
+		where deleteflag ='0'
+		<if test="keywords != null">
+			<if test="keywords.name != null and keywords.name != '' ">and name like concat('%',#{keywords.name},'%')</if>
+		</if>
+		ORDER BY modifytime DESC
+		limit  #{page.offset} ,#{page.limit} 
+	 </select> 
+<!-- 	 逻辑删除  -->
+	<update id="delete">
+		update zonekey_review set
+		deleteflag='1',modifyuser=#{modifyuser,jdbcType=CHAR},modifytime=sysDate()
+		where id =#{id,jdbcType=CHAR}
+	</update>
+	
+  <insert id="insert" parameterType="com.zonekey.disrec.vo.ReviewView" >
+    insert into zonekey_review ( id, name, description, usetimes, assess,markType, createtime,modifytime, 
+    createuser, modifyuser, deleteflag
+      )
+    values ( #{id,jdbcType=CHAR},#{name,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},
+      #{usetimes,jdbcType=INTEGER},  #{assess,jdbcType=INTEGER},#{markType,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP}, 
+       #{modifytime,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=CHAR}, #{modifyuser,jdbcType=CHAR}, #{deleteflag,jdbcType=CHAR}
+      )
+  </insert>
+   <insert id="insertSelective" parameterType="com.zonekey.disrec.vo.ReviewView" >
+    insert into zonekey_review
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="usetimes != null" >
+        usetimes,
+      </if>
+       <if test="assess != null" >
+        assess,
+      </if>
+      <if test="markType != null" >
+        markType,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="modifytime != null" >
+        modifytime,
+      </if>
+      <if test="createuser != null" >
+        createuser,
+      </if>
+      <if test="modifyuser != null" >
+        modifyuser,
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+       <if test="usetimes != null" >
+        #{usetimes,jdbcType=INTEGER},
+      </if>
+      <if test="assess != null" >
+        #{assess,jdbcType=INTEGER},
+      </if>
+      <if test="markType != null" >
+        #{markType,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=CHAR},
+      </if>
+      <if test="modifyuser != null" >
+        #{modifyuser,jdbcType=CHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=CHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateSelective" parameterType="com.zonekey.disrec.vo.LectureView">
+		update zonekey_review
+		<set>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description =  #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="usetimes != null" >
+        usetimes = #{usetimes,jdbcType=INTEGER},
+      </if>
+      <if test="assess != null" >
+        assess = #{assess,jdbcType=INTEGER},
+      </if>
+      <if test="markType != null" >
+        markType =   #{markType,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        modifytime =  #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        createuser = #{createuser,jdbcType=CHAR},
+      </if>
+      <if test="modifyuser != null" >
+        modifyuser =  #{modifyuser,jdbcType=CHAR},
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag =  #{deleteflag,jdbcType=CHAR},
+      </if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+  
+</mapper>

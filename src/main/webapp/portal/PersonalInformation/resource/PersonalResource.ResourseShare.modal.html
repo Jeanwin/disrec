@@ -1,0 +1,32 @@
+<div class="container-fluid" style="background-color: #f2f2f2;border-radius: 5px">
+    <div style="color: #0f97e5;margin: 24px"><label>分享给</label></div>
+    <div style="margin:0 0 24px 56px;">
+        <span><input name="name" type="radio" ng-click="organization()" checked> 机构</span>
+        <span><input name="name" type="radio" ng-click="Myselft()"> 个人</span>
+    </div>
+    <div collapse="MyselftModal === true" class="ReceivingSelection">
+        <div style="font-size: 14px;background-color: #fff">
+            <div style="margin-bottom: 8px;padding-left: 16px;">校长室（2人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;" ng-class="{'backchanage':backchanage2 ==='2'}">
+                <a href style="color: #000000"  ng-click="backChange('2')" class="aaa"><div>数学课科研组（21人）</div></a>
+            </div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">语文课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">英语课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;"  ng-class="{'backchanage':backchanage5 ==='5'}">
+                <a style="color: #000000" href ng-click="backChange('5')"><div>物理课科研组（21人）</div></a></div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">化学课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">地理课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">历史课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">自然课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">美术课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">体育课科研组（21人）</div>
+        </div>
+    </div>
+    <div collapse="organizationModal === true" style="margin-left: 24px">
+        <input type="hidden" style="width:412px" ui-select2="multi" ng-model="multi2Value"/>
+    </div>
+    <div style="margin: 24px 0 24px 24px">
+        <button class="btn btn-primary" style="width: 204px;box-shadow:#cecece 2px 2px 3px;" ng-click="ok()">保存</button>
+        <button class="btn btn-default" style="width: 204px;box-shadow:#cecece 2px 2px 3px;" ng-click="cancel()">取消</button>
+    </div>
+</div>

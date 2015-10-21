@@ -1,0 +1,434 @@
+<div class="container-fluid">
+<div class="whiteframe" style="margin-left:-16px">
+<div class="panel panel-default">
+<div class="panel-heading">
+    <span>RTSP方案</span>
+    <select ng-model="rtspscheam" ng-change="RtspscheamChange(rtspscheam)"
+            ng-options="rtspscheam.value as rtspscheam.name for rtspscheam in rtspscheamok">
+    </select>   
+    <span style="color:red">功能还未实现</span> 
+</div>
+<div class="panel-body padding-0">
+<!-------------------------------->
+<div class="col-xs-2 padding-0">
+    <table class="table table-striped table-fixed-height-td" style="text-align: center">
+        <thead>
+        <tr>
+            <td>参数</td>
+        </tr>
+        </thead>
+        <tr>
+            <td>视频编码类型：</td>
+        </tr>
+        <tr>
+            <td>音频编码类型：</td>
+        </tr>
+        <tr>
+            <td>BFrame：</td>
+        </tr>
+        <tr>
+            <td>RecordProfile：</td>
+        </tr>
+        <tr>
+            <td>RecordLevel：</td>
+        </tr>
+        <tr>
+            <td>RecordEntropy：</td>
+        </tr>
+        <tr>
+            <td>RecordComplexity：</td>
+        </tr>
+        <tr>
+            <td>GOP：(1-100)</td>
+        </tr>
+        <tr>
+            <td>码率：</td>
+        </tr>
+        <tr>
+            <td>帧率：（1-60）</td>
+        </tr>
+        <tr>
+            <td>分辨率:</td>
+        </tr>
+    </table>
+</div>
+
+<!--+++++++++++++++++++++++++++++++-->
+<div class="col-xs-10 padding-0" style="overflow-x: scroll">
+    <table class="table table-striped table-fixed-height-td" style="text-align:center">
+        <thead>
+        <tr>
+            <!--<td>参数</td>-->
+            <td>一号源</td>
+            <td>二号源</td>
+            <td>三号源</td>
+            <td>四号源</td>
+            <td>五号源</td>
+            <td>六号源</td>
+            <td>电影</td>
+        </tr>
+        </thead>
+            <tr>
+                <!--<td>
+                    视频编码类型：
+                </td>-->
+                <td>
+                    <select ng-model="schem.videoCodeType1" class="tacitwidth"
+                            ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.videoCodeType2" class="tacitwidth"
+                        ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.videoCodeType3" class="tacitwidth"
+                        ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.videoCodeType4" class="tacitwidth"
+                        ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.videoCodeType5" class="tacitwidth"
+                        ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.videoCodeType6" class="tacitwidth"
+                        ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.videoCodeType7" class="tacitwidth"
+                        ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    音频编码类型：
+                </td>-->
+                <td>
+                    <select ng-model="schem.auditCodeType1" class="tacitwidth"
+                            ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.auditCodeType2" class="tacitwidth"
+                        ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.auditCodeType3" class="tacitwidth"
+                        ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.auditCodeType4" class="tacitwidth"
+                        ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.auditCodeType5" class="tacitwidth"
+                        ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.auditCodeType6" class="tacitwidth"
+                        ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                </select>
+            </td><td>
+                <select ng-model="schem.auditCodeType7" class="tacitwidth"
+                        ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    BFrame：
+                </td>-->
+                <td>
+                    <input ng-model="schem.bFrame1" class="tacitwidth">
+                </td><td>
+                <input ng-model="schem.bFrame2" class="tacitwidth">
+            </td><td>
+                <input ng-model="schem.bFrame3" class="tacitwidth">
+            </td><td>
+                <input ng-model="schem.bFrame4" class="tacitwidth">
+            </td><td>
+                <input ng-model="schem.bFrame5" class="tacitwidth">
+            </td><td>
+                <input ng-model="schem.bFrame6" class="tacitwidth">
+            </td><td>
+                <input ng-model="schem.bFrame7" class="tacitwidth">
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    RecordProfile：
+                </td>-->
+                <td>
+                    <select ng-model="schem.recordProfile1" class="tacitwidth"
+                            ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.recordProfile2" class="tacitwidth"
+                        ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordProfile3" class="tacitwidth"
+                        ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordProfile4" class="tacitwidth"
+                        ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordProfile5" class="tacitwidth"
+                        ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordProfile6" class="tacitwidth"
+                        ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordProfile7" class="tacitwidth"
+                        ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    RecordLevel：
+                </td>-->
+                <td>
+                    <select ng-model="schem.recordLevel1" class="tacitwidth"
+                            ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.recordLevel2" class="tacitwidth"
+                        ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordLevel3" class="tacitwidth"
+                        ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordLevel4" class="tacitwidth"
+                        ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordLevel5" class="tacitwidth"
+                        ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordLevel6" class="tacitwidth"
+                        ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordLevel7" class="tacitwidth"
+                        ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    RecordEntropy：
+                </td>-->
+                <td>
+                    <select ng-model="schem.recordEntropy1" class="tacitwidth"
+                            ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.recordEntropy2" class="tacitwidth"
+                        ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordEntropy3" class="tacitwidth"
+                        ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordEntropy4" class="tacitwidth"
+                        ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordEntropy5" class="tacitwidth"
+                        ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordEntropy6" class="tacitwidth"
+                        ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordEntropy7" class="tacitwidth"
+                        ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    RecordComplexity：
+                </td>-->
+                <td>
+                    <select ng-model="schem.recordComplexity1" class="tacitwidth"
+                            ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.recordComplexity2" class="tacitwidth"
+                        ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordComplexity3" class="tacitwidth"
+                        ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordComplexity4" class="tacitwidth"
+                        ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordComplexity5" class="tacitwidth"
+                        ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordComplexity6" class="tacitwidth"
+                        ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                </select>
+            </td><td>
+                <select ng-model="schem.recordComplexity7" class="tacitwidth"
+                        ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    GOP：(1-100)
+                </td>-->
+                <td>
+                    <input ng-model="schem.gop1" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.gop2" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.gop3" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.gop4" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.gop5" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.gop6" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.gop7" class="tacitwidth">
+                </td>
+            </tr>
+            <tr>
+                <!--<td>
+                    码率：
+                </td>-->
+                <td>
+                    <select ng-model="schem.bitrate1" class="tacitwidth"
+                            ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                    </select>
+                </td><td>
+                <select ng-model="schem.bitrate2" class="tacitwidth"
+                        ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                </select>
+            </td><td>
+                <select ng-model="schem.bitrate3" class="tacitwidth"
+                        ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                </select>
+            </td><td>
+                <select ng-model="schem.bitrate4" class="tacitwidth"
+                        ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                </select>
+            </td><td>
+                <select ng-model="schem.bitrate5" class="tacitwidth"
+                        ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                </select>
+            </td><td>
+                <select ng-model="schem.bitrate6" class="tacitwidth"
+                        ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                </select>
+            </td><td>
+                <select ng-model="schem.bitrate7" class="tacitwidth"
+                        ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+                </select>
+            </td>
+
+            </tr>
+            <tr>
+                <!--<td>
+                    帧率：（1-60）
+                </td>-->
+                <td>
+                    <input ng-model="schem.framerate1" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.framerate2" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.framerate3" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.framerate4" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.framerate5" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.framerate6" class="tacitwidth">
+                </td>
+                <td>
+                    <input ng-model="schem.framerate7" class="tacitwidth">
+                </td>
+            </tr>
+            <tr>
+            <!--<td>
+                分辨率：
+            </td>-->
+            <td>
+                <select ng-model="schem.movieResoluation1" class="tacitwidth"
+                        ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+                </select>
+            </td><td>
+            <select ng-model="schem.movieResoluation2" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td><td>
+            <select ng-model="schem.movieResoluation3" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td><td>
+            <select ng-model="schem.movieResoluation4" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td><td>
+            <select ng-model="schem.movieResoluation5" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td><td>
+            <select ng-model="schem.movieResoluation6" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td><td>
+            <select ng-model="schem.movieResoluation7" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td>
+
+        </tr>
+</table>
+</div>
+</div>
+<div class="panel-footer" style="text-align: center">
+    <button class="btn btn-primary" ng-click="SaveRtspSchem()">保存</button>
+    <button class="btn btn-default" type="reset" ng-click="">重置</button>
+    <button class="btn btn-default" ng-click="openRtspSolutionModel(rtspscheam)">方案应用到</button>
+</div>
+</div>
+</div>
+</div>

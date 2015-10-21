@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="whiteframe" style="margin-left:-16px">
+        <div class="pull-left">
+            <div style="display: -webkit-inline-box">
+                <div style="margin-left: 80px;margin-top:8px;margin-right: -40px">
+                    <input type="checkbox" checked>磁盘空间剩余
+                </div>
+                <div style="padding-left: 80px;display: flex">
+                    <input class="form-control" style="width: 60px"><span style="padding-top: 8px">GB</span>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="pull-left">
+            <div style="display: -webkit-inline-box">
+                <div style="margin-left: 80px;margin-top:8px;margin-right: -40px">
+                    <input type="checkbox" checked>录像存储满
+                </div>
+                <div style="padding-left: 80px;display: flex">
+                    <input class="form-control" style="width: 60px"><span style="padding-top: 8px">天</span>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="pull-left">
+            <div style="display: -webkit-inline-box">
+                <div style="margin-left: 80px;margin-top:8px;margin-right: -40px">
+                    <button class="btn btn-primary" ng-disabled="frmAreaEditor.$pristine || frmAreaEditor.$invalid || showAreaNameError"  ng-click="save()">保存</button>
+                    <button class="btn btn-default" ng-click="cancel()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

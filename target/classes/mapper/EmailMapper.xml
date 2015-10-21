@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.EmailMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.Email" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="createuser" property="createuser" jdbcType="VARCHAR" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifyuser" property="modifyuser" jdbcType="VARCHAR" />
+    <result column="deleteflag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="bindLoginname">
+	 <bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, email
+  </sql>
+  <select id="getEmails" resultType="com.zonekey.disrec.entity.Email" >
+    select 
+    <include refid="Base_Column_List" />
+    from zonekey_resource_warn_email_strategy where deleteflag=0
+  </select>
+  <insert id="insert"  parameterType="java.util.List">
+    insert into zonekey_resource_warn_email_strategy (id, email,createdate,createuser,deleteflag)
+    values 
+     <foreach collection="list" item="email" index="index" separator="," >  
+        (#{email.id},#{email.email}, sysDate(),#{email.createuser},#{email.deleteFlag})  
+    </foreach> 
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zonekey.disrec.entity.Email" >
+    update zonekey_resource_warn_email_strategy
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        deleteflag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+      modifyuser=#{_loginname},
+      modifydate=sysDate()
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+
+ <!-- 逻辑删除 -->
+	<update id="deleteByKeys">
+		update zonekey_resource_warn_email_strategy set
+		deleteflag='1' where id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+[
+    {
+        "areaid":"2",
+        "parentid":"1"
+        ,"name":"01教室"
+    },
+    {
+        "areaid":"1",
+        "parentid":"2",
+        "name":"02教室"
+    }
+]

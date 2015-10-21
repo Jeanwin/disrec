@@ -1,0 +1,100 @@
+<div class="panel panel-default">
+    <div ui-view="main">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h2>
+                    系统消息
+                    <span class="glyphicon glyphicon-comment"></span>
+                </h2>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="whiteframe" style="margin:32px auto; width:800px;height:auto;padding:24px;padding-top:0px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="modal-title">
+                            <h4><span>发送消息</span>
+                                <a ng-href="#/information">返回</a>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form name="frmAreaEditor" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="send">发送给</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="send" ng-model="message.to">
+                                        <option value="00023">jack</option>
+                                        <option>李老师</option>
+                                        <option>王老师</option>
+                                        <option>刘老师</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="title">标题</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="title" placeholder="标题" type="text" ng-model="message.subject">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="content">内容</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" style="height: 200px" id="content" placeholder="请在此输入内容" ng-model="message.content"></textarea>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-primary" ng-click="sendMessage()">发送</button>
+                        <button class="btn btn-default" ng-click="cancel()">取消</button>
+                    </div>
+
+                    <ul>
+                        <li ng-repeat = "m in messages">
+                            {{m.subject}}
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</div>
+
+
+
+
+<!--
+
+
+
+<div class="col-md-2"><h3>消息提醒</h3></div>
+<div class="col-md-8">
+       <div class="modal-header ng-scope">
+           发送消息　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<a ng-href="#/information">返回</a>
+       </div>
+       <div class="modal-body ng-scope">
+           <div>发送给
+               <select ng-model="message.to">
+                   <option value="00023">jack</option>
+               </select>
+           </div>
+           <div>标题：<input type="text" ng-model="message.subject"></div>
+           <div>
+               内容：<textarea ng-model="message.content"></textarea>
+           </div>
+           <button class="btn btn-default" ng-click="sendMessage()">发送</button>
+       </div>
+       <ul>
+           <li ng-repeat = "m in messages">
+               {{m.subject}}
+           </li>
+       </ul>
+</div>
+<div class="col-md-2"></div>-->

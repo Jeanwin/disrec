@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="no-js" id="ng-app" ng-controller="ConsoleMainCtrl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>录播系统-导播台</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap-lemon.css" />
+    <link rel="stylesheet" type="text/css" href="css/vedio.css">
+	<link rel="stylesheet" type="text/css" href="../../assets/css/zkicon.css">
+    <!-- endbuild -->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <![endif]-->
+    <!-- build:js assets/js/lemon.min.js -->
+    <script type="text/javascript" src="../../assets/js/jquery/jquery-1.4.2.min.js"></script>
+    <!-- endbuild -->
+    <style>
+   		.directorFighting {
+   			visibility : hidden;
+   		}
+   	</style>
+</head>
+<body>
+<!-- <button ng-click="sendMessage()">WebSocket测试</button> -->
+<!--[if lte IE 9]>
+<div>不支持此浏览器</div>
+<![endif]-->
+<div id="vedio-live" ng-class="{'directorFighting' : directorFighting}">  
+    <div class="small-live-list">
+        <div class="col-xs-12 vedio-meta-title large-meta" >
+            <span class="address col-xs-4">
+            	
+	            <i class="icon-lens camera-lens" ng-show="recordStateSet"></i>
+	            <i class="icon-pause camera-pause" ng-show="!recordStateSet"></i>
+	            <span>
+	            	{{className}}&nbsp;&nbsp;{{courseName}}&nbsp;&nbsp;{{teacherName}}
+	            </span>
+            </span>
+            
+            <span class="time col-xs-2 col-xs-offset-1">{{clock}}</span>
+            <span class="luTime col-xs-3" ng-hide="!laterCourseFlag">
+            	{{courseStartTime}} 
+            </span>
+            <span class="luTime col-xs-3 col-xs-offset-1" ng-if="!laterCourseFlag" ng-hide="changTime">{{remainTime}} 
+                <i class="change-time glyphicon glyphicon-pencil" ng-click="changeTime()"></i>
+            </span>
+            <span ng-if="!laterCourseFlag" ng-hide="!changTime" class="col-xs-4 padding-left-right-none">
+                <span class="col-xs-6 padding-left-right-none" style="margin-bottom:6px;">
+                    <span class="zktime hour ng-binding">{{remainHours}}</span>
+                    <span>:</span>            
+                    <span class="zktime minute ng-binding">
+                        <span class="hour-change-large glyphicon glyphicon-chevron-up" ng-click="lastTimeObject.LastTimeModel=dealLastTime('add')"></span>
+                        {{lastTimeObject.LastTimeModel}}
+                        <span class="hour-change-small glyphicon glyphicon-chevron-down" ng-click="lastTimeObject.LastTimeModel=dealLastTime('remove')"></span>
+                    </span>
+                    <span>:</span>
+                    <span class="zktime second ng-binding">{{lastTimeObject.LastSecos}}</span>
+                </span>
+                <span class="col-xs-6 padding-left-right-none" style="text-align:left;">
+                     <button class="zkbtn" ng-click="changeTimeOk(lastTimeObject.LastTimeModel,lastTimeObject.LastSecos)"><span class="glyphicon glyphicon-ok"></span>&nbsp;确定</button>
+                     <button class="zkbtn" ng-click="changeTimeCancel()"><span class="glyphicon glyphicon-remove"></span>&nbsp;取消</button>
+                 </span>
+            </span>
+            <span class="col-xs-1" ng-show="isShow" ng-click="resizeSmallVedio()">
+                <i class="icon-all_video resize-icon-small" ></i> 
+            </span>
+             <!-- <div class="col-xs-1 pull-right" style="font-size:20px;line-height:60px;color:#fff;">
+                <span class="zkicon glyphicon glyphicon-refresh"></span>
+            </div> -->
+        </div>
+       
+    </div> 
+    <div class="small-live" ng-class="{active1:isShow}"> 
+        <div class="small-child-live small-left-top-live" ng-class="{active:isActive1}" >
+            <div class="vp v-meta padding-left-none padding-right-none" ng-hide="isShow1">
+                <div class="vedio-meta-title vedio-meta-entry col-xs-11 col-xs-offset-1 padding-top-27" >
+                    <span class="classic">{{VideosInformations[0].title}}</span>
+                    <!-- <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='1'}" ng-click="toggleCondition('1')" ng-if="!(urlParam1 === '')" >LIVE</button> -->             
+                </div> 
+                <div class="v-meta-overlay"></div>                   
+            </div>
+            <div class="vedio-img" ng-include="'../../director/consoleBestSample/left-top-video.html'"></div>    
+            
+            
+            <div class="vp v-meta-hover padding-left-none padding-right-none" ng-class="{moreMargin:isActive1}" ng-if="!(urlParam1 === '')">                    
+                <div class="hover-image">
+                    <embed src="icons-lastest1.svg" id="svgmapctrl1" class="col-xs-6 col-xs-offset-3 svgstyle"  type="image/svg+xml" ng-class="{svgActive:isActive1}" style="margin-bottom:-1px;z-index:4">          
+                    <span class="col-xs-2 pull-right resize-icon-large" ng-click="resizeVedio('1')" ng-hide="isActive1">
+                    	<i class="icon-tomax"></i>
+                    </span>                                
+                </div>              
+                <div class="v-meta-overlay" ng-class="{largeOverlay:isActive1}"></div> 
+            </div>                              
+        </div> 
+        <div class="small-child-live small-left-bottom-live" ng-class="{active:isActive2}" >
+            <div class="vp v-meta padding-left-none padding-right-none" ng-hide="isShow2">
+                <div class="vedio-meta-title vedio-meta-entry col-xs-11 col-xs-offset-1 padding-top-27">
+                    <span class="classic">{{VideosInformations[2].title}}</span>
+					<!-- <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='2'}" ng-click="toggleCondition('2')" ng-if="!(urlParam2 === '')">LIVE</button> -->             
+                </div> 
+                <div class="v-meta-overlay"></div>                   
+            </div>
+            <div class="vedio-img" ng-include="'../../director/consoleBestSample/right-top-video.html'"></div>    
+            
+            <div class="vp v-meta-hover padding-left-none padding-right-none" ng-class="{moreMargin:isActive2}" ng-if="!(urlParam2 === '')">                    
+                <div class="hover-image">
+                    <embed src="icons-lastest3.svg" id="svgmapctrl3" class="col-xs-6 col-xs-offset-3 svgstyle" ng-class="{svgActive:isActive2}" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" style="margin-bottom:-1px;z-index:4">          
+                    <span class="col-xs-2 pull-right resize-icon-large" ng-click="resizeVedio('2')" ng-hide="isActive2">
+                    	<i class="icon-tomax"></i>
+                    </span>                               
+                </div>                                     
+                <div class="v-meta-overlay" ng-class="{largeOverlay:isActive2}"></div> 
+            </div>                              
+        </div>
+        <div class="small-child-live small-right-top-live" ng-class="{active:isActive3}" >
+            <div class="vp v-meta padding-left-none padding-right-none" ng-hide="isShow3">
+                <div class="vedio-meta-title vedio-meta-entry col-xs-11 col-xs-offset-1 padding-top-27">
+                    <span class="classic">{{VideosInformations[1].title}}</span>
+                    <!-- <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='3'}" ng-click="toggleCondition('3')" ng-if="!(urlParam3 === '')">LIVE</button>  -->            
+                </div> 
+                <div class="v-meta-overlay" ></div>                   
+            </div>
+            <div class="vedio-img" ng-include="'../../director/consoleBestSample/left-bottom-video.html'"></div>    
+            
+            <div class="vp v-meta-hover padding-left-none padding-right-none" ng-class="{moreMargin:isActive3}" ng-if="!(urlParam3 === '')">                    
+                <div class="hover-image">
+                    <embed src="icons-lastest2.svg" id="svgmapctrl2" class="col-xs-6 col-xs-offset-3 svgstyle" ng-class="{svgActive:isActive3}" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" style="margin-bottom:-1px;z-index:4">          
+                    <span class="col-xs-2 pull-right resize-icon-large" ng-click="resizeVedio('3')" ng-hide="isActive3">
+                    	<i class="icon-tomax"></i>
+                    </span>                               
+                </div>                   
+                <div class="v-meta-overlay" ng-class="{largeOverlay:isActive3}"></div> 
+            </div>                              
+        </div>
+        <div class="small-child-live small-right-bottom-live" ng-class="{active:isActive4}" >
+            <div class="vp v-meta padding-left-none padding-right-none" ng-hide="isShow4">
+                <div class="vedio-meta-title vedio-meta-entry col-xs-11 col-xs-offset-1 padding-top-27">
+                    <span class="classic">{{VideosInformations[3].title}}</span>
+                    <!-- <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='4'}" ng-click="toggleCondition('4')" ng-if="!(urlParam4 === '')">LIVE</button>   -->           
+                </div> 
+                <div class="v-meta-overlay" ></div>                   
+            </div>
+            <div class="vedio-img" ng-include="'../../director/consoleBestSample/right-bottom-video.html'"></div>    
+            
+            <div class="vp v-meta-hover padding-left-none padding-right-none" ng-class="{moreMargin:isActive4}" ng-if="!(urlParam4 === '')">                    
+                <div class="hover-image" >
+                    <!-- <embed src="icons-lastest4.svg" id="svgmapctrl4" class="col-xs-6 col-xs-offset-3 svgstyle" ng-class="{svgActive:isActive4}" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" style="margin-bottom:-1px;z-index:4">-->       
+                    <span class="col-xs-2 pull-right resize-icon-large" ng-click="resizeVedio('4')" ng-hide="isActive4">
+                    	<i class="icon-tomax"></i>
+                    </span>                               
+                </div>                    
+                <div class="v-meta-overlay" ng-class="{largeOverlay:isActive4}"></div> 
+            </div>                              
+        </div>
+    </div>
+</div>
+<!--install by wanghan-->
+<div class="splash-window">
+    <div class="center">
+       loading...
+    </div>
+</div>
+<!--end install-->
+<script src="../../assets/js/lib/require.js" data-main="../../director/consoleBestSample/main.js?v=1.1"></script>
+<script type="text/javascript" src="../../coursepatrol/SwfContcrlor.js"></script>
+<script type="text/javascript" src="../../coursepatrol/swfobject.js"></script>
+<!-- <script type="text/javascript" src="swfobject.js"></script> -->
+</body>

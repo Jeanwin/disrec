@@ -1,0 +1,29 @@
+<div>
+    <div class="modal-header">
+        <div class="modal-title">2014-2015学年第一学期</div>
+    </div>
+    <div class="modal-body">
+        学期：<input><br><br>
+
+        学期：<div class="row">
+                 <div class="col-md-4">
+                    <p class="input-group">
+                        <input type="date" class="form-control" ng-model="vm.calendar"
+                               min-date="vm.minDate" max-date="'2015-06-22'" ng-required="true" />
+                    </p>
+                </div>开始时间为上课第一周
+              </div>
+        学期：<input><br><br>
+        周数：<input><br><br>周
+        节次安排：
+        <button class="btn btn-link" ng-click="open()">添加节次</button>
+        <div>
+            第一节<input><input>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

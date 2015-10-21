@@ -1,0 +1,73 @@
+[
+    {
+        "treatyNo": "OPSU201613",
+        "temTreatyNo": "16013",
+        "sectionNo": "a",
+        "fhxLayerViewVoList": [
+            {
+                "treatyNo": "OPSU201613",
+                "treatyName": null,
+                "tempTreatyNo": "16013",
+                "layerNo": 1,
+                "currency": "01",
+                "egnpi": 2700000,
+                "gnpi": 27800000,
+                "rate": 0.04,
+                "mdp": 97200,
+                "layerPremium": 108000,
+                "rwp": 1112000,
+                "annd": null,
+                "usedd": null,
+                "excessLoss": null,
+                "layerQuota": null,
+                "layerType": null,
+                "sectionNo": "a"
+            },
+            {
+                "treatyNo": "OPSU201613",
+                "treatyName": null,
+                "tempTreatyNo": "16013",
+                "layerNo": 2,
+                "currency": "01",
+                "egnpi": 450000,
+                "gnpi": 550000,
+                "rate": 0.6,
+                "mdp": 216000,
+                "layerPremium": 270000,
+                "rwp": 330000,
+                "annd": null,
+                "usedd": null,
+                "excessLoss": null,
+                "layerQuota": null,
+                "layerType": null,
+                "sectionNo": "a"
+            }
+        ]
+    },
+    {
+        "treatyNo": "OPSU201613",
+        "temTreatyNo": "16013",
+        "sectionNo": "b",
+        "fhxLayerViewVoList": [
+            {
+                "treatyNo": "OPSU201613",
+                "treatyName": null,
+                "tempTreatyNo": "16013",
+                "layerNo": 1,
+                "currency": "01",
+                "egnpi": 890000,
+                "gnpi": 935000,
+                "rate": 0.78,
+                "mdp": 555360,
+                "layerPremium": 694200,
+                "rwp": 729300,
+                "annd": null,
+                "usedd": null,
+                "excessLoss": null,
+                "layerQuota": null,
+                "layerType": null,
+                "sectionNo": "b"
+            }
+        ]
+    }
+]

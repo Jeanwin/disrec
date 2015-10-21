@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.SysFunctionMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.SysFunction">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="parentid" property="parentid" jdbcType="CHAR" />
+		<result column="fun_code" property="funCode" jdbcType="VARCHAR" />
+		<result column="fun_name" property="funName" jdbcType="VARCHAR" />
+		<result column="fun_pinyin" property="funPinyin" jdbcType="VARCHAR" />
+		<result column="attributes" property="attributes" jdbcType="CHAR" />
+		<result column="state" property="state" jdbcType="CHAR" />
+		<result column="ordervalue" property="ordervalue" jdbcType="INTEGER" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+		<result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+		<result column="createuser" property="createuser" jdbcType="CHAR" />
+		<result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+		<result column="modifyuser" property="modifyuser" jdbcType="CHAR" />
+		<result column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, parentid, fun_code, fun_name, fun_pinyin, attributes, state, ordervalue, URL,
+		createdate, createuser,
+		modifydate, modifyuser, deleteflag
+	</sql>
+	
+	<select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_function
+		where id = #{id,jdbcType=CHAR}
+	</select>
+
+	<select id="findByPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_function
+		LIMIT #{offset} ,#{limit}
+	</select>
+	<resultMap type="map" id="data">
+		<result property="id" column="id"/>
+		<association property="nodes" column="id" select="getData"/>
+	</resultMap>
+	<select id="getFunctions" resultMap="data">
+		select id,fun_name name from 	sys_function where deleteflag=0 and parentid='0'
+	</select>
+	<select id="getData" resultMap="data">
+		select id,fun_name name from 	sys_function where deleteflag=0 and parentid=#{id}
+	</select>
+	<select id="count" resultType="long">
+		SELECT count(*) FROM sys_function
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		update sys_function set
+		deleteflag='1',modifyuser=#{modifyuser,jdbcType=CHAR},modifydate=sysDate()
+		where id =#{id,jdbcType=CHAR}
+	</update>
+	<insert id="insert" parameterType="com.zonekey.disrec.entity.SysFunction">
+		insert into sys_function (id, parentid, fun_code,
+		fun_name, attributes, state,
+		order, URL, createdate,
+		createuser, modifydate, modifyuser,
+		deleteflag)
+		values (#{id,jdbcType=CHAR}, #{parentid,jdbcType=CHAR},
+		#{funCode,jdbcType=VARCHAR},
+		#{funName,jdbcType=VARCHAR}, #{attributes,jdbcType=CHAR}, #{state,jdbcType=CHAR},
+		#{order,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+		#{createdate,jdbcType=TIMESTAMP},
+		#{createuser,jdbcType=CHAR}, #{modifydate,jdbcType=TIMESTAMP}, #{modifyuser,jdbcType=CHAR},
+		#{deleteflag,jdbcType=CHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.zonekey.disrec.entity.SysFunction">
+		insert into sys_function
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="parentid != null">
+				parentid,
+			</if>
+			<if test="funCode != null">
+				fun_code,
+			</if>
+			<if test="funName != null">
+				fun_name,
+			</if>
+			<if test="attributes != null">
+				attributes,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="order != null">
+				order,
+			</if>
+			<if test="url != null">
+				URL,
+			</if>
+			<if test="createdate != null">
+				createdate,
+			</if>
+			<if test="createuser != null">
+				createuser,
+			</if>
+			<if test="modifydate != null">
+				modifydate,
+			</if>
+			<if test="modifyuser != null">
+				modifyuser,
+			</if>
+			<if test="deleteflag != null">
+				deleteflag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=CHAR},
+			</if>
+			<if test="parentid != null">
+				#{parentid,jdbcType=CHAR},
+			</if>
+			<if test="funCode != null">
+				#{funCode,jdbcType=VARCHAR},
+			</if>
+			<if test="funName != null">
+				#{funName,jdbcType=VARCHAR},
+			</if>
+			<if test="attributes != null">
+				#{attributes,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=CHAR},
+			</if>
+			<if test="order != null">
+				#{order,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+				#{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createuser != null">
+				#{createuser,jdbcType=CHAR},
+			</if>
+			<if test="modifydate != null">
+				#{modifydate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyuser != null">
+				#{modifyuser,jdbcType=CHAR},
+			</if>
+			<if test="deleteflag != null">
+				#{deleteflag,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.zonekey.disrec.entity.SysFunction">
+		update sys_function
+		<set>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=CHAR},
+			</if>
+			<if test="funCode != null">
+				fun_code = #{funCode,jdbcType=VARCHAR},
+			</if>
+			<if test="funName != null">
+				fun_name = #{funName,jdbcType=VARCHAR},
+			</if>
+			<if test="attributes != null">
+				attributes = #{attributes,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=CHAR},
+			</if>
+			<if test="order != null">
+				order = #{order,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+				createdate = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createuser != null">
+				createuser = #{createuser,jdbcType=CHAR},
+			</if>
+			<if test="modifydate != null">
+				modifydate = #{modifydate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyuser != null">
+				modifyuser = #{modifyuser,jdbcType=CHAR},
+			</if>
+			<if test="deleteflag != null">
+				deleteflag = #{deleteflag,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zonekey.disrec.entity.SysFunction">
+		update sys_function
+		set parentid = #{parentid,jdbcType=CHAR},
+		fun_code = #{funCode,jdbcType=VARCHAR},
+		fun_name = #{funName,jdbcType=VARCHAR},
+		attributes = #{attributes,jdbcType=CHAR},
+		state = #{state,jdbcType=CHAR},
+		order = #{order,jdbcType=INTEGER},
+		URL = #{url,jdbcType=VARCHAR},
+		createdate = #{createdate,jdbcType=TIMESTAMP},
+		createuser = #{createuser,jdbcType=CHAR},
+		modifydate = #{modifydate,jdbcType=TIMESTAMP},
+		modifyuser = #{modifyuser,jdbcType=CHAR},
+		deleteflag = #{deleteflag,jdbcType=CHAR}
+		where id = #{id,jdbcType=CHAR}
+	</update>
+</mapper>

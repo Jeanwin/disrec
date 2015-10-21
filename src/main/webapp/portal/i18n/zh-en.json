@@ -1,0 +1,13 @@
+{
+    "Dashboard" : "Dashboard",
+    "Treaties" : "Treaties",
+    "Setups" : "Setups",
+    "stateFlag_0" : "Draft",
+    "stateFlag_6" : "Closed",
+    "stateFlag_4" : "Active",
+    "treatyType_21": "surplus",
+    "treatyType_31": "quota share",
+    "treatyType_41": "reserved",
+    "optType_00": "Inward",
+    "optType_01": "Outward"
+}

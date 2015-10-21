@@ -1,0 +1,17 @@
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3>删除区域</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div>要删除<b>{{node.title}}</b>吗？ 该区域下的教室将被同时删除，此操作不可逆。</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok()"  focus-me="true">确认</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

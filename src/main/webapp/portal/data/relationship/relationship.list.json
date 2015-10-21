@@ -1,0 +1,29 @@
+{
+    "total": 3,
+    "data": [
+        {
+            "id": {
+                "treatyNo": "PT201402",
+                "uwYear": "2014"
+            },
+            "priorityNo": 2,
+            "treatyName": "临分"
+        },
+        {
+            "id": {
+                "treatyNo": "OC201403",
+                "uwYear": "2014"
+            },
+            "priorityNo": 3,
+            "treatyName": "2014预约合约"
+        },
+        {
+            "id": {
+                "treatyNo": "PT201401",
+                "uwYear": "2014"
+            },
+            "priorityNo": 1,
+            "treatyName": "特约临分"
+        }
+    ]
+}

@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.AreaMapper">
+	<resultMap type="com.zonekey.disrec.vo.Tree" id="root">
+		<result property="id" column="id" />
+		<association property="nodes" column="id" select="getData" />
+	</resultMap>
+	<resultMap type="com.zonekey.disrec.vo.Tree" id="allRoot">
+		<result property="id" column="id" />
+		<association property="nodes" column="id" select="getAllData" />
+	</resultMap>
+	<resultMap type="com.zonekey.disrec.vo.Tree" id="allRootAndCount">
+		<result property="id" column="id" />
+		<association property="nodes" column="id" select="getAllDataAndCount" />
+	</resultMap>
+	<resultMap type="map" id="devices">
+		<result property="id" column="id" />
+		<association property="childs" column="id" select="getDevices" />
+	</resultMap>
+	<resultMap id="areaDetails" type="com.zonekey.disrec.vo.AreaView">
+		<id property="id" column="id" />
+		<!-- <association property="curriculum" column="id" select="getCurriculum" />
+		<collection property="device" column="id" select="getDevice" ofType="com.zonekey.disrec.entity.Device"></collection> -->
+	</resultMap>
+	
+	<!-- <resultMap id="curriculumWithTeacher" type="com.zonekey.disrec.entity.Curriculum">
+		<id property="id" column="id" />
+		<association property="teacher" column="userid" select="getTeacher" />
+	</resultMap> -->
+	<!-- sql绑定用户名 -->
+	<sql id="bindLoginname">
+		<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()" />
+	</sql>
+
+	<select id="findByName" parameterType="map" resultMap="devices">
+		<include refid="bindLoginname" />
+		select
+		a.id,a.name value,innerid
+		from zonekey_area a where a.attribute ='y' and a.deleteflag = 0
+		<!-- 		添加于20150706 保持和树一致-->
+		and find_in_set(a.id,getareaChildLst(0))
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND
+		a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id IN (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND
+		b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1),1=1)
+		<if test="value != null">and a.name like concat('%',#{value},'%') </if>
+		order by case when a.sort is null then -1 end ,a.sort
+	</select>
+	
+	<select id="getDevices" resultType="map">
+		select name from zonekey_device where deleteflag='0' and areaid=#{id}
+	</select>
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		select
+		a.id,a.name,a.innerid,a.parentid,
+		(select name from zonekey_area where id = a.parentid) parentname,a.userid,
+		(select name from sys_user where id =a.userid) username,
+		a.sort,a.state,
+		a.deptid,(select mac from zonekey_device where
+		deleteflag='0' and areaid=a.id and mostly='0') mac,
+		(select name from zonekey_dept where id =a.deptid) deptname 
+		from zonekey_area a where
+		a.attribute ='y' and a.deleteflag = 0
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != '' ">and a.state = #{keywords.state}  </if>
+			<if test="keywords.innerid != null and keywords.innerid != '' ">and a.innerid like concat('%',#{keywords.innerid},'%')  </if>
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.temp != null and keywords.temp != ''">
+				<if test="treeid != null and treeid != '' ">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''"> and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or keywords.temp ==''">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(a.parentId,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(a.parentId,getareaChildLst(0)) </if>
+		</if>
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id IN (SELECT c.scopeid
+		FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1)
+		<!-- order by case when a.sort is null then -1 end ,a.sort -->
+		<if test="page != null and page.offset != null and page.limit!=null">
+			order by ${page.order} ${page.sort}
+			limit #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+	
+	<select id="findAllClassRooms" parameterType="com.zonekey.disrec.vo.AreaView" resultType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		select
+		a.id,a.name,a.innerid,a.parentid,
+		(select name from zonekey_area where id = a.parentid) parentname,a.userid,
+		(select name from sys_user where id =a.userid) username,
+		a.sort,a.state,
+		a.deptid,(select mac from zonekey_device where
+		deleteflag='0' and areaid=a.id and mostly='0') mac,
+		(select name from zonekey_dept where id =a.deptid) deptname
+		from zonekey_area a where
+		a.attribute ='y' and a.deleteflag = 0
+		and find_in_set(a.parentId,getareaChildLst(#{id})) 
+<!-- 			<if test="id ==null or id == ''">and find_in_set(a.parentId,getareaChildLst(0)) </if> -->
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id IN (SELECT c.scopeid
+		FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1)
+	</select>
+	<!-- shouji教室日常 -->
+	<select id="findClassRoomsByMobile" parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		select a.state,
+		(select name from sys_user where id=b.userid) username,
+		b.subject,
+		b.starttime,
+		b.endtime,
+		b.curriculumId,
+		b.resourcefloder,
+		a.id,
+		a.name,
+		a.innerid,
+		b.deptid,
+		<!-- 教室摄像头个数 -->
+		(select sum(zd.camera) from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0') cameraNum,
+		(select name from zonekey_dept
+		where id =b.deptid) deptname,
+		(select mac from zonekey_device where deleteflag='0' and areaid=a.id and mostly='0') mac,
+		(select typeid from zonekey_device where deleteflag='0' and areaid=a.id and mostly='0') deviceTypeid
+		from
+		zonekey_area a
+		left join
+		(select
+		areaid,deptid,id
+		curriculumId,resourcefloder,
+		subject,
+		starttime as starttime,
+		endtime endtime,
+		userid
+		from zonekey_curriculum
+		where
+		(date_format(now(),"%H:%m:%s") between starttime and endtime)
+		and
+		date_format(now(),"%Y-%m-%d")=date and deleteflag=0
+		) b on b.areaid=a.id
+		where a.attribute ='y' and a.deleteflag = 0
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != '' ">and a.state = #{keywords.state}  </if>
+			<if test="keywords.innerid != null and keywords.innerid != '' ">and a.innerid like concat('%',#{keywords.innerid},'%')  </if>
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%')</if>
+		<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(parentId,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(parentId,getareaChildLst(0)) </if>
+		</if>
+		
+		
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id IN (SELECT c.scopeid
+		FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1)
+		order by case when
+		a.sort is null then -1 end ,a.sort
+		<if test="page != null and page.offset != null and page.limit!=null">limit #{page.offset} ,#{page.limit}</if>
+	</select>
+	<!-- 获取总数 -->
+	<select id="countByMobile" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		<include refid="bindLoginname" />
+		select count(*) from zonekey_area where deleteflag=0 and attribute ='y'
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != '' ">and state = #{keywords.state}  </if>
+			<if test="keywords.innerid != null and keywords.innerid != '' ">and innerid like concat('%',#{keywords.innerid},'%')  </if>
+			<if test="keywords.name != null and keywords.name != ''">and name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(parentId,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(parentId,getareaChildLst(0)) </if>
+		</if>
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id IN (SELECT c.scopeid
+		FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1)
+<!-- 		<if test="page != null and page.offset != null and page.limit!=null">limit #{page.offset} ,#{page.limit}</if> -->
+	</select>
+	
+    <resultMap type="com.zonekey.disrec.vo.AreaView" id="ClassResultMap3">
+        <id property="id" column="id"/>
+        <result property="state" column="state"/>
+        <result property="username" column="username"/>
+        <result property="subject" column="SUBJECT"/>
+        <result property="starttime" column="starttime"/>
+        <result property="cameraNum" column="cameraNum"/>
+        <result property="endtime" column="endtime"/>
+        <result property="curriculumId" column="curriculumId"/>
+        <result property="name" column="name"/>
+        <result property="innerid" column="innerid"/>
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="device"  column="id" ofType="com.zonekey.disrec.entity.Device">
+            <id property="id" column="did"/>
+            <result property="name" column="dname"/>
+            <result property="mac" column="dmac"/>
+            <result property="ip" column="ip"/>
+            <result property="camera" column="camera"/>
+            <result property="typeid" column="typeid"/>
+        </collection>
+    </resultMap>	
+	
+	<!-- 教室日常 -->
+	<select id="findClassRooms" parameterType="com.zonekey.disrec.vo.PageBean" resultMap="ClassResultMap3">
+		<include refid="bindLoginname" />
+		select a.state,
+		(select name from sys_user where id=b.userid) username,
+		b.subject,
+		b.starttime,
+		b.endtime,
+		b.curriculumId,
+		b.resourcefloder,
+		a.id,
+		a.name,
+		a.innerid,
+		b.deptid,
+		<!-- 教室摄像头个数 -->
+		(select sum(zd.camera) from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0') cameraNum,
+		(select name from zonekey_dept
+		where id =b.deptid) deptname,
+		(select mac from zonekey_device where deleteflag='0' and areaid=a.id and mostly='0') mac,
+		h.id did,h.parentid,h.areaid,h.name dname,h.typeid,h.MAC dmac,h.IP,h.camera,h.createtime,h.createuser,h.modifydate,h.modifyuser,h.mostly,h.deleteflag
+		from
+		zonekey_area a
+		left join
+		(select
+		areaid,deptid,id
+		curriculumId,resourcefloder,
+		subject,
+		starttime as starttime,
+		endtime endtime,
+		userid
+		from zonekey_curriculum
+		where
+		(date_format(now(),"%H:%m:%s") between starttime and endtime)
+		and
+		date_format(now(),"%Y-%m-%d")=date and deleteflag=0
+		) b on b.areaid=a.id
+		LEFT JOIN zonekey_device h on h.areaid = a.id
+		where a.attribute ='y' and a.deleteflag = 0
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != '' ">and a.state = #{keywords.state}  </if>
+			<if test="keywords.innerid != null and keywords.innerid != '' ">and a.innerid like concat('%',#{keywords.innerid},'%')  </if>
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%')</if>
+		<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(a.parentId,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(a.parentId,getareaChildLst(0)) </if>
+		</if>
+		
+		 and h.deleteflag='0'
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		a.id IN (SELECT c.scopeid
+		FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1)
+		order by case when
+		a.sort is null then -1 end ,a.sort
+		<!-- <if test="page != null and page.offset != null and page.limit!=null">limit #{page.offset} ,#{page.limit}</if> -->
+	</select>
+	<!-- 获取总数 -->
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		<include refid="bindLoginname" />
+		select count(*) from zonekey_area where deleteflag=0 and attribute ='y'
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != '' ">and state = #{keywords.state}  </if>
+			<if test="keywords.innerid != null and keywords.innerid != '' ">and innerid like concat('%',#{keywords.innerid},'%')  </if>
+			<if test="keywords.name != null and keywords.name != ''">and name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(parentId,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(parentId,getareaChildLst(0)) </if>
+		</if>
+		AND
+		IF(
+		(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id IN (SELECT c.scopeid
+		FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1)
+	</select>
+	<select id="findByInnerid" parameterType="map" resultType="int">
+		select count(1) from zonekey_area where innerid=#{innerid} and deleteflag='0'
+	</select>
+	<!-- 查询是否重复 -->
+	<select id="findCountByName" parameterType="map" resultType="int">
+		select count(*) from zonekey_area a where a.deleteflag = 0
+		<if test="name != null">and a.name =#{name} </if>
+		<if test="parentid != null">and a.parentid =#{parentid} </if>
+		<if test="attribute != null">and a.attribute =#{attribute}</if>
+	</select>
+	<!-- 查询是否重复 -->
+	<select id="findAreaByName" parameterType="map" resultType="com.zonekey.disrec.vo.AreaView">
+		select * from zonekey_area a where a.deleteflag = 0
+		<if test="name != null">and a.name =#{name} </if>
+		<if test="parentid != null">and a.parentid =#{parentid} </if>
+		<if test="attribute != null">and a.attribute =#{attribute}</if>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		<include refid="bindLoginname" />
+		update zonekey_area set
+		deleteflag='1',modifyuser=#{_loginname},modifydate=sysDate()
+		where id =#{id}
+	</update>
+	<update id="deleteBy" parameterType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		update zonekey_area set
+		deleteflag='1',modifyuser=#{_loginname},modifydate=sysDate()
+		where find_in_set(parentid,getareaChildLst(#{id}))
+	</update>
+	<insert id="insert" parameterType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		insert into zonekey_area
+		(id, parentid, name,innerid, attribute, userid,
+		deptid, state, sort, createdate, createuser)
+		values
+		(#{id}, #{parentid},#{name},#{innerid}, #{attribute}, #{userid},
+		#{deptid},
+		#{state},#{sort}, sysDate(),#{_loginname})
+	</insert>
+	<update id="update" parameterType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		update zonekey_area
+		<set>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=CHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="innerid != null">
+				innerid = #{innerid,jdbcType=VARCHAR},
+			</if>
+			<if test="attribute != null">
+				attribute = #{attribute,jdbcType=CHAR},
+			</if>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=CHAR},
+			</if>
+			<if test="deptid != null">
+				deptid = #{deptid,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=CHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=CHAR},
+			</if>
+			modifydate = sysDate(),modifyuser = #{_loginname}
+		</set>
+		where id = #{id,jdbcType=CHAR} and deleteflag='0'
+	</update>
+	<!-- 删除默认教室 -->
+	<update id="clearDeptid" parameterType="com.zonekey.disrec.vo.AreaView">
+		<include refid="bindLoginname" />
+		update zonekey_area
+		<set>
+			deptid=null,modifydate = sysDate(),modifyuser = #{_loginname}
+		</set>
+		where deptid = #{deptid} and deleteflag='0'
+	</update>
+	<!-- 获取组织树 -->
+	<select id="getAreaTrees" resultMap="root">
+		select a.id,a.name title,a.attribute,a.sort, IFNULL((select zd.typeid from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0' and zd.mostly='0'),'0') typeid,
+		(select sum(zd.camera) from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0' and zd.mostly='0') cameraNum
+		from zonekey_area a where parentid ='0'
+	</select>
+	<select id="getData" resultMap="root">
+		<include refid="bindLoginname" />
+
+		select id,name title,attribute,sort,innerid,IFNULL((select zd.typeid from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0' and zd.mostly='0'),'0') typeid,
+		(select sum(zd.camera) from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0' and zd.mostly='0') cameraNum
+		 from zonekey_area a where parentid =#{id} and deleteflag='0'
+		and IF(
+		(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c WHERE
+		userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1),1=1)
+		order by case when sort is null then -1 end ,sort
+	</select>
+	
+	<select id="getAreaTreeAndCount" resultMap="allRootAndCount">
+<!-- 		select id,name title,attribute,sort from zonekey_area where parentid ='0' -->
+<!-- 		select id,name title,attribute,sort,(select count(*) as count from zonekey_area where deleteflag=0 and attribute ='Y' -->
+<!-- 		and find_in_set(parentId,getareaChildLst('0'))) count  from zonekey_area where parentid ='0' -->
+		select a.id,a.name title,a.attribute,a.sort,(select count(*) as classcount from zonekey_area where deleteflag=0 and attribute ='Y'
+		and find_in_set(parentId,getareaChildLst(a.id))) classcount  from zonekey_area a where parentid ='0'
+	</select>
+	<select id="getAllDataAndCount" resultMap="allRootAndCount">
+<!-- 		select id,name title,attribute,sort from zonekey_area where attribute ="z" and parentid =#{id} and deleteflag='0' -->
+<!-- 		select id,name title,attribute,sort,(select count(*) as count from zonekey_area where deleteflag=0 and attribute ='Y' -->
+<!-- 		and find_in_set(parentId,getareaChildLst(#{id}))) count  from zonekey_area where parentid =#{id} -->
+<!-- 		and attribute ='N' and deleteflag='0'  -->
+		select a.id,a.name title,a.attribute,a.sort,(select count(*) as classcount from zonekey_area where deleteflag=0 and attribute ='Y'
+		and find_in_set(parentId,getareaChildLst(a.id))) classcount  from zonekey_area a where parentid =#{id} and attribute ='N' and deleteflag='0'
+		<include refid="bindLoginname" />
+
+		and IF(
+		(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c WHERE
+		userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1),1=1)
+		order by case when sort is null then -1 end ,sort
+	</select>
+	
+	<!-- 获取组织树 -->
+	<select id="getAreaTree" resultMap="allRoot">
+		select id,name title,attribute,sort from zonekey_area where parentid ='0'
+	</select>
+	<select id="getAllData" resultMap="allRoot">
+		select id,name title,attribute,sort from zonekey_area where attribute ="N" and parentid =#{id} and deleteflag='0'
+		<include refid="bindLoginname" />
+
+		and IF(
+		(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c WHERE
+		userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+		id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c WHERE userid=#{_loginname}
+		AND a.rangeid=b.id
+		AND b.id=c.rangeid
+		AND a.rangeid=c.rangeid AND b.typeid=1),1=1)
+		order by case when sort is null then -1 end ,sort
+	</select>
+	<!-- 导入验证 -->
+	<select id="getCheck" parameterType="map" resultType="map">
+		select
+		(select id from sys_user where loginname=#{loginname} and name=#{username} and deleteflag='0') id ,
+		(select id from zonekey_area where name=#{areaname} and innerid =#{innerid} and
+		deleteflag='0') areaid
+		<if test="code != '' and deptname !='' and code !=null and deptname !=null">
+			,(select id from zonekey_dept where code=#{code} and name =#{deptname} and deleteflag='0') deptid
+		</if>
+
+	</select>
+	<!-- 根据教室编号查这个教室 -->
+	<select id="findAreaByInnerid" parameterType="string" resultType="com.zonekey.disrec.vo.AreaView">
+		select * from zonekey_area where innerid=#{innerid} and deleteflag='0'
+	</select>
+	<!-- 根据教室id查这个教室 -->
+	<select id="findAreaByid" parameterType="string" resultType="com.zonekey.disrec.vo.AreaView">
+		select * from zonekey_area where id=#{id} and deleteflag='0'
+	</select>
+	<!-- 新增临时表 -->
+	<insert id="insertareamid" parameterType="com.zonekey.disrec.vo.AreaView">
+		insert into zonekey_area_mid
+		(id,innerid, name,parentname,devicename,ip,mac,
+		createdate, createuser,deleteflag,excelbatch,flag,errordescribe)
+		values
+		(#{id}, #{innerid},#{name},#{parentname}, #{devicename},#{ip},#{mac},sysDate(), #{createuser},
+		#{deleteflag}, #{excelbatch},#{flag}, #{errordescribe})
+	</insert>
+	<select id="findareamid" resultType="com.zonekey.disrec.vo.AreaView">
+		select innerid, name ,parentname ,devicename,ip,mac,errordescribe from zonekey_area_mid where excelbatch=#{excelbatch} and flag=#{flag}
+	</select>
+	<insert id="insertVersion">
+		<include refid="bindLoginname" />
+		insert into sys_version(loginname,createDate)values (#{_loginname},sysDate())
+	</insert>
+	<select id="versionCount" resultType="long">
+		select count(*) from sys_version
+	</select>
+	<select id="findVersionByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultType="map">
+		select
+		v.programName,date_format(v.createDate,"%Y-%m-%d %H:%m:%s") createDate,v.loginname,s.name
+		from sys_version v,sys_user s where v.loginname=s.loginname
+		<if test="keywords != null">
+			<if test="keywords.createDate != null and keywords.createDate!= '' ">and v.createDate like concat(#{keywords.createDate},"%")  </if>
+		</if>
+		order by createDate desc
+		<if test="page != null and page.offset != null and page.limit!=null">
+			limit #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+
+	<!-- -->
+	<select id="findDetailById" parameterType="String" resultMap="areaDetails">
+		select a.id,a.name title,a.attribute,a.innerid,a.sort,
+		 <!-- 教室摄像头个数 -->
+		(select sum(zd.camera) from zonekey_device zd where a.id = zd.areaid and zd.deleteflag='0') cameraNum
+		<!--  -->
+		 from zonekey_area a where a.id =#{id} and a.deleteflag=0
+	</select>
+	<select id="findAreaIdByDeptId" parameterType="String" resultType="com.zonekey.disrec.vo.AreaView">
+		select * from zonekey_area a JOIN zonekey_dept d ON a.deptid = d.id
+where a.deleteflag='0' and d.deleteflag='0' and d.attribute='1' and a.attribute = 'Y' and a.deptid=#{deptid}
+	</select>
+	<update id="updateTreeBoot" parameterType="string">
+	update zonekey_area  set name = #{desktopName} where parentid='0' 
+	</update>
+	
+	<!-- <select id="getDevice" parameterType="String" resultType="com.zonekey.disrec.entity.Device">
+		select d.* from zonekey_device d where d.areaid = #{id} and deleteflag=0
+	</select>
+	<select id="getCurriculum" parameterType="String" resultMap="curriculumWithTeacher">
+		select c.* from zonekey_curriculum c where c.areaid = #{id} and (date_format(now(),"%H:%m:%s") between c.starttime and c.endtime)
+		and
+		date_format(now(),"%Y-%m-%d")=c.date and deleteflag=0
+	</select>
+	<select id="getTeacher" parameterType="String" resultType="com.zonekey.disrec.entity.SysUser">
+		select u.* from sys_user u where u.id = #{userid} and deleteflag=0
+	</select> -->
+
+<!-- <select id="findAreaIdByDeptId" parameterType="string" resultType="areaDetails"> -->
+<!-- 		select * from  zonekey_area where deptid=#{deptid} and  deleteflag = '0' and attribute = 'Y' -->
+<!-- 	</select> -->
+</mapper>

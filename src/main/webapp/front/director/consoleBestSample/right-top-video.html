@@ -1,0 +1,37 @@
+<div class="back-info" id="back-info2">
+     <i class="zkicon-fontsize-100 zk-logo icon-zklogo"></i> 
+    <!-- <h4 style="color:#5e5e5e">信号故障，点击尝试重新连接</h4> -->
+</div>
+<div id="flashContent2" >
+    <p>
+        To view this page ensure that Adobe Flash Player version 
+        0.0.0 or greater is installed. 
+    </p>
+   
+</div>
+ 
+<input type="hidden" id="urlParam2" value="{{urlParam2}}"/>
+  
+<script type="text/javascript">
+    // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+    var swfVersionStr = "0.0.0";
+    // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+    var xiSwfUrlStr = "playerProductInstall.swf";
+    var flashvars = {};
+    var params = {};
+    params.quality = "high";
+    params.bgcolor = "#000000";
+    params.allowscriptaccess = "sameDomain";
+    params.allowfullscreen = "true";
+    params.wmode = "opaque";
+    var attributes = {};
+    attributes.id = "lone_rtmp_player2";
+    attributes.name = "lone_rtmp_player2";
+    attributes.align = "middle";
+    swfobject.embedSWF(
+        "../../coursepatrol/lone_rtmp_player.swf", "flashContent2", 
+        "100%", "100%", 
+        swfVersionStr, xiSwfUrlStr, 
+        flashvars, params, attributes);
+    // JavaScript enabled so display the flashContent4 div in case it is not replaced with a swf object.
+</script>

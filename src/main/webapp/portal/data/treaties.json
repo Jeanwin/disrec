@@ -1,0 +1,92 @@
+[
+    {
+        "uwYear": 2012, 
+        "treatyNo": "OP201209", 
+        "treatyName": "一汽大众商品车保险业务预约临分再保险协议", 
+		"refNo": "大众预约分保",
+		"treatyType": "41",
+		"optType": "00",
+        "stateFlag": "0"
+    },
+	{
+        "uwYear": 2013, 
+        "treatyNo": "PT201311", 
+        "treatyName": "Personal Accident Insurance Surplus Reinsurance Agreement", 
+		"refNo": "SJIC-PICCPA",
+		"treatyType": "21",
+		"optType": "01",
+        "stateFlag": "0"
+    },
+    {
+        "uwYear": 2013, 
+        "treatyNo": "PT201305",
+        "treatyName": "2013 COMBINED MARINE AND NON-MARINE QUOTA SHARE & SURPLUS TREATY Property Surplus", 
+		"refNo": "2013 Combined M & NM QS/Surplus (Property Surplus)",
+		"treatyType": "21",
+		"optType": "00",
+        "stateFlag": "0"
+    },
+	{
+        "uwYear": 2013, 
+        "treatyNo": "PT201310", 
+        "treatyName": "Henan Agriculture Quota Share Reinsurance Agreement", 
+		"refNo": "SJIC-CPICHNQS",
+		"treatyType": "31",
+		"optType": "01",
+        "stateFlag": "0"
+    },
+	{
+        "uwYear": 2013, 
+        "treatyNo": "PT201301", 
+        "treatyName": "人身保险分保合约", 
+		"refNo": "SJIC-QSCII",
+		"treatyType": "31",
+		"optType": "00",
+        "stateFlag": "0"
+    },
+    {
+        "uwYear": 2012, 
+        "treatyNo": "PT201208", 
+        "treatyName": "PICC Liaoning Forest Quota Share Reinsurance Agreement",
+		"refNo": "SJIC-QSGBT", 
+		"treatyType": "31",
+		"optType": "00",
+        "stateFlag": "4"
+    }, 
+    {
+        "uwYear": 2012, 
+        "treatyNo": "PT201210", 
+        "treatyName": "农作物止损再保合约",
+		"refNo": "SJIC-XLNM", 
+		"treatyType": "31",
+		"optType": "01",
+        "stateFlag": "0"
+    },
+    {
+        "uwYear": 2013, 
+        "treatyNo": "PT201303", 
+        "treatyName": "健康险成数再保合同",
+		"refNo": "SJIC-CMC", 
+		"treatyType": "41",
+		"optType": "00",
+        "stateFlag": "6"
+    }, 
+    {
+        "uwYear": 2013, 
+        "treatyNo": "PT201302", 
+        "treatyName": "境外旅行险成数再保险合同",
+		"refNo": "SJIC-XLCROP", 
+		"treatyType": "31",
+		"optType": "00",
+        "stateFlag": "0"
+    },
+    {
+        "uwYear": 2011, 
+        "treatyNo": "PT201110", 
+        "treatyName": "农作物止损再保合约",
+		"refNo": "SJIC-XLNM", 
+		"treatyType": "31",
+		"optType": "01",
+        "stateFlag": "6"
+    }
+]

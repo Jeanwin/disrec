@@ -1,0 +1,436 @@
+<div class="container-fluid">
+
+    <div class="row" style="margin-top:16px">
+
+    <div class="col-xs-2">
+
+        <div class="whiteframe">
+            <div class="system-left-top font-overlay-1" title="{{areaTree[0].title}}" ng-if="!activeArea.title" style="padding-left: 8px"><i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i>
+                    <span>{{areaTree[0].title}}</span>
+             </div>
+            <div class="system-left-top font-overlay-1" title="{{areaTree[0].title}}" ng-if="activeArea.title" style="padding-left: 8px">
+            		<i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i>
+                    <span>{{activeArea.title}}</span>
+             </div>
+            <div>
+
+                <div ui-tree id="tree-root" data-drag-enabled="false">
+                    <ol ui-tree-nodes ng-model="areaTree">
+                        <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--右边区域-->
+    <div class="col-xs-10">
+        <div class="whiteframe" style="margin-left:-16px">
+            <div class="row padding-8">
+                <div class="col-xs-5">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" ng-click="addScheduleModal(activeArea)" >
+                            <span class="glyphicon glyphicon-plus"></span>
+                            添加课表
+                        </button>
+                        <button class="btn btn-default" ng-click="impScheduleModal()" >
+                            <span class="glyphicon glyphicon-import"></span>
+                            导入课表
+                        </button>
+                        <button ng-disabled="selectedCount===0" class="btn btn-default" ng-click="delScheduleMessage()">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            删除
+                        </button>
+                    </div>
+                </div>
+            <!--<div class="col-lg-4">-->
+                <!--<div class="input-group">-->
+                    <!--<input type="text" class="form-control" placeholder="请输入教师姓名或教工号">-->
+                      <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-default" type="button"><a class="glyphicon glyphicon-search"></a></button>-->
+                      <!--</span>-->
+                <!--</div>-->
+            <!--</div>-->
+                <div class="col-xs-5">
+                    <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch">
+                        <input type="text" class="form-control" placeholder="请输入教师、教室、课程名称" ng-model="schedule.serchclumn">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="searchSchedules('1')">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="pull-right">
+                        <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                        <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div collapse="hideAdvancedSearch" style="background-color: #f2f2f2;border-top: solid 2px #c0c0c0;">-->
+        <div collapse="hideAdvancedSearch" class="advSearchPanel" style="margin-left: -16px">
+            <form class="form-inline" role="form">
+                <!--<div class="form-group">-->
+                    <!--<label class="form-label" for="edit">授课时间</label>-->
+                    <!--<input type="date" id="edit" class="form-control" ng-model="schedule.startdate" />-->
+                    <!--<span style="margin : 24px">-->
+                    <!--至-->
+                    <!--</span>-->
+                    <!--<input type="date" class="form-control" ng-model="schedule.enddate" />-->
+                <!--</div>-->
+
+                    <div class="form-group">
+                        <label style="width: 88px" class="form-label">授课时间</label>
+                            <input type="date" class="form-control" datepicker2 ng-model="schedule.startdate" />
+                            <label style="width: 88px">至</label>
+                            <input type="date" class="form-control" datepicker2 ng-model="schedule.enddate" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label"  style="width: 88px" for="edit7">开课周</label>
+                        <select id="edit7" class="form-control" ng-model="schedule.weeks"
+                                ng-options="startweek.id as startweek.value for startweek in startweekList">
+                            <option value="">选周次</option>
+                        </select>
+                    </div>
+                <div class="form-group">
+                    <label class="form-label"  style="width: 88px"for="edit5">星期</label>
+                    <select id="edit5" class="form-control" ng-model="schedule.weekdate">
+                        <option value="">全部</option>
+                        <option value="1">星期一</option>
+                        <option value="2">星期二</option>
+                        <option value="3">星期三</option>
+                        <option value="4">星期四</option>
+                        <option value="5">星期五</option>
+                        <option value="6">星期六</option>
+                        <option value="7">星期日</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label"  style="width: 88px" for="edit6">节次</label>
+                    <select id="edit6" class="form-control" ng-model="schedule.classnum">
+                        <option value="">全部</option>
+                        <option value="1">第一节</option>
+                        <option value="2">第二节</option>
+                        <option value="3">第三节</option>
+                        <option value="4">第四节</option>
+                        <option value="5">第五节</option>
+                        <option value="6">第六节</option>
+                        <option value="7">第七节</option>
+                        <option value="8">第八节</option>
+                        <option value="9">第九节</option>
+                        <option value="10">第十节</option>
+                        <option value="11">第十一节</option>
+                        <option value="12">第十二节</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" style="width: 88px" for="edit2">直播</label>
+                    <select id="edit2" ng-model="schedule.live" ng-change="search(serviceOptions)" class="form-control">
+                        <option value="">全部</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="form-label" style="width: 88px" for="edit3">录像</label>
+                    <select id="edit3" ng-model="schedule.record" ng-change="search(serviceOptions)" class="form-control" >
+                        <option value="">全部</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" style="width: 88px" for="edit4">互动</label>
+                    <select id="edit4" ng-model="schedule.intercourse" ng-change="search(serviceOptions)" class="form-control">
+                        <option value="">全部</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit10">班级名称</label>
+                    <input id="edit10" class="form-control" placeholder="班级名称" ng-model="schedule.deptname">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit8">课程名称</label>
+                    <input id="edit8" class="form-control" placeholder="课程名称" ng-model="schedule.subject">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit9">教师名称</label>
+                    <input id="edit9" class="form-control" placeholder="教师名称" ng-model="schedule.username">
+                </div>
+
+                <div class="form-group pull-right">
+                    <button class="btn btn-primary pull-right" ng-click="searchSchedules('1')">
+                        <span class="glyphicon glyphicon-search"></span>
+                        查询</button>
+                </div>
+
+                <!--<div class="form-group">-->
+                    <!--<button class="btn btn-primary pull-right" ng-click="searchSchedules('1')">-->
+                        <!--<span class="glyphicon glyphicon-search"></span>-->
+                        <!--查询</button>-->
+                <!--</div>-->
+            </form>
+        </div>
+        <!--<div class="formheader">-->
+        <div class="panel panel-default" style="margin-left:-16px">
+            <div class="panel-body padding-0" id="rightContent-height">
+                <table class="table table-striped">
+                    <thead style="background-color: #ceecff;font-weight:bold">
+                        <tr style="text-align: center">
+                            <td><input type="checkbox"  ng-model="checkAll" ng-click="checkAllEdits()"></td>
+                            <td style="white-space:nowrap">
+                            	<span>教室</span>
+                            	<span>
+                                    <a href ng-show="sort.areaname == 'asc'" ng-click="orderby('areaname')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.areaname == 'desc'" ng-click="orderby('areaname')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>教师</span>
+                            	<span>
+                                    <a href ng-show="sort.username == 'asc'" ng-click="orderby('username')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.username == 'desc'" ng-click="orderby('username')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>课程</span>
+                            	<span>
+                                    <a href ng-show="sort.subject == 'asc'" ng-click="orderby('subject')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.subject == 'desc'" ng-click="orderby('subject')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>班级</span>
+                            	<span>
+                                    <a href ng-show="sort.deptname == 'asc'" ng-click="orderby('deptname')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.deptname == 'desc'" ng-click="orderby('deptname')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>开课周</span>
+                            	<span>
+                                    <a href ng-show="sort.weeks == 'asc'" ng-click="orderby('weeks')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.weeks == 'desc'" ng-click="orderby('weeks')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>星期</span>
+                            	<span>
+                                    <a href ng-show="sort.weekdate == 'asc'" ng-click="orderby('weekdate')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.weekdate == 'desc'" ng-click="orderby('weekdate')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>节次</span>
+                            	<span>
+                                    <a href ng-show="sort.sameclass == 'asc'" ng-click="orderby('sameclass')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.sameclass == 'desc'" ng-click="orderby('sameclass')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                                <span>时间</span>
+                                <span>
+                                    <!-- <button ng-show="schedule.sort === '0'" ng-click="sortTime()"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </button>
+                                    <button ng-show="schedule.sort === '1'" ng-click="sortTime()"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </button> -->
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>直播</span>
+                            	<span>
+                                    <a href ng-show="sort.live == 'asc'" ng-click="orderby('live')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.live == 'desc'" ng-click="orderby('live')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">
+                            <span>录像</span>
+                            	<span>
+                                    <a href ng-show="sort.record == 'asc'" ng-click="orderby('record')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.record == 'desc'" ng-click="orderby('record')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="white-space:nowrap">互动课程</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="schedule in scheduleList" style="text-align: center">
+                        <td><input type="checkbox" ng-model="schedule.checked"></td>
+                        <td>{{schedule.areaname}}</td>
+                        <td>{{schedule.username}}</td>
+                        <td>{{schedule.subject}}</td>
+                        <td>{{schedule.deptname}}</td>
+                        <td>{{schedule.weeks}}</td>
+                        <td>{{schedule.weekdate}}</td>
+                        <td>{{schedule.sameclass}}</td>
+                        <td>{{schedule.starttime}}-{{schedule.endtime}}</td>
+                        <td ng-if="schedule.live==='0'">否</td>
+                        <td ng-if="schedule.live==='1'">是</td>
+                        <!--<td>{{schedule.live}}</td>-->
+                        <td ng-if="schedule.record==='0'">否</td>
+                        <td ng-if="schedule.record==='1'">是</td>
+                        <!--<td ng-if="schedule.video==='1'">视频</td>-->
+                        <!--<td ng-if="schedule.video==='3'">视频+资源</td>-->
+                        <!--<td ng-if="schedule.video==='2'">资源</td>-->
+                        <td>
+                            <span ng-if="schedule.intercourse==='0'">否</span>
+                            <span ng-if="schedule.intercourse==='1'">是</span>
+                        </td>
+                        <td style="white-space:nowrap">
+                            <button class="btn btn-link" ng-click="editScheduleModal(schedule)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button class="btn btn-link" ng-click="openDeleteModal(schedule)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                    <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+                </div>-->
+                <button ng-if="pagination.totalItems === 0" class="ondata">
+                    <span class="ondatatext">找不到您搜索的信息！</span>
+                </button>
+            </div>
+
+            <div class="panel-footer" style="padding-top:1px;padding-bottom:1px;">
+
+                <!-- <div ng-if="pagination.totalItems > 0" class="row"> -->
+                <div class="row">
+
+                    <div class="col-xs-3 padding-right-none" style="padding-top:8px;">
+                        <span>共{{pagination.totalItems}}条数据,</span>
+                            <span>每页
+                                <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>条
+                            </span>
+                    </div>
+
+                    <div class="col-xs-9 padding-left-right-none" ng-show="pagination.totalItems > pagination.pageSize">
+                        <!-- 分页  -->
+                        <div class="col-xs-10 padding-left-right-none">
+                            <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                        page="pagination.pageIndex"
+                                        items-per-page="pagination.pageSize"
+                                        max-size="pagination.maxSize"
+                                        previous-text="{{pagination.previousText}}"
+                                        next-text="{{pagination.nextText}}"
+                                        first-text="{{pagination.firstText}}"
+                                        last-text="{{pagination.lastText}}"
+                                        class="pagination-small"
+                                        boundary-links="true"
+                                        on-select-page="onSelectPage(page)">
+                            </pagination>
+                        </div>
+                        <div class="col-xs-2" style="padding-top:8px;">
+                            <div class="input-group input-group-sm" style="width: 88px"
+                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                            Go
+                                        </button>
+                                    </span>
+                            </div><!-- /input-group -->
+                            <!--<div class="input-group input-group-sm">-->
+                                <!--<input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{(pagination.totalItems + 0.5)/pagination.pageSize}}">-->
+                                    <!--<span class="input-group-btn">-->
+                                        <!--<button class="btn btn-default" type="button" ng-click="selectPage(pageIndex)">Go</button>-->
+                                    <!--</span>-->
+                            <!--</div><!-- /input-group -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span ng-click="setActiveArea(node,pagination)" class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}" ng-click="setActiveAreaTreeNode(this)">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>

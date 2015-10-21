@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.PlateFormMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.PlateForm">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="desktopName" property="desktopName" jdbcType="VARCHAR" />
+		<result column="unitName" property="unitName" jdbcType="VARCHAR" />
+		<result column="desktopPictureurl" property="desktopPictureurl" jdbcType="VARCHAR" />
+		<result column="uintPictureurl" property="uintPictureurl" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, desktopName, unitName, desktopPictureurl, uintPictureurl
+	</sql>
+	
+	<select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_plateForm
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="deleteAll">
+		delete from zonekey_plateForm
+	</update>
+	<insert id="saveAll" parameterType="com.zonekey.disrec.entity.PlateForm" >
+		insert into zonekey_plateForm 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="desktopName != null">
+				desktopName,
+			</if>
+			<if test="unitName != null">
+				unitName,
+			</if>
+			<if test="desktopPictureurl != null">
+				desktopPictureurl,
+			</if>
+			<if test="uintPictureurl != null">
+				uintPictureurl
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=CHAR},
+			</if>
+			<if test="desktopName != null">
+				#{desktopName,jdbcType=VARCHAR},
+			</if>
+			<if test="unitName != null">
+				#{unitName,jdbcType=VARCHAR},
+			</if>
+			<if test="desktopPictureurl != null">
+				#{desktopPictureurl,jdbcType=VARCHAR},
+			</if>
+			<if test="uintPictureurl != null">
+				#{uintPictureurl,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+</mapper>

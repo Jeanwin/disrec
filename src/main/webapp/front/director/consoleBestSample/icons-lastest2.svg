@@ -1,0 +1,616 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   version="1.0"
+   id="图层_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 380 270"
+   enable-background="new 0 0 380 270"
+   xml:space="preserve"
+   width="100%"
+   height="100%"
+   sodipodi:docname="icons-11-29.svg">
+   <script language="JavaScript" xlink:href="../../assets/js/lib/jquery-1.10.2.min.js" />
+<script language="JavaScript" xlink:href="console.main2.ctrl.js" />
+<input type="hidden" id="currentCouldControlId2" value="3001"/>
+<input type="hidden" id="macValue2" value=""/>
+<input type="hidden" id="urlAdressValue2" value=""/>
+<input type="hidden" id="activeMem2" value=""/>
+<input type="hidden" id="titleValue2" value=""/>
+
+   <defs
+   id="defs3860" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   id="namedview3858"
+   showgrid="false"/>
+<g
+   id="shinning">
+	<defs
+   id="defs3667">
+		<rect
+   id="SVGID_1_"
+   x="6"
+   y="102"
+   width="371"
+   height="164" />
+	</defs>
+	<clipPath
+   id="SVGID_2_">
+		<use
+   xlink:href="#SVGID_1_"
+   overflow="visible"
+   id="use3671" />
+	</clipPath>
+	<radialGradient
+   id="SVGID_3_"
+   cx="187.1653"
+   cy="107.7083"
+   r="158.737"
+   gradientUnits="userSpaceOnUse">
+		<stop
+   offset="0.5059"
+   style="stop-color:#2277A8"
+   id="stop3674" />
+		<stop
+   offset="0.6609"
+   style="stop-color:#2373A6;stop-opacity:0.6863"
+   id="stop3676" />
+		<stop
+   offset="0.8003"
+   style="stop-color:#2469A2;stop-opacity:0.4043"
+   id="stop3678" />
+		<stop
+   offset="0.9332"
+   style="stop-color:#275699;stop-opacity:0.1353"
+   id="stop3680" />
+		<stop
+   offset="1"
+   style="stop-color:#294A94;stop-opacity:0"
+   id="stop3682" />
+	</radialGradient>
+	<circle
+   clip-path="url(#SVGID_2_)"
+   fill="url(#SVGID_3_)"
+   cx="187.2"
+   cy="107.7"
+   r="158.7"
+   id="circle3684" />
+</g>
+<path
+   fill="#23282E"
+   d="M329.7,107.3c0-1.8,0-3.5-0.1-5.3h-285c0,0.1,0,0.1,0,0.2v10.2c2.6,78.4,65.4,141.1,142.5,141.1  C265.9,253.4,329.7,188,329.7,107.3z"
+   id="path3686" />
+ 
+ 
+
+
+
+
+<g
+   id="number6_hover">
+	<path
+   fill="#2A4FA1"
+   d="M265.523,176.562c0,0,22.253-31.732,20.697-42.062l40.794,0.344c0,0-5.888,39.007-29.579,67.8
+	L265.523,176.562z" />
+
+</g>
+<g
+   id="number6" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('6')">
+	<path
+   fill="#23282E" stroke="#23282E" stroke-width="1"
+   d="M265.523,176.562c0,0,22.253-31.732,20.697-42.062l40.794,0.344c0,0-5.888,39.007-29.579,67.8
+	L265.523,176.562z" />
+	<text fill-opacity="1" transform="matrix(0.4769 -0.8749 0.878 0.4786 304.946 173.799)" fill="#FFFFFF" font-family="'SimHei'" font-size="21">6</text>
+
+</g>
+
+<g
+   id="number5_hover">
+	<path
+   fill="#2A4FA1"
+   d="M230.025,203.448c0,0,33.662-19.305,35.511-28.232l32.133,25.374c0,0-14.862,21.678-49.725,39.167
+	L230.025,203.448z" />
+
+</g>
+<g
+   id="number5" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('5')">
+	<path
+   fill="#23282E" stroke="#23282E" stroke-width="1"
+   d="M230.025,203.448c0,0,33.662-19.305,35.511-28.232l32.133,25.374c0,0-14.862,21.678-49.725,39.167
+	L230.025,203.448z" />
+	<text fill-opacity="1" transform="matrix(0.7973 -0.5977 0.5999 0.8001 265.4157 216.0717)" fill="#FFFFFF" font-family="'SimHei'" font-size="21">5</text>
+
+</g>
+
+<g
+   id="number4_hover">
+	<path
+   fill="#2A4FA1"
+   d="M186.585,213.265c0,0,30.937-2.285,44.123-9.959l17.972,36.126c0,0-29.199,14.958-62.621,14.013
+	L186.585,213.265z" />
+
+</g>
+<g
+   id="number4" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('4')">
+	<path
+   fill="#23282E" stroke="#23282E" stroke-width="1"
+   d="M186.585,213.265c0,0,30.937-2.285,44.123-9.959l17.972,36.126c0,0-29.199,14.958-62.621,14.013
+	L186.585,213.265z" />
+	<text fill-opacity="1" transform="matrix(0.9743 -0.2088 0.2096 0.9778 211.8296 237.9296)" fill="#FFFFFF" font-family="'SimHei'" font-size="21">4</text>
+
+</g>
+
+<g
+   id="number3_hover">
+	<path
+   fill="#2A4FA1"
+   d="M187.157,253.448c0,0-45.22-2.956-61.14-13.347l-1.036-0.483l18.363-36.437
+	c0,0,37.749,13.582,44.338,10.156v41.412" />
+
+</g>
+<g
+   id="number3" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('3')">
+	<path
+   fill="#23282E" stroke="#23282E" stroke-width="1"
+   d="M187.157,253.448c0,0-45.22-2.956-61.14-13.347l-1.036-0.483l18.363-36.437
+	c0,0,37.749,13.582,44.338,10.156v41.412" />
+	<text fill-opacity="1" transform="matrix(0.9722 0.2183 -0.2191 0.9757 153.9853 235.396)" fill="#FFFFFF" font-family="'SimHei'" font-size="21">3</text>
+
+</g>
+
+<g
+   id="number2_hover">
+	<path
+   fill="#2A4FA1"
+   d="M108.534,175.446c0,0,27.91,29.34,35.517,27.645l-17.963,37.597c0,0-40.73-25.438-48.955-40.001
+	L108.534,175.446z" />
+
+</g>
+<g
+   id="number2" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('2')">
+	<path
+   fill="#23282E" stroke="#23282E" stroke-width="1"
+   d="M108.534,175.446c0,0,27.91,29.34,35.517,27.645l-17.963,37.597c0,0-40.73-25.438-48.955-40.001
+	L108.534,175.446z" />
+	<text fill-opacity="1" transform="matrix(0.7962 0.5991 -0.6013 0.799 102.6661 208.8268)" fill="#FFFFFF" font-family="'SimHei'" font-size="21">2</text>
+
+</g>
+
+<g
+   id="number1_hover">
+	<path
+   fill="#2A4FA1"
+   d="M76.662,201.286l31.836-25.389L86.408,135l-39.091-0.167
+	C47.316,134.833,57.546,182.525,76.662,201.286z" />
+
+</g>
+<g
+   id="number1" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('1')">
+	<path
+   fill="#23282E" stroke="#23282E" stroke-width="1"
+   d="M76.662,201.286l31.836-25.389L86.408,135l-39.091-0.167
+	C47.316,134.833,57.546,182.525,76.662,201.286z" />
+	<text fill-opacity="1" transform="matrix(0.4602 0.8838 -0.887 0.4618 67.2404 162.9832)" fill="#FFFFFF" font-family="'SimHei'" font-size="21">1</text>
+
+</g>
+
+
+
+<g
+   id="g3736">
+	<path
+   fill="#23282E"
+   d="M336,123c0,6.6-5.4,12-12,12H51c-6.6,0-12-5.4-12-12V99c0-6.6,5.4-12,12-12h273c6.6,0,12,5.4,12,12V123z"
+   id="path3738" />
+	<path
+   fill="none"
+   stroke="#FFFFFF" 
+   stroke-width="3"
+   stroke-miterlimit="10"
+   d="M335.5,122.5c0,6.6-5.4,12-12,12h-273   c-6.6,0-12-5.4-12-12v-24c0-6.6,5.4-12,12-12h273c6.6,0,12,5.4,12,12V122.5z"
+   id="path3740" />
+</g>
+
+
+<g
+   id="decrease_hover">
+	<path
+   fill="#2A4FA1"
+   d="M48.5,132.9c-7.1-1.6-8.5-8.8-8.5-8.8V97.3c1.6-8.3,9.4-9.3,9.4-9.3h37v44.9H48.5z"
+   id="path6252" />
+</g>
+<g cursor="pointer"
+   id="decrease"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onmouseup="setVideo2('')" 
+   onmousedown="setVideo2('3')">
+	<path
+   fill="#23282E"
+   d="M48.5,132.9c-7.1-1.6-8.5-8.8-8.5-8.8V97.3c1.6-8.3,9.4-9.3,9.4-9.3h37v44.9H48.5z"
+   id="path6256" />
+	<line
+   fill="none"
+   stroke="#FFFFFF" fill-opacity="1"
+   stroke-width="4"
+   stroke-linecap="round"
+   stroke-miterlimit="10"
+   x1="54"
+   y1="109.5"
+   x2="70"
+   y2="109.5"
+   id="line6258" />
+</g>
+
+
+<g
+   id="increase_hover">
+	<path
+   fill="#2A4FA1"
+   d="M288.1,88l-0.1,44.9l37,0.1c0,0,7.8-1,9.4-9.2l0.1-26.8c0,0-1.4-7.2-8.5-8.8L288.1,88z"
+   id="path6261" />
+	<g
+   id="g3748">
+	</g>
+</g>
+<g cursor="pointer"
+   id="increase"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onmouseup="setVideo2('')" 
+   onmousedown="setVideo2('1')"
+   >
+	<path
+   fill="#23282E"
+   d="M288.1,88l-0.1,44.9l37,0.1c0,0,7.8-1,9.4-9.2l0.1-26.8c0,0-1.4-7.2-8.5-8.8L288.1,88z"
+   id="path6267" />
+	<g
+   id="g6269">
+		
+			<line
+   fill="none"
+   stroke="#FFFFFF" fill-opacity="1"
+   stroke-width="4"
+   stroke-linecap="round"
+   stroke-miterlimit="10"
+   x1="305"
+   y1="109.5"
+   x2="322"
+   y2="109.5"
+   id="line6271" />
+		
+			<line
+   fill="none"
+   stroke="#FFFFFF" fill-opacity="1"
+   stroke-width="4"
+   stroke-linecap="round"
+   stroke-miterlimit="10"
+   x1="313.5"
+   y1="102"
+   x2="313.5"
+   y2="118"
+   id="line6273" />
+	</g>
+</g>
+
+
+<path
+   id="banyuan"
+   fill="none"
+   stroke="#FFFFFF"
+   stroke-width="4"
+   stroke-miterlimit="10"
+   d="M47.3,134.8  c11,67.3,69.4,118.6,139.8,118.6c70.4,0,128.8-51.3,139.8-118.6H47.3z" />
+<g
+   id="zhongyuan">
+	<circle
+   fill="#23282E"
+   cx="187.2"
+   cy="110.7"
+   r="102.2"
+   id="circle3756" />
+	<circle
+   fill="none"
+   stroke="#FFFFFF"
+   stroke-width="3"
+   stroke-miterlimit="10"
+   cx="187.2"
+   cy="110.7"
+   r="102.2"
+   id="circle3758" />
+</g>
+
+<g
+   id="up_1_hover">
+	<path
+   id="up"
+   fill="#2A4FA1"
+   d="M115.8,39.8l27.3,27c0,0,42.9-38,87.4-0.6l27.1-27.4c0,0-26-29-71.1-28.9   C186.4,9.9,145.6,8.9,115.8,39.8z" />
+</g>
+<g
+   id="up_1_" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onmouseup="setVideo2('')" 
+   onmousedown="setVideo2('8')"
+   >
+	<path
+   id="path6283"
+   fill="#23282E"
+   d="M115.8,39.8l27.3,27c0,0,42.9-38,87.4-0.6l27.1-27.4c0,0-26-29-71.1-28.9   C186.4,9.9,145.6,8.9,115.8,39.8z" />
+	<path
+   fill="#FFFFFF" fill-opacity="1"
+   d="M177.8,35.2c0.6,0.6,1.2,1.2,1.9,1.9c2.2-2.2,4.4-4.4,6.6-6.6c2.2,2.2,4.4,4.4,6.6,6.6   c0.7-0.7,1.3-1.3,1.9-1.9c-2.8-2.8-5.7-5.7-8.5-8.5C183.5,29.5,180.7,32.3,177.8,35.2"
+   id="path6285" />
+</g>
+
+<g
+   id="down_1_hover">
+	<path
+   id="down"
+   fill="#2A4FA1"
+   d="M258.3,181.7l-27.3-27c0,0-42.9,38-87.4,0.6l-27.1,27.4c0,0,26,29,71.1,28.9   C187.6,211.6,228.4,212.5,258.3,181.7z" />
+</g>
+<g
+   id="down_1_" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onmouseup="setVideo2('')" 
+   onmousedown="setVideo2('2')">
+	<path
+   id="path6291"
+   fill="#23282E"
+   d="M258.3,181.7l-27.3-27c0,0-42.9,38-87.4,0.6l-27.1,27.4c0,0,26,29,71.1,28.9   C187.6,211.6,228.4,212.5,258.3,181.7z" />
+	<path
+   fill="#FFFFFF" fill-opacity="1"
+   d="M196.2,190.1c-0.6-0.6-1.2-1.2-1.9-1.9c-2.2,2.2-4.4,4.4-6.6,6.6c-2.2-2.2-4.4-4.4-6.6-6.6   c-0.7,0.7-1.3,1.3-1.9,1.9c2.8,2.8,5.7,5.7,8.5,8.5C190.5,195.8,193.3,193,196.2,190.1"
+   id="path6293" />
+</g>
+
+<g
+   id="right_1_hover">
+	<path
+   id="right"
+   fill="#2A4FA1"
+   d="M231,68.1l28.1-27.7c0,0,22.9,23.1,27.1,52.9s-1.6,46.4-8.5,61.9c0,0-12.3,21.5-19.7,26.8   l-27-27.1C231,154.8,269.8,108.8,231,68.1z" />
+</g>
+<g
+   id="right_1_" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onmouseup="setVideo2('')" 
+   onmousedown="setVideo2('6')">
+	<path 
+   id="path6299"
+   fill="#23282E"
+   d="M231,68.1l28.1-27.7c0,0,22.9,23.1,27.1,52.9s-1.6,46.4-8.5,61.9c0,0-12.3,21.5-19.7,26.8   l-27-27.1C231,154.8,269.8,108.8,231,68.1z" />
+	<path
+   fill="#FFFFFF" fill-opacity="1"
+   d="M262.7,100.3c-0.6,0.6-1.2,1.2-1.9,1.9c2.2,2.2,4.4,4.4,6.6,6.6c-2.2,2.2-4.4,4.4-6.6,6.6   c0.7,0.7,1.3,1.3,1.9,1.9c2.8-2.8,5.7-5.7,8.5-8.5C268.4,106,265.6,103.2,262.7,100.3"
+   id="path6301" />
+</g>
+
+<g
+   id="left_1_hover">
+	<path
+   id="left"
+   fill="#2A4FA1"
+   d="M143.6,154.2l-27.7,28.1c0,0-23.2-22.8-27.8-52.5c-4.6-29.7,1-46.4,7.7-62c0,0,12.1-21.7,19.3-27   l27.4,26.8C142.5,67.5,104.4,113.9,143.6,154.2z" />
+</g>
+<g
+   id="left_1_"  cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onmouseup="setVideo2('')" 
+   onmousedown="setVideo2('4')">
+	<path  
+   id="path6307"
+   fill="#23282E" 
+   d="M143.6,154.2l-27.7,28.1c0,0-23.2-22.8-27.8-52.5c-4.6-29.7,1-46.4,7.7-62c0,0,12.1-21.7,19.3-27   l27.4,26.8C142.5,67.5,104.4,113.9,143.6,154.2z" />
+	<path
+   fill="#FFFFFF" fill-opacity="1"
+   d="M110.7,118.9c0.6-0.6,1.2-1.2,1.9-1.9c-2.2-2.2-4.4-4.4-6.6-6.6c2.2-2.2,4.4-4.4,6.6-6.6   c-0.7-0.7-1.3-1.3-1.9-1.9c-2.8,2.8-5.7,5.7-8.5,8.5C105,113.2,107.9,116,110.7,118.9"
+   id="path6309" />
+</g>
+
+
+<line
+   id="lin2"
+   opacity="0.6"
+   fill="none"
+   stroke="#FFFFFF"
+   stroke-width="4"
+   stroke-miterlimit="10"
+   x1="114.7"
+   y1="39.8"
+   x2="258.1"
+   y2="183.2" />
+<line
+   id="line1"
+   opacity="0.6"
+   fill="none"
+   stroke="#FFFFFF"
+   stroke-width="4"
+   stroke-miterlimit="10"
+   x1="258.1"
+   y1="39.8"
+   x2="114.7"
+   y2="183.2" />
+<circle
+   id="xiaoyuan"
+   stroke-miterlimit="10"
+   cx="187.2"
+   cy="110.7"
+   r="61.2"
+   stroke-width="4"
+   stroke="#FFFFFF"
+   fill="#23282E" />
+   
+  
+  
+  
+   
+<g
+   id="remember_hover">
+			<radialGradient
+   id="SVGID_6_"
+   cx="186.966"
+   cy="110.3492"
+   r="60.0005"
+   gradientUnits="userSpaceOnUse">
+				<stop
+   offset="0"
+   style="stop-color:#294A94"
+   id="stop3820" />
+				<stop
+   offset="0.4698"
+   style="stop-color:#284992"
+   id="stop3822" />
+				<stop
+   offset="0.6391"
+   style="stop-color:#26468B"
+   id="stop3824" />
+				<stop
+   offset="0.7597"
+   style="stop-color:#234080"
+   id="stop3826" />
+				<stop
+   offset="0.8572"
+   style="stop-color:#1E376F"
+   id="stop3828" />
+				<stop
+   offset="0.9398"
+   style="stop-color:#172C59"
+   id="stop3830" />
+				<stop
+   offset="0.9779"
+   style="stop-color:#13264C"
+   id="stop3832" />
+				<stop
+   offset="0.9811"
+   style="stop-color:#13264C"
+   id="stop3834" />
+				<stop
+   offset="1"
+   style="stop-color:#13264C"
+   id="stop3836" />
+			</radialGradient>
+       
+     <circle 
+     sodipodi:ry="60"
+     sodipodi:rx="60"
+     sodipodi:cy="110.3"
+     sodipodi:cx="187"
+     cx="187"
+     cy="110.3"
+     r="60"
+     id="black-0"
+     d="m 247,110.3 c 0,33.13709 -26.86292,60 -60,60 -33.13708,0 -60,-26.86291 -60,-60 0,-33.137082 26.86292,-59.999997 60,-59.999997 33.13708,0 60,26.862915 60,59.999997 z"
+     style="fill:url(#SVGID_6_);fill-opacity:1"
+      />
+
+
+
+</g> 
+   
+<g
+   id="remember" cursor="pointer"
+   onmouseover="setAttribute('fill-opacity','0')"
+   onmouseout="setAttribute('fill-opacity','1')"
+   onclick="operConsole('0',this)">
+			<radialGradient
+   id="SVGID_4_"
+   cx="186.966"
+   cy="110.3492"
+   r="60.0005"
+   gradientUnits="userSpaceOnUse">
+				<stop
+   offset="0"
+   style="stop-color:#494e51;stop-opacity:1;"
+   id="stop3784" />
+				<stop
+   offset="0.6529"
+   style="stop-color:#373B3D"
+   id="stop3786" />
+				<stop
+   offset="0.8878"
+   style="stop-color:#292D32"
+   id="stop3788" />
+				<stop
+   offset="0.9779"
+   style="stop-color:#24282D"
+   id="stop3790" />
+				<stop
+   offset="0.9797"
+   style="stop-color:#1E2738"
+   id="stop3792" />
+				<stop
+   offset="0.98290002"
+   style="stop-color:#24282d;stop-opacity:1;"
+   id="stop3794" />
+				<stop
+   offset="0.98750001"
+   style="stop-color:#2e3438;stop-opacity:1;"
+   id="stop3796" />
+				<stop
+   offset="1"
+   style="stop-color:#363c41;stop-opacity:1;"
+   id="stop3798" />
+			</radialGradient>
+       
+     <circle
+     sodipodi:ry="60"
+     sodipodi:rx="60"
+     sodipodi:cy="110.3"
+     sodipodi:cx="187"
+     cx="187"
+     cy="110.3"
+     r="60"
+     id="black-0"
+     d="m 247,110.3 c 0,33.13709 -26.86292,60 -60,60 -33.13708,0 -60,-26.86291 -60,-60 0,-33.137082 26.86292,-59.999997 60,-59.999997 33.13708,0 60,26.862915 60,59.999997 z"
+     style="fill:url(#SVGID_4_);"
+      />
+
+
+	<text
+   transform="matrix(1 0 0 1 159.5713 118.7754)"
+   font-size="27"
+   id="text6358"
+   font-family="'SimHei'"
+   fill="#FFFFFF" fill-opacity="1">记忆</text>
+
+</g>
+
+</svg>

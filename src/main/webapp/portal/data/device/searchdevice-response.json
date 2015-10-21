@@ -1,0 +1,44 @@
+﻿[
+    {
+        "id":"001",
+        "name":  "121教室录播机1[主]",
+        "areaid":  "001",
+        "areaname":  "001教室",
+        "parentid":  "1",
+        "parentname":  "录播机",
+		 		"ip":"192.168.1.2",
+		 		"mac":"00-FF-2E-1D-D8-E2",
+		 		"state":"在线",
+		 		"typename":"orm跟踪机",
+		 		"typeid":"11",
+         "mostly":"0"
+    },
+    {
+        "id":"002",
+        "name":  "122教室录播机1[主]",
+        "areaid":  "002",
+        "areaname":  "002教室",
+        "parentid":  "1",
+        "parentname":  "录播机",
+		 		"ip":"192.168.1.4",
+		 		"mac":"00-FF-2E-1D-D8-E5",
+		 		"state":"在线",
+		 		"typename":"orm跟踪机",
+		 		"typeid":"11",
+         "mostly":"0"
+    },
+    {
+        "id":"003",
+        "name":  "123教室录播机1[主]",
+        "areaid":  "003",
+        "areaname":  "003教室",
+        "parentid":  "1",
+        "parentname":  "录播机",
+		 		"ip":"192.168.1.5",
+		 		"mac":"00-FF-2E-1D-D8-E3",
+		 		"state":"在线",
+		 		"typename":"orm跟踪机",
+		 		"typeid":"11",
+         "mostly":"0"
+    },
+]

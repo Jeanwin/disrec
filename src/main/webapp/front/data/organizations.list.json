@@ -1,0 +1,60 @@
+{
+    "total": 22,
+    "data": [
+        {
+            "id":"1",
+            "name": "六年级一班",
+            "parentname": "东教",
+            "attributeName": "班级",
+            "stateName": "可用",
+            "areaName": "101教室",
+            "areaId": "333",
+            "code": "1",
+            "sort": "254"
+        },
+        {
+            "id":"2",
+            "name": "六年级二班",
+            "parentname": "东教",
+            "attributeName": "班级",
+            "stateName": "可用",
+            "areaName": "101教室",
+            "areaId": "333",
+            "code": "2",
+            "sort": "254"
+        },
+        {
+            "id":"6",
+            "name": "六年级三班",
+            "parentname": "东教",
+            "attributeName": "班级",
+            "stateName": "可用",
+            "areaName": "101教室",
+            "areaId": "333",
+            "code": "3",
+            "sort": "254"
+        },
+        {
+            "id":"3",
+            "name": "六年级四班",
+            "parentname": "东教",
+            "attribute": "班级",
+            "stateName": "可用",
+            "areaName": "101教室",
+            "areaId": "333",
+            "code": "4",
+            "sort": "254"
+        },
+        {
+            "id":"4",
+            "name": "六年级五班",
+            "parentname": "东教",
+            "attributeName": "班级",
+            "stateName": "可用",
+            "areaName": "101教室",
+            "areaId": "333",
+            "code": "5",
+            "sort": "254"
+        }
+    ]
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--[if lt IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gte IE 8]><!-->
+<html class="no-js" id="ng-app" ng-controller="MainCtrl">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>{{config.app.name}} | {{config.app.version}}</title>
+    <!-- build:css assets/css/lemon.min.css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-lemon.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/form.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/icons.css" />
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/angular-ui-tree.min.css">
+    <link rel="stylesheet" href="assets/css/fullcalendar.css">
+    <link rel="stylesheet" href="assets/css/ng-animate.css">
+    <link rel="stylesheet" href="assets/css/angular-toggle-switch-bootstrap.css">
+    <link rel="stylesheet" href="assets/css/angular-toggle-switch.css">
+    <link rel="stylesheet" href="assets/css/angular-file-upload.css">
+    <link rel="stylesheet" href="assets/css/angular-growl.min.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+
+    <!-- endbuild -->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <![endif]-->
+    <!-- build:js assets/js/lemon.min.js -->
+    <script src="assets/js/modernizr.js"></script>
+    <script src="PolyfillLoader.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<!--[if lte IE 9]>
+<div>不支持此浏览器</div>
+<![endif]-->
+<div class="whiteframe" style="margin:auto; width:auto;height:100%;padding:24px;padding-top:40px;">
+    <div class="panel panel-default" style="margin:auto; width:90%;height:auto;padding:24px;padding-top:0px;">
+
+        <div class="panel-body">
+            <div>
+                <span>亲爱的${loginname}，您好：</span><br><br>
+                <span>您正在进行找回密码操作，请点击下面链接完成新密码的设置</span><br>
+                <a href="${url}">${url}</a><br><br>
+                <span>为了确保您的帐号安全，该链接20分钟内访问有效</span><br><br>
+                <span>如果点击链接不工作，请您选择并复制整个链接，打开浏览器窗口并将其粘贴到地址栏中。然后单击"转到"按钮或按键盘上的 Enter键。</span><br><br>
+                <span>此信是由 <a href="">中庆录播管理系统</a> 发出，系统不接收回信，请勿直接回复。</span><br><br>
+                <span>中庆录播</span><br>
+                <span>${date}</span><br>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

@@ -1,0 +1,50 @@
+{
+    "total": 25,
+    "data": [
+            {
+                "id": "1",
+                "value": "ww",
+                "areaname": "001教室",
+                "username": "李老师",
+                "subject": "语文",
+                "deptname": "初三(1)",
+                "weeks": "1",
+                "weekdate": "星期一",
+                "classname": "第二节",
+                "live": "0",
+                "record": "1",
+                "video": "3",
+                "classniddlerecord": "0"
+            },
+            {
+                "id": "2",
+                "value": "ww",
+                "areaname": "002教室",
+                "username": "刘老师",
+                "subject": "数学",
+                "deptname": "初三(2)",
+                "weeks": "2",
+                "weekdate": "星期三",
+                "classname": "第二节",
+                "live": "1",
+                "record": "0",
+                "video": "2",
+                "classniddlerecord": "0"
+            },
+            {
+                "id": "3",
+                "value": "ww",
+                "areaname": "003教室",
+                "username": "李老师",
+                "subject": "语文",
+                "deptname": "初三(3)",
+                "weeks": "1",
+                "weekdate": "星期一",
+                "classname": "第二节",
+                "live": "0",
+                "record": "1",
+                "video": "3",
+                "classniddlerecord": "1"
+            }
+    ]
+}

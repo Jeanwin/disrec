@@ -1,0 +1,165 @@
+{
+    "tmpTreatyNo": 123,
+    "treatyNo": 123,
+    "exTreatyNo": 123,
+    "refNo": 123,
+    "treatyName": 123,
+    "treatyEname": 123,
+    "treatyType": "U",
+    "uwYear": 123,
+    "startDate": 123,
+    "endDate": 123,
+    "closeDate": 123,
+    "currency": "CNY",
+    "extendDate": 123,
+    "extendFlag": 123,
+    "stateFlag": "1",
+    "flag": 123,
+    "updaterCode": 123,
+    "updaterTime": 123,
+    "reMarks": 123,
+    "inoutMrk": 1,
+    "fhxSectionList": [
+        {
+            "id": {
+                "tmpTreatyNo": 123,
+                "sectionNo": 123
+            },
+            "treatyNo": 123,
+            "sectionCdesc": 123,
+            "sectionEdesc": 123,
+            "currency": 123,
+            "fhxRiskList":
+                [
+                    {
+                        "id": {
+                            "tmpTreatyNo": 123,
+                            "sectionNo": 123,
+                            "riskCode": 123
+                        },
+                        "treatyNo": 123,
+                        "fhxExItemKindList":
+                            [
+                                {
+                                    "id": {
+                                        "tmpTreatyNo": 123,
+                                        "sectionNo": 123,
+                                        "riskCode": 123,
+                                        "itemKind": 123
+                                    },
+                                    "treatyNo": 123,
+                                    "itemKindDesc": 123,
+                                    "flag": 123
+                                }
+                            ]
+                    }
+                ],
+            "fhxLayerList":
+                [
+                    {
+                        "id":
+                        {
+                            "tmpTreatyNo": 123,
+                            "sectionNo": 123,
+                            "layerNo": 123
+                        },
+                        "treatyNo": 123,
+                        "layerType": 123,
+                        "layerCdesc": 123,
+                        "layerEdesc": 123,
+                        "currency": 123,
+                        "excessLoss": 123,
+                        "layerQuota": 123,
+                        "totalQuota": 123,
+                        "egnpi": 123,
+                        "gnpi": 123,
+                        "rate": 123,
+                        "rol": 123,
+                        "mdpRate": 123,
+                        "mdp": 123,
+                        "layerPremium": 123,
+                        "shareRate": 123,
+                        "reinstTimes": 123,
+                        "reinstRate": 123,
+                        "resiDualReinstSum": 123,
+                        "reinstType": 123,
+                        "reMarks": 123,
+                        "updaterCode": 123,
+                        "updaterDate": 123,
+                        "flag": 123,
+                        "rwp": 123,
+                        "expireLoss": 123,
+                        "payTimes": 123,
+                        "adrwp": 123,
+                        "adgnpi": 123,
+                        "annd": 123,
+                        "usedd": 123,
+                        "fhxReinsList":
+                            [
+                                {
+                                    "id": {
+                                        "tmpTreatyNo": 123,
+                                        "sectionNo": 123,
+                                        "layerNo": 123,
+                                        "reinsCode": 123
+                                    },
+                                    "treatyNo": 123,
+                                    "reinsName": 123,
+                                    "brokerFlag": 123,
+                                    "payCode": 123,
+                                    "payName": 123,
+                                    "shareRate": 123,
+                                    "ispriReinsx": 123,
+                                    "ttyLinker": 123,
+                                    "ttyMobile": 123,
+                                    "ttyPhone": 123,
+                                    "ttyFax": 123,
+                                    "ttyEmail": 123,
+                                    "ttyAddress": 123,
+                                    "ttyPost": 123,
+                                    "reMarks": 123,
+                                    "fhxFinalReinsList":
+                                        [
+                                            {
+                                                "id": {
+                                                    "tmpTreatyNo": 123,
+                                                    "sectionNo": 123,
+                                                    "layerNo": 123,
+                                                    "reinsCode": 123,
+                                                    "freinsCode": 123
+                                                },
+                                                "treatyNo": 123,
+                                                "reinsName": 123,
+                                                "freinsName": 123,
+                                                "payCode": 123,
+                                                "payName": 123,
+                                                "shareRate": 123,
+                                                "ispriReinsx": 123,
+                                                "reMarks": 123
+                                            }
+                                        ]
+                                }
+                            ],
+                        "fhxPlanList":
+                            [
+                                {
+                                    "id": {
+                                        "tmpTreatyNo": 123,
+                                        "sectionNo": 123,
+                                        "layerNo": 123,
+                                      
+                                        "payNo": 123
+                                    },
+                                    "payTimes": 123,
+                                    "treatyNo": 123,
+                                    "planDate": 123,
+                                    "currency": 123,
+                                    "payValue": 123,
+                                    "flag": 123
+                                }
+                            ]
+                    }
+                ]
+        }
+    ]
+}

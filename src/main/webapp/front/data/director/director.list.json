@@ -1,0 +1,74 @@
+{
+    "total": 6,
+    "data": [
+        {
+            "time": "14:00:00_15:40:00",
+            "name": "2号楼202",
+            "id": "2342adfad",
+            "stuts": "高一1班_李梅_数据库概论及应用",
+            "live": "否",
+            "autodirector": "否",
+            "record": "否",
+            "livestuts": "未开始/进行中",
+            "recordstuts": "未开始/进行中",
+            "directorstuts": "自动/手动/鼠标",
+            "mac": null
+        },
+
+    {
+        "time": "14:00:00_15:40:00",
+        "name": "2号楼202",
+        "id": "2342adfad",
+        "stuts": "高一1班_李梅_数据库概论及应用",
+        "live": "否",
+        "autodirector": "否",
+        "record": "否",
+        "livestuts": "未开始/进行中",
+        "recordstuts": "未开始/进行中",
+        "directorstuts": "自动/手动/鼠标",
+        "mac": "33:33:43:12:42"
+    },
+
+    {
+        "time": "14:00:00_15:40:00",
+        "name": "2号楼202",
+        "id": "2342adfad",
+        "stuts": "高一1班_李梅_数据库概论及应用",
+        "live": "否",
+        "autodirector": "否",
+        "record": "否",
+        "livestuts": "未开始/进行中",
+        "recordstuts": "未开始/进行中",
+        "directorstuts": "自动/手动/鼠标",
+        "mac": null
+    },
+    {
+        "time": "14:00:00_15:40:00",
+        "name": "2号楼202",
+        "id": "2342adfad",
+        "stuts": "高一1班_李梅_数据库概论及应用",
+        "live": "否",
+        "autodirector": "否",
+        "record": "否",
+        "livestuts": "未开始/进行中",
+        "recordstuts": "未开始/进行中",
+        "directorstuts": "自动/手动/鼠标",
+        "mac": null
+    },
+    {
+        "time": "14:00:00_15:40:00",
+        "name": "2号楼202",
+        "id": "2342adfad",
+        "stuts": "高一1班_李梅_数据库概论及应用",
+        "live": "否",
+        "autodirector": "否",
+        "record": "否",
+        "livestuts": "未开始/进行中",
+        "recordstuts": "未开始/进行中",
+        "directorstuts": "自动/手动/鼠标",
+        "mac": null
+    }
+        ]
+}
+
+

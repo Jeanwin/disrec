@@ -1,0 +1,15 @@
+﻿{
+    "innerid": "1",
+    "roleIdList": [
+        "1",
+        "2"
+    ],
+    "areaList": [
+        {"id":"4","name":"yiban"},
+        {"id":"2","name":"erban"}
+    ],
+    "deptIdList": [
+       {"id":"4","name":"高一"},
+       {"id":"2","name":"高二"}
+    ]
+}

@@ -1,0 +1,53 @@
+{
+    "total": 60,
+    "data":[
+        {
+            "clmAmount": 500000,
+            "cataName": "CAT001台风菲特",
+            "certiNo": "417284401201201004100005",
+            "totClmAmout": 500000,
+            "riskUnitNo": 1,
+            "insuredName": "李成俊",
+            "policyNo": "1172844012011000033",
+            "osLoss": 0,
+            "claimNo": "4172844012012010041",
+            "damageDate": {
+                "nanos": 0,
+                "time": 1394380800000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 2,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 1,
+                "date": 10
+            },
+            "currency": "01"
+        },
+        {
+            "clmAmount": 7890000,
+            "cataName": "CAT004四川地震",
+            "certiNo": "66668999901212345100003",
+            "totClmAmout": 9000000,
+            "riskUnitNo": 2,
+            "insuredName": "旺旺",
+            "policyNo": "19837563783949572",
+            "osLoss": 0,
+            "claimNo": "114847579834098358340563456",
+            "damageDate": {
+                "nanos": 0,
+                "time": 1394380800000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 2,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 1,
+                "date": 10
+            },
+            "currency": "01"
+        }
+    ]
+}

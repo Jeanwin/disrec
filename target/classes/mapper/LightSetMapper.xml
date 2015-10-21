@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.LightSetMapper" >
+
+   <sql id="bindLoginname">
+	 <bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+  </sql>
+  
+   <select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long" >
+     select count(*)
+     from zonekey_classroom_light a RIGHT  JOIN (select c.* from  zonekey_area c where c.attribute='Y' and c.deleteflag='0'
+    <if test="keywords != null">
+		<if test="keywords.areaName != null and keywords.areaName != '' ">and c.name like concat('%',#{keywords.areaName},'%')  </if>
+	</if>  ) b 
+    on a.area_id=b.id 
+  </select>
+  
+   <select id="findByPage" resultType="map" parameterType="com.zonekey.disrec.vo.PageBean" >
+   select a.usedLength usedlength,a.maxLength maxlength,a.is_use isUse,b.id areaId,b.name 
+    from zonekey_classroom_light a RIGHT  JOIN (select c.* from  zonekey_area c where c.attribute='Y' and c.deleteflag='0'
+    <if test="keywords != null">
+		<if test="keywords.areaName != null and keywords.areaName != '' ">and c.name like concat('%',#{keywords.areaName},'%')  </if>
+	</if>  ) b 
+    on a.area_id=b.id order by a.createdate desc  
+	<if test="page != null and page.offset != null and page.limit!=null">
+		limit  #{page.offset} ,#{page.limit}
+	</if>
+  </select>
+  
+ <insert id="saveLightSet" parameterType="com.zonekey.disrec.entity.LightSet" >
+ <include refid="bindLoginname"/>
+    insert into zonekey_classroom_light (id, usedLength, 
+      maxLength, createdate, createuser,is_use,area_id)
+    values
+      (#{id,jdbcType=CHAR}, #{usedlength,jdbcType=DOUBLE},#{maxlength,jdbcType=DOUBLE},
+      sysDate(),#{_loginname},#{isUse},#{areaId})  
+  </insert>
+   
+  <update id="updateLightSet" parameterType="com.zonekey.disrec.entity.LightSet" >
+  <include refid="bindLoginname"/>
+    update zonekey_classroom_light
+    <set >
+      <if test="usedlength != null" >
+        usedLength = #{usedlength,jdbcType=DOUBLE},
+      </if>
+      <if test="maxlength != null" >
+        maxLength = #{maxlength,jdbcType=DOUBLE},
+      </if>
+      <if test="isUse != null" >
+        is_use = #{isUse,jdbcType=CHAR},
+      </if>
+      modifydate = sysDate(),
+      modifyuser = #{_loginname}
+    </set>
+    where area_id = #{areaId,jdbcType=CHAR}
+  </update>
+  
+    <select id="getLightSet" resultType="com.zonekey.disrec.entity.LightSet" parameterType="String">
+		select a.id,a.area_id from zonekey_classroom_light a where a.area_id=#{areaId}
+	</select>
+	
+	<select id="findLightSet" resultType="map">
+      select a.usedLength usedlength,a.maxLength maxlength,(case when a.is_use='0' then '正常' when a.is_use='1' then '报废' end) isUse,b.id areaId,b.name 
+    from zonekey_classroom_light a RIGHT  JOIN (select c.* from  zonekey_area c where c.attribute='Y' and c.deleteflag='0') b 
+    on a.area_id=b.id order by a.createdate desc
+  </select>
+  
+</mapper>

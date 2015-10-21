@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.StudyRecordViewMapper">
+
+	<select id="findCount" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+	SELECT count(*) FROM study_record r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+			<if test="keywords.name != null and keywords.name != '' ">and u.name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.deptid != null and keywords.deptid != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.deptid})) </if>
+			<if test="keywords.deptid == null and keywords.deptid == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if>
+		</if>
+	</select>
+	<select id="findPageByPageBean" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="com.zonekey.disrec.vo.StudyRecordView">
+		SELECT r.*,u.name username,d.name deptname,d.id deptid FROM study_record r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+		<if test="keywords != null">
+		     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+			<if test="keywords.name != null and keywords.name != '' ">and u.name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.deptid != null and keywords.deptid != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.deptid})) </if>
+			<if test="keywords.deptid == null and keywords.deptid == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if>
+			
+		</if>
+	
+		<if test="page != null ">
+		limit #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+	<select id="findReviewCount" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="map">
+	SELECT d.name deptname,count(*) count FROM study_review_detail r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+				<if test="keywords.id != null and keywords.id != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.id})) </if> 
+<!-- 			<if test="keywords.id == null and keywords.id == '' ">FIND_IN_SET(d.id,getDeptChildLst(0)) </if> -->
+<!-- 				<if test="keywords.id != null and keywords.id != '' ">and d.id = #{keywords.id} </if> -->
+		</if>
+		GROUP BY d.id
+	</select>
+	<select id="findLectureCount" parameterType="com.zonekey.disrec.vo.PageBean"
+			resultType="map">
+	SELECT d.name deptname,count(*) count FROM study_record r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1 
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+			<if test="keywords.id != null and keywords.id != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.id})) </if> 
+<!-- 			<if test="keywords.id == null and keywords.id == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if> -->
+<!-- 				<if test="keywords.id != null and keywords.id != '' ">and d.id = #{keywords.id} </if> -->
+		</if>
+		GROUP BY d.id
+	</select>
+	
+	<select id="findReviewCountByTime" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="map">
+		select DATE_FORMAT(r.createdate,'%Y%m%d') time,count(*) count from study_review_detail r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+			<if test="keywords.name != null and keywords.name != '' ">and u.name like concat('%',#{keywords.name},'%')</if>
+				<if test="keywords.id != null and keywords.id != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.id})) </if> 
+<!-- 			<if test="keywords.id == null and keywords.id == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if> -->
+<!-- 				<if test="keywords.id != null and keywords.id != '' ">and d.id = #{keywords.id} </if> -->
+		</if>
+			group by time
+	</select>
+		<select id="findReviewCountByWeekTime" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="map">
+		select DATE_FORMAT(r.createdate,'%Y%u') time,count(*) count from study_review_detail r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+				<if test="keywords.id != null and keywords.id != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.id})) </if> 
+<!-- 			<if test="keywords.id == null and keywords.id == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if> -->
+<!-- 				<if test="keywords.id != null and keywords.id != '' ">and d.id = #{keywords.id} </if> -->
+		</if>
+			group by time
+	</select>
+	<select id="findLectureCountByTime" parameterType="com.zonekey.disrec.vo.PageBean"
+			resultType="map">
+			select DATE_FORMAT(r.createdate,'%Y%m%d') time,count(*) count from study_record r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+			<if test="keywords.name != null and keywords.name != '' ">and u.name like concat('%',#{keywords.name},'%')</if>
+				<if test="keywords.id != null and keywords.id != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.id})) </if> 
+<!-- 			<if test="keywords.id == null and keywords.id == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if> -->
+<!-- 				<if test="keywords.id != null and keywords.id != '' ">and d.id = #{keywords.id} </if> -->
+		</if>
+		group by time
+	</select>
+	<select id="findLectureCountByWeekTime" parameterType="com.zonekey.disrec.vo.PageBean"
+			resultType="map">
+			select DATE_FORMAT(r.createdate,'%Y%u') time,count(*) count from study_record r left
+		join sys_user u on u.loginname=r.userid left join zonekey_dept d on
+		u.deptid = d.id
+		where 1=1
+	<if test="keywords != null">
+			     <if test="keywords.startdate!=null and keywords.startdate!=''">and r.createDate >= #{keywords.startdate}</if>
+			 <if test="keywords.enddate!=null and keywords.enddate!=''">   and #{keywords.enddate} >=  r.createDate</if>
+			<if test="keywords.name != null and keywords.name != '' ">and u.name like concat('%',#{keywords.name},'%')</if>
+				<if test="keywords.id != null and keywords.id != '' ">and FIND_IN_SET(d.id,getDeptChildLst(#{keywords.id})) </if> 
+<!-- 			<if test="keywords.id == null and keywords.id == '' ">and FIND_IN_SET(d.id,getDeptChildLst(0)) </if> -->
+<!-- 				<if test="keywords.id != null and keywords.id != '' ">and d.id = #{keywords.id} </if> -->
+		</if>
+		group by time
+	</select>
+	
+	
+	<select id="getSubectByCurriculum" parameterType="com.zonekey.disrec.vo.StudyRecordView"
+		resultType="map">
+		select c.subject as subjectname,c.subjectattribute from zonekey_curriculum c where c.id = #{resourceid}
+	</select>
+		<select id="getSubectByResource" parameterType="com.zonekey.disrec.vo.StudyRecordView"
+		resultType="map">
+<!-- 			  select  -->
+<!-- 	(select a.name from sys_code a,sys_code b where a.deleteflag=0 and b.deleteflag=0  -->
+<!-- 		and a.parentid = b.id and a.value =r1.subject and b.value ='subject'  ) as subjectname -->
+<!-- 		from ( -->
+		select m.resourcename as subjectname
+ from zonekey_resource m where m.floder = #{resourceid} group by m.floder
+<!-- 		) r1 -->
+	</select>
+		<select id="getSubectByWorks" parameterType="com.zonekey.disrec.vo.StudyRecordView"
+		resultType="map">
+<!-- 			  select  -->
+<!-- 	(select a.name from sys_code a,sys_code b where a.deleteflag=0 and b.deleteflag=0  -->
+<!-- 		and a.parentid = b.id and a.value =r2.subject and b.value ='subject'  ) as subjectname -->
+<!-- 		from ( -->
+		select w.name as subjectname from study_works w where w.id =#{worksid}
+<!-- 		) r2 -->
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		delete from study_record
+		where id =#{id,jdbcType=CHAR}
+	</update>
+</mapper>

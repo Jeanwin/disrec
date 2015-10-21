@@ -1,0 +1,13 @@
+<div>
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <ul class="nav navbar-nav navbar">
+                <!-- <li ng-if="!menu.hide" ng-repeat = "menu in menus.admin" > -->
+                <li ng-repeat = "menu in menus.admin" >
+                    <a ng-href="{{menu.url}}">{{menu.label}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ui-view="admin"></div>
+</div>

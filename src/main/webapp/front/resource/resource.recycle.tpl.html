@@ -1,0 +1,214 @@
+<div class="resourcereleased">
+<div class="whiteframe">
+    <div style="padding:8px 8px 8px 10px;" class="row">
+        <div class="col-xs-4">
+            <div class="btn-group">
+                <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openDeleteVideoModal(-1,'revert')">
+				    <span class="glyphicon glyphicon-revert"></span>还原
+				</button>
+				<button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openDeleteVideoModal(-1,'delete')">
+				    <span class="glyphicon glyphicon-remove"></span>彻底删除
+				</button>
+            </div>
+        </div>
+        <div class="col-xs-5 col-xs-offset-1 padding-right-none">
+            <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch===true">
+                <input  type="text" ng-model="videoResource.resourcename" class="form-control" placeholder="请输入资源名称">
+                <span class="input-group-btn">
+                        <button ng-click="resourcevideos('1')" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="pull-right">
+                <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+            </div>
+        </div>
+    </div>
+<div>
+<div collapse="hideAdvancedSearch" class="advSearchPanel">
+
+    <form class="form-inline" role="form">
+
+        <div class="form-group">
+            <label class="form-label" for="video">创建时间</label>
+            <input ng-model="videoResource.startdate" type="date" id="video" class="form-control" datepicker2 />
+            至
+            <input ng-model="videoResource.enddate" type="date" class="form-control" datepicker2 />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="video2">作者</label>
+            <input id="video2" class="form-control" placeholder="作者" ng-model="videoResource.username">
+        </div>
+        
+        <button class="btn btn-primary pull-right" ng-click="resourcevideos('1')">
+            <span class="glyphicon glyphicon-search"></span>
+            查询</button>
+
+    </form>
+</div>
+</div>
+    <!--<div class="formheader">-->
+    <div class="panel panel-default">
+        <div class="panel-body padding-0" style="min-height:467px">
+            <table class="table table-striped" style="text-align: center">
+                <thead class="formthead">
+                <!--全选按钮-->
+                <td style="WORD-WRAP: break-word" width="40"><input type="checkbox" ng-model="checkAll" ng-click="checkAllVideo()"></td>
+                <td style="WORD-WRAP: break-word" width="100">资源名称</td>
+                <td>
+                <span>作者</span>
+                            	<span>
+                                    <a href ng-show="sort.username == 'asc'" ng-click="orderby('username')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.username == 'desc'" ng-click="orderby('username')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                </td>
+                <td style="WORD-WRAP: break-word" width="156">
+                    <span>视频来源</span>
+                	<span>
+                        <a href ng-show="sort.areaname == 'asc'" ng-click="orderby('areaname')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.areaname == 'desc'" ng-click="orderby('areaname')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>创建时间</span>
+                	<span>
+                        <a href ng-show="sort.createdate == 'asc'" ng-click="orderby('createdate')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.createdate == 'desc'" ng-click="orderby('createdate')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span> 
+                </td>    
+                <td>            
+                	<span>发布状态</span>
+                   	<span>
+                         <a href ng-show="sort.publishstate == 'asc'" ng-click="orderby('publishstate')"
+                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                 class="btn-link glyphicon glyphicon-chevron-up">
+                         </a>
+                         <a href ng-show="sort.publishstate == 'desc'" ng-click="orderby('publishstate')"
+                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                 class="btn-link glyphicon glyphicon-chevron-down">
+                         </a>
+                     </span>
+               </td>
+               <!-- <td>
+               	   <span>删除时间</span>
+               	   <span>
+                         <a href ng-show="sort.publishstate == 'asc'" ng-click="orderby('deleteTime')"
+                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                 class="btn-link glyphicon glyphicon-chevron-up">
+                         </a>
+                         <a href ng-show="sort.publishstate == 'desc'" ng-click="orderby('deleteTime')"
+                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                 class="btn-link glyphicon glyphicon-chevron-down">
+                         </a>
+                     </span>
+               </td> 
+                
+                <td>
+                	<span>彻底删除</span>
+                </td> -->
+                <td>操作</td>
+                </thead>
+                 <!--遍历数据-->
+                <tr ng-repeat="video in videoList">
+                    <td><input type="checkbox" ng-model="video.checked"></td>
+                    <td ng-if="video.status !== '1'">{{video.resourcename}}</td>
+                    <td ng-if="video.size > 10 && video.status == '1'"><a target="_blank" ng-href="#/resource/resourcename/{{video}}">{{video.resourcename}}</a></td>
+                    <td ng-if="video.size <= 10 && video.status == '1'"><a href="" ng-click="openClickVideo('size')">{{video.resourcename}}</a></td>
+                    <td>{{video.username}}</td>
+                    <td>{{video.areaname}}</td>
+                    <td>{{video.createdate}}</td>
+                    <td ng-if="video.publishstate==='0'">未发布</td>
+                    <td ng-if="video.publishstate==='1'">已发布</td>
+                   <!--  <td>{{video.deleteTime}}</td>
+                   
+                    <td>{{video.completeDelete}}</td>  -->
+                    <td>
+	                    <span class="btn btn-link" ng-click="openDeleteVideoModal($index,'revert')">
+	                        		还原
+	                    </span>
+	                    <span class="btn btn-link" ng-click="openDeleteVideoModal($index,'delete')" >
+	                        		彻底删除
+	                    </span>
+                    </td>
+                </tr>
+            </table>
+
+            <button ng-if="pagination.totalItems === 0" class="ondata">
+                <span class="ondatatext">没有找到相关信息！</span>
+                <!-- <a ng-href="#/resource/videoShow">test</a> -->
+            </button>
+
+            <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+            </div>-->
+        </div>
+
+        <div class="panel-footer">
+
+            <div ng-if="pagination.totalItems > 0" class="row">
+
+                <div class="col-xs-3" style="padding-top:8px;">
+                    <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                </div>
+
+                <div class="col-xs-7" ng-show="pagination.totalItems > pagination.pageSize">
+                    <!-- 分页  -->
+                    <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                page="pagination.pageIndex"
+                                items-per-page="pagination.pageSize"
+                                max-size="pagination.maxSize"
+                                previous-text="{{pagination.previousText}}"
+                                next-text="{{pagination.nextText}}"
+                                first-text="{{pagination.firstText}}"
+                                last-text="{{pagination.lastText}}"
+                                class="pagination-small"
+                                boundary-links="true"
+                                on-select-page="onSelectPage(page)">
+                    </pagination>
+                </div>
+                <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+                    <div class="input-group input-group-sm" style="width: 100px"
+                         tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                        Go
+                                    </button>
+                                </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

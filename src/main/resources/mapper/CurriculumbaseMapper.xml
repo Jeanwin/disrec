@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.CurriculumbaseMapper" >
+  
+	  <!-- 按termid 查找对应课节 -->
+  <select id="findCurriculumbaseByTerm" resultType="com.zonekey.disrec.entity.Curriculumbase" >
+ 	select id,name,starttime,endtime from zonekey_curriculumbase WHERE termid=#{termid}
+  </select>
+  
+   <!-- 按条件查找对应课节 -->
+  <select id="findCurriculumbaseByWhere" resultType="com.zonekey.disrec.entity.Curriculumbase" parameterType="com.zonekey.disrec.entity.Curriculum">
+	SELECT a.id,a.class_type as classtype, a.areaid, a.date_begin as datebegin, a.date_end as dateend, a. name,
+	a.i_class as iclass, a.starttime, a.endtime 
+	FROM zonekey_curriculumbase a 
+	WHERE 1=1 
+	<if test="areaid != null">and a.areaid = #{areaid} </if>
+	<if test="termid != null">AND a.termid = #{termid} </if>
+	<if test="date != null">AND a.date_end >= #{date} </if>
+	<if test="date != null">AND #{date} >= a.date_begin</if>
+</select>
+
+	<!-- 按条件查找对应课节 -->
+	<select id="findCurriculumbaseTimeByWhere" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculum">
+		SELECT a.id,a.class_type as classtype,a.areaid,a.date_begin as datebegin,a.date_end as dateend,a.name,a.starttime,a.endtime,a.i_class as iclass ,a.classbatch
+		from zonekey_curriculumbase a
+		where 1=1 and a.class_type !=''
+		<if test="areaid != null">and a.areaid = #{areaid} </if>
+		<if test="date != null">AND a.date_end >= #{date} </if>
+		<if test="date != null">AND #{date} >= a.date_begin</if>
+		ORDER BY a.i_class
+	</select>
+<!-- 新增课节 -->
+	<insert id="insertCurriculumbase" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		insert into zonekey_curriculumbase (id,class_type,areaid,date_begin,date_end,termid,name,starttime,endtime,i_class,smaxclass,maxclass,createtime,createuser,modifyuser,modifydate,deleteflag,classbatch) 
+		values(#{id},#{classtype},#{areaid},#{datebegin},#{dateend},#{termid},#{name},#{starttime},#{endtime},#{iclass},#{smaxclass},#{maxclass},sysDate(),#{createuser},#{modifyuser},#{modifydate},#{deleteflag},#{classbatch})
+	</insert>
+	
+	<!-- 将课节应用到教室 -->
+	<insert id="insertUsedarea"  parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		insert into zonekey_curriculumbase (id,class_type,areaid,date_begin,date_end,termid,name,starttime,endtime,i_class,createtime,createuser,modifyuser,modifydate,deleteflag,classbatch) 
+		values(#{id},#{classtype},#{areaid},#{datebegin},#{dateend},#{termid},#{name},#{starttime},#{endtime},#{iclass},sysDate(),#{createuser},#{modifyuser},#{modifydate},#{deleteflag},#{classbatch})
+	</insert>
+	<!-- 根据areaid、起止时间查一下，该教室是否存在方案 -->
+	<select id="findClassTypeByArea" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		SELECT a.id,a.class_type as classtype, a.areaid, c.name as areaname,a.date_begin as
+		datebegin, a.date_end as dateend, a. name,
+		a.i_class as iclass, a.starttime, a.endtime,classbatch
+		FROM zonekey_curriculumbase a ,zonekey_area c
+		WHERE 1=1 and a.areaid=c.id
+		and a.areaid = #{areaid} 
+		GROUP BY a.date_begin,a.date_end
+	</select>
+	 <!-- 查询该方案，该有效起止时间 一共有多少节课 -->
+  <select id="findCurriculumbaseByType" resultType="com.zonekey.disrec.entity.Curriculumbase" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+	SELECT a.id,a.class_type as classtype, a.classbatch,a.areaid, a.date_begin as datebegin, a.date_end as dateend, a. name,
+	a.i_class as iclass, a.starttime, a.endtime 
+	FROM zonekey_curriculumbase a 
+	WHERE 1=1 AND ISNULL(a.areaid)
+	<if test="classtype != null">and a.class_type = #{classtype} </if>
+	<if test="datebegin != null">AND a.date_begin = #{datebegin} </if>
+	<if test="dateend != null">AND a.date_end = #{dateend} </if>
+</select>
+
+ <!-- 查询该方案，该有效起止时间 一共有多少节课 -->
+  <select id="findCurriculumbaseClassbatch" resultType="com.zonekey.disrec.entity.Curriculumbase" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+	SELECT a.id,a.class_type as classtype, a.areaid, a.date_begin as datebegin, a.date_end as dateend, a. name,
+	a.i_class as iclass, a.starttime, a.endtime ,a.classbatch
+	FROM zonekey_curriculumbase a 
+	WHERE 1=1 AND ISNULL(a.areaid)
+	and a.classbatch = #{classbatch} 
+</select>
+	<!-- 根据批次、节次查询方案 -->
+  	<select id="findCurriculumbaseClassbatchAndIclass" resultType="com.zonekey.disrec.entity.Curriculumbase" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		SELECT a.id,a.class_type as classtype, a.areaid, a.date_begin as datebegin, a.date_end as dateend, a. name,
+		a.i_class as iclass, a.starttime, a.endtime ,a.classbatch
+		FROM zonekey_curriculumbase a 
+		WHERE 1=1 AND ISNULL(a.areaid)
+		<if test="classbatch != null">AND a.classbatch = #{classbatch} </if>
+		<if test="iclass != null">AND a.i_class = #{iclass} </if>
+	</select>
+
+	<!-- 查询所有方案、课节 -->
+	<select id="findAllCurriculumbase_bak" resultType="com.zonekey.disrec.entity.Curriculumbase">
+		select
+		class_area.id,class_area.class_type as classtype,class_area.date_begin
+		as datebegin,class_area.date_end as dateend,class_sum.classsum as
+		classsum,count(*) as areasum FROM
+		(select c.id , c.class_type ,c.date_begin,c.date_end ,count(c.class_type)
+		from zonekey_curriculumbase c where
+		c.class_type != '' AND c.areaid != '' GROUP BY c.class_type
+		,c.date_begin,c.date_end ,c.areaid) class_area ,
+		(select c.class_type ,c.date_begin,c.date_end,COUNT(c.id) as classsum from
+		zonekey_curriculumbase c where c.class_type != '' AND ISNULL(c.areaid)
+		GROUP BY c.class_type) class_sum
+		where class_area.class_type = class_sum.class_type
+		GROUP BY class_area.class_type
+	</select>
+	<!-- 查询所有方案、课节 -->
+	<select id="findAllCurriculumbase_1020" resultType="com.zonekey.disrec.entity.Curriculumbase">
+	select
+	classnums.classtype,classnums.datebegin, classnums.dateend, classnums.classsum, count(*) as areasum
+	from
+	(
+	select
+	b.id,b.class_type as classtype,b.date_begin
+	as datebegin,b.date_end as dateend,
+	count(*) as
+	classsum from zonekey_curriculumbase b where b.areaid ='' or ISNULL(b.areaid)
+	GROUP BY b.class_type,b.date_begin,b.date_end
+	) classnums,
+	(
+	select b.id,b.class_type as classtype,b.date_begin
+	as datebegin,b.date_end as dateend from zonekey_curriculumbase b where
+	b.areaid !='' GROUP BY b.class_type,b.date_begin,b.date_end,b.areaid
+	) areas
+	where classnums.classtype=areas.classtype and
+	classnums.datebegin=areas.datebegin and classnums.dateend=areas.dateend
+	GROUP BY classnums.classtype,classnums.datebegin,classnums.dateend
+	</select>
+	<!-- 查询所有方案、课节 -->
+	<select id="findAllCurriculumbase" resultType="com.zonekey.disrec.entity.Curriculumbase" parameterType="com.zonekey.disrec.vo.PageBean">
+	select
+	classnums.classtype,classnums.datebegin, classnums.dateend, classnums.classsum, (count(*)-1) as areasum ,classnums.classbatch
+	from
+	(
+	select
+	b.id,b.class_type as classtype,b.date_begin
+	as datebegin,b.date_end as dateend,
+	count(*) as
+	classsum ,classbatch from zonekey_curriculumbase b where b.areaid ='' or ISNULL(b.areaid)
+	GROUP BY b.class_type,b.date_begin,b.date_end
+	) classnums,
+	(
+	select b.id,b.class_type as classtype,b.date_begin
+	as datebegin,b.date_end as dateend from zonekey_curriculumbase b 
+	 GROUP BY b.class_type,b.date_begin,b.date_end,b.areaid
+	)areas
+	where classnums.classtype=areas.classtype and
+	classnums.datebegin=areas.datebegin and classnums.dateend=areas.dateend
+	GROUP BY classnums.classtype,classnums.datebegin,classnums.dateend
+	<if test="page !=null and page.offset != null and page.limit!=null">limit  #{page.offset} ,#{page.limit}</if>
+	</select>
+	
+<select id="findAllCurriculumbaseCount" parameterType="com.zonekey.disrec.vo.PageBean"
+	resultType="long">
+	select count(*) FROM
+	(
+	select
+	classnums.classtype,classnums.datebegin, classnums.dateend, classnums.classsum, (count(*)-1) as areasum ,classnums.classbatch
+	from
+	(
+	select
+	b.id,b.class_type as classtype,b.date_begin
+	as datebegin,b.date_end as dateend,
+	count(*) as
+	classsum ,classbatch from zonekey_curriculumbase b where b.areaid ='' or ISNULL(b.areaid)
+	GROUP BY b.class_type,b.date_begin,b.date_end
+	) classnums,
+	(
+	select b.id,b.class_type as classtype,b.date_begin
+	as datebegin,b.date_end as dateend from zonekey_curriculumbase b 
+	 GROUP BY b.class_type,b.date_begin,b.date_end,b.areaid
+	)areas
+	where classnums.classtype=areas.classtype and
+	classnums.datebegin=areas.datebegin and classnums.dateend=areas.dateend
+	GROUP BY classnums.classtype,classnums.datebegin,classnums.dateend
+	) c
+</select>
+	<!-- 修改节次基础数据(展示基础数据) -->
+	<select id="queryCurriculumbase" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select  c.class_type as classtype,c.classbatch,c.i_class as iclass,c.name,c.date_begin as datebegin,c.date_end as dateend,c.starttime,c.endtime ,c.areaid from zonekey_curriculumbase c 
+		where ISNULL(c.areaid)
+		<if test="classbatch != null">and c.classbatch = #{classbatch} </if>
+		ORDER BY c.i_class ASC
+	</select>
+
+	<!-- 查看课节下的教室 -->
+	<select id="findAreaByCurriculumbase" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select DISTINCT(c.areaid), c.class_type as classtype,c.date_begin as
+		datebegin,c.date_end as dateend ,c.classbatch from zonekey_curriculumbase c
+		where c.areaid != ''
+		<if test="classbatch != null">and c.classbatch = #{classbatch} </if>
+		<!-- <if test="classtype != null">and c.class_type = #{classtype} </if>
+		<if test="datebegin != null">and c.date_begin = #{datebegin} </if>
+		<if test="dateend != null">and c.date_end = #{dateend} </if> -->
+		GROUP BY c.areaid
+	</select>
+	
+	<!-- 查看该批次下的所有教室 -->
+	<select id="findAreaByClassbatch" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select DISTINCT(c.areaid), c.classbatch,c.class_type as classtype,c.date_begin as
+		datebegin,c.date_end as dateend from zonekey_curriculumbase c
+		where c.areaid != ''
+		<if test="classbatch != null">and c.classbatch = #{classbatch} </if>
+		GROUP BY c.areaid
+	</select>
+	<!-- 删除该方案以及下面所有节次 -->
+	<delete id="deleteCurriculumbaseByClassbatch" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		delete from zonekey_curriculumbase 
+		where classbatch = #{classbatch}
+		
+	</delete>
+	<!-- 删除该方案下面所有节次 (方案仍保留)-->
+	<delete id="deleteAreaTypeByClassbatch" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		delete from zonekey_curriculumbase 
+		where classbatch = #{classbatch} and areaid !=''
+		
+	</delete>
+	<!-- 删除该方案，以及下面所有的教室数据 -->
+	<delete id="deleteCurriculumbaseByType" parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		delete from zonekey_curriculumbase 
+		where 1=1
+		<if test="classtype != null">and class_type = #{classtype} </if>
+		<if test="datebegin != null">and date_begin = #{datebegin} </if>
+		<if test="dateend != null">and date_end = #{dateend} </if>
+	</delete>
+
+	<!-- 查看一段时间内的所有方案 -->
+	<select id="findTypesByweek" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select
+		a.id,a.class_type as classtype, a.classbatch,a.areaid, a.date_begin as datebegin, a.date_end as
+		dateend, a. name,
+		a.i_class as iclass, a.starttime, a.endtime 
+		,a. smaxclass,a.maxclass
+		from
+		zonekey_curriculumbase a
+		where ISNULL(a.areaid)
+		<if test="datebegin != null">and a.date_end >=#{dateend}</if>
+		<if test="dateend != null">and #{datebegin} >= a.date_begin </if>
+		GROUP BY a.classbatch
+		ORDER BY a.i_class
+	</select>
+	
+	<!-- 查看一段时间内的所有方案(为我的课表使用) -->
+	<select id="findMyTypesByweek" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select
+		a.id,a.class_type as classtype, a.classbatch,a.areaid, a.date_begin as datebegin, a.date_end as
+		dateend, a. name,
+		a.i_class as iclass, a.starttime, a.endtime 
+		,a. smaxclass,a.maxclass
+		from
+		zonekey_curriculumbase a
+		where ISNULL(a.areaid)
+		<if test="datebegin != null">and a.date_end >=#{dateend}</if>
+		<if test="dateend != null">and #{datebegin} >= a.date_begin </if>
+		GROUP BY a.classbatch
+		ORDER BY a.maxclass desc limit 1
+	</select>
+	<!-- 查看一段时间内的所有方案 -->
+	<select id="findTypesByweek_bak" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select
+		a.id,a.class_type as classtype, a.classbatch,a.areaid, a.date_begin as datebegin, a.date_end as
+		dateend, a. name,
+		a.i_class as iclass, a.starttime, a.endtime 
+		,MAX(smaxclass) as smaxclass,MAX(maxclass) as maxclass
+		from
+		zonekey_curriculumbase a
+		where ISNULL(a.areaid)
+		<if test="datebegin != null">and a.date_end >=#{datebegin}</if>
+		<if test="dateend != null">and #{dateend} >= a.date_begin </if>
+		<!-- 这里可能不需要分组，这样只返回一条jil -->
+		<!-- GROUP BY a.class_type,a.date_begin,a.date_end -->
+		ORDER BY a.i_class
+	</select>
+	<!-- 查询某个方案下，某节课的上课时间 -->
+	<select id="findClassTimeByClassnum" resultType="com.zonekey.disrec.entity.Curriculumbase"
+		parameterType="com.zonekey.disrec.entity.Curriculumbase">
+		select * from zonekey_curriculumbase where classbatch=#{classbatch} and i_class = #{iclass} and ISNULL(areaid)
+	</select>
+	<!-- 初始化新增节次方案时 -->
+	<select id="initInsertCurriculumbase" resultType="com.zonekey.disrec.entity.Curriculumbase" >
+		select class_type as classtype,LEFT(starttime,5) as starttime,LEFT(endtime,5) as endtime ,i_class as iclass ,classbatch from zonekey_curriculumbase where ISNULL(areaid) and classbatch=
+		( select classbatch from zonekey_curriculumbase where ISNULL(areaid) GROUP BY
+		classbatch limit 1) order by i_class
+	</select>
+  </mapper>

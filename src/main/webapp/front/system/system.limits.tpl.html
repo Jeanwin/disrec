@@ -1,0 +1,236 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:490px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+   
+    .roleListContent li,.roleListTile li{
+        float: left;
+        list-style: none;
+        padding-top: 10px;
+        
+    }
+    .roleListContent .secondLi{height:40px;}
+    .roleListContent .secondLi:nth-child(2n+1){
+        background-color: #ebf6fd;
+    }
+    .roleListContent .secondLi:hover{
+        background-color: #CEECFF;
+    }
+    .roleListContent{
+        max-height: 575px;
+        overflow-y: auto;
+    }
+    .roleListTile{
+    	width:100%;
+    	padding-left:0;
+    }
+    .roleListTile{
+    	background-color: #ceecff;
+    	font-weight:bold;
+    	border-top:1px solid #DDD;
+    	height:40px;
+    	background-image:-webkit-gradient(linear,left top,left bottom,from(#F3F9FF),to(#C7DFF6));
+    }
+    
+    .isAllChecked {
+    	/* background: green;
+		padding: 2px 2px 0px; */
+		box-shadow: -1px -1px 1px 1px rgba(255,0,0,0.6);
+    }
+</style>
+<div class="container-fluid">
+    <div class="row" style="margin-top:16px">
+    <div class="col-xs-9">
+        <div class="whiteframe">
+            <div class="system-left-top" style="margin-left: 8px;margin-bottom:5px;">
+                <button class="btn btn-primary" ng-click="addroles()">
+                    <span class="glyphicon glyphicon-plus"></span>添加角色
+                </button>
+            </div>
+            <!--<div style="height:456px;overflow:scroll">-->
+
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-0" style="min-height:521px">
+                    <ul class="roleListTile">
+                        <li class="col-xs-1">
+                            <!-- <input type="checkbox" ng-model="checkAll" ng-click="checkAllLimits()"> -->
+                        </li>
+                        <li class="col-xs-9">
+                            <span>角色</span>
+                        </li>
+                        <li class="col-xs-2 text-right padding-left-20 pull-right">
+                            <span>操作</span>
+                        </li>
+                       </ul>
+                       <ul class="roleListContent padding-left-none" style="width:100%;">
+                       	 <li class="col-xs-12 padding-left-none padding-top-none padding-right-none secondLi" ng-repeat="roles in rolesList" style="display:block;clear:both;border-top:1px solid #DDD;">
+                            <ul class="second" style="padding-left:0;">
+                                <li class="col-xs-1">
+                                     <!-- <input type="checkbox" ng-model="roles.checked"> -->
+                                </li>
+                                <li class="col-xs-4 padding-left-none">
+                                     <a ng-click="setlimits(roles)" href="">
+                                    <!--<span class="glyphicon glyphicon-user"></span>-->
+                                    {{roles.roleName}}</a>
+                                </li>
+                                <li class="col-xs-2 text-right padding-left-35 pull-right">
+                                    <a href="" ng-disabled="roles.enable === 'N'" ng-click="openDeleteLimitsModal(roles)"
+                                        tooltip-placement="left" tooltip-popup-delay="1000" tooltip="删除">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="panel-footer">
+
+                    <div ng-if="pagination.totalItems > 0" class="row">
+
+                        <div class="col-xs-3" style="padding-top:8px;">
+                            <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                        </div>
+
+                        <div class="col-xs-9" ng-show="pagination.totalItems > pagination.pageSize">
+                            <!-- 分页  -->
+                            <div class="col-xs-9">
+                                <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                            page="pagination.pageIndex"
+                                            items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize"
+                                            previous-text="{{pagination.previousText}}"
+                                            next-text="{{pagination.nextText}}"
+                                            first-text="{{pagination.firstText}}"
+                                            last-text="{{pagination.lastText}}"
+                                            class="pagination-small"
+                                            boundary-links="true"
+                                            on-select-page="onSelectPage(page)">
+                                </pagination>
+                            </div>
+                            <div class="col-xs-3" style="padding-top:8px;">
+
+                                <div class="input-group input-group-sm" style="width: 100px"
+                                     tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                    <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                        </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+                <!--<div ng-repeat="roles in rolesList">
+                    <button ng-click="setlimits(roles)" class="btn btn-link">
+                        <span class="glyphicon glyphicon-user"></span>
+                        {{roles.roleName}}</button>
+                </div>-->
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <div class="whiteframe" style="margin-left:-16px">
+            <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #fff">
+                <form name="frmAreaEditor" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <!--<label class="col-sm-2 control-label" for="rolesName">角色名称</label>-->
+                        <div class="col-xs-8">
+                            <input  class="form-control" id="rolesName" placeholder="当前角色" type="text" ng-model="roles.roleName">
+                        </div>
+                        <div class="col-xs-4">
+                            <button ng-disabled="roles.enable === 'N'" class="btn btn-primary" ng-click="AddRoleLimit(roles)">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-body" style="padding:8px;">
+                <!--<div class="panel-title">
+                    <h3>功能权限</h3>
+                </div>-->
+                    <!-- <div class="panel-console">
+                        <div ng-repeat="rolename in rolenameList">
+                            <div style="margin-top: 8px;">
+                                　　  <input type="checkbox" ng-model="rolename.checkbox">
+                                <b>{{rolename.name}}</b>
+                            </div>
+                        </div>
+                    </div> -->
+                     <div ui-tree id="tree-root" data-drag-enabled="false">
+                         <ol ui-tree-nodes ng-model="rolenameList">
+                             <li ng-repeat="node in rolenameList" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                         </ol>
+                     </div>
+            </div>
+            <div class="panel-footer">
+            </div>
+
+            <!--<div style="height:456px;overflow:scroll">
+                <div class="modal-body">
+                    <div ng-repeat="rolename in rolenameList">
+                        <div style="margin-top: 8px;">
+                    　　  <input type="checkbox" ng-model="rolename.checkbox">
+                            <b>{{rolename.name}}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}" ng-click="setActiveAreaTreeNode(this)">
+        <!--<span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>-->
+        <!--<span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>-->
+        <input type="checkbox" ng-class="{'isAllChecked': node.halfFlag}" ng-model="node.isSelected" ng-click="checkAllTrees(node)">{{node.name}}
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="nodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content slideTree" >-->
+        <!--<a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>-->
+        <!--<input   type="checkbox" ng-model="node.isSelected" ng-click="checkAllApplys(node)">{{node.name}}-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

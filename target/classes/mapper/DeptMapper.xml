@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.DeptMapper">
+	<resultMap type="com.zonekey.disrec.vo.Tree" id="roots">
+		<result property="id" column="id"/>
+		<association property="nodes" column="id" select="getDatas"/>
+	</resultMap>
+	<resultMap type="com.zonekey.disrec.vo.Tree" id="root">
+		<result property="id" column="id"/>
+		<association property="nodes" column="id" select="getData"/>
+	</resultMap>
+	<!-- sql绑定用户名 -->
+	<sql id="bindLoginname">
+		<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+	</sql>
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.DeptView">
+	<include refid="bindLoginname"/>
+		select 
+		a.id,a.name,a.parentid,
+		a.attribute,
+		a.code,
+		(select name from zonekey_dept where id = a.parentid) parentname,
+		a.sort,
+		a.state,
+		b.name areaName,b.id areaid
+		 from zonekey_dept a left join zonekey_area b on a.id=b.deptid
+		  where  a.deleteflag = 0 
+		  
+		  		and IF(
+				(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2)>0,
+					a.id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2),1=1) 
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != ''">and a.state = #{keywords.state}  </if>
+			<if test="keywords.attribute != null and keywords.attribute != ''">and a.attribute = #{keywords.attribute}  </if>
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%') </if> 
+			<if test="keywords.param != null and keywords.param != ''">and (a.name like concat('%',#{keywords.param},'%') or a.code like concat('%',#{keywords.param},'%')) </if>
+		</if>
+		<if test="treeid !=null and treeid != ''">and a.parentId = #{treeid} </if>
+		<if test="treeid ==null or  treeid == ''">and a.parentId = '0'  </if>
+<!-- 		order by case  when a.sort is null then -1 end ,a.sort  -->
+		<if test="page != null and page.offset != null and page.limit!=null">
+		order by ${page.order} ${page.sort}
+		limit  #{page.offset} ,#{page.limit}</if>
+	</select>
+	<select id="findByName" parameterType="map" resultType="map">
+		select id,code,name from zonekey_dept where deleteflag='0' and attribute="2" 
+		<if test="name != null">
+			and name like concat(#{name},"%")
+		</if>
+	</select>
+	<!-- 获取总数 -->
+	<select id="count" resultType="long">
+	<include refid="bindLoginname"/>
+		select count(*) from 
+		zonekey_dept a 
+		left join zonekey_area b on a.id=b.deptid 
+		where a.deleteflag=0 
+		
+				and IF(
+				(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2)>0,
+					a.id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2),1=1) 
+		<if test="keywords != null">
+			<if test="keywords.state != null and keywords.state != ''">and a.state = #{keywords.state}  </if>
+			<if test="keywords.attribute != null and keywords.attribute != ''">and a.attribute = #{keywords.attribute}  </if>
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%') </if>
+			<if test="keywords.param != null and keywords.param != ''">and (a.name like concat('%',#{keywords.param},'%') or a.code like concat('%',#{keywords.param},'%'))</if> 
+		</if>
+		<if test="treeid !=null and treeid != ''">and a.parentId = #{treeid} </if>
+		<if test="treeid ==null or  treeid == ''">and a.parentId = '0'  </if>
+	</select>
+	<!-- 校验是否重复 -->
+	<select id="check" parameterType="com.zonekey.disrec.entity.Dept" resultType="int">
+		select count(*) from zonekey_dept where deleteflag='0'
+		<if test="code != null">
+			and code = #{code}
+		</if>
+		<if test="name != null">
+			and name =#{name}
+		</if>
+		<if test="parentid != null">
+			and parentid =#{parentid}
+		</if>
+	</select>
+	<!-- 校验名字是否重复 -->
+	<select id="checkname" parameterType="com.zonekey.disrec.entity.Dept" resultType="int">
+		select count(*) from zonekey_dept where deleteflag='0'
+		<if test="name != null">
+			and name =#{name}
+		</if>
+		<if test="parentid != null">
+			and parentid =#{parentid}
+		</if>
+	</select>
+	<!-- 获取根树 -->
+	<select id="getDeptRootTrees" resultMap="roots">
+		select id,name title,attribute,sort from zonekey_dept where parentid ='0'
+	</select>
+	<select id="getDatas" resultMap="roots">
+	<include refid="bindLoginname"/>
+		select id,name title,attribute,sort from zonekey_dept where parentid =#{id} and deleteflag='0'
+		and IF(
+				(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2)>0,
+					id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2),
+1=1)
+		order by case  when sort is null then -1 end ,sort 
+	</select>
+	
+	<select id="getDeptRootTree" resultMap="root">
+		select id,name title,attribute,sort from zonekey_dept where parentid ='0'
+	</select>
+	<select id="getData" resultMap="root">
+	<include refid="bindLoginname"/>
+		select id,name title,attribute,sort from zonekey_dept where parentid =#{id} and deleteflag='0' and attribute !=17
+		and IF(
+				(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2)>0,
+					id in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2),
+					FIND_IN_SET(id,getDeptChildLst(#{id}))) 
+		order by case  when sort is null then -1 end ,sort 
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		<include refid="bindLoginname"/>
+		update zonekey_dept set
+		deleteflag='1',modifyuser=#{_loginname},modifydate=sysDate()
+		where id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+
+	<insert id="insert" parameterType="com.zonekey.disrec.vo.DeptView">
+	<include refid="bindLoginname"/>
+		insert into zonekey_dept (id, parentid, code,
+		name, attribute, description,
+		Sort, state, classyear, createdate,createuser)
+		values (#{id}, #{parentid},
+		#{code},#{name}, #{attribute}, #{description},
+		#{sort}, #{state},date_format(SYSDATE(),"%Y"), sysDate(),#{_loginname})
+	</insert>
+	
+	<update id="update" parameterType="com.zonekey.disrec.vo.DeptView">
+	<include refid="bindLoginname"/>
+		update zonekey_dept
+		<set>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=CHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="attribute != null">
+				attribute = #{attribute,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				Sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=CHAR},
+			</if>
+				modifydate = sysDate(),modifyuser = #{_loginname}
+		</set>
+		where id = #{id}
+	</update>
+	<update id="updateTreeBoot" parameterType="string">
+	update zonekey_dept  set name = #{desktopName} where id='1' and parentid='0'  
+	</update>
+	<!-- 根据机构代码查整个机构 -->
+	<select id="findDeptByCode" parameterType="string" resultType="com.zonekey.disrec.vo.DeptView">
+		select * from  zonekey_dept where code=#{code} and  deleteflag = '0'
+	</select>
+	<select id="findAreaIdByDeptId" parameterType="string" resultType="com.zonekey.disrec.vo.DeptView">
+		select * from  zonekey_dept where id=#{deptid} and  deleteflag = '0' and attribute = '2'
+	</select>
+	<!-- 根据父机构id、name查询 -->
+	<select id="findDeptByName" parameterType="string" resultType="com.zonekey.disrec.vo.DeptView">
+		select * from  zonekey_dept where parentid=#{parentid} and name=#{name} and  deleteflag = '0'
+	</select>
+	<!-- 新增临时表 -->
+	<insert id="insertdeptmid" parameterType="com.zonekey.disrec.vo.DeptView">
+		insert into zonekey_dept_mid (id, code,
+		name, attribute, areaname, parentname,
+		createdate,createuser,excelbatch,errordescribe,flag)
+		values (#{id}, #{code},
+		#{name},#{attribute}, #{areaName}, #{parentname},
+		sysDate(),#{createuser}, #{excelbatch}, #{errordescribe}, #{flag})
+	</insert>
+	<select id="finddeptmid" resultType="com.zonekey.disrec.vo.DeptView">
+		select * from zonekey_dept_mid where excelbatch=#{excelbatch} and flag=#{flag}
+	</select>
+	<select id="findOne" parameterType="string" resultType="com.zonekey.disrec.vo.DeptView">
+	    select * from zonekey_dept where id =#{id}
+	</select>	
+		<select id="findAll" parameterType="string" resultType="map">
+	    select id,name from zonekey_dept where 1=1 and attribute = '2'
+	    <if test="id !=null and id != '' ">
+	    AND FIND_IN_SET(id,getDeptChildLst(#{id})) 
+	    </if>
+	     <if test="id ==null and id == '' ">
+	      AND FIND_IN_SET(id,getDeptChildLst(0)) 
+	     </if>
+	</select>
+	<select id="findDeptSomeMessage" parameterType="com.zonekey.disrec.entity.Dept" resultType="com.zonekey.disrec.vo.DeptView">
+		SELECT r.*,
+		(select a.name from sys_code a,sys_code b where a.deleteflag=0 and b.deleteflag=0 
+				and a.parentid = b.id and a.value =r.attribute and b.value ='institution'  ) as attributename
+		FROM 
+		(SELECT d.id,d.parentid,d.name,d.attribute from zonekey_dept d where 
+		1=1 and FIND_IN_SET(d.id,getDeptChildLst(0)) AND d.deleteflag = '0'
+		<if test="name != null and name != ''">and d.name like concat('%',#{name},'%')   </if>
+		<if test="attribute != null and attribute != ''">and d.attribute = #{attribute}  </if>
+		
+		) r
+	</select>
+</mapper>

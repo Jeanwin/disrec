@@ -1,0 +1,53 @@
+<tabset>
+    <tab heading="popover">
+
+        <a popup-show="popup.html" class="btn btn-link" popup-placement="bottom">show popup (下方)</a>
+        <a popup-show="popup2.html" class="btn btn-link" popup-placement="top">show popup (上方)</a>
+        <a popup-show="popup.html" class="btn btn-link" popup-placement="left">show popup (左方)</a>
+        <a popup-show="popup.html" class="btn btn-link" popup-placement="right">show popup (右方)</a>
+
+        <script type="text/ng-template" id="popup.html">
+            <h3 class="popover-title">Hello!</h3>
+
+            <div class="popover-content">
+                <p>This is a popup</p>
+                <ul>
+                    <li>aaaaa</li>
+                    <li>aaaaa</li>
+                    <li>aaaaa</li>
+                </ul>
+
+                <a ng-click="hidePopover()" class="btn btn-primary">close</a>
+            </div>
+
+        </script>
+        <script type="text/ng-template" id="popup2.html">
+
+            <div class="popover-content">
+                <p>This is a popup</p>
+                <ul>
+                    <li>aaaaa</li>
+                    <li>aaaaa</li>
+                    <li>aaaaa</li>
+                </ul>
+
+                <a ng-click="hidePopover()" class="btn btn-primary">close</a>
+            </div>
+
+        </script>
+    </tab>
+    <tab heading="日历">
+        <div class="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+    </tab>
+    <tab heading="modal">
+        backdrop:'static'
+        <button class="btn btn-primary" ng-click="openModal()">打开modal</button>
+    </tab>
+    <tab heading="test">
+
+        <div ng-include="'sample/sample.list.html'"></div>
+
+
+    </tab>
+</tabset>
+

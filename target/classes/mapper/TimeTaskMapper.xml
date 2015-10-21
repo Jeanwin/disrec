@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.TimeTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.TimeTask" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="task_type" property="taskType" jdbcType="CHAR" />
+    <result column="exec_start" property="execStart" jdbcType="DATE" />
+    <result column="exec_end" property="execEnd" jdbcType="DATE" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="createuser" property="createuser" jdbcType="VARCHAR" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifyuser" property="modifyuser" jdbcType="VARCHAR" />
+    <result column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+    <association column="id" property="areas" select="getAreaList"></association>
+  </resultMap>
+  
+   <sql id="bindLoginname">
+		<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+	</sql>
+  <select id="findByPage" resultMap="BaseResultMap" parameterType="com.zonekey.disrec.vo.PageBean" >
+    select 
+    	a.id, a.exec_start execStart, b.value taskType,b.name taskName,a.exec_end execEnd, a.week, a.start_time startTime,c.total
+			from zonekey_classroom_time_task a,(select a.name,a.value from sys_code a,sys_code b where a.parentid=b.id and b.value='timeTaskType' ) b,
+				(select t.id,count(*) total from zonekey_classroom_time_task t,zonekey_classroom_time_task_area ta 
+					where t.id=ta.time_task_id and ta.deleteflag='0' and t.deleteflag='0' group by t.id) c
+     where a.task_type=b.value and c.id=a.id and a.deleteflag='0' order by a.createdate desc 
+    <if test="page != null and page.offset != null and page.limit!=null">
+		limit  #{page.offset} ,#{page.limit}
+	</if>
+  </select>
+  
+  <select id="getAreaList" resultType="map">
+		select area_id id
+		from zonekey_classroom_time_task_area
+		where time_task_id = #{id} and deleteflag ='0'
+	</select>
+<!--   <select id="getSysCode" resultType="com.zonekey.disrec.entity.SysCode">
+		select id,name
+		from sys_code
+		where id = #{task_type} and deleteflag ='0'
+  </select> -->
+	
+  <select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long" >
+    select  count(*) from zonekey_classroom_time_task a
+    where a.deleteflag=0 
+  </select>
+  <insert id="saveTimeTask" parameterType="com.zonekey.disrec.entity.TimeTask" >
+  <include refid="bindLoginname"/>
+    insert into zonekey_classroom_time_task (id, task_type, exec_start, 
+      exec_end, week, start_time, 
+      createdate, createuser)
+    values (#{id,jdbcType=CHAR}, #{taskType,jdbcType=CHAR}, #{execStart,jdbcType=VARCHAR}, 
+      #{execEnd,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+      sysDate(), #{_loginname})
+  </insert>
+  
+  <insert id="saveTimeTaskArea" parameterType="com.zonekey.disrec.entity.TimeTask" >
+  <include refid="bindLoginname"/>
+    insert into zonekey_classroom_time_task_area (id,time_task_id, area_id,createdate, createuser)
+    values
+    <foreach collection="areas" item="area" index="index" separator="," >  
+        (#{area.id1},#{id},#{area.id},sysDate(),#{_loginname})  
+    </foreach> 
+  </insert>
+
+  <update id="updateTimeTask" parameterType="com.zonekey.disrec.entity.TimeTask" >
+  <include refid="bindLoginname"/>
+    update zonekey_classroom_time_task
+    <set >
+      <if test="taskType != null" >
+        task_type = #{taskType,jdbcType=CHAR},
+      </if>
+      <if test="execStart != null" >
+        exec_start = #{execStart,jdbcType=VARCHAR},
+      </if>
+      <if test="execEnd != null" >
+        exec_end = #{execEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+        modifydate = sysDate(),
+        modifyuser = #{_loginname},
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+ 
+  <delete id="deleteTimeTaskArea" parameterType="com.zonekey.disrec.entity.TimeTask" >
+    delete from zonekey_classroom_time_task_area
+    where time_task_id = #{id,jdbcType=CHAR}
+  </delete>
+  
+    <!-- 逻辑删除 -->
+	<update id="deleteTimeTask">
+		update zonekey_classroom_time_task set
+		deleteflag='1' where id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+	
+  <!-- 逻辑删除 -->
+	<update id="deleteTimeArea">
+		update zonekey_classroom_time_task_area set
+		deleteflag='1' where time_task_id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+</mapper>

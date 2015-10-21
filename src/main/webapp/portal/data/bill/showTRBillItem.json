@@ -1,0 +1,57 @@
+{
+    "billStatus": null,
+    "billTyp": "01 - 季度账",
+    "billNo": "OPD2014220101001000001",
+    "contNo": "OPD201422",
+    "sectionNo": null,
+    "layerNo": null,
+    "deptCode": null,
+    "reinsCode": "01",
+    "reinsName": "公司",
+    "accPeriod": null,
+    "currency": "人民币",
+    "balance": null,
+    "insrncCde": null,
+    "startDate": "2014-01",
+    "endDate": "2014-03",
+    "tmpBillNo": null,
+    "contYear": "2014",
+    "insrncNme": null,
+    "premium": null,
+    "commFee": null,
+    "paidLoss": null,
+    "refund": null,
+    "reserceDraw": null,
+    "reserceReten": null,
+    "interest": null,
+    "tax": null,
+    "otherFee": null,
+    "noPaidLoss": null,
+    "billItems": [
+        {
+            "feeCde": "C1",
+            "feeValue": 633170.66,
+            "feeFlag": "C"
+        },
+        {
+            "feeCde": "D1",
+            "feeValue": 243770.7,
+            "feeFlag": "D"
+        },
+        {
+            "feeCde": "D2",
+            "feeValue": 763.35,
+            "feeFlag": "D"
+        },
+        {
+            "feeCde": "D9",
+            "feeValue": 27974.42,
+            "feeFlag": "C"
+        },
+        {
+            "feeCde": "BAL",
+            "feeValue": 388636.61,
+            "feeFlag": "D"
+        }
+    ]
+}

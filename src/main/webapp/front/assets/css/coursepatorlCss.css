@@ -1,0 +1,13 @@
+@charset "gb2312";
+.focus{width:600px;float:left;}
+.cfix,.cf,.clear{zoom:1;margin: 0;padding: 0;height: 100%;}
+.focus li{width:200px;float:left;position:relative;list-style: none;/* left:80%; top:200px;*/}
+.maskBg-1{background:#000;opacity:0.6;filter:alpha(opacity=60);height:30px;width:100%;}.focus li:hover .maskBg-1,
+.focus li.on .maskBg-1{border-top:2px solid #f00;height:28px;}
+.focus li .maskTx-1 img{vertical-align:middle;margin:0 5px 0 0;}
+.maskTx-1,
+.maskBg-1{position:absolute;left:0;bottom:0;}
+.focus li .maskTx-1{height:27px;padding-top:3px;line-height:23px;width:190px;}
+.focus li p{ margin:0;font-size: 20px;}
+.maskTx-1{color:#fff;padding:0 5px;height:18px;overflow:hidden;}
+.videoImg{width:100%; height:100%;}

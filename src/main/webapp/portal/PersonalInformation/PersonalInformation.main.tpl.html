@@ -1,0 +1,204 @@
+<div class="iphone-hide container padding-left-right-none" id="personal-right" style="background-color: #fff;border:2px solid #ccc;margin-top:16px;">
+    <div class="col-xs-3 padding-left-none">
+        <nav class="navbar navbar-static-top" id="personal-left" role="navigation"
+             style="background-color:#f2f2f2;">
+            <div style="text-align: center;padding-top:48px">
+                <img src="assets/img/UserHead.png">
+            </div>
+            <div style="text-align: center;color: #8e8e8e;font-size: 16px">刘梅</div>
+
+            <div style="text-align: center;margin-top: 40px">
+                <a ng-href="#/PersonalInformation/resource" style="font-size: 14px;color: #8e8e8e;text-decoration:none">
+                    <i class="icon-view-quilt" ng-class="{'blue-color':active === 1}"></i>
+                    <span class="Mynavigation" ng-class="{'NavigationSize':active === 1}">我的资源</span>
+                </a>
+            </div>
+
+            <div style="text-align: center;margin-top: 28px">
+                    <a ng-href="#/PersonalInformation/schedule" style="font-size: 14px;color: #8e8e8e;text-decoration:none">
+                        <i class="icon-my-folder" ng-class="{'blue-color':active === 2}"></i>
+                        <span class="Mynavigation" ng-class="{'NavigationSize':active === 2}">我的课堂</span>
+                    </a>
+            </div>
+            <div style="text-align: center;margin-top: 28px">
+                <a ng-href="#/PersonalInformation/information" style="font-size: 14px;color: #8e8e8e;text-decoration:none">
+                    <i class="icon-textsms" ng-class="{'blue-color':active === 3}"></i>
+                    <span class="Mynavigation" ng-class="{'NavigationSize':active === 3}">我的消息</span>
+                </a>
+            </div>
+
+            <div style="text-align: center;margin-top: 28px">
+                <a ng-href="#/PersonalInformation/personalset" style="font-size: 14px;color: #8e8e8e;text-decoration:none">
+                    <i class="icon-settings" ng-class="{'blue-color':active === 4}"></i>
+                    <span class="Mynavigation" ng-class="{'NavigationSize':active === 4}">个人设置</span>
+                </a>
+            </div>
+
+            <div style="text-align: center;margin-top: 28px">
+                <a ng-href="#/PersonalInformation/videoset" style="font-size: 14px;color: #8e8e8e;text-decoration:none">
+                    <i class="icon-film" ng-class="{'blue-color':active === 5}"></i>
+                    <span class="Mynavigation" ng-class="{'NavigationSize':active === 5}">视频加工</span>
+                </a>
+            </div>
+
+        </nav>
+    </div>
+    
+    <div class="col-xs-9">
+        <div ui-view="main"></div>
+    </div>
+</div>
+<div class="pc-hide iphone-show">
+        <div class="col-xs-12 iphone-operation fixed-top padding-bottom-5">
+            <div class="col-xs-1 padding-left-none">
+                <a ng-href="#/homePage"><i class="icon-chevron-left dark-color"></i></a>
+            </div>
+            <div class="col-xs-4 col-xs-offset-3 padding-left-none padding-right-none text-right">
+                <span class="resourse-title">我的资源</span>
+                <i class="icon-expand-more"></i>
+            </div>
+            <div ng-hide="showM" class="col-xs-4 pull-right padding-right-none text-right padding-top-5">
+                <span ng-show="!focus" class="glyphicon glyphicon-search" ng-click="toggleInput()"></span>
+                <span ng-show="focus" > 
+                    <input type="text" class="form-control" style="width:90px;height:23px;" placeholder="" ng-blur="focus=false;">
+                </span>
+            </div>
+            <div ng-show="showM" class="col-xs-1 pull-right text-right padding-top-5">
+                <span class="badge" style="background:#27ace6;">{{selectedCount}}</span>
+            </div>
+        </div>
+        <ul class="padding-left-none" style="list-style-type: none;overflow-y: scroll;max-height: 483px;">
+            <li ng-repeat="source in sourceList">
+                <div  class="col-xs-12 padding-left-right-none iphone-resourse">
+                    <div class="col-xs-2 padding-left-5">
+                        <i class="resourse-type icon-Word deep-blue-color"></i>
+                    </div>
+                    <div class="col-xs-7">
+                        <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                        <span class="resourse-time">2-14年5月12日</span>
+                    </div>
+                    <div class="col-xs-3 pull-right padding-top-15">
+                        <i class="resourse-btns icon-view-headline"></i>
+                        <span class="resour-check pull-right">
+                            <input type="checkbox" ng-model="source.checked"/>
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <!-- <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 padding-left-right-none iphone-resourse">
+            <div class="col-xs-2 padding-left-5">
+                <i class="resourse-type icon-Word deep-blue-color"></i>
+            </div>
+            <div class="col-xs-7">
+                <h5 class="resourse-name margin-top-5 margin-bottom-5">20140817东302-004</h5>
+                <span class="resourse-time">2-14年5月12日</span>
+            </div>
+            <div class="col-xs-3 pull-right padding-top-15">
+                <i class="resourse-btns icon-view-headline"></i>
+                <span class="resour-check pull-right">
+                    <input type="checkbox" ng-model="sourceChecked"/>
+                </span>
+            </div>
+        </div> -->
+        <div class="col-xs-12 iphone-bottom-operation fixed-bottom bottom-operation">
+            <div class="unchecked-operation text-center" ng-hide="showM">
+                <span class="glyphicon glyphicon-plus"></span>
+            </div>
+            <div class="checked-operation" ng-show="showM">
+                <i class="icon-delete col-xs-2"></i>
+                <span class="col-xs-2 pull-right glyphicon glyphicon-folder-open"></span>
+            </div>
+        </div>
+       
+</div>

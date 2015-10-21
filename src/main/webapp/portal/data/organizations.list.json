@@ -1,0 +1,43 @@
+[
+    {
+        "name":  "六年级一班",
+		"parentname": "东教",
+		"attribute": "班级",
+		"state": "可用",
+		"areaName": "101教室",
+		"areaId": "333",
+        "code":"254"
+    }, {
+        "name":  "六年级一班",
+		"parentname": "东教",
+		"attribute": "班级",
+		"state": "可用",
+		"areaName": "101教室",
+		"areaId": "333",
+         "code":"254"
+    }, {
+        "name":  "六年级一班",
+		"parentname": "东教",
+		"attribute": "班级",
+		"state": "可用",
+		"areaName": "101教室",
+		"areaId": "333",
+        "code":"254"
+    }, {
+        "name":  "六年级一班",
+		"parentname": "东教",
+		"attribute": "班级",
+		"state": "可用",
+		"areaName": "101教室",
+		"areaId": "333",
+         "code":"254"
+    }, {
+        "name":  "六年级一班",
+		"parentname": "东教",
+		"attribute": "班级",
+		"state": "可用",
+		"areaName": "101教室",
+		"areaId": "333",
+        "code":"254"
+    }
+]

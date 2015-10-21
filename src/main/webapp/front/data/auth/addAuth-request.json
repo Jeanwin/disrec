@@ -1,0 +1,11 @@
+﻿{
+    "innerid": "1",
+    "roleIdList": [
+        "1",
+        "2"
+    ],
+    "range": [
+        {"scopeid":"4","scopename":"yiban","scopetype":"1"},
+        {"scopeid":"2","scopename":"erban","scopetype":"2"}
+    ]
+}

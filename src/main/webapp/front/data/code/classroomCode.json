@@ -1,0 +1,105 @@
+{
+    "total": 25,
+    "data": [
+        {
+            "id": "01",
+            "value": "CNY"
+        },
+        {
+            "id": "02",
+            "value": "HKD"
+        },
+        {
+            "id": "03",
+            "value": "USD"
+        },
+        {
+            "id": "04",
+            "value": "GBP"
+        },
+        {
+            "id": "05",
+            "value": "JPY"
+        },
+        {
+            "id": "06",
+            "value": "DM"
+        },
+        {
+            "id": "07",
+            "value": "SF"
+        },
+        {
+            "id": "08",
+            "value": "FF"
+        },
+        {
+            "id": "09",
+            "value": "SGD"
+        },
+        {
+            "id": "10",
+            "value": "C$"
+        },
+        {
+            "id": "11",
+            "value": "NT$"
+        },
+        {
+            "id": "12",
+            "value": "EUR"
+        },
+        {
+            "id": "13",
+            "value": "A$"
+        },
+        {
+            "id": "14",
+            "value": "ITL"
+        },
+        {
+            "id": "15",
+            "value": "NLG"
+        },
+        {
+            "id": "16",
+            "value": "ATS"
+        },
+        {
+            "id": "17",
+            "value": "BEF"
+        },
+        {
+            "id": "18",
+            "value": "SEK"
+        },
+        {
+            "id": "19",
+            "value": "DKK"
+        },
+        {
+            "id": "20",
+            "value": "NZD"
+        },
+        {
+            "id": "21",
+            "value": "MYR"
+        },
+        {
+            "id": "22",
+            "value": "KER"
+        },
+        {
+            "id": "23",
+            "value": "NOK"
+        },
+        {
+            "id": "24",
+            "value": "CZK"
+        },
+        {
+            "id": "25",
+            "value": "RUB"
+        }
+    ]
+}

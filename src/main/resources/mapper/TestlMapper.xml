@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.TestlMapper" >
+  <insert id="insertestl" parameterType="com.zonekey.disrec.entity.Testl">
+    insert into testl(id,name,age,datetime) values(#{id},#{name},#{age},sysDate())
+  </insert>
+</mapper>

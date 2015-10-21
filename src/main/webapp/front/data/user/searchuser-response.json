@@ -1,0 +1,26 @@
+﻿[
+{
+	"id":"12",
+	"innerid":"123",
+	"name":"李梅",
+	"deptName":"高一二班",
+	"state":"1",
+	"roleList":[{"idd":"1","roleName":"管理员"},{"id":"2","roleName":"老师"}],
+	"schoolYear":"2014",
+	"phone":"151",
+	"sex":"1",
+	"email":"gao"
+},
+{
+	"id":"12",
+	"innerid":"123",
+	"name":"王刚",
+	"deptName":"高一3班",
+	"state":"1",
+	"roleList":[{"idd":"1","roleName":"管理员"},{"id":"2","roleName":"老师"}],
+	"schoolYear":"2014",
+	"phone":"151",
+	"sex":"1",
+	"email":"gao"
+}
+]

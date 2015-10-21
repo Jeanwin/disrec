@@ -1,0 +1,145 @@
+<div class="resourceimage resourcereleased ">
+    <div style="padding:8px" class="row">
+        <div class="col-xs-4">
+            <div class="btn-group">
+                <button ng-disabled="selectedCount===0" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>
+                    下载</button>
+                <button ng-disabled="selectedCount===0" class="btn btn-default"  ng-click="openDeleteImageModal()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    删除
+                </button>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div ng-show="hideAdvancedSearch===true" class="input-group pull-right" style="width:240px">
+                <input ng-click="hideAdvancedSearch=true" ng-model="imageResource.name" type="text" class="form-control" placeholder="请输入图片名称">
+                <span class="input-group-btn">
+                    <button ng-click="resourceimages('1')" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="pull-right">
+            <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+            <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+            </div>
+        </div>
+    </div>
+    <div collapse="hideAdvancedSearch" class="advSearchPanel">
+            <!--<div style="border-bottom: solid 1px #c0c0c0;padding:4px 16px">
+                <h4>
+                    <span class="glyphicon glyphicon-search"></span>
+                    查询条件
+                </h4>
+            </div>-->
+            <form class="form-inline" role="form">
+
+                <div class="form-group">
+                    <label class="form-label" for="image">创建时间</label>
+                    <input ng-model="imageResource.startdate" type="date" id="image" class="form-control" />
+                    至
+                    <input ng-model="imageResource.enddate" type="date" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="image2">作者</label>
+                    <input id="image2" class="form-control" placeholder="作者" ng-model="imageResource.username">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="image3">来源</label>
+                    <input id="image3" class="form-control" placeholder="来源" ng-model="imageResource.areaname">
+                </div>
+
+                <button class="btn btn-primary pull-right" ng-click="resourceimages('1')">
+                    <span class="glyphicon glyphicon-search"></span>
+                    查询</button>
+            </form>
+            <!--<div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-primary pull-right" ng-click="inquire()">
+                        <span class="glyphicon glyphicon-search"></span>
+                        查询</button>
+                </div>
+            </div>-->
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-body padding-0" style="min-height:467px">
+            <table class="table table-striped" style="text-align: center">
+                <thead class="formthead">
+                <td style="WORD-WRAP: break-word" width="40"><input type="checkbox" ng-model="checkAll" ng-click="checkAllimage()"></td>
+                <td style="WORD-WRAP: break-word" width="100">图片名称</td>
+                <td>作者</td>
+                <td style="WORD-WRAP: break-word">来源</td>
+                <td>发布日期</td>
+                <td>操作</td>
+                </thead>
+                <tr ng-repeat="image in imageList">
+                    <td><input type="checkbox" ng-model="image.checked"></td>
+                    <td><button class="btn btn-link" ng-click="openImageName()">{{image.name}}</button></td>
+                    <td>{{image.username}}</td>
+                    <td>{{image.areaname}}</td>
+                    <td>{{image.publishdate}}</td>
+                    <td><button class="btn btn-link" ng-click="openImage(image)"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="设置">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                    </button></td>
+                </tr>
+            </table>
+
+            <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+            </div>-->
+            <button ng-if="pagination.totalItems === 0" class="ondata">
+                <span class="ondatatext">找不到您搜索的信息！</span>
+            </button>
+        </div>
+        <div class="panel-footer">
+
+            <div ng-if="pagination.totalItems > 0" class="row">
+
+                <div class="col-xs-3" style="padding-top:8px;">
+                    <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                </div>
+
+                <div class="col-xs-7" ng-show="pagination.totalItems > pagination.pageSize">
+                    <!-- 分页  -->
+                    <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                page="pagination.pageIndex"
+                                items-per-page="pagination.pageSize"
+                                max-size="pagination.maxSize"
+                                previous-text="{{pagination.previousText}}"
+                                next-text="{{pagination.nextText}}"
+                                first-text="{{pagination.firstText}}"
+                                last-text="{{pagination.lastText}}"
+                                class="pagination-small"
+                                boundary-links="true"
+                                on-select-page="onSelectPage(page)">
+                    </pagination>
+                </div>
+                <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+                    <div class="input-group input-group-sm" style="width: 100px"
+                         tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{(pagination.totalItems + 0.5)/pagination.pageSize}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="selectPage(pageIndex)">
+                                        Go
+                                    </button>
+                                </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

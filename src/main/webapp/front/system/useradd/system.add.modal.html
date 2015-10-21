@@ -1,0 +1,96 @@
+<div class="col-md-2 addoreditsystemleft">
+        <div class="system-left-top">当前机构：六年级二班</div>
+        <div style="padding-top: 20px">
+            <script type="text/ng-template" id="nodes_renderer.html">
+                <div ui-tree-handle class="tree-node tree-node-content">
+                    <a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                    <a href="" style="color: #919191">{{node.title}}</a>
+                </div>
+                <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+                    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+                    </li>
+                </ol>
+            </script>
+            <div ui-tree id="tree-root">
+                <ol ui-tree-nodes ng-model="data">
+                    <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+<div class="col-md-10 addoreditsystemright">
+    <div style="margin-top: 30px">
+        <span style="padding-left: 20px;font-size: 18px">认证信息</span>
+        <span style="border-top: solid 2px #f2f2f2;">　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+        </span>
+        <div style="margin-left: 20px;margin-top: 30px;margin-bottom: 30px">
+            <form class="form-inline" role="form">
+                <span>账号　<input class="form-control" type="text" placeholder="账号"> <a style="color: red">*</a></span>
+                <span style="padding-left: 120px">密码　<input class="form-control" type="text" placeholder="密码"> <a style="color: red">*</a></span>
+            </form>
+        </div>
+    </div>
+    <div style="margin-top: 30px">
+        <span style="padding-left: 20px;font-size: 18px">基本信息</span>
+        <span style="border-top: solid 2px #f2f2f2;">　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+        </span>
+        <div style="margin-left: 20px;margin-top: 30px;margin-bottom: 30px">
+            <form class="form-inline" role="form">
+                <span>真实姓名　<input class="form-control" type="text" placeholder="真实姓名" ng-model="name"> <a style="color: red">*</a></span>
+                <span style="padding-left: 120px">电子邮箱　<input class="form-control" type="text" placeholder="电子邮箱" ng-model="email"></span>
+            </form>
+        </div>
+        <div style="margin-left: 20px;margin-top: 30px;margin-bottom: 30px">
+            <form class="form-inline" role="form">
+                <span>电话　　　<input class="form-control" type="text" placeholder="电话" ng-model="phone"></span>
+                <span style="padding-left: 130px">隶属机构　<input class="form-control" type="text" placeholder="隶属机构" ng-model="organization"> <a style="color: red">*</a></span>
+            </form>
+        </div>
+        <div style="margin-left: 20px;margin-top: 30px;margin-bottom: 30px">
+            <form class="form-inline" role="form">
+                <span>身份　　　<input class="form-control" type="text" placeholder="身份" ng-model="classify"></span>
+                <span style="padding-left: 130px">入学年份　<input class="form-control" type="text" placeholder="入学年份" ng-model="year"></span>
+            </form>
+        </div>
+        <div style="margin-left: 20px;">
+            <div ng-if="sex==='男'">
+                <form>性别：
+                    <input name="sex" type="radio" checked="checked">男　　　
+                    <input name="sex" type="radio" >女
+                </form>
+            </div>
+            <div ng-if="sex==='女'">
+                <form>性别：
+                    <input name="sex" type="radio">男　　　
+                    <input name="sex" type="radio" checked="checked">女
+                </form>
+            </div>
+            <div ng-if="!sex">
+                <form>性别：
+                    <input name="sex" type="radio" checked="checked">男　　　
+                    <input name="sex" type="radio">女
+                </form>
+            </div>
+        </div>
+            <div style="margin-left: 402px;margin-top: -20px;margin-bottom: 10px">
+                <span>账号状态</span>　
+                <span>
+                     <toggle-switch on-label="可用" off-label="不可用" ng-model="classroom.state">
+                         <span class="switch-left ng-binding" ng-bind="onLabel">可用</span>
+                         <span class="knob ng-binding" ng-bind="knobLabel">&nbsp;</span>
+                         <span class="switch-right ng-binding" ng-bind="offLabel">不可用</span>
+                     </toggle-switch>
+                </span>
+            </div>
+
+            <div style="margin-left: 20px">个人介绍<textarea class="form-control" placeholder="个人介绍" style="width: 492px;height: 80px;"></textarea></div>
+        <div style="margin-left: 800px;margin-top: -280px;">
+            <div style="margin-bottom: 20px"><img style="height: 120px;width: 120px" src="#"></div>
+            <div><button class="btn btn-default" style="width: 120px">修改</button></div>
+        </div>
+    </div>
+    <div style="margin-left: 800px;margin-top: 80px">
+        <a class="btn btn-primary" ng-href="#/system/user" style="width: 80px">确定</a>
+        <a class="btn btn-default" ng-href="#/system/user" style="width: 80px">取消</a>
+    </div>
+</div>

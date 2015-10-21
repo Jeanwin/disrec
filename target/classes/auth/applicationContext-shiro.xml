@@ -1,0 +1,65 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<description>Shiro安全配置</description>
+
+	<!-- Shiro's main business-tier object for web-enabled applications -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="shiroDbRealm" />
+		<!-- <property name="realm" ref="openldapRealm" /> -->
+		<!-- <property name="sessionMode" value="native"/> -->
+	</bean>
+
+	<!-- 項目自定义的Realm -->
+	<bean id="shiroDbRealm" class="com.zonekey.disrec.service.auth.ShiroDbRealm">
+	</bean>
+	
+	<bean id="openldapRealm" class="com.zonekey.disrec.service.auth.ShiroJndiLdapRealm">
+        <property name="userDnTemplate" value="cn={0},dc=zonekey,dc=com"/>
+        <property name="contextFactory" ref="contextFactory" />
+    </bean>
+    
+    <bean id="contextFactory" class="org.apache.shiro.realm.ldap.JndiLdapContextFactory">
+        <property name="url" value="ldap://192.168.12.105:389/"/>
+        <property name="systemUsername" value="cn={0},dc=zonekey,dc=com"/>
+        <property name="systemPassword" value="{1}"/>
+        <!-- <property name="authenticationMechanism" value="DIGEST-MD5"/> -->
+    </bean>
+    
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <!-- <property name="loginUrl" value="/front/login"/> -->
+        <property name="successUrl" value="/front/index.html"/>
+        <property name="unauthorizedUrl" value="/login"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /login = authc
+                /centerController/** = anon
+                /mobile/** = anon
+                /restMobile/userView/** = anon
+<!--                 /areaMobile/** = anon -->
+<!--                 /curriculumMobile/** = anon -->
+                 /*Mobile/** = anon
+				/front/assets/** = anon
+<!--				/front/Bell/**=anon  -->
+                /front/otherTools/**=anon
+				/rest/**=anon
+				/serverConfig/** = anon
+				/static/**=anon
+				/code/**=anon
+				/** = authc
+            </value>
+        </property>
+    </bean>
+    
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+</beans>

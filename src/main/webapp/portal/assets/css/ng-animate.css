@@ -1,0 +1,36 @@
+.slide.ng-enter,
+.slide.ng-leave
+{
+    -webkit-animation: bounce 1s;
+    -webkit-transition:all 1s ease-in-out;
+}
+
+.slide.ng-enter.slide.ng-enter-active,
+.slide.ng-leave {
+    opacity: 1;
+}
+
+
+.slide.ng-leave.slide.ng-leave-active,
+.slide.ng-enter {
+    opacity: 0;
+}
+
+
+[ui-view].ng-enter, [ui-view].ng-leave {
+    -webkit-transition:all 1s;
+}
+
+[ui-view].ng-enter {
+    -webkit-animation: fadeIn 1s;
+}
+
+[ui-view].ng-enter-active {
+}
+
+[ui-view].ng-leave {
+    -webkit-animation: fadeOut 1s;
+}
+
+[ui-view].ng-leave-active {
+}

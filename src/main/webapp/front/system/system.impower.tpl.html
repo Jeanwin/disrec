@@ -1,0 +1,195 @@
+<div class="container-fluid ">
+    <div class="row" style="margin:16px 4px">
+        <div class="whiteframe">
+            <div class="row padding-8" style="padding-left:10px;">
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" ng-click="addimpower()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            添加管理员
+                        </button>
+                        <button class="btn btn-default" ng-disabled="selectedCount===0" ng-click="delimpowers()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                            取消授权
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="input-group" ng-show="hideAdvancedSearch">
+                        <input type="text" class="form-control" placeholder="请输入用户ID或名称" ng-model="impower.param">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="systemimpowers('1')"><span class="glyphicon glyphicon-search"></span></button>
+                      </span>
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <div class="pull-right">
+                        <button ng-show="hideAdvancedSearch" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                        <button ng-show="!hideAdvancedSearch" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div collapse="hideAdvancedSearch" class="advSearchPanel">
+
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label class="form-label" style="width: 88px" for="inputLoginName">账号</label>
+                        <input id="inputLoginName" class="form-control" placeholder="账号" ng-model="impower.loginname">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="width: 88px" for="inputName">姓名</label>
+                        <input id="inputName" class="form-control" placeholder="姓名" ng-model="impower.name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" style="width: 88px" for="inputRoleId">角色</label>
+                        <select id="inputRoleId" class="form-control" style="width:320px"
+                                ng-model="impower.roleid">
+                            <option value="">全部角色</option>
+                            <option ng-repeat="depart in selectsysroleList" ng-selected="{{depart.id === impower.roleid}}" value="{{depart.id}}">{{depart.roleName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" style="width: 88px" for="selectRoleId">筛选方式</label>
+                        <select id="selectRoleId" class="form-control" style="width:320px"
+                                ng-model="impower.selectid">
+<!--                                 <option value="">筛选方式</option> -->
+	                            <option value="">包含</option>
+	                            <option value="1">除外</option>
+<!--                             <option value="0">包含</option> -->
+<!--                             <option ng-repeat="depart in selectsysroleList" ng-selected="{{depart.id === impower.roleid}}" value="{{depart.id}}">{{depart.roleName}}</option> -->
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary pull-right" ng-click="systemimpowers('1')">
+                        <span class="glyphicon glyphicon-search"></span>
+                        查询</button>
+
+                </form>
+                <!--<div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary pull-right" ng-click="systemimpowers(impower,pagination,'')">
+                            <span class="glyphicon glyphicon-search"></span>
+                            查询</button>
+                    </div>
+                </div>-->
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-0" style="min-height:400px">
+                    <table class="table table-striped" style="text-align: center">
+                        <thead class="formthead">
+                        <td style="WORD-WRAP: break-word" width="30">
+                            <input type="checkbox" ng-model="checkAll" ng-click="checkAllFacilitys()">
+                        </td>
+                        <td style="WORD-WRAP: break-word" width="180px">
+                            <span>账号</span> 
+                            <span> 
+                                  <a href ng-show="sort.loginname == 'asc'" ng-click="orderby('loginname')" 
+                                          tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up"> 
+                                  </a> 
+                                  <a href ng-show="sort.loginname == 'desc'" ng-click="orderby('loginname')" tooltip-placement="top" 
+                                          tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down"> 
+                                  </a>
+                            </span>
+                        </td> 
+                        <td style="WORD-WRAP: break-word" width="180px" >
+                            <span>姓名</span> 
+                            <span> 
+                                  <a href ng-show="sort.name == 'asc'" ng-click="orderby('name')" 
+                                          tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up"> 
+                                  </a> 
+                                  <a href ng-show="sort.name == 'desc'" ng-click="orderby('name')" tooltip-placement="top" 
+                                          tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down"> 
+                                  </a>
+                            </span>
+                        </td> 
+<!--                         <td style="WORD-WRAP: break-word" > -->
+<!--                             <span>角色</span>  -->
+<!--                             <span>  -->
+<!--                                   <a href ng-show="sort.role_name == 'asc'" ng-click="orderby('role_name')"  -->
+<!--                                           tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up">  -->
+<!--                                   </a>  -->
+<!--                                   <a href ng-show="sort.role_name == 'desc'" ng-click="orderby('role_name')" tooltip-placement="top"  -->
+<!--                                           tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down">  -->
+<!--                                   </a> -->
+<!--                             </span> -->
+<!--                         </td>  -->
+                        <td style="WORD-WRAP: break-word" width="450px">角色</td>
+                        <td style="WORD-WRAP: break-word">范围</td>
+                        <td>操作</td>
+                        </thead>
+                        <tr ng-repeat="impower in impowerList">
+                            <td>
+                                <input type="checkbox" ng-model="impower.checkbox">
+                            </td>
+                            <td>{{impower.loginname}}</td>
+                            <td>{{impower.name}}</td>
+                            <td><span  ng-repeat="role in impower.roleList">{{role.roleName}}&nbsp;&nbsp;</span></td>
+                            <td><span  ng-repeat="scope in impower.scopeList">{{scope.name}}&nbsp;&nbsp;</span></td>
+                            <td>
+                            <button class="btn-link" ng-click="editimpower(impower)"
+                                    tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑"
+                                    >
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                                <button class="btn-link" ng-click="delimpower(impower)"
+                                        tooltip-placement="top" tooltip-popup-delay="1000" tooltip="取消授权">
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                </button></td>
+                        </tr>
+                    </table>
+                    <button ng-if="pagination.totalItems === 0" class="ondata">
+                        <span class="ondatatext">找不到您搜索的信息！</span>
+                    </button>
+                </div>
+                <div class="panel-footer">
+                    <div ng-if="pagination.totalItems > 0" class="row">
+
+                        <div class="col-xs-4" style="padding-top:8px;">
+                            <span>共找到{{pagination.totalItems}}条数据，</span>
+                            <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                        </div>
+
+                        <div class="col-xs-8" ng-show="pagination.totalItems > pagination.pageSize">
+                            <div class="col-xs-9">
+                                <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                            page="pagination.pageIndex"
+                                            items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize"
+                                            previous-text="{{pagination.previousText}}"
+                                            next-text="{{pagination.nextText}}"
+                                            first-text="{{pagination.firstText}}"
+                                            last-text="{{pagination.lastText}}"
+                                            class="pagination-small"
+                                            boundary-links="true"
+                                            on-select-page="onSelectPage(page)">
+                                </pagination>
+                            </div>
+                            <div class="col-xs-3" style="padding-top:8px;">
+                                <div class="input-group input-group-sm" style="width: 100px"
+                                     tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                    <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

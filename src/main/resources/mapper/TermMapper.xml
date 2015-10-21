@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.TermMapper" >
+	<sql id="Base_Column_List">
+		id, termname, startday, weeks, createdate, createuser, modifydate,
+		modifyuser, deleteflag,
+		is_current
+	</sql>
+
+	<select id="findOne" parameterType="java.lang.String" resultType="com.zonekey.disrec.entity.Term">
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_term
+		where id = #{id,jdbcType=CHAR}
+	</select>
+  
+	  <!-- 按id查询直播课表 -->
+  <select id="findNowTerm" resultType="com.zonekey.disrec.entity.Term">
+  SELECT a.id,a.termname ,a.startday,a.weeks , a.is_current as iscurrent FROM zonekey_term a 
+  where is_current ='1'
+  </select>
+  <!--  查询全部学期-->
+   <select id="findAllTerm" resultType="com.zonekey.disrec.entity.Term" parameterType="com.zonekey.disrec.vo.PageBean">
+    SELECT
+     id,termname,startday,weeks,is_current as iscurrent
+    FROM zonekey_term order by id desc
+    <if test="page !=null and page.offset != null and page.limit!=null">limit  #{page.offset} ,#{page.limit}</if>
+  </select>
+  
+  <!--  查询全部学期（不翻页）-->
+   <select id="findAllTermForShearch" resultType="com.zonekey.disrec.entity.Term" >
+    SELECT
+     id,termname,startday,weeks,is_current as iscurrent
+    FROM zonekey_term  order by id desc
+  </select>
+  <!--  根据名字查询（不翻页）-->
+   <select id="findAllTermByName" resultType="com.zonekey.disrec.entity.Term" >
+    SELECT
+     id,termname,startday,weeks,is_current as iscurrent
+    FROM zonekey_term  
+    where termname =#{termname}
+    order by id desc
+  </select>
+  <!--  查询当前学期全部周（不翻页）-->
+   <select id="findAllWeeksForShearch" resultType="com.zonekey.disrec.entity.Term" >
+    SELECT
+     id,termname,startday,weeks
+    FROM zonekey_term where is_current ='1' order by id desc
+  </select>
+  <!--  查询全部学期条数-->
+   <select id="findAllTermCount" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+    SELECT
+     count(*)
+    FROM zonekey_term order by id desc
+  </select>
+  <!-- 添加新学期 -->
+	<insert id="insertTerm" parameterType="com.zonekey.disrec.entity.Term">
+		insert into zonekey_term (id,termname,startday,weeks,createdate,createuser,is_current) 
+		values(#{id},#{termname},#{startday},#{weeks},sysDate(),#{createuser},#{iscurrent})
+	</insert>
+	
+	<!-- 根据主键查询学期 -->
+	<select id="findTermById" resultType="com.zonekey.disrec.entity.Term" parameterType="java.lang.String">
+		SELECT id,termname,startday,weeks,createdate,createuser,is_current from zonekey_term where 
+		id=#{id}
+	</select>
+	<!-- 设为当前学期 -->
+	<update id="editiscurrent" parameterType="com.zonekey.disrec.entity.Term">
+		update zonekey_term
+		set 
+		is_current = '1'
+		where id = #{id,jdbcType=CHAR}
+	</update>
+	<!-- 取消当前学期 -->
+	<update id="canceliscurrent" parameterType="com.zonekey.disrec.entity.Term">
+		update zonekey_term
+		set 
+		is_current = '0',modifydate = #{modifydate},modifyuser = #{modifyuser}
+		where is_current = '1'
+	</update>
+	<update id="updateTerm" parameterType="com.zonekey.disrec.entity.Term">
+		update zonekey_term
+		<set>
+			<if test="termname != null">
+				termname = #{termname,jdbcType=VARCHAR},
+			</if>
+			<if test="startday != null">
+				startday = #{startday,jdbcType=DATE},
+			</if>
+			<if test="weeks != null">
+				weeks = #{weeks,jdbcType=INTEGER},
+			</if>
+			<if test="createdate != null">
+				createdate = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createuser != null">
+				createuser = #{createuser,jdbcType=CHAR},
+			</if>
+			<if test="modifydate != null">
+				modifydate = #{modifydate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyuser != null">
+				modifyuser = #{modifyuser,jdbcType=CHAR},
+			</if>
+			<if test="deleteflag != null">
+				deleteflag = #{deleteflag,jdbcType=CHAR},
+			</if>
+			<if test="iscurrent != null">
+				is_current = #{iscurrent,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+	<update id="update" parameterType="com.zonekey.disrec.entity.Term">
+		update zonekey_term
+		<set>
+			<if test="termname != null">
+				termname = #{termname,jdbcType=VARCHAR},
+			</if>
+			<if test="startday != null">
+				startday = #{startday,jdbcType=DATE},
+			</if>
+			<if test="weeks != null">
+				weeks = #{weeks,jdbcType=INTEGER},
+			</if>
+			<if test="createdate != null">
+				createdate = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createuser != null">
+				createuser = #{createuser,jdbcType=CHAR},
+			</if>
+			<if test="modifydate != null">
+				modifydate = #{modifydate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyuser != null">
+				modifyuser = #{modifyuser,jdbcType=CHAR},
+			</if>
+			<if test="deleteflag != null">
+				deleteflag = #{deleteflag,jdbcType=CHAR},
+			</if>
+			<if test="iscurrent != null">
+				is_current = #{iscurrent,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zonekey.disrec.entity.Term">
+		update zonekey_term
+		set termname = #{termname,jdbcType=VARCHAR},
+		startday = #{startday,jdbcType=DATE},
+		weeks = #{weeks,jdbcType=INTEGER},
+		createdate = #{createdate,jdbcType=TIMESTAMP},
+		createuser = #{createuser,jdbcType=CHAR},
+		modifydate = #{modifydate,jdbcType=TIMESTAMP},
+		modifyuser = #{modifyuser,jdbcType=CHAR},
+		deleteflag = #{deleteflag,jdbcType=CHAR},
+		is_current = #{iscurrent,jdbcType=CHAR}
+		where id = #{id,jdbcType=CHAR}
+	</update>
+  </mapper>

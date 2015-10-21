@@ -1,0 +1,29 @@
+{
+    "id": "98e65c687a3a474380d12bc47230852b",
+    "userid": "admin",
+    "areainfoList": [
+        {
+            "id": "3"
+        },
+        {
+            "id": "4"
+        }
+    ],
+    "deviceinfoList": [
+        {
+            "id": "1"
+        },
+        {
+            "id": "3"
+        }
+    ],
+    "areainfo": "666666,129129",
+    "deviceinfo": "4,5",
+    "polingset": "3",
+    "polingtime": "3",
+    "createdate": "2014-12-12 16:06:34.0",
+    "createuser": "admin",
+    "modifydate": "2014-12-12 16:26:17.0",
+    "modifyuser": "admin",
+    "deleteflag": "0"
+}

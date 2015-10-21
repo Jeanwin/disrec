@@ -1,0 +1,30 @@
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title" >
+            <h3>应用到中控</h3>
+        </div>
+    </div>
+    <div class="modal-body row" style="width:70%;margin:0 auto;">
+        <div class="col-xs-12">中控列表</div>
+        <form name="frmApplyConsole" class="col-xs-12 form-horizontal" role="form" style="padding:15px;background:#fff;border:1px #ccc solid;">
+           <div class="input-group" style="width:240px">
+                <input type="text" class="form-control" ng-model="deviceSearch.name" placeholder="按设备ip查询"> 
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="showDeviceServerList()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+            <ul class="applyConsoleList">
+                <li ng-repeat="deviceList in deviceLists"><input type="checkBox" name="selConsole" ng-click="toggle(this)" ng-model="selConsoleStatus" />{{deviceList.name}}({{deviceList.ip}})</li>
+            </ul>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="saveApply()" ng-disabled="frmApplyConsole.$pristine" disabled="disabled">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

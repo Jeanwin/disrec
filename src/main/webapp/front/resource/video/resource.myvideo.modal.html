@@ -1,0 +1,58 @@
+<div class="modal-header ng-scope">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </button>
+    <h3 class="modal-title">视频设置</h3>
+</div>
+
+<div class="modal-body ng-scope">
+    <form name="frmAreaEditor" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="videoName"><span style="color:red">*</span>资源名称</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="videoName" placeholder="资源名称" type="text" ng-model="video.resourcename" required>
+            </div>
+        </div>
+
+         
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="video3">学科</label>
+            <div class="col-sm-10">
+             <select style="border-radius:4px;width: 95px" ng-model="video.subject"
+                            ng-options="cour.value as cour.name for cour in subjectList">
+             </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="video4">适用阶段</label>
+            <div class="col-sm-10">
+            	<select style="border-radius:4px;width: 95px" ng-model="video.grade"
+                            ng-options="cour.value as cour.name for cour in gradeList">
+             </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="video4">类型</label>
+            <div class="col-sm-10">
+            	<select style="border-radius:4px;width: 95px" ng-model="video.resourcetype"
+                            ng-options="cour.value as cour.name for cour in resourcetypeList">
+             </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="video4">备注</label>
+            <div class="col-sm-10">
+            <textarea  class="form-control" id="video4" placeholder="备注" type="text" ng-model="video.description">
+            </textarea>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer ng-scope">
+    <button class="btn btn-primary" ng-disabled="frmAreaEditor.name.$error.required || frmAreaEditor.name.$error.required || frmAreaEditor.$pristine || frmAreaEditor.$invalid" ng-click="ok()">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

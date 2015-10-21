@@ -1,0 +1,183 @@
+<div>
+    <div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3 ng-if="!error">导入新课表</h3>
+            <h3 ng-if="error">导入结果</h3>
+        </span>
+    </div>
+    <div class="modal-body">
+
+        <form ng-if="!error" class="form-horizontal" name="frmImportSchedule" role="form">
+
+            <div class="form-group">
+                <label for="inputTerm" class="col-sm-2 control-label">学期</label>
+                <div class="col-sm-10">
+                    <select id="inputTerm" class="form-control" ng-model="impScheduleSet.termname"
+                            ng-options="term.id as term.termname for term in TermList">
+                    </select>
+                    <span>
+                        <button class="btn btn-link" ng-click="NewClassTimeSet()">节次设置</button>
+                        <button class="btn btn-link" ng-click="NewTermSet()">学期设置</button>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">直播</label>
+                <div class="col-sm-3">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.live" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.live" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-7">
+                    <div collapse="impScheduleSet.live==='0'">
+                        <label>直播模式</label>
+                        <div class="btn-group">
+                        <label class="btn btn-default" ng-repeat="schema in schemaList"
+                               ng-model="impScheduleSet.livemodel" btn-radio="'{{schema.value}}'">{{schema.name}}</label>
+                    	</div>
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- <div class="form-group">
+                <label class="col-sm-2 control-label">录像</label>
+                <div class="col-sm-3">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.record" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.record" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div collapse="impScheduleSet.record==='0'">
+                        <label>录像模式</label>
+                        <div class="btn-group">
+                        <label class="btn btn-default" ng-repeat="schema in schemaList"
+                               ng-model="impScheduleSet.video" btn-radio="'{{schema.value}}'">{{schema.name}}</label>
+                    	</div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="form-group">
+                <label class="col-xs-2 padding-left-none control-label">录像</label>
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.record" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.record" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" collapse="impScheduleSet.record==='0'">
+                <label class="col-xs-2 control-label padding-left-none" style="white-space: nowrap;">录像模式</label>
+                <div class="col-xs-8 padding-right-none">
+                    <div class="btn-group">
+                       <label class="btn btn-default" ng-repeat="schema in schemaList"
+                              ng-model="impScheduleSet.video" btn-radio="'{{schema.value}}'">{{schema.name}}</label>
+                   	</div>
+                </div>
+            </div>
+			<div class="form-group margin-bottom-8" collapse="impScheduleSet.record==='0'">
+                <label class="col-xs-2 control-label padding-left-none" style="white-space: nowrap;">直播模式</label>
+                <div class="col-xs-8 padding-right-none">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-repeat="livemodel in livemodelList" ng-model="impScheduleSet.livemodel" btn-radio="'{{livemodel.value}}'"
+                               >{{livemodel.name}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">课间录像</label>
+                <div class="col-sm-10">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.classniddlerecord" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.classniddlerecord" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">互动课程</label>
+                <div class="col-sm-10">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.intercourse" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.intercourse" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="form-group">
+                <label class="col-sm-2 control-label">录像上传</label>
+                <div class="col-sm-10">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.videoupload" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.videoupload" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">自动上传</label>
+                <div class="col-sm-10">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="impScheduleSet.isupload" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="impScheduleSet.isupload" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div ng-if="error">
+            <h4>数据存在问题，未完成导入，可能原因为：</h4>
+            <ul>
+                <li>1、数据填写不符合要求。</li>
+                <li>2、数据重复</li>
+                <li>3、其它原因</li>
+            </ul>
+            <span>请导出问题数据，修改后再重新导入</span>
+        </div>
+
+        <div class="col-xs-12" ng-if="!error">
+            <div class="drop-box" ng-file-drop="onFileSelect($files)"
+                 ng-file-drag-over-class="optional-css-class-name-or-function"
+                 ng-show="dropSupported">
+
+                <div ng-if="!file" style="padding:32px">
+                    请拖拽课表模板文件到这里<br>
+                    <a href='scheduleManagements/curriculumScheduleTemplate.zip'>下载课表模板</a>
+                </div>
+
+                <div class="alert alert-danger" ng-if="importerror" type="importerror">上传失败</div>
+
+                <div ng-if="file" style="padding:32px">
+                    <img src="assets/img/icons/icon-excel.png">
+                    <span class="progress" ng-show="progress > 0">
+                        <div style="width:{{progress}}%">{{progress}}%</div>
+                    </span>
+                    {{file.name}} ({{file.size}}KB)
+                </div>
+            </div>
+            <div>
+                <div class="js-fileapi-wrapper upload-btn">
+                    <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" accept="application/vnd.ms-excel" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-if="!error && upload && progress < 100 && !importerror" ng-click="abort()">取消上传</button>
+        <button class="btn btn-primary" ng-if="!upload || !error" data-ng-disabled="!file" ng-click="startUpload()">开始导入</button>
+        <button class="btn btn-primary" ng-if="importerror && !error" data-ng-disabled="!file" ng-click="startUpload()">重试</button>
+        <!--<button class="btn btn-primary" ng-if="error" data-ng-disabled="!file" ng-click="ExportData()">导出数据</button>-->
+        <a class="btn btn-primary" ng-if="error" data-ng-disabled="!file" href="../rest/curriculum/exportcurriculum?excelbatch={{ErrorNum}}">导出数据</a>
+        <a class="btn btn-default" ng-if="error" ng-click="close()">关闭</a>
+        <button class="btn btn-primary" ng-if="numerror" data-ng-disabled="!file" ng-click="Import()">重试</button>
+        <button class="btn btn-default" ng-if="!upload || !error" ng-click="cancel()">取消</button>
+    </div>
+</div>

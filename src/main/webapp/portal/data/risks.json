@@ -1,0 +1,282 @@
+[
+    {
+        "riskCode": "0101",
+        "riskName": "财产基本险"
+    },
+	{
+        "riskCode": "0102",
+        "riskName": "财产综合险"
+    },
+    {
+        "riskCode": "0104",
+        "riskName": "财产一切险"
+    },
+    {
+        "riskCode": "0107",
+        "riskName": "营业中断保险"
+    },
+    {
+        "riskCode": "0111",
+        "riskName": "机器损坏险"
+    },
+    {
+        "riskCode": "0112",
+        "riskName": "特殊设备险"
+    },
+    {
+        "riskCode": "0113",
+        "riskName": "工程机械保险"
+    },
+    {
+        "riskCode": "0122",
+        "riskName": "办公室综合险"
+    },
+    {
+        "riskCode": "0124",
+        "riskName": "电脑险"
+    },
+    {
+        "riskCode": "0125",
+        "riskName": "现金险"
+    },
+    {
+        "riskCode": "0301",
+        "riskName": "家庭财产综合保险"
+    },
+    {
+        "riskCode": "0399",
+        "riskName": "个人抵押贷款房屋保险"
+    },
+    {
+        "riskCode": "0501",
+        "riskName": "机动车辆保险"
+    },
+    {
+        "riskCode": "0507",
+        "riskName": "交强险"
+    },
+    {
+        "riskCode": "0701",
+        "riskName": "建筑工程一切险"
+    },
+    {
+        "riskCode": "0914",
+        "riskName": "货物运输保险"
+    },
+    {
+        "riskCode": "0915",
+        "riskName": "进出口货物运输保险"
+    },
+    {
+        "riskCode": "0918",
+        "riskName": "承运人赔偿责任保险"
+    },
+    {
+        "riskCode": "0988",
+        "riskName": "通用货运险（分入）"
+    },
+    {
+        "riskCode": "1101",
+        "riskName": "船舶保险"
+    },
+    {
+        "riskCode": "1188",
+        "riskName": "船舶建造保险"
+    },
+    {
+        "riskCode": "1501",
+        "riskName": "公众责任险"
+    },
+    {
+        "riskCode": "1502",
+        "riskName": "保管人赔偿责任险"
+    },
+    {
+        "riskCode": "1504",
+        "riskName": "综合赔偿责任险"
+    },
+    {
+        "riskCode": "1505",
+        "riskName": "综合赔偿责任险(CGLISO)"
+    },
+    {
+        "riskCode": "1506",
+        "riskName": "产品召回费用险"
+    },
+    {
+        "riskCode": "1507",
+        "riskName": "第三者综合责任险"
+    },
+    {
+        "riskCode": "1511",
+        "riskName": "机动车辆延长保修责任险"
+    },
+    {
+        "riskCode": "1519",
+        "riskName": "产品责任险"
+    },
+    {
+        "riskCode": "1525",
+        "riskName": "高尔夫球员综合险"
+    },
+    {
+        "riskCode": "1532",
+        "riskName": "职业赔偿责任险"
+    },
+    {
+        "riskCode": "1588",
+        "riskName": "展览会责任险"
+    },
+    {
+        "riskCode": "1589",
+        "riskName": "产品责任险(打包导入)"
+    },
+    {
+        "riskCode": "1590",
+        "riskName": "公众责任险(打包导入)"
+    },
+    {
+        "riskCode": "1601",
+        "riskName": "雇主工伤责任险"
+    },
+    {
+        "riskCode": "1602",
+        "riskName": "雇主责任险"
+    },
+    {
+        "riskCode": "1688",
+        "riskName": "雇主责任险(打包导入)"
+    },
+    {
+        "riskCode": "2601",
+        "riskName": "团体住院津贴保险"
+    },
+    {
+        "riskCode": "2602",
+        "riskName": "优逸团体补充医疗保险"
+    },
+    {
+        "riskCode": "2603",
+        "riskName": "逸+团体全球医疗保险"
+    },
+    {
+        "riskCode": "2604",
+        "riskName": "逸+个人全球医疗保险"
+    },
+    {
+        "riskCode": "2605",
+        "riskName": "团体重大疾病保险"
+    },
+    {
+        "riskCode": "2606",
+        "riskName": "睿逸团体医疗保险"
+    },
+    {
+        "riskCode": "2688",
+        "riskName": "通用健康险(分入)"
+    },
+    {
+        "riskCode": "2701",
+        "riskName": "漫游樱花团体海外旅行意外伤害保险"
+    },
+    {
+        "riskCode": "2702",
+        "riskName": "漫游樱花个人海外旅行意外伤害保险"
+    },
+    {
+        "riskCode": "2703",
+        "riskName": "逸行全球团体商务旅行意外伤害保险"
+    },
+    {
+        "riskCode": "2704",
+        "riskName": "逸行全球个人商务旅行意外伤害保险"
+    },
+    {
+        "riskCode": "2712",
+        "riskName": "团体意外伤害保险"
+    },
+    {
+        "riskCode": "2713",
+        "riskName": "团体交通事故意外伤害保险"
+    },
+    {
+        "riskCode": "2788",
+        "riskName": "人身意外险(打包导入)"
+    },
+    {
+        "riskCode": "3001",
+        "riskName": "财意双全财产损失及意外伤害综合保险"
+    },
+    {
+        "riskCode": "3002",
+        "riskName": "餐饮企业组合保险"
+    },
+    {
+        "riskCode": "3101",
+        "riskName": "借款人意外保险"
+    },
+    {
+        "riskCode": "3102",
+        "riskName": "关爱一家综合保障计划"
+    },
+    {
+        "riskCode": "3103",
+        "riskName": "万事兴综合保障计划"
+    },
+    {
+        "riskCode": "3104",
+        "riskName": "E通卡"
+    },
+    {
+        "riskCode": "3188",
+        "riskName": "通用农业险种种植业(分入)"
+    },
+    {
+        "riskCode": "3189",
+        "riskName": "通用农业险种养殖业(分入)"
+    },
+    {
+        "riskCode": "3197",
+        "riskName": "巨灾无忧综合意外保险"
+    },
+    {
+        "riskCode": "3198",
+        "riskName": "真情一家综合意外保险"
+    },
+    {
+        "riskCode": "3199",
+        "riskName": "顺心六福综合意外保险"
+    },
+    {
+        "riskCode": "3301",
+        "riskName": "国内贸易短期信用保险"
+    },
+    {
+        "riskCode": "3488",
+        "riskName": "产品质量保证保险"
+    },
+    {
+        "riskCode": "4088",
+        "riskName": "卫星保险"
+    },
+    {
+        "riskCode": "4089",
+        "riskName": "飞机保险"
+    },
+    {
+        "riskCode": "4090",
+        "riskName": "BNM"
+    },
+    {
+        "riskCode": "7777",
+        "riskName": "旅行保险预约协议"
+    },
+    {
+        "riskCode": "8888",
+        "riskName": "机动车延长保修期限预约险"
+    },
+    {
+        "riskCode": "9999",
+        "riskName": "货物运输保险预约协议"
+    }
+]

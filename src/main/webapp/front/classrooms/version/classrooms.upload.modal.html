@@ -1,0 +1,35 @@
+
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3>上传安装包</h3>
+        </div>
+    </div>
+    <div class="modal-body" style="height:100px;">
+
+        <form name="frmImportUseruploadEditor" class="form-horizontal" form-validator="" novalidate role="form">
+        <div class="col-xs-12 margin-bottom-10">请同时上传安装包及描述文件：安装包为zip格式，描述文件为txt格式
+：</div>
+            <div class="col-xs-12">
+                    <div class="js-fileapi-wrapper upload-btn col-xs-12">
+                        <input id="choose" name="files" type="file" multiple="multiple" ng-file-select="onFileSelect($files)" accept="aplication/zip" />
+                    </div>
+                    <div class="col-xs-12">
+                    	<div>{{file[0].name}}</div>
+                    	<div>{{file[1].name}}</div>
+                    </div>
+                    
+            </div>
+
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-disabled="!(file.length == 2 && firstName == secondName)"  ng-click="importVersion()">上传 </button>
+   
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

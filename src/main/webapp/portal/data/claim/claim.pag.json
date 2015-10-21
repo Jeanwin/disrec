@@ -1,0 +1,14 @@
+{
+    "03-01": {
+        "scurrency": "03",
+        "tcurrency": "01",
+        "exchrate": 6.1089,
+        "userExchRate": 1
+    },
+    "02-01": {
+        "scurrency": "02",
+        "tcurrency": "01",
+        "exchrate": 0.78733,
+        "userExchRate": 1
+    }
+}

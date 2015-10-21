@@ -1,0 +1,342 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:160px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+   
+    }
+</style>
+<div>
+    <div class="modal-header padding-top-10 padding-bottom-10">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title" >
+            <h3 ng-if="!editingMode">添加用户</h3>
+            <h3 ng-if="editingMode">编辑用户</h3>
+        </div>
+    </div>
+    <div class="modal-body padding-bottom-none padding-top-10">
+
+        <form name="frmAreaEditor" class="form-horizontal" novalidate role="form">
+            <div class="row">
+                <div class="col-xs-3" style="text-align:center">
+
+                    <div class="drop-box" style="width:160px;height:186px"
+                         ">
+                         <div ng-if="!file" style="padding-top: 73px;" class="ng-scope">
+				                        封面图片  (<500kb)
+				         </div>
+                        <div ng-if="imgCheck.flag">
+                            <img style="width:168px;height:220px;" ng-src="{{imgData.url}}">
+                        </div>
+                        <div ng-if="!imgCheck.flag">
+                            <img style="position: relative; left: -1%;margin-top: -62%;width: 160px;height: 186px;" ng-src="{{iptemp+user.pictureurl}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group margin-bottom-10">
+                        <div class="btn-group">
+                            <label ng-repeat="usrsex in sexList" class="btn btn-default" ng-model="user.sex"
+                                   btn-radio="'{{usrsex.value}}'">{{usrsex.name}}</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="js-fileapi-wrapper upload-btn">
+                            <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" style="width:175px"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-9">
+
+                    <div class="panel panel-default margin-bottom-10">
+                        <div class="panel-body padding-top-10 padding-bottom-10">
+
+                            <div class="form-group margin-bottom-10">
+                                <label class="col-xs-3 control-label" for="realname">真实姓名</label>
+                                <div class="col-xs-9">
+                                    <input name="name"
+                                           class="form-control"
+                                           id="realname"
+                                           type="text"
+                                           validate-on="dirty"
+                                           placeholder="真实姓名"
+                                           ng-model="user.name"
+                                           required>
+                                    <span ng-if="frmAreaEditor.name.$dirty && frmAreaEditor.name.$error.required">
+                                        <div style="color: red;">姓名不能为空</div>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group margin-bottom-10">
+                                <label class="col-xs-3 control-label" for="user4">电子邮箱</label>
+                                <div class="col-xs-9">
+                                    <input name="email"
+                                           class="form-control"
+                                           id="user4" type="text"
+                                           placeholder="电子邮箱" ng-model="user.email"
+                                           ng-pattern=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+                                            ng-change="selectEmail()" >
+                                    <span ng-show="showEmailError">
+                                    <div style="color: red;">*电子邮件不能重复</div>
+                                </span>
+                                <span ng-show="frmAreaEditor.email.$error.pattern">
+                                    <div style="color: red;">不是合法的邮箱</div>
+                                </span>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group margin-bottom-10">
+                                <label class="col-xs-3 control-label" for="user5">手机</label>
+                                <div class="col-xs-9">
+                                    <input name="phone"
+                                           ng-blur="phoneDisplay=true"
+                                           ng-pattern=/^1[3|4|5|7|8]\d{9}$/ class="form-control"
+                                           id="user5"
+                                           type="text"
+                                           placeholder="电话"
+                                           number-only
+                                           ng-model="user.phone"
+                                           ng-change="selectPhone()">
+
+                                    <div ng-show="phoneDisplay">
+                                        <span ng-show="showPhoneError">
+                                            <div style="color: red;">手机号号码不能重复</div>
+                                        </span>
+                                        <span ng-show="frmAreaEditor.phone.$error.pattern">
+                                            <div style="color: red;">手机号必须是以13,14,15,17,18开头的11位数字</div>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group margin-bottom-10">
+                                <label class="col-xs-3 control-label" for="user6">隶属机构</label>
+                                <div class="col-xs-9">
+                                    <div class="input-group">
+                                        <input class="form-control"
+                                               id="user6"
+                                               type="text"
+                                               placeholder="隶属机构"
+                                               ng-model="user.deptName"
+                                               ng-click="toggleTree()"
+                                               readonly
+                                               required>
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-list" ng-click="toggleTree()"></i>
+                                        </span>
+                                    </div>
+
+                                    <div collapse="hideTree">
+                                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                                            <ol ui-tree-nodes ng-model="areaTree">
+                                                <li ng-repeat="node in areaTree" ui-tree-node ng-include="'users_renderer.html'"></li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-10">
+                                <label class="col-xs-3 control-label">身份</label>
+                                <div class="col-xs-9">
+                                    <div class="btn-group">
+                                        <label ng-repeat="usertypes in classfiyList" class="btn btn-default" ng-model="user.usertype"
+                                               btn-radio="'{{usertypes.value}}'">{{usertypes.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="(user.usertype === classfiyList[0].value && classfiyList[0].name === '学生') || (user.usertype === classfiyList[1].value && classfiyList[1].name === '学生') " class="form-group">
+                                <label class="col-xs-3 control-label" for="user8">入学年份</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" id="user8" placeholder="入学年份" ng-model="user.schoolyear" number-only required>
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-none">
+                                <label class="col-xs-3 control-label" for="user9">个人介绍</label>
+                                <div class="col-xs-9">
+                                    <textarea class="form-control" id="user9" placeholder="个人介绍" style="height: 60px;" ng-model="user.remark"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-default margin-bottom-10">
+                        <div class="panel-body padding-top-10 padding-bottom-10">
+
+                            <div class="form-group" ng-if="user.id">
+                                <label class="col-xs-3 control-label" for="realname">账号</label>
+                                 <span class="col-xs-9"  style="display: block;padding: 6px 12px;">{{user.loginname}}</span> 
+                                <!-- <div ng-if="userRole.roleList[0].roleName == '系统管理员' "  class="col-xs-9">
+                                    <input class="form-control"
+                                           id="userid1"
+                                           type="text"
+                                           validate-on="dirty"
+                                           name="loginname"
+                                           placeholder="账号"
+                                           ng-model="user.loginname"
+                                           >
+                                    <span ng-show="showUserIDError && user.loginname">
+                                        <div style="color: red;">账号不能重复</div>
+                                    </span>
+                                    <span ng-show="frmAreaEditor.loginname.$dirty && frmAreaEditor.loginname.$error.required">
+                                        <div style="color: red;">账号不能为空</div>
+                                    </span>
+                                </div> -->
+                            </div>
+							<div class="form-group margin-bottom-10" ng-if="user.id  && userRole.roleList[0].roleName == '系统管理员'">
+                                <label class="col-xs-3 control-label" for="realname">密码</label>
+                                <div class="col-xs-9">
+                                    <input name="password"
+                                           class="form-control"
+                                           id="password1"
+                                           type="password"
+                                           placeholder="密码"
+                                           ng-model="user.password"
+                                           >
+                                </div>
+                            </div>
+                            <div class="form-group margin-bottom-10" ng-if="user.id  && userRole.roleList[0].roleName == '系统管理员'" collapse="!user.password ">
+                                <label class="col-xs-3 control-label" for="realname">确认密码</label>
+                                <div class="col-xs-9">
+                                    <input name="passwordok"
+                                           class="col-xs-9 form-control"
+                                           id="password2"
+                                           type="password"
+                                           validate-on="dirty"
+                                           placeholder="确认密码"
+                                           ng-model="user.passwordok">
+                                    <span ng-if="user.password != user.passwordok">
+                                        <div style="color: red;">请保持密码与确认密码一致</div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group margin-bottom-10" ng-if="!user.id">
+                                <label class="col-xs-3 control-label" for="realname">账号</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control"
+                                           id="userid1"
+                                           type="text"
+                                           validate-on="dirty"
+                                           name="loginname"
+                                           placeholder="账号"
+                                           ng-model="user.loginname"
+                                           ng-change="selectUserID()"
+                                           required>
+                                <span ng-show="showUserIDError && user.loginname">
+                                    <div style="color: red;">账号不能重复</div>
+                                </span>
+                                <span ng-show="frmAreaEditor.loginname.$dirty && frmAreaEditor.loginname.$error.required">
+                                    <div style="color: red;">账号不能为空</div>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-10" ng-if="!user.id">
+                                <label class="col-xs-3 control-label" for="realname">密码</label>
+                                <div class="col-xs-9">
+                                    <input name="password"
+                                           class="form-control"
+                                           id="password1"
+                                           type="password"
+                                           validate-on="dirty"
+                                           placeholder="密码"
+                                           ng-model="user.password"
+                                           required>
+                                    <span ng-show="frmAreaEditor.password.$dirty && frmAreaEditor.password.$error.required">
+                                        <div style="color: red;">密码不能为空</div>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-10" ng-if="!user.id" collapse="user.password ==='' ">
+                                <label class="col-xs-3 control-label" for="realname">确认密码</label>
+                                <div class="col-xs-9">
+                                    <input name="passwordok"
+                                           class="col-xs-9 form-control"
+                                           id="password2"
+                                           type="password"
+                                           validate-on="dirty"
+                                           placeholder="确认密码"
+                                           ng-model="user.passwordok"
+                                           required>
+                                    <span ng-show="frmAreaEditor.passwordok.$dirty && frmAreaEditor.passwordok.$error.required">
+                                        <div style="color: red;">确认密码不能为空</div>
+                                    </span>
+                                    <span ng-if="!frmAreaEditor.passwordok.$error.required &&user.password != user.passwordok">
+                                        <div style="color: red;">密码和确认密码不一致</div>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-none">
+                                <label class="col-xs-3 control-label">状态</label>
+                                <div class="col-xs-9">
+                                    <div class="btn-group">
+                                        <label ng-repeat="status in statusList" class="btn btn-default" ng-model="user.status"
+                                               btn-radio="'{{status.value}}'">{{status.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <div class="modal-footer margin-top-none padding-top-10 padding-bottom-10">
+
+        <button ng-if="!editingMode" class="btn btn-primary" ng-click="ok(user)"
+                ng-disabled="frmAreaEditor.$invalid || (!frmAreaEditor.passwordok.$error.required && user.password != user.passwordok)">确定
+        </button>
+        <button ng-if="editingMode" class="btn btn-primary" ng-click="ok(user)"
+                ng-disabled="(frmAreaEditor.$invalid || (!frmAreaEditor.passwordok.$error.required && user.password != user.passwordok)) && showSuccess">确定
+        </button>
+        <button ng-if="error" class="btn btn-primary" data-ng-disabled="!file" ng-click="save()">重试</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>
+
+<script type="text/ng-template" id="users_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>
+        <span ng-click="setActiveAreaTree(node)">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'users_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+

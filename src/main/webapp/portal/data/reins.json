@@ -1,0 +1,18 @@
+[
+    {
+        "reinsCode": "RD0001",
+        "reinsName": "中国人民财产保险股份有限公司"
+    },
+	{
+        "reinsCode": "RD0002",
+        "reinsName": "中国平安财产保险股份有限公司"
+    },
+    {
+        "reinsCode": "RD0003",
+        "reinsName": "中国太平财产保险股份有限公司"
+    },
+    {
+        "reinsCode": "RD0004",
+        "reinsName": "中国大地财产保险股份有限公司"
+    }
+]

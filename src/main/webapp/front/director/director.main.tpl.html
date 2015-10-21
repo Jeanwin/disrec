@@ -1,0 +1,252 @@
+<div class="container-fluid">
+    <!--tree-->
+    <div class="row" style="padding-top: 16px">
+        <div class="col-xs-2">
+            <div class="whiteframe">
+                <div>
+                    <div class="system-left-top font-overlay-1" title="{{areaTree[0].title}}" ng-if="!activeArea.title">
+						<i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i>
+                    	<span>{{areaTree[0].title}}</span>
+                    </div>
+                    <div class="system-left-top font-overlay-1" title="{{activeArea.title}}" ng-if="activeArea.title">
+                    	<i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i>
+                    	<span>{{activeArea.title}}</span>
+                    </div>
+                    <!--<div style="padding-left: 8px;border-bottom: solid 1px #cecece;">当前区域：{{activeAreaTreeNode.node.title}}</div>-->
+                </div>
+                <div style="padding-top: 5px">
+
+                    <!--<div ui-tree id="tree-root" data-drag-enabled="false" style="overflow: scroll">-->
+                    <div ui-tree id="tree-root" data-drag-enabled="false">
+                        <ol ui-tree-nodes ng-model="areaTree">
+                            <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--右边区域-->
+        <div class="col-xs-10">
+        <div class="whiteframe" style="margin-left:-16px">
+               <!--  <div class="padding-8 row">
+                    <div  class="container-fluid">
+                            <div class="pull-right" >
+                                <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">显示查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                                <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">隐藏查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+                            </div>
+                    </div>
+                </div> -->
+                <!-- <div collapse="hideAdvancedSearch" class="advSearchPanel">
+
+                    <form class="form-inline" role="form">
+
+                        <div class="form-group">
+                            <label class="form-label" for="liveState">直播状态</label>
+                            <select id="liveState" ng-model="InquireData.livestuts" class="form-control">
+                                <option value="">不限</option>
+                                <option value="usable">未直播</option>
+                                <option value="block">进行中</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="video">录播</label>
+                            <select id="video" ng-model="InquireData.record" class="form-control">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="live">直播</label>
+                            <select id="live" ng-model="InquireData.live" class="form-control">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="videoState">录像状态</label>
+                            <select id="videoState" ng-model="InquireData.recordstuts" class="form-control">
+                                <option value="">全部</option>
+                                <option value="usable">未录像</option>
+                                <option value="block">进行中</option>
+                                <option value="block">暂停中</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="director">导播状态</label>
+                            <select id="director" ng-model="InquireData.directorstuts" class="form-control">
+                                <option value="">全部</option>
+                                <option value="usable">手动</option>
+                                <option value="block">自动</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary pull-right" ng-click="inquire()">
+                            <span class="glyphicon glyphicon-search"></span>
+                            查询</button>
+
+                    </form>
+                </div> -->
+
+        <div class="panel panel-default">
+            <div class="panel-body padding-0" id="rightContent-height">
+                <table class="table table-striped" ng-controller="DirectorSeize" style="text-align: center;margin-bottom:0;">
+                    <thead style="background-color: #ceecff;font-weight:bold">
+                    <tr>
+                        <td style="WORD-WRAP: break-word" width="156">教室</td>
+                        <td>任务时间
+                            <span> 
+                                 <a href="" ng-show="sort.dateTime == 'asc'" ng-click="orderby('dateTime')" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up ng-scope"> 
+                                 </a> 
+                                 <a href="" ng-show="sort.dateTime == 'desc'" ng-click="orderby('dateTime')" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down ng-scope ng-hide"> 
+                                 </a>
+                            </span>
+                        </td>
+                        <td style="WORD-WRAP: break-word" width="156">课表任务</td>
+                        <td style="white-space: nowrap;">直播</td>
+                        <td style="white-space: nowrap;">录像</td>
+<!--                         <td>自动导播</td> -->
+                        <td style="white-space: nowrap;">直播状态</td>
+                        <td style="white-space: nowrap;">录像状态</td>
+<!--                         <td>导播状态</td> -->
+<!--                         <td>导播员</td> -->
+                        <td style="white-space: nowrap;">Mac</td>
+                        <td style="white-space: nowrap;">状态</td>
+                        <td style="white-space: nowrap;">操作</td>
+                    </tr>
+                    </thead>
+                    <tr  ng-repeat="tool in directorList"  ng-Dblclick="openConsole(tool.mac,tool.cameraNo,tool.id,tool.curriculumId,tool.resourcefloder)">
+                    <!-- <tr  ng-repeat="tool in directorList" ng-if="tool.cameraNo ==　4" ng-Dblclick="openConsole(tool.mac,'openConsoleSample',tool.id,tool.curriculumId,tool.resourcefloder)" >
+                    <tr  ng-repeat="tool in directorList" ng-if="tool.cameraNo <=　3" ng-Dblclick="openConsole(tool.mac,'openConsoleBestThree',tool.id,tool.curriculumId,tool.resourcefloder)" > -->
+                   
+                    	<td >
+                            <a href=""  class="tooltipTest-text" ng-click="openConsole(tool.mac,tool.cameraNo,tool.id,tool.curriculumId,tool.resourcefloder)" >{{tool.name}}</a>
+                           
+                        </td>
+                        <td>{{tool.time}}</td>
+                        <td>{{tool.stuts}}</td>
+                        <td>{{tool.live}}</td>
+                        <td>{{tool.record}}</td>
+                        <td ng-if="tool.livestuts === '1'">正在直播</td>
+                        <td ng-if="tool.livestuts != '1'">未直播</td>
+                        <td ng-if="tool.recordstuts === '1'">正在录像</td>
+                        <td ng-if="tool.recordstuts != '1'">未录像</td>
+<!--                         <td>{{tool.name}}</td> -->
+<!--                         <td>{{tool.name}}</td> -->
+                        <td>{{tool.mac}}</td>
+                        <td ng-if="tool.refreshstuts == '1'">在线</td>
+                        <td ng-if="tool.refreshstuts != '1'">离线</td>
+                        <td style="white-space: nowrap;" >
+                        
+                            <!-- <a ng-if="tool.cameraNo > 4"  class="btn btn-link" ng-click="openConsole(tool.mac,tool.cameraNo,tool.id,tool.curriculumId,tool.resourcefloder)"
+                                    tooltip-placement="top" tooltip-popup-delay="1000" tooltip="进入导播间">
+                                <span class="glyphicon glyphicon-expand"></span>
+                            </a> 
+                             <a ng-if="tool.cameraNo == 4 && tool.mac!=null" class="btn-link" ng-click="openConsole(tool.mac,tool.cameraNo,tool.id,tool.curriculumId,tool.resourcefloder)"
+                                    tooltip-placement="top" tooltip-popup-delay="1000" tooltip="进入简洁导播间">
+                                <span class="glyphicon glyphicon-expand"></span>
+                            </a> -->  
+                             <!-- <button ng-if="tool.mac!=null" class="btn btn-link" ng-click="openConsole(tool.mac,'openConsoleBestSample',tool.id,tool.curriculumId,tool.resourcefloder)"
+                                    tooltip-placement="top" tooltip-popup-delay="1000" tooltip="进入精版简洁导播间">
+                                <span class="glyphicon glyphicon-expand"></span>
+                            </button> -->
+                            <a  class="btn-link" ng-click="openConsole(tool.mac,tool.cameraNo,tool.id,tool.curriculumId,tool.resourcefloder)"
+                                    tooltip-placement="top" tooltip-popup-delay="1000" tooltip="进入导播间">
+                                <span class="glyphicon glyphicon-expand"></span>
+                            </a>  
+                        </td>
+                    </tr>
+                </table>
+                <button ng-if="pagination.totalItems === 0" class="ondata">
+                	<span ng-if="!getDataReady" class="ondatatext">数据正在加载，请稍等...</span>
+                    <span ng-if="getDataReady" class="ondatatext">找不到您搜索的信息！</span>
+                </button>
+            </div>
+
+            <div class="panel-footer">
+
+                <div ng-if="pagination.totalItems > 0" class="row">
+
+                    <div class="col-xs-3 padding-right-none" style="padding-top:8px;">
+                        <span>共{{pagination.totalItems}}条数据,</span>
+                                <span>每页
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                    </div>
+
+                    <div class="col-xs-7 padding-left-right-none" ng-show="pagination.totalItems > pagination.pageSize">
+                      
+                        <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                    page="pagination.pageIndex"
+                                    items-per-page="pagination.pageSize"
+                                    max-size="pagination.maxSize"
+                                    previous-text="{{pagination.previousText}}"
+                                    next-text="{{pagination.nextText}}"
+                                    first-text="{{pagination.firstText}}"
+                                    last-text="{{pagination.lastText}}"
+                                    class="pagination-small"
+                                    boundary-links="true"
+                                    on-select-page="onSelectPage(page)">
+                        </pagination>
+                    </div>
+                    <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+                        <div class="input-group input-group-sm" style="width: 88px"
+                             tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                            <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span ng-click="setActiveArea(node,pagination)" class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-bottom:15px;"></span>
+        <span title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="nodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content slideTree" ng-class="{'tree-node-active':node.id===activeArea.id}">-->
+        <!--<a class="btn btn-xs">-->
+                    <!--<span ng-if="node.parentid === null" class="glyphicon" style="width:12px;height:12px">-->
+                        <!--<img src="assets/img/icon-house2.png" style="width:24px;height:24px;padding-bottom: 8px">-->
+                    <!--</span>-->
+                    <!--<span ng-if="!(node.nodes && node.nodes.length > 0)" class="glyphicon" style="width:12px;height:12px">-->
+                        <!--<img src="assets/img/icon-house1.png" style="width:24px;height:24px;padding-bottom: 8px;padding-right: 5px">-->
+                    <!--</span>-->
+                    <!--<span class="glyphicon" ng-if="node.nodes && node.nodes.length > 0"-->
+                          <!--nodrag ng-click="toggle(this)"-->
+                          <!--ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}">-->
+                    <!--</span>-->
+        <!--</a>-->
+        <!--<span ng-click="setActiveArea(node,pagination)">{{node.title}}</span>-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

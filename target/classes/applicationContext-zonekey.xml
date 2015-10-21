@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<import resource="email/applicationContext-email.xml" />
+	<import resource="auth/applicationContext-shiro.xml" />
+	<import resource="log/applicationContext-log.xml" />
+	<!-- <import resource="cache/applicationContext-memcached.xml" />
+	<import resource="task/applicationContext-task.xml" />
+	<import resource="workflow/applicationContext-activiti.xml" /> -->
+</beans>

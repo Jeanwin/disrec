@@ -1,0 +1,161 @@
+<div class="container-fluid padding-8" style="position: absolute;width: 100%;min-height:400px;margin-top: -56px;z-index:1011;padding: 0;background:#fff;">
+        <div class="row" style="padding-bottom: 8px;background-color: #e3e3e3;padding-top: 10px;margin-top: 0;">
+            <div class="col-xs-2" style="font-size: 23px;margin-left: 8px">
+               参数配置-录播
+            </div>
+            <div class="col-xs-8"></div>
+            <div class="col-xs-2 pull-right">
+                <a class="close margin-right-20" href="#/classrooms/facility"
+                   tooltip-placement="top" tooltip-popup-delay="300" tooltip="返回">
+                    <!--<span aria-hidden="true">&times;</span>返回-->
+                    <span class="glyphicon glyphicon-share-alt"></span>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="whiteframe" style="padding:20px;">
+        	<div class="col-xs-12 margin-top-15">
+	        	<div class="col-xs-1 text-right">配置</div>
+	        	<div class="col-xs-11">
+	        		<select class="form-control" style="width:30%" ng-model="selectcontent">
+	        			<option value="">请选择</option>
+	        			<!-- <option value="teacherCloud">教师云台</option> -->
+	        			<option value="centerWarn">中控报警配置</option>
+	        			<!-- <option value="centerpalt">中控平台面板配置</option> -->	        		
+	        		</select>           			
+	        	</div>
+        	</div>
+        	<div class="col-xs-12 margin-top-15">
+	        	<div class="col-xs-1 text-right">内容</div>
+	        	<div class="col-xs-11">
+	        		<table class="table table-striped" style="text-align:center" ng-show="selectcontent == 'centerpalt'">
+	                     <thead style="background-color: #ceecff;font-weight:bold">
+	                     	<tr>
+	                     		<td>面板</td>
+	                     		<td>类型</td>
+	                     		<td>组合命令</td>
+	                     	</tr>
+	                     </thead>
+	                     <tbody>
+	                     	<tr>
+	                     		<td></td>
+	                     		<td></td>
+	                     		<td></td>
+	                     	</tr>
+	                     </tbody>
+	               </table>
+	               <form name="parameterConfigurationForm">
+		               <table class="table table-striped" style="text-align:center" ng-show="selectcontent == 'centerWarn'">
+		                     <thead style="background-color: #ceecff;font-weight:bold">
+		                     	<tr>
+		                     		<td>中控输入</td>
+		                     		<td>状态</td>
+		                     		<td>报警提示语</td>
+		                     		<td>铃声</td>
+		                     		<td>消息报警</td>
+		                     		<td>邮箱报警</td>
+		                     		<td>短信通知</td>
+		                     	</tr>
+		                     </thead>
+		                     <tbody>
+		                     	<tr ng-repeat="alarm in alarmList">
+		                     		<td>
+		                     			<select class="form-control" ng-change="splitData($index,alarm.outputTemp)"  ng-model="alarm.outputTemp" ng-options="cour.name + '-' + cour.value as cour.name + '-' + cour.value for cour in alarmConfigs" ng-disabled="true">
+						                 		<option value="">请选择</option>
+						                 </select>
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="alarm.state" ng-change="checkoutPut($index)">
+		                     				<option value="0">低</option>
+		                     				<option value="1">高</option>
+		                     			</select>
+		                     		</td>
+		                     		<td><input type="text" ng-model="alarm.clues" class="form-control"></td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="alarm.bell">
+		                     				<option value="1">1</option>
+		                     				<option value="2">2</option>
+		                     				<option value="3">3</option>
+		                     				<option value="4">4</option>
+		                     				<option value="5">5</option>
+		                     				<option value="6">6</option>
+		                     				<option value="7">7</option>
+		                     			</select>
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="alarm.messageAlarm">
+		                     				<option value="1">启用</option>
+		                     				<option value="0">停用</option>
+		                     			</select>
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="alarm.emailUse">
+		                     				<option value="1">启用</option>
+		                     				<option value="0">停用</option>
+		                     			</select>
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="alarm.sms">
+		                     				<option value="1">启用</option>
+		                     				<option value="0">停用</option>
+		                     			</select>
+									</td>
+		                     	</tr>
+
+		                     	<!-- <tr ng-repeat="alarmConfig in alarmConfigs">
+		                     		<td>	                     			
+		                     			<select class="form-control" ng-model="add.output" ng-options="cour.name + '-' + cour.value as cour.name + '-' + cour.value for cour in alarmConfigs">
+		                     				<option value="">请选择</option>
+		                     			</select>	                     				
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="add.state" ng-change="">
+		                     				<option value="0">高</option>
+		                     				<option value="1">低</option>
+		                     			</select>
+		                     		</td>
+		                     		<td><input type="text" ng-model="add.clues" class="form-control"></td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="add.bell">
+		                     				<option value="1">1</option>
+		                     				<option value="2">2</option>
+		                     				<option value="3">3</option>
+		                     				<option value="4">4</option>
+		                     				<option value="5">5</option>
+		                     				<option value="6">6</option>
+		                     				<option value="7">7</option>
+		                     			</select>	                     			
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="add.messageAlarm">
+		                     				<option value="0">启用</option>
+		                     				<option value="1">停用</option>
+		                     			</select>
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="add.emailUse">
+		                     				<option value="0">启用</option>
+		                     				<option value="1">停用</option>
+		                     			</select>
+		                     		</td>
+		                     		<td>
+		                     			<select class="form-control" ng-model="add.sms">
+		                     				<option value="0">启用</option>
+		                     				<option value="1">停用</option>
+		                     			</select>
+		                     									</td>	                     		
+		                     	</tr> -->
+		                     </tbody>
+		               </table>
+		            </form>   
+	               	<textarea ng-show="selectcontent == 'teacherCloud'" style="width:100%;height:400px;"></textarea>
+	        		
+	        	</div>
+        	</div>
+        </div>
+		<div class="footer row">
+			<button class="btn btn-default col-xs-offset-5" ng-disabled="stateOnlyOne||parameterConfigurationForm.$pristine" ng-click="saveList()">保存</button>
+			<button class="btn btn-default" ng-disabled="stateOnlyOne" ng-click="apply(alarmList)">应用到其他教室</button>
+		</div>
+</div>

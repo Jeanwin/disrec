@@ -1,0 +1,9 @@
+<script>
+function iframeCallback(){
+	angular.element(document.getElementById('cmsIfm')).scope().$parent.changeIframe();
+}
+</script>
+<div ui-view="classroom-manage" class="ng-scope">
+<div class="container-fluid ng-scope">
+<iframe id="cmsIfm" frameborder="0" width="100%" height="720px"></iframe>
+</div></div>

@@ -1,0 +1,62 @@
+﻿[
+    {
+        "id": "0001",
+        "classtype": "高考班教室",
+        "datebegin": "2014-05-01",
+        "dateend": "2014-09-01",
+        "iclass": "1",
+        "name": "第一节",
+        "starttime": "8:00",
+        "endtime": "9:00"
+    },
+    {
+        "id": "0002",
+        "classtype": "高考班教室",
+        "datebegin": "2014-05-01",
+        "dateend": "2014-09-01",
+        "iclass": "2",
+        "name": "第二节",
+        "starttime": "9:00",
+        "endtime": "10:00"
+    },
+    {
+        "id": "0003",
+        "classtype": "高考班教室",
+        "datebegin": "2014-05-01",
+        "dateend": "2014-09-01",
+        "iclass": "3",
+        "name": "第三节",
+        "starttime": "10:00",
+        "endtime": "11:00"
+    },
+    {
+        "id": "0004",
+        "classtype": "高考班教室",
+        "datebegin": "2014-05-01",
+        "dateend": "2014-09-01",
+        "iclass": "4",
+        "name": "第四节",
+        "starttime": "11:00",
+        "endtime": "12:00"
+    },
+    {
+        "id": "0005",
+        "classtype": "高考班教室",
+        "datebegin": "2014-05-01",
+        "dateend": "2014-09-01",
+        "iclass": "5",
+        "name": "第五节",
+        "starttime": "13:00",
+        "endtime": "14:00"
+    },
+    {
+        "id": "0006",
+        "classtype": "高考班教室",
+        "datebegin": "2014-05-01",
+        "dateend": "2014-09-01",
+        "iclass": "6",
+        "name": "第六节",
+        "starttime": "15:00",
+        "endtime": "16:00"
+    }
+]

@@ -1,0 +1,24 @@
+<div class="modal-header ng-scope">
+    <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </a>
+    <h3>添加角色</h3>
+</div>
+<div class="modal-body ng-scope" >
+    <form name="frmLimitsEditor" class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="roleName">角色名称</label>
+            <div class="col-sm-8">
+                <input class="form-control" name="rolename" id="roleName" placeholder="角色名称" type="text" ng-model="rolename.roleName" ng-pattern="/^.{1,20}$/" required>
+            </div>
+            <div class="col-sm-2 padding-top-5 padding-left-none">
+                <span ng-show="frmLimitsEditor.rolename.$error.pattern" style="color: red" class="">必须20字内</span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer ng-scope">
+    <button class="btn btn-primary" ng-disabled="frmLimitsEditor.$pristine || frmLimitsEditor.$invalid || frmLimitsEditor.rolename.$error.pattern" ng-click="ok(rolename)">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

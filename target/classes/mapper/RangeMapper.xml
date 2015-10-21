@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.RangeMapper" >
+  <resultMap type="map" id="data">
+  	<result property="rangeid" column="rangeid"/>
+  	<association property="rangeScopes" column="rangeid" select="getData"/>
+  </resultMap>
+  <select id="getScope" resultMap="data">
+  	select id rangeid,name ,typeid scopetype,enable from zonekey_range where deleteflag=0
+  </select>
+  <select id="findOne" resultType="com.zonekey.disrec.entity.Range">
+  	select id ,name ,typeid  from zonekey_range where deleteflag=0 and id=#{id}
+  </select>
+  <select id="getData" resultType="map">
+  	select scopeid from range_scope where rangeid=#{rangeid}
+  </select>
+  <insert id="insertRange" >
+		insert into user_range(id,userid,rangeid,createdate,createuser) values
+		<foreach collection="list" item="map" index="index" separator=",">
+			(#{map.id},#{userid},#{map.rangeid},sysDate(),#{createuser})
+		</foreach>
+	</insert>
+	<insert id="insertRangeRole" >
+		insert into user_role(id,userid,roleid,createtime,createuser) values
+		<foreach collection="list" item="map" index="index" separator=",">
+			(#{map.insertid},#{userid},#{map.id},sysDate(),#{createuser})
+		</foreach>
+	</insert>
+	<!-- 删除的是和用户关联的范围数据,而不是范围 -->
+	<delete id="deleteRange" >
+		delete from user_range 
+		where   deleteflag=0 and userid in 
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.loginname}
+		</foreach>
+	</delete>
+	<delete id="deleteRangeRole">
+		delete from user_role 
+		where   deleteflag=0 and userid in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.loginname}
+		</foreach>
+	</delete>
+	
+	<insert id="saveRange" parameterType="map">
+		insert into zonekey_range (id,name,typeid,createDate,createuser)
+		values(#{id},#{name},#{scopetype},sysDate(),#{createuser})
+	</insert>
+	<update id="updateRange" parameterType="com.zonekey.disrec.entity.Range">
+		update zonekey_range 
+		<set >
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="typeid != null">
+				typeid = #{typeid},
+			</if>
+			modifydate=sysDate(),modifyuser=#{modifyuser}
+		</set> where id = #{id}
+	</update>
+	
+	<delete id="deleteRangeScope" parameterType="com.zonekey.disrec.vo.RangeView">
+		delete from range_scope  where rangeid=#{rangeid} and deleteflag=0
+	</delete> 
+	<insert id="insertRangeScope" parameterType="com.zonekey.disrec.vo.RangeView">
+		insert into range_scope(id,rangeid,isChecked,scopeid,createdate,createuser) values
+		<foreach collection="rangeScopes"  item="item" separator=",">
+			(#{item.param},#{rangeid},#{item.isChecked},#{item.id},sysDate(),#{createuser})
+		</foreach>
+	</insert>
+	<!-- 查询使用该范围的用户数量 -->
+	<select id="findUserCount" parameterType="com.zonekey.disrec.vo.RangeView" resultType="int">
+		select count(*) from user_range where rangeid = #{rangeid} and deleteflag='0'
+	</select>
+	<delete id="delRange" parameterType="com.zonekey.disrec.vo.RangeView">
+		delete from zonekey_range where id=#{rangeid} 
+	</delete>
+</mapper>

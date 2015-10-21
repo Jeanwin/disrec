@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.DeviceServiceMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.DeviceService" >
+   
+  </resultMap>
+  <sql id="Base_Column_List" >
+    deviceid, id, name, type, state, url, createtime, description, extendinfo, modifydate, 
+    createuser, modifyuser, deleteflag
+  </sql>
+
+	<select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_device_service
+		where id = #{id,jdbcType=CHAR}
+	</select>
+
+	<select id="findByPage" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM zonekey_device_service
+		LIMIT #{offset} ,#{limit}
+	</select>
+
+	<select id="count" resultType="long">
+		SELECT count(*) FROM
+		zonekey_device_service
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		update zonekey_device_service set
+		deleteflag='1',modifyuser=#{modifyuser,jdbcType=CHAR},modifydate=sysDate()
+		where id =#{id,jdbcType=CHAR}
+	</update>
+	
+  <insert id="insert" parameterType="com.zonekey.disrec.entity.DeviceService" >
+    insert into zonekey_device_service (deviceid, id, name, 
+      type, state, url,camera, createtime, 
+      description, extendinfo, modifydate, 
+      createuser, modifyuser, deleteflag
+      )
+    values (#{deviceid,jdbcType=CHAR}, #{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=CHAR}, #{state,jdbcType=CHAR}, #{url,jdbcType=VARCHAR},camera, #{createtime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=VARCHAR}, #{extendinfo,jdbcType=VARCHAR}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{createuser,jdbcType=CHAR}, #{modifyuser,jdbcType=CHAR}, #{deleteflag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zonekey.disrec.entity.DeviceService" >
+    insert into zonekey_device_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deviceid != null" >
+        deviceid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="extendinfo != null" >
+        extendinfo,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+      <if test="createuser != null" >
+        createuser,
+      </if>
+      <if test="modifyuser != null" >
+        modifyuser,
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=CHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo != null" >
+        #{extendinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=CHAR},
+      </if>
+      <if test="modifyuser != null" >
+        #{modifyuser,jdbcType=CHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.zonekey.disrec.entity.DeviceService" >
+    update zonekey_device_service
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="extendinfo != null" >
+        extendinfo = #{extendinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null" >
+        createuser = #{createuser,jdbcType=CHAR},
+      </if>
+      <if test="modifyuser != null" >
+        modifyuser = #{modifyuser,jdbcType=CHAR},
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag = #{deleteflag,jdbcType=CHAR},
+      </if>
+    </set>
+    where deviceid = #{deviceid,jdbcType=CHAR}
+      and id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zonekey.disrec.entity.DeviceService" >
+    update zonekey_device_service
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      state = #{state,jdbcType=CHAR},
+      url = #{url,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      extendinfo = #{extendinfo,jdbcType=VARCHAR},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      createuser = #{createuser,jdbcType=CHAR},
+      modifyuser = #{modifyuser,jdbcType=CHAR},
+      deleteflag = #{deleteflag,jdbcType=CHAR}
+    where deviceid = #{deviceid,jdbcType=CHAR}
+      and id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

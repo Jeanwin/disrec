@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="no-js" id="ng-app" ng-controller="ConsoleMainCtrl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap-lemon.css" />
+    <link rel="stylesheet" type="text/css" href="css/vedio.css">
+    <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
+    <!-- endbuild -->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <![endif]-->
+    <!-- build:js assets/js/lemon.min.js -->
+    <script type="text/javascript" src="../../assets/js/jquery/jquery-1.4.2.min.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<!-- <button ng-click="sendMessage()">WebSocket测试</button> -->
+<!--[if lte IE 9]>
+<div>不支持此浏览器</div>
+<![endif]-->
+<div id="vedio-live" ng-show="!directorFighting">
+        <div class="small-live-list">
+            <div class="col-xs-4 col-xs-offset-4 header-info" style="padding-top: 10px;padding-bottom: 10px;width: 50%;margin-left: 15%;">
+                 <table class="" ng-hide="changTime">
+                    <tr>
+                        <td>教室</td>
+                        <td>课程</td>
+                        <td>教师</td>
+                        <td>系统时间</td>
+                        <td>倒计时</td>
+                    </tr>
+                    <tr>
+                        <td>{{className}}</td>
+                        <td>{{courseName}}</td>
+                        <td>{{teacherName}}</td>
+                        <td>{{clock}}</td>
+                        <!-- <td>10:23:07</td> -->
+                        <td>{{remainTime}}<i class="change-time glyphicon glyphicon-pencil" ng-click="changeTime()"></i>
+                    </tr>
+                </table> 
+                <div style="padding-top:6px;" ng-hide="!changTime">
+                	<span class="col-xs-4">设置直播结束时间</span>
+                	<div class="col-xs-4" style="margin-bottom:6px;">
+                		<span class="zktime hour">{{remainHours}}</span>
+                		<span>:</span>            
+                		<span class="zktime minute">
+                			<span class="hour-change-large glyphicon glyphicon-chevron-up"
+                				style="margin-top:-18px;"
+                				ng-click="lastTimeObject.LastTimeModel=dealLastTime('add')"
+                				></span>
+                			{{lastTimeObject.LastTimeModel}}
+                			<span class="hour-change-small glyphicon glyphicon-chevron-down"
+                				style="margin-top:28px;"
+                				ng-click="lastTimeObject.LastTimeModel=dealLastTime('remove')"
+                				></span>
+               			</span>
+                		<span>:</span>
+                		<span class="zktime second">{{lastTimeObject.LastSecos}}</span>
+                	</div>
+                    <div class="col-xs-4" style="text-align:right;">
+                        <button class="zkbtn" ng-click="changeTimeOk(lastTimeObject.LastTimeModel,lastTimeObject.LastSecos)"><span class="glyphicon glyphicon-ok"></span>&nbsp;确定</button>
+                        <button class="zkbtn" ng-click="changeTimeCancel()"><span class="glyphicon glyphicon-remove"></span>&nbsp;取消</button>
+                    </div>
+                	
+                </div>
+            </div>
+            <div class="col-xs-2 col-xs-offset-2 header-info-icon">           
+                <i class="col-xs-1 zkicon-fontsize-26 icon-alert icon-nouser margin-right-30"></i>
+                <i class="col-xs-1 zkicon zkicon-fontsize-26 icon-brocast" ng-click="setLiveMode('stop')"></i>
+                <span ng-if="livingStatusParam==='LivingStart'" style="color:white;margin-left:30px;">
+                	直播中
+                </span>
+                <span ng-if="livingStatusParam!='LivingStart'" style="color:white;margin-left:30px;">
+                	未直播
+                </span>
+                <button class="btn btn-sm btn-primary pull-right" ng-click="backMain()">返回首页</button>
+            </div>
+            
+        </div> 
+        <div class="small-live">             
+            <div class="small-child-live small-leftTop-live" ng-class="{active:isActive1}" ng-hide="isShow1">
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='1'}">
+                    <div class="vedio-meta-title vedio-meta-entry" >                        
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[0].title}}</span> <!-- 获取视屏列表信息 -->
+                        <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='1'}" ng-click="toggleCondition('1','3000')" style="margin-top:-1px;">LIVE</button>
+                        <i class="zkicon zkicon-fontsize-23 icon-cam-control pull-right" ng-hide="isShow" ng-click="toggleCloud('1')"></i> 
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio('1')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('1')"></i> 
+
+					</div>                                      
+                </div> 
+                <!-- <div class="vtoggleCloudedio-img padding-left-none padding-right-none">
+                    <img class="img"  src="img/lemonade-elements-25.png" alt="教室左上视图">                   
+                </div> -->  
+                <div class="vedio-img" ng-include="'../../director/consoleSample/left-top-video.html'"></div>                                   
+            </div> 
+            <div class="small-child-live small-rightTop-live" ng-class="{active:isActive2}" ng-hide="isShow2">
+
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='2'}">
+                    <div class="vedio-meta-title vedio-meta-entry">
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[1].title}}</span>
+                        
+                        <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='2'}" ng-click="toggleCondition('2','3001')" style="margin-top:-1px;">LIVE</button>
+                        <!-- <span class="col-xs-1 pull-right glyphicon glyphicon-asterisk" ng-click="toggleCloud('2')" ng-hide="isShow"></span> 
+                        <span class="col-xs-1 resize-icon-large pull-right" ng-hide="isShow" ng-click="resizeVedio('2')"></span>
+                        <span class="col-xs-4 resize-icon-small pull-right" ng-show="isShow" ng-click="resizeSmallVedio('2')"></span> -->
+                        <i class="zkicon zkicon-fontsize-23 icon-cam-control pull-right" ng-hide="isShow" ng-click="toggleCloud('2')"></i> 
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio('2')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('2')"></i> 
+                    </div>                                      
+                </div>
+                <!-- <div class="vedio-img padding-left-none padding-right-none">
+                    <img class="img" src="img/lemonade-elements-25.png" alt="教室左上视图">                    
+                </div>   --> 
+                <div class="vedio-img" ng-include="'../../director/consoleSample/left-bottom-video.html'"></div>             
+                                            
+            </div>
+            <div class="small-child-live small-leftbottom-live" ng-class="{active:isActive3}" ng-hide="isShow3">
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='3'}">
+                    <div class="vedio-meta-title vedio-meta-entry">
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[2].title}}</span>
+                        
+                        <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='3'}" ng-click="toggleCondition('3','3002')" style="margin-top:-1px;">LIVE</button>
+                        <!-- <span class="col-xs-1 pull-right glyphicon glyphicon-asterisk" ng-click="toggleCloud('3')" ng-hide="isShow"></span> 
+                        <span class="col-xs-1 resize-icon-large pull-right" ng-hide="isShow" ng-click="resizeVedio('3')"></span>
+                        <span class="col-xs-4 resize-icon-small pull-right" ng-show="isShow" ng-click="resizeSmallVedio('3')"></span> -->
+                        <i class="zkicon zkicon-fontsize-23 icon-cam-control pull-right" ng-hide="isShow" ng-click="toggleCloud('3')"></i> 
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio('3')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('3')"></i> 
+                    </div>                                      
+                </div>
+                <div class="vedio-img" ng-include="'../../director/consoleSample/right-top-video.html'"></div>                              
+            </div>            
+            <div class="small-child-live small-rightBottom-live" ng-class="{active:isActive4}" ng-hide="isShow4">
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='4'}">
+                    <div class="vedio-meta-title vedio-meta-entry">
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[3].title}}</span>
+                        
+                        <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='4'}" ng-click="toggleCondition('4','3003')" style="margin-top:-1px;">LIVE</button>
+                        <!-- <span class="col-xs-1 pull-right glyphicon glyphicon-asterisk" ng-click="toggleCloud('4')" ng-hide="isShow"></span> 
+                        <span class="col-xs-1 resize-icon-large pull-right" ng-hide="isShow" ng-click="resizeVedio('4')"></span>
+                        <span class="col-xs-4 resize-icon-small pull-right" ng-show="isShow" ng-click="resizeSmallVedio('4')"></span> -->
+                        <!--<i class="zkicon zkicon-fontsize-23 icon-cam-control pull-right" ng-hide="isShow" ng-click="toggleCloud('4')"></i> -->
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio('4')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('4')"></i> 
+                    </div>                                      
+                </div>                
+                    <div class="vedio-img" ng-include="'../../director/consoleSample/right-bottom-video.html'"></div>               
+            </div>            
+        </div>
+        <div class="cloud-live">
+            <div class="cloud-live-title">
+            	<span ng-if="couldControl === undefined" class="dedicate">{{VideosInformations[3].title}}</span>
+                <span class="dedicate">{{couldControl.title}}</span>
+                <span>云台控制</span>
+            </div>
+            <div class="vp v-meta-hover padding-left-none padding-right-none">                 
+                <embed src="icons-lastest.svg" id="svgmapctrl" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" >                 
+            </div>
+            <div class="col-xs-12" style="margin-top:25px;margin-bottom:5px;">   
+                <span class="col-xs-3 pull-right padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-remember" ng-click="operConsole('0')" ng-class="{'active':activeMem==='0'}">记忆</a>
+                </span>
+            </div>
+            <div class="col-xs-12">    
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="operConsole('1')">1</a>
+                </span>
+                <span class="col-xs-3 padding-1" >
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-2" ng-click="operConsole('2')">2</a>
+                </span>
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-3" ng-click="operConsole('3')">3</a>
+                </span>
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-4" ng-click="operConsole('4')">4</a>
+                </span>
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-5" ng-click="operConsole('5')">5</a>
+                </span>
+                <span class="col-xs-3 padding-1" >
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-6" ng-click="operConsole('6')">6</a>
+                </span>
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-7" ng-click="operConsole('7')">7</a>
+                </span>
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-8" ng-click="operConsole('8')">8</a>
+                </span>                  
+            </div>           
+   </div>
+</div>
+<script src="../../assets/js/lib/require.js" data-main="../../director/consoleSample/main.js?v=1.1"></script>
+<script type="text/javascript" src="swfobject.js"></script>
+</body>

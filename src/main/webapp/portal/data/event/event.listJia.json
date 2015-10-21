@@ -1,0 +1,23 @@
+{
+    "total" :2,
+    "data" :[
+        {
+            "sgCode":"事故代码",
+            "sgSort":"事故序号",
+            "sgDescript":"miaoshu",
+            "currency":"CNY",
+            "jzCode":"聚在代码",
+            "jzName":"juzaiName",
+            "dtMoney":"待摊金额"
+        },
+        {
+            "sgCode":"事故代码2",
+            "sgSort":"事故序号2",
+            "sgDescript":"miaoshu2",
+            "currency":"CNY2",
+            "jzCode":"聚在代码2",
+            "jzName":"juzaiName2",
+            "dtMoney":"待摊金额2"
+        }
+    ]
+}

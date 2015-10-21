@@ -1,0 +1,14 @@
+{
+    "id":{
+        "uwYear":"2014",
+        "riskClass":"CL01",
+        "riskCode":"0101",
+        "riskLevel":"001"
+    },
+    "riskClassDesc":"保单最大自留额",
+    "riskLevelDesc":"风险1级",
+    "currency":"CNY",
+    "retentionValue":3214826000,
+    "reMarks":null,
+    "flag":null
+}

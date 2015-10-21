@@ -1,0 +1,57 @@
+[
+    {
+        "id":1,
+        "classroom":"高一(1)班",
+        "course":"数学",
+        "teacher":"刘梅",
+        "systemTime":"10:23:07",
+        "countTime":"00:04:23",
+        "vedio":[
+                {
+                    "title":"学生1",
+                    "id":1
+                },
+                {
+                    "title":"学生2",
+                    "id":2
+                },
+                {
+                    "title":"教师1",
+                    "id":3
+                },
+                {
+                    "title":"教师2",
+                    "id":4
+                }
+
+        ]
+    },
+    {
+        "id":2,
+        "classroom":"高一(2)班",
+        "course":"语文",
+        "teacher":"刘刚",
+        "systemTime":"11:23:07",
+        "countTime":"00:05:23",
+        "vedio":[
+                {
+                    "title":"学生1",
+                    "id":1
+                },
+                {
+                    "title":"学生2",
+                    "id":2
+                },
+                {
+                    "title":"教师1",
+                    "id":3
+                },
+                {
+                    "title":"教师2",
+                    "id":4
+                }
+
+        ]
+    }
+    
+]

@@ -1,0 +1,87 @@
+{
+    "total":12,
+    "data":[
+        {
+        "loginname":"1002",
+        "name":"崔老师",
+        "roleList":[
+            {
+                "id":"1",
+                "roleName":"管理员"
+            },
+            {
+                "id":"2",
+                "roleName":"超级管理员"
+            }
+
+        ],
+        "scopeList":[
+            {
+                "rangeid":"1",
+                "name":"东教室",
+                "scopetype":"1"
+            },
+            {
+                "rangeid":"2",
+                "name":"初中部",
+                "scopetype":"2"
+            }
+
+        ]
+
+    },
+        {
+            "loginname":"1002",
+            "name":"刘老师",
+            "roleList":[
+                {
+                    "roleid":"1",
+                    "roleName":"管理员"
+                }
+
+            ],
+            "scopeList":[
+                {
+                    "rangeid":"1",
+                    "name":"东教室",
+                    "scopetype":"1"
+                },
+                {
+                    "rangeid":"2",
+                    "name":"初中部",
+                    "scopetype":"2"
+                }
+
+            ]
+
+        },
+        {
+            "loginname":"1002",
+            "name":"崔",
+            "roleList":[
+                {
+                    "roleid":"1",
+                    "roleName":"管理员"
+                },
+                {
+                    "roleid":"2",
+                    "roleName":"超级管理员"
+                }
+
+            ],
+            "scopeList":[
+                {
+                    "rangeid":"1",
+                    "name":"东教室",
+                    "scopetype":"1"
+                },
+                {
+                    "rangeid":"2",
+                    "name":"初中部",
+                    "scopetype":"2"
+                }
+
+            ]
+
+        }]
+}

@@ -1,0 +1,47 @@
+[
+    {
+        "id": "33",
+        "parentid": "32",
+        "name": "电影",
+        "shortname": null,
+        "showorder": 0,
+        "level": null,
+        "childcount": null,
+        "defaultValue": null,
+        "createdate": null,
+        "createuser": null,
+        "modifydate": null,
+        "modifyuser": null,
+        "deleteflag": "0"
+    },
+    {
+        "id": "35",
+        "parentid": "32",
+        "name": "电影+资源",
+        "shortname": null,
+        "showorder": 0,
+        "level": null,
+        "childcount": null,
+        "defaultValue": null,
+        "createdate": null,
+        "createuser": null,
+        "modifydate": null,
+        "modifyuser": null,
+        "deleteflag": "0"
+    },
+    {
+        "id": "34",
+        "parentid": "32",
+        "name": "资源",
+        "shortname": null,
+        "showorder": 0,
+        "level": null,
+        "childcount": null,
+        "defaultValue": null,
+        "createdate": null,
+        "createuser": null,
+        "modifydate": null,
+        "modifyuser": null,
+        "deleteflag": "0"
+    }
+]

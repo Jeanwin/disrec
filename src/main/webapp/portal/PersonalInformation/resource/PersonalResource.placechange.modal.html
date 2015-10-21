@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="modal-header">
+            <h4>移动到</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div ui-tree id="tree-root" data-drag-enabled="false" style="overflow: auto;height: 320px;">
+                <ol ui-tree-nodes ng-model="areaTree">
+                    <li ng-repeat="node in areaTree" ui-tree-node ng-include="'resources_renderer.html'"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div>
+            <span style="margin-right: 180px"><button class="btn btn-default" ng-click="NewFolder()"><span class="glyphicon glyphicon-folder-open"></span> 新建文件夹</button></span>
+            <span><button class="btn btn-primary" ng-click="MoveSave()">确定</button></span>
+            <span><button class="btn btn-default" ng-click="cancel()">取消</button></span>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="resources_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===ActiveFolder.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span ng-click="setActiveFolder(node)" title="{{node.title}}"
+              style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}
+        </span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'resources_renderer.html'" >
+        </li>
+    </ol>
+
+</script>

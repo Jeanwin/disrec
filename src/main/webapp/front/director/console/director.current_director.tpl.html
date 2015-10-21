@@ -1,0 +1,33 @@
+<style>
+    .modal-content {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #999;
+        border: 1px solid rgba(0, 0, 0, .2);
+        border-radius: 6px;
+        box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        background-clip: padding-box;
+        outline: 0;
+        width: 500px;
+        margin: 0 auto;
+    }
+</style>
+<div style="width: 96%;height:100%;margin: 0 auto;margin-top: 5px;margin-bottom: 11px;">
+    <div style="padding: 20px;color: #27ACE5;font-family: '黑体';font-weight: bold;">
+        <h3 style="color:black;">导播申请</h3>
+    </div>
+    <div style="font-size: 17px;color: #777476;font-family: '黑体';">
+        <div style="padding-left: 74px;">
+            {{reqUserName}}请求导播，选择"同意"，您将退出导播台。
+        </div>
+        <div style="margin-left: 25px;">
+            请在<span style="color: red;">{{intervalFlagValue}}s</span>内完成选择，否则视为同意。
+        </div>
+    </div>
+        <br/>
+        <br/>
+    <div style="" >
+        <a href="" class="btn btn-primary" style="color: #fff;background-color: #0073AE;border-color: #0073AE;width: 170px;margin-top: -10px;margin-left: 28px;margin-bottom: 5px;" ng-click="resultWindow('1');">同意</a>
+        <a href="" class="btn btn-default" style="color: #fff;width: 170px;margin-top: -10px;color: #8C8989;margin-left: 53px;margin-bottom: 5px;" ng-click="resultWindow('0');">不同意</a>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{
+    "info": {
+        "movie": "rtsp://root:root@192.168.12.47:554/session6.mpg",
+        "resource5": "rtsp://root:root@192.168.12.47:554/session4.mpg",
+        "resource4": "rtsp://root:root@192.168.12.47:554/session3.mpg",
+        "resource6": "rtsp://root:root@192.168.12.47:554/session5.mpg",
+        "resource1": "rtsp://root:root@192.168.12.47:554/session0.mpg",
+        "resource3": "rtsp://root:root@192.168.12.47:554/session2.mpg",
+        "resource2": "rtsp://root:root@192.168.12.47:554/session1.mpg"
+    },
+    "result": "ok"
+}

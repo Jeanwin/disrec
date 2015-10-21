@@ -1,0 +1,118 @@
+<div class="col-xs-12">
+            <div class="whiteframe" style="margin-left:-16px">
+                <div class="row padding-8">
+                    <div class="col-xs-3">
+                        <button class="btn btn-primary" ng-click="newBroadCast()">
+                            	<span class="glyphicon glyphicon-plus"></span>
+                            	创建广播
+                        </button>
+                        <button class="btn btn-primary" ng-click="microphoneBroadCast()">
+                            	话筒广播
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <!--<div style="border-top: solid 2px #c0c0c0;padding:8px;text-align:center">-->
+                    <div class="panel panel-default">
+                        <div class="panel-body padding-0" id="rightContent-height">
+                        <table class="table table-striped" style="text-align:center">
+                            <thead style="background-color: #ceecff;font-weight:bold">
+                            <tr>
+                            	<td width="15"></td>
+                                <td><span>广播文件</span> </td>
+                                <td><span>时长</span></td>    
+                                <td><span>格式</span> </td>
+                                <td><span>广播日期</span></td>    
+                                <td><span>开始时间</span></td>
+                                <td><span>星期</span></td>
+                                <td><span>班级列表</span></td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="facility in facilityList">
+                            	<td>
+                            		<i ng-if="facility.volume" class="icon-volume-up orange-color"></i>	
+                            	</td>
+                                <td>{{facility.name}}</td>
+                                <td>{{facility.areaname}}</td>
+                                <td>{{facility.parentname}}</td>
+                                <td>{{initStatus(facility.typeid)}}</td>
+                                <td>{{facility.ip}}</td>
+                                <td>{{facility.mac}}</td>
+                                <td>
+                                	<span ng-if="facility.volume">
+                                        	<a ng-href="">
+                                        		停止播放
+                                        	</a>
+                                    </span>
+                                    <span ng-if="!facility.volume">
+	                                    <button class="btn btn-link" ng-click="editFacilityModal('update', facility)"
+	                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除"
+	                                            >
+	                                        <span class="glyphicon glyphicon-pencil"></span>
+	                                    </button>
+	                                     <button class="btn btn-link" ng-click="editFacilityModal('update', facility)"
+	                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除"
+	                                            >
+	                                        <span class="glyphicon glyphicon-trash"></span>
+	                                    </button>
+                                     </span>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                            <a style="color: #cecece;font-size: 32px;">没有查到任何相关的数据</a>
+                        </div>-->
+                        <button ng-if="pagination.totalItems === 0" class="ondata">
+                            <span class="ondatatext">找不到您搜索的信息！</span>
+                        </button>
+                    </div>
+
+                        <div class="panel-footer" style="padding-top:1px;padding-bottom:1px;">
+
+                            <!-- <div ng-if="pagination.totalItems > 0" class="row"> -->
+                            <div class="row">
+                                <div class="col-xs-4" style="padding-top:8px;">
+                                    <span>共条数据，</span>
+                                    <span>每页显示
+                                        <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                        </select>条
+                                    </span>
+                                </div>
+
+                                <div class="col-xs-8 padding-left-none" ng-show="pagination.totalItems > pagination.pageSize">
+                                    <!-- 分页  -->
+                                    <div class="col-xs-9">
+                                        <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                                    page="pagination.pageIndex"
+                                                    items-per-page="pagination.pageSize"
+                                                    max-size="pagination.maxSize"
+                                                    previous-text="{{pagination.previousText}}"
+                                                    next-text="{{pagination.nextText}}"
+                                                    first-text="{{pagination.firstText}}"
+                                                    last-text="{{pagination.lastText}}"
+                                                    class="pagination-small"
+                                                    boundary-links="true"
+                                                    on-select-page="onSelectPage(page)">
+                                        </pagination>
+                                    </div>
+                                    <div class="col-xs-3" style="padding-top:8px;">
+                                        <div class="input-group input-group-sm" style="width: 100px"
+                                             tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                            <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,79 @@
+<input type="hidden" id="urlParam4" value="{{livingAddress4}}"/>
+<input type="hidden" id="pollingFlag" value="{{pollingFlag}}"/>
+<input type="hidden" id="pollingchangeFlag" value="{{pollingchangeFlag}}"/>
+<input type="hidden" id="pollingcacheNumber" value="{{pollingcacheNumber}}"/>
+<input type="hidden" id="pollingcacheFlag" value="{{pollingcacheFlag}}"/>
+<input type="hidden" id="pollingcacheCount" value="{{pollingcacheCount}}"/>
+<div ng-if="(livingAddress4== undefined) " class="player-wrapper" id="back-info4">
+    <div style="position: relative;top: 30%;">
+    	<i class="zkicon-fontsize-100 icon-ccamera" 
+	    style="position: relative;font-size: 88px;left: 0%;color: gray;"></i>  
+	    <!-- <h4 style="color:#fff">信号故障</h4> -->
+    </div>
+</div>
+<div ng-if="!(livingAddress4 == undefined) " style="background:#000;" class="player-wrapper">
+	<div id="flashContent4" >
+	    <p>
+	        To view this page ensure that Adobe Flash Player version 
+	        0.0.0 or greater is installed. 
+	    </p>
+	   
+	</div>
+</div>
+
+<noscript>
+    <object  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" style="width:100%;height:100%;" id="polling_pll_4">
+        <param name="movie" value="coursepatrol4/RtmpPolling.swf" />
+        <param name="quality" value="high" />
+        <param name="bgcolor" value="#ffffff" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <param name="allowFullScreen" value="true" />
+        [if !IE]>
+        <object type="application/x-shockwave-flash" data="RtmpPolling.swf" class="player-wrapper">
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#ffffff" />
+            <param name="allowScriptAccess" value="sameDomain" />
+            <param name="allowFullScreen" value="true" />
+            <p> 
+                Either scripts and active content are not permitted to run or Adobe Flash Player version
+                0.0.0 or greater is not installed.
+            </p>
+
+            <a href="http://www.adobe.com/go/getflashplayer">
+                <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+            </a>
+
+        </object>
+
+    </object>
+</noscript> 
+<script type="text/javascript">
+
+     // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+     var swfVersionStr = "0.0.0";
+     // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+     var xiSwfUrlStr = "playerProductInstall.swf";
+     var flashvars = {};
+     var params = {};
+     params.quality = "high";
+     params.bgcolor = "#000000";
+     params.allowscriptaccess = "sameDomain";
+     params.allowfullscreen = "true";
+     params.wmode = "opaque";
+     var attributes = {};
+     attributes.id = "polling_pll_4";
+     attributes.name = "polling_pll_4";
+     attributes.align = "middle";
+     swfobject.embedSWF(
+         "coursepatrol/RtmpPolling.swf", "flashContent4", 
+         "100%", "100%", 
+         swfVersionStr, xiSwfUrlStr, 
+         flashvars, params, attributes,onSWFcreated);
+     //onRtmpPlayerloadMethod();
+     // JavaScript enabled so display the flashContent7 div in case it is not replaced with a swf object.
+	 
+	function onSWFcreated(info){
+		info.ref.className = "player-wrapper";
+		SwfContcrlor.interFace().addswf(info);
+	}
+</script>

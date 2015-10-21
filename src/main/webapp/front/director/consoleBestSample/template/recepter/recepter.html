@@ -1,0 +1,109 @@
+<div>
+88888888888888888
+    <form  ng-class="{'readonly': operation==='view'}" >
+        <!--非比例-->
+        <table  class="table-stripped" style="width:80%;" ng-if="contAttr ==='nprop'">
+            <tr>
+                <td width="7%">序号</td>
+                <td width="5%">接受人</td>
+                <td width="5%">接收份额(%)</td>
+                <td width="7%">属性</td>
+                <td width="15%">是否首席</td>
+                <td width="10%">联系人姓名</td>
+                <td width="10%">联系人手机</td>
+                <td width="10%">联系人传真</td>
+                <td width="10%">联系人mail</td>
+                <td width="10%">联系人地址</td>
+                <td width="10%">联系人邮编</td>
+                <td width="1%">&nbsp;</td>
+            </tr>
+            <tr ng-repeat="rein in layer.fhxReinsList">
+                <td>1</td>
+                <td><input type="text" ng-model="rein.id.reinsCode" ng-readonly="operation==='view'"></td>
+                <td><input type="text" ng-model="rein.shareRate" ng-readonly="operation==='view'"></td>
+                <td>
+                    <input type="checkbox" ng-model="rein.brokerFlag" ng-readonly="operation==='view'"
+                            >
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="rein.ispriReinsx" ng-readonly="operation==='view'"
+                           checked>
+                </td>
+                <td><input type="text" ng-model="rein.ttyLinker" ng-readonly="operation==='view'"></td>
+                <td><input type="text" ng-model="rein.ttyMobile" ng-readonly="operation==='view'"></td>
+                <td><input type="text" ng-model="rein.ttyFax" ng-readonly="operation==='view'"></td>
+                <td><input type="text" ng-model="rein.ttyEmail" ng-readonly="operation==='view'"></td>
+                <td><input type="text" ng-model="rein.ttyAddress" ng-readonly="operation==='view'"></td>
+                <td><input type="text" ng-model="rein.ttyPost" ng-readonly="operation==='view'"></td>
+                <td>
+                    <a class="btn btn-default" ng-model="addReinsurer" ng-if="operation !='view'">添加最终接受人</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=11"></td>
+                <td> <a class="btn btn-default" ng-model="addReinsurer" ng-if="operation !='view'" >添加</a></td>
+            </tr>
+        </table>
+        <!--比例-->
+        <table  class="table-stripped" style="width:80%;" ng-if="contAttr ==='prop'">
+            <tr>
+                <td width="7%">序号</td>
+                <td width="5%">接受人</td>
+                <td width="5%">接收份额(%)</td>
+                <td width="7%">属性</td>
+                <td width="15%">是否首席</td>
+                <td width="10%">联系人姓名</td>
+                <td width="10%">联系人手机</td>
+                <td width="10%">联系人传真</td>
+                <td width="10%">联系人mail</td>
+                <td width="10%">联系人地址</td>
+                <td width="10%">联系人邮编</td>
+                <td width="1%">&nbsp;</td>
+            </tr>
+            <tr ng-repeat="receptor in contract.contOutComShares">
+                <td>{{$index}}</td>
+                <td>
+                    <input type="text" ng-model="receptor.id.ricomCde" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <input type="text" ng-model="receptor.share" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <input type="radio" ng-model="receptor.brokerFlag" ng-readonly="operation ==='view'">经纪人
+                </td>
+                <td>
+                    <input type="radio" ng-model="receptor.isPrireins" ng-readonly="operation ==='view'">首席
+                </td>
+                <td>
+                    <input type="text" ng-model="receptor.ttyLinker" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <input type="text" ng-model="receptor.ttyMobile" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <input type="text" ng-model="receptor.ttyPhone" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <input type="text" ng-model="receptor.ttyFax" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <input type="text" ng-model="receptor.ttyEmail" ng-readonly="operation ==='view'">
+                </td>
+                <td>
+                    <a class="btn btn-default" ng-model="addReinsurer" ng-if="operation !='view'">添加最终接受人</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=11"></td>
+                <td> <a class="btn btn-default" ng-model="addReinsurer" ng-if="operation !='view'" >添加</a></td>
+            </tr>
+        </table>
+    </form>
+
+
+
+
+
+
+
+</div>

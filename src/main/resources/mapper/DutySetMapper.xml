@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.DutySetMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.DutySet" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="createuser" property="createuser" jdbcType="CHAR" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifyuser" property="modifyuser" jdbcType="CHAR" />
+    <result column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+    <result column="warm_email" property="warmEmail" jdbcType="VARCHAR" />
+    <association column="id" property="areas" select="getAreaList"></association>
+    <association column="user_id" property="user" select="getUser"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, telephone, user_id,warm_email
+  </sql>
+  <sql id="bindLoginname">
+	  <bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+  </sql>
+   <select id="findDuty" resultType="com.zonekey.disrec.entity.DutySet" parameterType="java.lang.String" >
+    select a.name,a.user_id userId,a.warm_email warmEmail
+    from zonekey_classroom_duty a,zonekey_classroom_duty_area b where a.id=b.duty_id 
+    and a.deleteflag='0' and b.deleteflag='0' and b.area_id=#{areaId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zonekey_classroom_duty
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zonekey.disrec.entity.DutySet" >
+  <include refid="bindLoginname"/>
+    insert into zonekey_classroom_duty (id, name, telephone, 
+     user_id, createdate, createuser,warm_email)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}
+    , #{userId,jdbcType=CHAR}, sysDate(), #{_loginname},#{warmEmail})
+  </insert>
+  
+  <insert id="saveDutyArea" parameterType="com.zonekey.disrec.entity.DutySet" >
+  <include refid="bindLoginname"/>
+    insert into zonekey_classroom_duty_area (id,area_id,duty_id,createdate, createuser) values 
+    <foreach collection="areas" item="area" index="index" separator="," >  
+        (#{area.id1},#{area.id},#{id},sysDate(),#{_loginname})  
+    </foreach>
+  </insert>
+  
+   <!-- 逻辑删除 -->
+	<update id="deleteDuty">
+		update zonekey_classroom_duty set
+		deleteflag='1' where id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+	
+  <!-- 逻辑删除 -->
+	<update id="deleteDutyArea">
+		update zonekey_classroom_duty_area set
+		deleteflag='1' where duty_id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+  <update id="updateDuty" parameterType="com.zonekey.disrec.entity.DutySet" >
+  <include refid="bindLoginname"/>
+    update zonekey_classroom_duty
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+        modifydate = sysDate(),
+        modifyuser = #{_loginname},
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+   <delete id="delDutyArea" parameterType="com.zonekey.disrec.entity.DutySet" >
+    delete from zonekey_classroom_duty_area
+    where duty_id = #{id,jdbcType=CHAR} and deleteflag='0'
+  </delete>
+  
+  <select id="count"  resultType="long">
+		select count(*) from  zonekey_classroom_duty a  where  a.deleteflag = '0' 
+	</select>
+	
+	<select id="findDutyByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultMap="BaseResultMap">
+		 select 
+    	<include refid="Base_Column_List" />
+    	from  zonekey_classroom_duty  a where  a.deleteflag = '0' 
+    	order by a.createdate desc 
+		<if test="page != null and page.offset != null and page.limit!=null">
+			limit  #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+	
+	<select id="getAreaList" resultType="map">
+		select area_id id
+		from zonekey_classroom_duty_area
+		where duty_id = #{id} and deleteflag ='0'
+	</select>
+	
+	<select id="getUser" resultType="com.zonekey.disrec.entity.SysUser">
+		select u.* from sys_user u where u.loginname=#{user_id} and deleteflag='0'
+	</select>
+	
+	<select id="getClassAdminsList" resultType="com.zonekey.disrec.entity.SysUser">
+		select u.* from sys_user u,sys_role r,user_role ur where u.loginname=ur.userid and 
+		ur.roleid=r.id and u.deleteflag='0' and ur.deleteflag=0 and r.deleteflag='0' and r.role_code='ROLE_ADMIN'
+		and find_in_set(u.deptid,getdeptChildLst(0))
+	</select>
+	
+	<select id="checkClassroom" resultType="com.zonekey.disrec.entity.DutySet" parameterType="java.lang.String" >
+	    select duty_id from zonekey_classroom_duty_area
+	    where area_id = #{areaId,jdbcType=CHAR} and deleteflag='0'
+  </select>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

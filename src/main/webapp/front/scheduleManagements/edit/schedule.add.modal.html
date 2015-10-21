@@ -1,0 +1,342 @@
+<style>
+    .setColor{
+        background-color: #afebff;
+    }
+    .setColorUser{
+        background-color: #afebff;
+    }
+    .setColorClass{
+        background-color: #afebff;
+    }
+    .dropdown-menu{
+    	width:255px;
+    	max-height: 290px;
+		overflow-y: auto;
+    }
+</style>
+
+
+
+<div>
+
+<div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3>添加课表</h3>
+        </span>
+</div>
+<div class="modal-body" style="max-height:485px; overflow:auto;padding-top:10px;padding-bottom:0">
+<form class="form-horizontal" name="frmEditSchedule" role="form">
+<div class="row">
+<div class="col-xs-7">
+    <div class="panel panel-default">
+        <div class="panel-heading">课程信息</div>
+        <div class="panel-body padding-top-5 padding-bottom-none">
+
+            <div class="alert alert-warning padding-none" role="alert">当前为{{termName}}学期第{{termWeek}}周,学期或节次方案不正确,将影响排课。</div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label padding-left-none" for="areaname"><span style="color: red">*</span>教室</label>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input class="form-control"
+                               ng-click="searchClassname('areaname',schedule.areaname);toggleTree('')"
+                               id="areaname"
+                               placeholder="请选择教室"
+                               ng-model="schedule.areaname"
+                               typeahead-loading="loading..."
+                               ng-blur="checkAutoMessage('areaname', schedule);"
+                               typeahead="classname.id + ',' + classname.value + ','+ classname.innerid as classname.innerid + '-' + classname.value for classname in searchClassname('areaname',$viewValue)"
+                               typeahead-wait-ms="1000"
+                               typeahead-on-select="selectClassname(schedule.areaname);toggleTree('ImmediatelyClose')"
+                               required>
+                        <span class="input-group-addon" ng-click="searchClassname('areaname',schedule.areaname);toggleTree('')" ng-mouseover="showClassTimePopup()">
+                            <!--  ng-if="showClassroomTimeError"  -->
+                            <i  class="glyphicon glyphicon-th" popup-placement="right"
+                               popup-auto-show="ClassTimePopupIsShown" popup-show="classTimePopup.html"></i>
+                        </span>
+                    </div>
+                    <!--<div collapse="hideTree" class="dropdown-tree-wrapper">
+                        <div style="cursor: pointer;list-style-type: none;"
+                             ng-repeat="typeValue in searchimpowerList"
+                             ng-class="{'setColor' : typeValue.getColor}"
+                             ng-click="setautoMessageValue('areaname', schedule, typeValue.value);setColor(typeValue)">
+                            <span style="margin-left: 15px;">{{typeValue.value}}</span>
+                        </div>
+                    </div>-->
+                    <div collapse="hideTree" class="dropdown-tree-wrapper">
+                        <div style="cursor: pointer;list-style-type: none;"
+                             ng-repeat="typeValue in searchimpowerList"
+                             ng-class="{'setColor' : typeValue.getColor}"
+                             ng-click="setautoMessageValue('areaname', schedule, typeValue);setColor(typeValue)">
+                            <span style="margin-left: 15px;">{{typeValue.value}}</span>
+                        </div>
+                    </div>
+                    <!-- <span ng-show="frmEditSchedule.areaname.$error.required">
+                        <div style="color: red">必须输入教室</div>
+                    </span> -->
+                </div>
+                <div class="col-xs-4 padding-left-none padding-right-none">
+                    <script type="text/ng-template" id="classTimePopup.html">
+                        <h3 class="popover-title">节次方案
+                            <button type="button" class="close" ng-click="hidePopover()" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                            </button>
+                        </h3>
+
+                        <div>
+                            <table class="table">
+                                <thead>
+                                <tr style="text-align: center">
+                                    <td>方案名称</td>
+                                    <td>有效日期</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="text-align: center">
+                                        <td>{{ClassroomTimeList.classtype}}</td>
+                                        <td>{{ClassroomTimeList.datebegin}}至{{ClassroomTimeList.dateend}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </script>
+                    <div class="alert alert-danger padding-none margin-top-5 margin-bottom-none" role="alert" ng-show="!showClassroomTimeError" style="font-size:10px;">
+                        该教室无节次方案, <a href ng-click="NewClassTimeSet()">立即设置</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label padding-left-none" for="weeks" style="white-space:nowrap;"><span style="color:red">*</span>开课周</label>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input id="weeks" class="form-control" ng-model="schedule.weeks" required>
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-calendar" ng-click="item.week=!item.week"></i>
+                            </span>
+                    </div>
+                    <div collapse="!item.week" class="selectweek">
+                        <div style="padding:8px;font-size:16px">选择周
+                            <button type="button" class="close" ng-click="item.week=!item.week" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                            </button>
+                        </div>
+                        <a class="btn btn-default" style="margin: 4px" ng-click="getWeek($index,week)"
+                           ng-class="{'changeColor':Weeksselct[{{$index}}].id === week.id}" ng-repeat="week in WeeksList">{{week.value}}
+                        </a>
+                        <div style="margin-left: 36px">
+                            <a class="btn btn-primary" ng-click="submit()" ng-mouseup="item.week=!item.week">确定</a>
+                            <a class="btn btn-default" ng-click="weekCancel()">重置</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label" for="weekdate" style="white-space:nowrap;"><span style="color:red">*</span>星期</label>
+                <div class="col-xs-6">
+                    <select id="weekdate" class="form-control" ng-model="schedule.weekdate" required>
+                        <option value="1">星期一</option>
+                        <option value="2">星期二</option>
+                        <option value="3">星期三</option>
+                        <option value="4">星期四</option>
+                        <option value="5">星期五</option>
+                        <option value="6">星期六</option>
+                        <option value="7">星期日</option>
+                    </select>
+                </div>　
+            </div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label" for="startclasstime">节次</label>
+                <div class="col-xs-8">
+                    <select id="startclasstime" class="form-control" ng-model="schedule.startclasstime" ng-change="CompareClassTime()"
+                            required style="display:inline;width:90px;padding:6px;">
+                            <option ng-repeat="classTime in classTimeList" ng-selected="{{classTime.id === schedule.startclasstime}}" value="{{classTime.id}}">{{classTime.value}}</option>
+                    </select>至
+                    <select class="form-control" ng-model="schedule.endclasstime" ng-change="CompareClassTime()"
+                            required style="display:inline;width:90px;padding:6px;">
+                        <option ng-repeat="classTime in classTimeList" ng-selected="{{classTime.id === schedule.endclasstime}}" value="{{classTime.id}}">{{classTime.value}}</option>
+                    </select>
+                </div>
+                <div class="col-xs-9 col-xs-offset-2">
+                    <span ng-show="showErrorClassTime">
+                        <div style="color: red;">节次的结束时间不能大于开始时间</div>
+                    </span>
+                </div>              
+            </div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label padding-left-none" for="username"><span style="color: red">*</span>教师</label>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input id="username" class="form-control"
+                               ng-click="searchTeacher('username',schedule.username)"
+                               placeholder="请选择授课老师"
+                               ng-model="schedule.username"
+                               typeahead-loading="loading..."
+                               ng-blur="checkAutoMessageUser('username', schedule);"
+                               typeahead="teacher.id +','+ teacher.name as teacher.name +'-'+ teacher.loginname for teacher in searchTeacher('username',$viewValue)"
+                               typeahead-wait-ms="100"
+                               typeahead-on-select="selectTeacher();toggleTreeUser('ImmediatelyCloseUser')"
+                               required>
+                        <span class="input-group-addon" ng-click="searchTeacher('username',schedule.username);toggleTreeUser('')">
+                            <i class="glyphicon glyphicon-th" popup-placement="right" popup-auto-show="ClassTimePopupIsShown"></i>
+                        </span>
+                    </div>
+                    <div collapse="hideTreeUser" class="dropdown-tree-wrapper">
+                        <div ng-repeat="typeValueUser in searchUserList"
+                             style="cursor: pointer;list-style-type: none;"
+                             ng-class="{'setColorUser' : typeValueUser.getColor}"
+                             ng-click="setautoMessageValueUser('username', schedule, typeValueUser);setColorUser(typeValueUser)">
+                            <span style="margin-left: 15px;">{{typeValueUser.name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-xs-2">
+                    <span ng-show="frmAreaEditor.username.$error.required">
+                        <div style="color: red">必须输入教师</div>
+                    </span>
+                </div> -->
+            </div>
+            
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label padding-left-none" for="subject" style="white-space:nowrap"><span style="color: red;">*</span>课程名</label>
+                <div class="col-xs-6">
+                    　　<input id="subject" class="form-control" placeholder="课程名" ng-model="schedule.subject" required style="margin-top:-25px;">
+                </div>
+            </div>
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label padding-left-none" for="theme" style="white-space:nowrap">主题项</label>
+                <div class="col-xs-6">
+                    　　<input id="theme" class="form-control" placeholder="主题项" style="margin-top:-25px;" ng-model="schedule.subjectattribute" >
+                </div>
+            </div>
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label" for="deptname">班级</label>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input id="deptname"
+                               ng-click="searchClass('classname',schedule.deptname);toggleTreeClass('')"
+                               class="form-control"
+                               placeholder="请选择班级"
+                               ng-model="schedule.deptname"
+                               typeahead-loading="loading..."
+                               ng-blur="checkAutoMessageClass('classname', schedule);"
+                               typeahead="classroom.id +','+ classroom.name as classroom.code +'-'+ classroom.name for classroom in searchClass('classname',$viewValue)"
+                               typeahead-wait-ms="500"
+                               typeahead-on-select="selectClass();toggleTreeClass('ImmediatelyCloseClass')"
+                               >
+                        <span class="input-group-addon" ng-click="searchClass('classname',schedule.deptname);toggleTreeClass('')">
+                            <i class="glyphicon glyphicon-th" popup-placement="right" popup-auto-show="ClassTimePopupIsShown"></i>
+                        </span>
+                    </div>
+                    <div collapse="hideTreeClass" class="dropdown-tree-wrapper">
+                        <div ng-repeat="typeValueClass in searchClassList"
+                             style="cursor: pointer;list-style-type: none;"
+                             ng-class="{'setColorClass' : typeValueClass.getColor}"
+                             ng-click="setautoMessageValueClass('classname', schedule, typeValueClass);setColorClass(typeValueClass)">
+                            <span style="margin-left: 15px;">{{typeValueClass.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-xs-5 padding-right-none">
+    <div class="panel panel-default margin-bottom-5">
+        <div class="panel-heading">课程属性</div>
+        <div class="panel-body padding-top-5 padding-bottom-none">
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-4 control-label" for="areaname">直播</label>
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="schedule.live" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="schedule.live" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-4 control-label">录像</label>
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="schedule.record" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="schedule.record" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom-8" collapse="schedule.record==='0'">
+                <label class="col-xs-4 control-label padding-left-none" style="white-space:nowrap">录像模式</label>
+                <div class="col-xs-8 padding-right-none">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-repeat="schema in schemaList"
+                               ng-model="schedule.video" btn-radio="'{{schema.value}}'">{{schema.name}}</label>
+                    </div>
+                </div>
+            </div>
+			<div class="form-group margin-bottom-8" collapse="schedule.record==='0'">
+                <label class="col-xs-4 control-label padding-left-none" style="white-space: nowrap;">直播模式</label>
+                <div class="col-xs-8 padding-right-none">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-repeat="livemodel in livemodelList" ng-model="schedule.livemodel" btn-radio="'{{livemodel.value}}'"
+				                               >{{livemodel.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-4 control-label padding-left-none" style="white-space:nowrap">课间录像</label>
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="schedule.classniddlerecord" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="schedule.classniddlerecord" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom-8">
+                <label class="col-xs-4 control-label padding-left-none" style="white-space:nowrap">互动课程</label>
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="schedule.intercourse" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="schedule.intercourse" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group margin-bottom-8" collapse="schedule.record==='0'">
+                <label class="col-xs-4 control-label padding-left-none" style="white-space:nowrap">自动上传</label>
+                <div class="col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="schedule.isupload" btn-radio="'1'">是</label>
+                        <label class="btn btn-default" ng-model="schedule.isupload" btn-radio="'0'">否</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+        <textarea class="form-control" placeholder="课程描述，最多可以输入300字"
+                  style="height: 75px;" maxlength="300"
+                  ng-model="schedule.coursedesc"></textarea>
+    </div>
+</div>
+</div>
+</form>
+</div>
+<div class="modal-footer margin-top-none">
+    <button class="btn btn-primary" ng-disabled="frmEditSchedule.$pristine || frmEditSchedule.$invalid || !showClassroomTimeError || showErrorClassTime" ng-click="save()">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>
+</div>
+

@@ -1,0 +1,174 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:160px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3 ng-if="editingMode==='update'">编辑教室</h3>
+            <h3 ng-if="editingMode==='save'">添加教室</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form name="frmAreaEditor" class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属区域</label>
+                <div class="col-sm-10">
+
+
+                    <div class="input-group">
+                        <input ng-if="editingMode != 'update'" class="form-control" placeholder="所属区域" ng-model="classroom.parentname" ng-click="toggleTree('hideTree')"  required>
+                        <input ng-if="editingMode==='update'" class="form-control" ng-model="classroom.parentname" ng-click="toggleTree('hideTree')"  required>
+                        <span class="input-group-addon" ng-click="toggleTree('hideTree')">
+                            <i class="glyphicon glyphicon-list"></i>
+                        </span>
+                    </div>
+
+
+                    <div collapse="hideTree">
+                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                            <ol ui-tree-nodes ng-model="areaTree">
+                                <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaTitle">教室名称</label>
+                <div class="col-sm-8">
+                    <input name="name" class="form-control" id="areaTitle" placeholder="请输入教室名称"
+                           validate-on="blur"
+                           ng-change="checkClassroomName()"
+                           ng-model="classroom.name"
+                           required>                                       
+                </div>
+                <div class="col-sm-2 padding-top-5 padding-left-none">
+                    <span ng-show="showClassroomNameError">
+                        <div style="color: red">教室名称不能重复</div>
+                    </span> 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="classroomOrder">教室编码</label>
+                <div class="col-sm-8">
+                    <input name="innerid" class="form-control" id="classroomOrder" placeholder="请输入教室编码"
+                           ng-change="checkClassroomNum()"
+                           ng-model="classroom.innerid" required>                    
+                </div>
+                <div class="col-sm-2 padding-top-5 padding-left-none">
+                    <span ng-show="showClassroomNumError">
+                        <div style="color: red">教室编码不能重复</div>
+                    </span>                  
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">隶属机构</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                         <input class="form-control"
+                                id="user6"
+                                type="text"
+                                placeholder="隶属机构"
+                                ng-model="classroom.deptName"
+                                ng-click="toggleTree('hideOrganTree')"                                
+                                required>
+                         <span class="input-group-addon">
+                             <i class="glyphicon glyphicon-list" ng-click="toggleTree('hideOrganTree')"></i>
+                         </span>
+                     </div>
+                    <div collapse="!hideOrganTree">
+                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                            <ol ui-tree-nodes ng-model="areaTree">
+                                <li ng-repeat="node in organTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaOrder">显示顺序</label>
+                <div class="col-sm-4">
+                    <input type="text" name="order" value="1"  class="form-control" id="areaOrder" placeholder="1"  ng-model="classroom.sort" ng-pattern=/^[1-9]\d{0,2}$/>                    
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none">
+                    <span ng-show="frmAreaEditor.order.$error.pattern" style="color: red">必须1-999范围内的数字</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaOrder">状态</label>
+                <div class="col-sm-8">
+                    <div class="btn-group">
+                    	<label ng-repeat="state in deviceDepartment" class="btn btn-default"  ng-model="classroom.state" btn-radio="state.value">{{state.name}}</label>
+                    </div>
+                    <!--<toggle-switch on-label="有效" off-label="无效" ng-model="state">
+                        <span class="switch-left ng-binding" ng-bind="onLabel">有效</span>
+                        <span class="knob ng-binding" ng-bind="knobLabel">&nbsp;</span>
+                        <span class="switch-right ng-binding" ng-bind="offLabel">无效</span>
+                    </toggle-switch>-->
+                </div>
+            </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="NewWrite(editingMode)">重置</button>
+            <button class="btn btn-primary" ng-disabled="(frmAreaEditor.$pristine || frmAreaEditor.$invalid) && !successSave || showClassroomNameError || showClassroomNumError || frmAreaEditor.innerid.$error.required || frmAreaEditor.name.$error.required" ng-click="save(editMode)">保存</button>
+            <button class="btn btn-default" ng-click="cancel()">取消</button>
+        </div>
+
+    </form>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span ng-click="setActiveAreaTreeNode(this)" title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="nodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content" ng-class="{'tree-node-active':node.id===activeArea.id}">-->
+        <!--<a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)">-->
+            <!--<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>-->
+        <!--<span ng-click="setActiveAreaTreeNode(this)">{{node.title}}</span>-->
+        <!--&lt;!&ndash;<a class="pull-right btn btn-danger btn-xs" nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a class="pull-right btn btn-primary btn-xs" nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

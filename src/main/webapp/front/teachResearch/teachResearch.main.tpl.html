@@ -1,0 +1,31 @@
+
+<nav class="navbar navbar-static-top systemmain" role="navigation">
+    <div class="btn-group btn btn-group-lg container-fluid nav navbar-nav">
+        <a ng-if="global.user.authenticatid.indexOf('auth_teachResearch_listenModal_url_view')>=0" href="#" ng-href="#/teachResearch/listenModal"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===0}">听课模板
+        </a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_teachResearch_classEvaluation_url_view')>=0" href="" ng-href="#/teachResearch/classEvaluation"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===1}">评课模板
+        </a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_teachResearch_listenRecord_url_view')>=0" href="" ng-href="#/teachResearch/listenRecord"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===2}">听课记录
+        </a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_teachResearch_actionManage_url_view')>=0" href="" ng-href="#/teachResearch/actionManage"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===3}">活动管理
+        </a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_teachResearch_teachStatistics_url_view')>=0" href="" ng-href="#/teachResearch/teachStatistics"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===4}">教研统计
+        </a>
+    </div>
+</nav>
+<div class="ng-scope" ui-view="teachResearch-manage"></div>

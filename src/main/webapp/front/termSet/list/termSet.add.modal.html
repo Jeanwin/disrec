@@ -1,0 +1,42 @@
+<div>
+    <div class="modal-header">
+        <span ng-if="!editingMode" class="modal-title">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </button>
+            <h3>添加新学期</h3>
+        </span>
+        <span ng-if="editingMode" class="modal-title">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </button>
+            <h3>编辑学期</h3>
+        </span>
+    </div>
+    <div class="modal-body form-inline" style="margin-left: 80px">
+        <form name="frmEditSchedule">
+            <div class="form-group">
+                学期　　　<input class="form-control" ng-model="termset.termname"  ng-change="checktermName(termset)" required>
+                <span ng-show="showTermNameError">
+                      <div style="color: red;margin-left: 40px">*学期名称不能重复</div>
+                </span>
+            </div>
+            <div class="form-group">
+                开始时间　<input type="date" class="form-control" ng-model="termset.startday" ng-change="checkTimeandWeek(termset)" required>
+            </div>
+            <div class="form-group">
+                周数　　　<input class="form-control" ng-model="termset.weeks" ng-change="checkTimeandWeek(termset)" required>　周
+            </div>
+             <span ng-show="showTimeNameError">
+                      <div style="color: red;margin-left: 40px">*开始时间不能重复</div>
+             </span>
+            <div  ng-if="!editingMode">
+                <input type="checkbox" value="1"  ng-model="termset.iscurrent">　　　设为当前学期
+            </div>
+        </form>
+    </div>
+    <div style="margin-left: 440px;margin-bottom: 20px">
+        <button class="btn btn-primary" ng-disabled="frmEditSchedule.$pristine || frmEditSchedule.$invalid" ng-click="ok(termset)">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

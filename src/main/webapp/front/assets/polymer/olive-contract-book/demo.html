@@ -1,0 +1,158 @@
+ <!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>olive-book</title>
+
+  <script src="../platform/platform.js"></script>
+
+  <link href="olive-contract-book.html" rel="import">
+
+  <style>
+    body {
+      padding: 24px;
+      margin: 0;
+      -webkit-transform: translateZ(0);
+      font-family: sans-serif;
+      font-size: 16px;
+    }
+
+    section {
+      margin: 2em 0;
+    }
+
+    aside {
+      background: #ccc;
+      padding: 1em;
+      margin-right: 2em;
+      font-size: 12px;
+      width: 250px;
+      border-radius: 3px;
+    }
+
+    olive-book {
+      margin: 1em;
+    }
+
+    olive-book[multiline] {
+      border: 1px dotted #ccc;
+    }
+
+    olive-book.sized {
+      width: 500px;
+      height: 200px;
+    }
+  </style>
+
+</head>
+<body>
+<polymer-element name="book-demo">
+    <template>
+    <div ng-repeat="contract in contractList ">
+        <div >
+            <input type="checkbox" ng-model="contract.checked">
+        </div>
+
+        <div class="contract-thumbnail" ng-class="{'animated shake':contract.contStatus==='2'}">
+
+            <olive-contract-book data="contract"></olive-contract-book>
+        </div>
+
+        <div class="text-center" style="margin:5px 0 0 0">
+            <div>
+                    <span class="contract-status" ng-class="{'status-temp':contract.contStatus==='0',
+                                                            'status-pendding':contract.contStatus==='1',
+                                                            'status-verified':contract.contStatus==='3',
+                                                            'status-rejected':contract.contStatus==='2',
+                                                            'status-closed':contract.contStatus==='6'}"></span>
+                {{contract.contNo}}
+            </div>
+
+            <div class="btn-group btn-group-sm hover-visible">
+                <a class="btn btn-default" ng-href="#/contracts/prop/{{mode}}/{{contract.tmpContNo}}/view">查看</a>
+                <a class="btn btn-default" ng-href="#/{{mode}}/contracts/prop/{{mode}}/{{contract.tmpContNo}}/edit">编辑</a>
+                <button ng-click="openContractBill(contract)" class="btn btn-default"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;账单</button>
+            </div>
+        </div>
+    </div>
+    </template>
+<script>
+
+    Polymer('book-demo', {
+
+        page: 0,
+
+        contractList: [
+            {
+                "contStatus":"1",
+                "contGrpTypCde":"B",
+                "contEndTm":{
+                    "nanos":0,
+                    "time":1072800000000,
+                    "minutes":0,
+                    "seconds":0,
+                    "hours":0,
+                    "month":11,
+                    "year":103,
+                    "timezoneOffset":-480,
+                    "day":3,
+                    "date":31
+                },
+                "contYear":"2003",
+                "contOutTyp":"D",
+                "contNo":"OPA200301",
+                "tmpContNo": "OPA200301",
+                "refNme":null,
+                "contBgnTm":{
+                    "nanos":0,
+                    "time":1041350400000,
+                    "minutes":0,
+                    "seconds":0,
+                    "hours":0,
+                    "month":0,
+                    "year":103,
+                    "timezoneOffset":-480,
+                    "day":3,
+                    "date":1
+                }
+            },
+            {
+                "contStatus":"0",
+                "contGrpTypCde":"D",
+                "contEndTm":{
+                    "nanos":0,
+                    "time":1072800000000,
+                    "minutes":0,
+                    "seconds":0,
+                    "hours":0,
+                    "month":11,
+                    "year":103,
+                    "timezoneOffset":-480,
+                    "day":3,
+                    "date":31
+                },
+                "contYear":"2003",
+                "contOutTyp":"B",
+                "contNo":"OPD200314",
+                "tmpContNo": "OPD200314",
+                "refNme":null,
+                "contBgnTm":{
+                    "nanos":0,
+                    "time":1041350400000,
+                    "minutes":0,
+                    "seconds":0,
+                    "hours":0,
+                    "month":0,
+                    "year":103,
+                    "timezoneOffset":-480,
+                    "day":3,
+                    "date":1
+                }
+            }
+        ]
+    });
+
+</script>
+</polymer-element>
+</body>

@@ -1,0 +1,33 @@
+﻿{
+    "data": [
+        {
+            "id": "2",
+            "innerid": "10002",
+            "name": "zhangsan",
+            "roleList": [
+                {
+                    "id": "1",
+                    "roleName": "admin"
+                },
+                {
+                    "id": "2",
+                    "name": "user"
+                }
+            ],
+            "scopeList": [
+                {
+                    "rangeid": "1",
+                    "scopetype": "2",
+                    "scopeid": "2",
+                    "scopename": "gaoer"
+                },
+                {
+                    "rangeid": "1",
+                    "scopetype": "3",
+                    "scopeid": "4",
+                    "scopename": "gaoyi"
+                }
+            ]
+        }
+    ]
+}

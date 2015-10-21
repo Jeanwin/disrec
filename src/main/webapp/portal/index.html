@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gte IE 8]><!-->
+<html class="no-js" id="ng-app" ng-controller="MainCtrl">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>{{config.app.name}} | {{config.app.version}}</title>
+    <!-- build:css({.tmp,app}) assets/css/main.css -->
+    
+    <link rel="stylesheet" href="assets/css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-olive.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/form.css" />
+    <link rel="stylesheet" href="assets/css/icons.css" />
+    <link rel="stylesheet"  href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/angular-file-upload.css">
+    <link rel="stylesheet"  href="assets/css/angular-ui-tree.min.css">
+    <link rel="stylesheet" href="assets/css/angular-ui-tree.lemon.css">
+    <link rel="stylesheet"  href="assets/css/ng-animate.css">
+    <link rel="stylesheet" href="assets/css/angular-growl.min.css">
+    <link rel="stylesheet"  href="assets/css/angular-toggle-switch-bootstrap.css">
+    <link rel="stylesheet"  href="assets/css/angular-toggle-switch.css">
+    <link rel="stylesheet" href="assets/css/angular.treeview.css">
+    <link rel="stylesheet" href="assets/css/select2.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/responsive-nav.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/zkicon.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 600px)" href="assets/css/iphone.css">
+    <!-- endbuild -->
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <![endif]-->
+    <!-- build:js assets/js/lemon.min.js -->
+    <script src="assets/js/modernizr.js"></script>
+    <script src="common/PolyfillLoader.js"></script>
+    <!-- endbuild -->
+
+</head>
+
+<body>
+
+<!--[if lt IE 8]>
+<div>不支持此浏览器</div>
+<![endif]-->
+<div class="container-fluid padding-left-right-none">
+    <div class="top-bar hidden-xs" style="background:#0f97e9">
+        <div class="index-top row margin-none">
+            <div class="col-xs-3 col-xs-offset-8">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-btn">
+                        <select class="btn btn-default" style="background-color: #0e7ab7;border: none;color: #f1f1f1">
+                            <option>直播课程</option>
+                            <option>精品课程</option>
+                        </select>
+                    </span>
+                    <input type="text" class="form-control" style="position: relative; background-color: #0e7ab7;border: none;color: #f1f1f1;">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" style="background-color: #0e7ab7;border: none;">
+                            <span style="color: #fff" class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+            <div class="btn btn-link col-xs-1 border-none"  ng-click="login()">
+                <a style="color: #ffffff;font-size: 13px" ng-show="LoginName === false" ng-click="Login()">登录
+                </a>
+                <a style="color: #ffffff" ng-show="LoginName === true">
+                    <select class="LoginSelect"  ng-model="LoginSelect" ng-change="loginSelect(LoginSelect)" style="background:#3BACDE">
+                        <option value="">管理员</option>
+                        <option value="1">刘梅</option>
+                        <option value="2">退出</option>
+                    </select>
+                </a>
+            </div>
+            <!-- /.col-lg-3 -->
+        </div>
+    </div>
+
+    <div collapse="Loginhidden === false" class="portalLogin hidden-xs" style="border: solid 1px #f2f2f2">
+        <div style="margin: -17px 0 0 -8px">
+            <img src="assets/img/login_title_bg.png">
+        </div>
+        <div style="margin: -36px 0 0 24px">
+            <span style="color: #fff;font-size: 18px">用户登录</span>
+            <span style="color: #fff;padding-left: 8px">Login</span>
+        </div>
+        <div style="margin: 40px 0 0 22px">
+
+            <div>
+                <input type="text" class="form-control text" placeholder="用户名">
+                <div style="left: 5px;top:-25px;color: #dbdbdb" class="glyphicon glyphicon-user"></div>
+            </div>
+            <div>
+                <input type="text" class="form-control text" placeholder="密码">
+                <div style="left: 5px;top:-25px;color: #dbdbdb" class="glyphicon glyphicon-lock"></div>
+            </div>
+            <div style="margin-top: -16px">
+                <span style="padding-top: -2px"><input type="checkbox"></span>自动登录<span style="padding-left: 154px">找回密码</span>
+            </div>
+            <div style="margin: 8px 0 16px 0">
+                <button class="btn btn-primary" style="width: 280px;font-size: 18px" ng-click="Loginname()">登录</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 navbar navbar-customer">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+
+>
+            <span class="icon-bar"></span>
+          </button> -->
+          <button class="navbar-toggle margin-right-none padding-right-none margin-top-none">
+                <a ng-href="#/PersonalInformation/resource"><i class="icon-phone_user fontSize-30"></i></a>
+          </button>
+           <div  class="navbar-toggle margin-right-none padding-left-none padding-right-none  margin-top-none" >
+                <i ng-show="!focus" class="icon-phone_search fontSize-30 margin-right-10" ng-click="toggleInput()"></i>
+                <span ng-show="focus" > 
+                    <div class="input-group input-group-sm" ng-blur="focus=false;" style="width:180px;margin-top:-2px;margin-right:-10px;">
+                        <span class="input-group-btn">
+                            <select class="btn btn-default" ng-model="scheduletype" style="padding-left:0;padding-right:1px;">
+                                <option value="直播">直播</option>
+                                <option value="热门">热门</option>
+                                <option value="精品" selected="selected">精品</option>
+                            </select>
+                        </span>
+                        <input type="text" class="form-control" ng-click="showsearchContent = '1'" ng-model="query">
+                        <span class="deleteContent" ng-if ="query.length != 0"  ng-click="cleanSearchContent()">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+                        
+                    </div>
+                    <div class="searchContent" ng-if ="showsearchContent == '1' ">
+                        <ul>
+                            <li ng-repeat = "schedule in schedules | filter:scheduletype">
+                                <div ng-click="fillSearchInput($index,schedule.scheduletype)" ng-repeat = "schedulelist in schedule.data | filter: query">
+                                    <span>{{schedulelist.resourcename}}</span>
+                                    &nbsp;&nbsp; <span>{{schedulelist.username}}</span>
+                                    &nbsp; <span>{{schedulelist.grade}}</span>
+                                    &nbsp; <span>{{schedulelist.course}}</span>
+                                </div> 
+                                
+                                
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <!-- <input type="text" class="form-control" style="width:120px;height:23px;" placeholder="请输入关键字" ng-blur="focus=false;"> -->
+                </span>
+          </div>          
+          <div class="navbar-brand logo padding-right-none padding-left-none padding-top-5" >
+              <a ng-href="#/homePage"><img src="assets/img/logo.png"></a>
+          </div>
+          
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li ng-class="{'btn-navshow':action === 0}">
+              <a ng-href="#/homePage">首页</a>              
+            </li>
+            <li id="pipe">|</li>
+            <li ng-class="{'btn-navshow':action === 1}">
+              <a ng-href="#/liveCourses">直播课程</a>                           
+            </li>
+            <li id="pipe">|</li>
+            <li ng-class="{'btn-navshow':action === 2}"><a ng-href="#/excellentCourse">精品课程</a></li>
+            <li id="pipe">|</li>
+            <li ng-class="{'btn-navshow':action === 3}"><a ng-href="#/NoticInfo" onclick="">通知公告</a></li>
+
+          </ul>
+          <!-- <ul class="nav navbar-nav navbar-right hidden-sm">
+            <li>
+                <div class="top-bar" >
+                    <div class="index-top">                            
+                        <div class="btn btn-link col-xs-1 pull-right" ng-click="login()">
+                            <a style="color: #fffffpull-rightnt-size: 13px" ng-show="LoginName === false" ng-click="Login()">登录
+                            </a>
+                            <a style="color: #ffffff" ng-show="LoginName === true">
+                                <select class="LoginSelect"  ng-model="LoginSelect" ng-change="loginSelect(LoginSelect)">
+                                    <option value="">管理员</option>
+                                    <option value="1">刘梅</option>
+                                    <option value="2">退出</option>
+                                </select>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 pull-right">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-btn">
+                                    <select class="btn btn-default">
+                                        <option>直播课程</option>
+                                        <option>精品课程</option>
+                                    </select>
+                                </span>
+                                <input type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div collapse="Loginhidden === false" class="portalLogin" style="border: solid 1px #f2f2f2">
+                    <div style="margin: -17px 0 0 -8px">
+                        <img src="assets/img/login_title_bg.png">
+                    </div>
+                    <div style="margin: -36px 0 0 24px">
+                        <span style="color: #fff;font-size: 18px">用户登录</span>
+                        <span style="color: #fff;padding-left: 8px">Login</span>
+                    </div>
+                    <div style="margin: 40px 0 0 22px">
+
+                        <div>
+                            <input type="text" class="form-control text" placeholder="用户名">
+                            <div style="left: 5px;top:-25px;color: #dbdbdb" class="glyphicon glyphicon-user"></div>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control text" placeholder="密码">
+                            <div style="left: 5px;top:-25px;color: #dbdbdb" class="glyphicon glyphicon-lock"></div>
+                        </div>
+                        <div style="margin-top: -16px">
+                            <span style="padding-top: -2px"><input type="checkbox"></span>自动登录<span style="padding-left: 154px">找回密码</span>
+                        </div>
+                        <div style="margin: 8px 0 16px 0">
+                            <button class="btn btn-primary" style="width: 280px;font-size: 18px" ng-click="Loginname()">登录</button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+          </ul> -->
+        </div>
+
+      </div>
+    </div> 
+   
+    <div class="col-xs-12 padding-left-right-none padding-bottom-20" ui-view="main" style="background:#f7f7f7;"></div>
+    <div class="col-sm-12 col-xs-12 iphone-hide" style="background-color: #4c4c4c;">
+        <div style="color: #b8b8b8;padding-top: 20px;padding-bottom:40px;">           
+            <div class="col-sm-offset-2 col-sm-4 col-xs-12">xxx单位  版权所有 | 现代中庆 技术支持</div>
+            <div class="col-sm-3 col-xs-12">
+                <span class="glyphicon glyphicon-earphone"></span>
+                <span>18201168494</span>                
+            </div>
+            <div class="col-sm-3 col-xs-12">               
+                <span class="glyphicon glyphicon-map-marker"></span>
+                <span>北京市海淀区上地东路1号</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!--<div class="footer">
+    <div ng-include="'/footer/footer-page.html'"></div>
+</div>-->
+
+
+<div class="splash-window">
+    <div class="center">
+       <img src="assets/img/logo.png">
+           <div class="progress" >
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                <span class="sr-only">30% Complete</span>
+              </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="slide notification" ng-if="global.notification.message.length>0">
+    <button type="button" class="close" ng-click="closeNotification()">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <span class="glyphicon" ng-class="{'glyphicon-ok-sign':global.notification.type==='success','glyphicon-remove-circle':global.notification.type==='danger'}"></span>
+    {{global.notification.message}}
+</div>
+<!-- <script src="assets/bootstrap.min.js"></script>
+<script src="assets/jquery-1.10.2.min.js"></script> -->
+<script src="assets/js/lib/require.js" data-main="main.js?v=1.0"></script>
+
+</body>

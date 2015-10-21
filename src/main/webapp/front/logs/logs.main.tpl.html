@@ -1,0 +1,20 @@
+<nav class="navbar navbar-static-top systemmain" role="navigation">
+    <div class="btn-group btn btn-group-lg container-fluid nav navbar-nav">
+
+
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_log_url_view')>=0" href="#" ng-class="{'active':active===0}"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/logs/alarmLog"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            报警日志
+        </a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_voice_call_url_view')>=0" href="#"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/logs/voiceCall"
+           ng-class="{'active':active===1}"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            语音呼叫
+        </a>       
+    </div>
+</nav>
+<div ui-view="logs-alarmLog"></div>

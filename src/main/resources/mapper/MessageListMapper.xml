@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.MessageListMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.MessageList">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+		<result column="createuser" property="createuser" jdbcType="VARCHAR" />
+		<result column="area_id" property="areaId" jdbcType="VARCHAR" />
+		<result column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+		<result column="read_flag" property="readFlag" jdbcType="CHAR" />
+		<association column="area_id" property="map" select="findDirectorParam"></association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, title, time,area_id, createdate, createuser, deleteflag
+	</sql>
+	<sql id="bindLoginname">
+		<bind name="_loginname"
+			value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()" />
+	</sql>
+	<insert id="saveMessageList" parameterType="com.zonekey.disrec.entity.MessageList">
+		<include refid="bindLoginname" />
+		insert into sys_message_list (id, title, time, createdate,
+		createuser,source,area_id)
+		values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+		sysDate(), sysDate(), #{_loginname},#{source},#{areaId})
+	</insert>
+
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+		select count(*) from sys_message_list a where
+		a.deleteflag='0'
+	</select>
+
+	<select id="untreatedMessageCount" resultType="long">
+		select count(*)
+		from sys_message_list a where a.deleteflag='0' and read_flag='0'
+	</select>
+
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultMap="BaseResultMap">
+		select
+		a.id, a.title, DATE_FORMAT(a.time,'%Y-%m-%d %H:%i:%s')
+		time,a.area_id,b.name areaName,a.read_flag,a.source
+		from sys_message_list a,zonekey_area b where a.area_id=b.id and
+		a.deleteflag='0' and b.deleteflag='0'
+		order by a.createdate desc
+		<if test="page != null and page.offset != null and page.limit!=null">
+			limit #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="deleteMessageList">
+		update sys_message_list set
+		deleteflag='1' where id in
+		<foreach collection="list" open="(" close=")" separator=","
+			item="map">
+			#{map.id}
+		</foreach>
+	</update>
+
+	<select id="findDirectorParam" parameterType="java.lang.String"
+		resultType="map">
+		select c.areaid,c.editclassbatch,c.resourcefloder,d.MAC
+		mac,d.IP ip from zonekey_curriculum c,(select a.* from zonekey_device
+		a where a.camera>0 and a.deleteflag='0' and a.mostly='0') d
+		where c.areaid=d.areaid and c.deleteflag='0' and c.areaid=#{areaId}
+		and CONCAT(c.date,' ',c.endtime)>=NOW() and NOW()>=CONCAT(c.date,'
+		',c.starttime)
+	</select>
+
+	<delete id="delMessage" parameterType="java.lang.String">
+		delete from sys_message_list where id =#{id}
+	</delete>
+
+	<update id="updateReadFlag">
+		<include refid="bindLoginname" />
+		update sys_message_list set
+		read_flag='1',
+		modifydate = sysDate(),
+		modifyuser = #{_loginname,jdbcType=VARCHAR}
+		where id in
+		<foreach collection="list" open="(" close=")" separator=","
+			item="map">
+			#{map.id}
+		</foreach>
+	</update>
+
+
+	<select id="findCount" resultType="long">
+		select count(*) from
+		sys_message_list a where a.deleteflag='0' and read_flag='0'
+	</select>
+
+	<select id="isMessageExist" parameterType="com.zonekey.disrec.entity.MessageList"
+		resultType="Integer">
+		select count(id) from sys_message_list
+		where title=#{title,jdbcType=VARCHAR} and area_id=#{areaId} and
+		createuser=#{_loginname}
+		and read_flag='0' and deleteflag='0'
+	</select>
+
+	<update id="upMessageExist" parameterType="com.zonekey.disrec.entity.MessageList">
+		update sys_message_list set time=sysDate()
+		where title=#{title,jdbcType=VARCHAR} and area_id=#{areaId} 
+		and read_flag='0' and deleteflag='0'
+	</update>
+</mapper>

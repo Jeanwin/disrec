@@ -1,0 +1,33 @@
+﻿[
+    {
+        "id": "3",
+        "userid": "1",
+        "areaid": "1",
+	"username": "刘老师",
+	 "areaname": "001教室",
+        "curriculumid": null,
+        "deptid": "1",
+        "name": "文件",
+        "course": "汉字一",
+        "floder": null,
+        "source": null,
+        "description": null,
+        "type": "1",
+        "size": 50,
+        "createdate": null,
+        "modifydate": null,
+        "createuser": null,
+        "modifyuser": null,
+        "deleteflag": "0",
+        "sorted": "英语",
+        "publishdate": "2014-10-03",
+        "timelength": "30",
+        "watchwatchnum": "3",
+        "objectpos": "黑板",
+        "parentid": "1",
+        "attribute": "N",
+        "uploadstate": null,
+        "publishstate": null,
+        "label": null
+    }
+]

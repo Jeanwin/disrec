@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.DeviceAlarmMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.DeviceAlarm" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="output" property="output" jdbcType="CHAR" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="message_alarm" property="messageAlarm" jdbcType="CHAR" />
+    <result column="clues" property="clues" jdbcType="VARCHAR" />
+    <result column="bell" property="bell" jdbcType="CHAR" />
+    <result column="email_use" property="emailUse" jdbcType="CHAR" />
+    <result column="sms" property="sms" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, output, state, message_alarm, clues, bell, email_use, sms,area_id
+  </sql>
+  <sql id="bindLoginname">
+	<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+  </sql>
+  <select id="findDeviceAlarmList" resultType="com.zonekey.disrec.entity.DeviceAlarm" parameterType="com.zonekey.disrec.entity.DeviceAlarm" >
+   <!--    select 
+    a.id,a.output, b.name outputName, a.state, a.message_alarm messageAlarm, a.clues, a.bell, a.email_use emailUse, a.sms,a.area_id areaId
+    from zonekey_device_alarm a,(select a.name,a.value from sys_code a,sys_code b where a.parentid=b.id and b.value='deviceAlarmConfig' ) b,zonekey_device_alarm_area c
+    where a.area_id=c.device_alarm_area and c.area_id = #{areaId} and a.output=b.value  -->
+    
+    select a.id,a.output, b.name outputName, a.state, a.message_alarm messageAlarm, a.clues, a.bell, a.email_use emailUse, a.sms,a.area_id areaId
+    from zonekey_device_alarm a, (select a.name,a.value from sys_code a,sys_code b where a.parentid=b.id and b.value='deviceAlarmConfig' ) b 
+    where a.area_id= #{areaId} and a.output=#{output} and a.state=#{state} and a.output=b.`value`
+  </select>
+  
+  <select id="findDeviceAlarmListByAreaid" resultType="com.zonekey.disrec.entity.DeviceAlarm" parameterType="java.lang.String" >
+     select a.id,a.output,a.state, a.message_alarm messageAlarm, a.clues, a.bell, a.email_use emailUse, a.sms,a.area_id areaId
+    from zonekey_device_alarm a where a.area_id=#{areaId}  
+  </select>
+
+  <select id="findDeviceAlarmListByDeviceAlarm" resultType="com.zonekey.disrec.entity.DeviceAlarm" parameterType="com.zonekey.disrec.entity.DeviceAlarm" >
+     select a.id,a.output,a.state, a.message_alarm messageAlarm, a.clues, a.bell, a.email_use emailUse, a.sms,a.area_id areaId
+    from zonekey_device_alarm a where a.area_id=#{areaId}  
+  </select>
+
+  <select id="findDeviceAlarmListWithCode" resultType="com.zonekey.disrec.entity.DeviceAlarm" parameterType="com.zonekey.disrec.entity.DeviceAlarm" >
+     select case when b.id is null then -1 else b.id end id,a.name outputName,a.value output,b.state, b.message_alarm messageAlarm, b.clues, b.bell, b.email_use emailUse, b.sms,#{areaId} areaId
+      FROM (select a.name,a.value from sys_code a,sys_code b where a.parentid=b.id and b.value='deviceAlarmConfig' )  a  LEFT OUTER JOIN zonekey_device_alarm b on a.value=b.output
+      where b.area_id is null or area_id=#{areaId}
+      ORDER BY output asc
+  </select>
+
+  <insert id="saveDeviceAlarm">
+   <include refid="bindLoginname"/>
+    insert into zonekey_device_alarm (id, output, state, message_alarm, 
+      clues, bell, email_use, sms, 
+      createdate, createuser,area_id)
+    values 
+    <foreach collection="list" item="deviceAlarm" index="index" separator="," >  
+         (#{deviceAlarm.id,jdbcType=CHAR}, #{deviceAlarm.output,jdbcType=CHAR}, #{deviceAlarm.state,jdbcType=CHAR},
+          #{deviceAlarm.messageAlarm,jdbcType=CHAR}, #{deviceAlarm.clues,jdbcType=VARCHAR}, #{deviceAlarm.bell,jdbcType=CHAR},
+          #{deviceAlarm.emailUse,jdbcType=CHAR}, #{deviceAlarm.sms,jdbcType=VARCHAR}, sysDate(), #{_loginname},#{deviceAlarm.areaId}) 
+    </foreach> 
+  </insert>
+  
+   <delete id="deleteDeviceAlarm" parameterType="java.lang.String" >
+    delete from zonekey_device_alarm
+    where area_id = #{area_id,jdbcType=CHAR}
+  </delete>
+  
+  <delete id="deleteDeviceAlarmByids">
+    delete from zonekey_device_alarm where id in 
+    <foreach collection="array" index="index" item="alarmid" open="(" separator="," close=")">
+       #{alarmid,jdbcType=CHAR}     
+    </foreach>  
+  </delete>
+  
+  <delete id="deleteDeviceAlarmByAreaids">
+    delete from zonekey_device_alarm  where area_id in
+    <foreach collection="array" index="index" item="areaid" open="(" separator="," close=")">
+       #{areaid}     
+    </foreach>  
+  </delete>
+  
+  <insert id="saveDeviceAlarmArea" parameterType="map" >
+   <include refid="bindLoginname"/>
+    insert into zonekey_device_alarm_area (id,device_alarm_area,area_id,createdate, createuser)
+    values 
+         (#{id1},#{areaId},#{id},sysDate(),#{_loginname}) 
+  </insert>
+    <delete id="deleteDeviceAlarmArea" parameterType="java.lang.String" >
+    delete from zonekey_device_alarm_area
+    where area_id = #{area_id,jdbcType=CHAR}
+  </delete>
+  
+  <select id="findDeviceAlarm" resultMap="BaseResultMap" parameterType="map" >
+ 	select a.id, a.output, a.state, a.message_alarm, a.clues, a.bell, a.email_use, a.sms,a.area_id from zonekey_device_alarm a
+       where a.area_id = #{areaId}
+       and a.output = #{output}
+       and a.state = #{state}
+  </select>
+  
+  <select id="findByAreaId" resultType="com.zonekey.disrec.entity.DeviceAlarm" parameterType="java.lang.String" >
+   select * from zonekey_device_alarm_area where area_id = #{id}
+  </select>
+  
+  <update id="updateDeviceAlarmArea">
+    update zonekey_device_alarm_area set device_alarm_area = #{areaId} where id = #{id}
+  </update>
+</mapper>

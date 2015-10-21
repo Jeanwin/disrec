@@ -1,0 +1,47 @@
+[
+    {
+        "id": "15",
+        "parentid": "14",
+        "name": "同名",
+        "shortname": null,
+        "showorder": 0,
+        "level": null,
+        "childcount": null,
+        "defaultValue": null,
+        "createdate": null,
+        "createuser": null,
+        "modifydate": 1414662600000,
+        "modifyuser": "cwx",
+        "deleteflag": "0"
+    },
+    {
+        "id": "16",
+        "parentid": "14",
+        "name": "年级",
+        "shortname": null,
+        "showorder": 0,
+        "level": null,
+        "childcount": null,
+        "defaultValue": null,
+        "createdate": null,
+        "createuser": null,
+        "modifydate": 1414662600000,
+        "modifyuser": "cwx",
+        "deleteflag": "0"
+    },
+    {
+        "id": "17",
+        "parentid": "14",
+        "name": "班级",
+        "shortname": null,
+        "showorder": 0,
+        "level": null,
+        "childcount": null,
+        "defaultValue": null,
+        "createdate": null,
+        "createuser": null,
+        "modifydate": 1414662600000,
+        "modifyuser": "cwx",
+        "deleteflag": "0"
+    }
+]

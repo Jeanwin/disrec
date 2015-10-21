@@ -1,0 +1,271 @@
+<div class="container-fluid">
+
+    <div class="row" style="margin-top:16px">
+        <div class="col-xs-2">
+            <div class="whiteframe">
+                <div>
+                    <div class="system-left-top font-overlay-1" title="{{activeAreaTreeNode.node.title}}"><i class="icon-swap-horiz" ng-click="toggleArea=!toggleArea;toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i>
+                     	<span>{{activeAreaTreeNode.node.title}}</span>
+                     </div>
+                </div>
+
+                <div>
+                    <div ui-tree id="tree-root" data-drag-enabled="false">
+                        <ol ui-tree-nodes ng-model="areaTree">
+                            <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--右边区域-->
+        <div class="col-xs-10 ">
+            <div class="whiteframe" style="margin-left:-16px">
+                <div class="row padding-8">
+                    <div class="col-xs-3">
+                        <button class="btn btn-primary" ng-click="editFacilityModal('save', '')">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            添加设备
+                        </button>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch===true">
+                            <input type="text" class="form-control"
+                                   ng-model="facility.name"
+                                   placeholder="按设备名称查询">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"
+                                        ng-click="searchFacility('1')">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="pull-right">
+                            <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                            <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div collapse="hideAdvancedSearch" class="advSearchPanel">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="form-label" for="selectTypeId">设备类型</label>
+                            <select id="selectTypeId" class="form-control" ng-model="facility.typeid"
+                                    ng-options="department.value as department.name for department in deviceDepartment">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="facilityMac">MAC地址</label>
+                            <input id="facilityMac" class="form-control" ng-model="facility.mac">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="facilityId">IP地址</label>
+                            <input id="facilityId" class="form-control" ng-model="facility.ip">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label class="form-label" for="runStatus">运行状态</label>
+                            <select id="runStatus" ng-model="facility.runStats"
+                                    ng-options="state.value as state.name for state in StateList"
+                                    ng-change="search(serviceOptions)" class="form-control">
+                                <option value="">全部</option>
+                            </select>
+                        </div> -->
+                        <button class="btn btn-primary pull-right" ng-click="searchFacility('1')">
+                            <span class="glyphicon glyphicon-search"></span>
+                            查询</button>
+                    </form>
+                </div>
+                <div>
+                    <!--<div style="border-top: solid 2px #c0c0c0;padding:8px;text-align:center">-->
+                    <div class="panel panel-default">
+                        <div class="panel-body padding-0" id="rightContent-height">
+                        <table class="table table-striped" style="text-align:center">
+                            <thead style="background-color: #ceecff;font-weight:bold">
+                            <tr>
+                            	<!--
+                                <td>
+                                    <input type="checkbox" ng-model="checkAll" ng-click="checkAllFacilitys()">
+                                </td>
+                                -->
+                                <td style="WORD-WRAP: break-word" width="120">
+                                        <span>设备名称</span> 
+                                        <span> 
+                                             <a href ng-show="sort.name == 'asc'" ng-click="orderby('name')" 
+                                                      tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up"> 
+                                             </a> 
+                                             <a href ng-show="sort.name == 'desc'" ng-click="orderby('name')" tooltip-placement="top" 
+                                                      tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down"> 
+                                             </a>
+                                        </span>
+                                </td>
+                                <td style="WORD-WRAP: break-word" width="120">
+                                        <span>所属教室</span> 
+                                        <span> 
+                                             <a href ng-show="sort.areaname == 'asc'" ng-click="orderby('areaname')" 
+                                                      tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up"> 
+                                             </a> 
+                                             <a href ng-show="sort.areaname == 'desc'" ng-click="orderby('areaname')" tooltip-placement="top" 
+                                                      tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down"> 
+                                             </a>
+                                        </span>
+                                </td>    
+                                <td style="WORD-WRAP: break-word">父设备</td>
+                                <td style="WORD-WRAP: break-word" width="120">
+                                        <span>设备类型</span> 
+                                        <span> 
+                                             <a href ng-show="sort.typeid == 'asc'" ng-click="orderby('typeid')" 
+                                                      tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序" class="btn-link glyphicon glyphicon-chevron-up"> 
+                                             </a> 
+                                             <a href ng-show="sort.typeid == 'desc'" ng-click="orderby('typeid')" tooltip-placement="top" 
+                                                      tooltip-popup-delay="1000" tooltip="降序" class="btn-link glyphicon glyphicon-chevron-down"> 
+                                             </a>
+                                        </span>
+                                </td>    
+                                <td style="WORD-WRAP: break-word">IP</td>
+                                <td style="WORD-WRAP: break-word">MAC</td>
+                                <td style="WORD-WRAP: break-word">状态</td>
+                                <td>操作</td>
+                                <!-- <td>查看日志</td> -->
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="facility in facilityList">
+                            <!--
+                                <td>
+                                    <input type="checkbox" ng-model="facility.checked">
+                                </td>
+                                -->
+                                <td ng-if="facility.mostly != '0'">{{facility.name}}</td>
+                                <td ng-if="facility.mostly === '0'">{{facility.name}}[主]</td>
+                                <td>{{facility.areaname}}</td>
+                                <td>{{facility.parentname}}</td>
+                                <td>{{initStatus(facility.typeid)}}</td>
+                                <td>{{facility.ip}}</td>
+                                <td>{{facility.mac}}</td>
+                                <td ng-if="facility.state === '1'">在线</td>
+                                <td ng-if="facility.state != '1'">离线</td>
+                                <td>
+                                    <button class="btn btn-link" ng-click="editFacilityModal('update', facility)"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑"
+                                            >
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button class="btn btn-link" ng-click="openDeleteFacilityModal(facility)"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除"
+                                            >
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                    <a ng-href="#/classrooms/configFacility/{{facility.areaid}}" ng-show="facility.typeid=='2'">配置</a>
+                                    <!--<button class="btn btn-link" ng-click="serveModal()">服务</button>-->
+                                </td>
+                                <!-- <td>
+                                    <a target="_blank" ng-href="#/classrooms/log/{{facility.ip}}">查看日志</a>
+                                </td> -->
+                            </tr>
+                        </table>
+                        <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                            <a style="color: #cecece;font-size: 32px;">没有查到任何相关的数据</a>
+                        </div>-->
+                        <button ng-if="pagination.totalItems === 0" class="ondata">
+                            <span class="ondatatext">找不到您搜索的信息！</span>
+                        </button>
+                    </div>
+
+                        <div class="panel-footer" style="padding-top:1px;padding-bottom:1px;">
+
+                            <!-- <div ng-if="pagination.totalItems > 0" class="row"> -->
+                            <div class="row">
+                                <div class="col-xs-4" style="padding-top:8px;">
+                                    <span>共{{pagination.totalItems}}条数据，</span>
+                                    <span>每页显示
+                                        <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                        </select>条
+                                    </span>
+                                </div>
+
+                                <div class="col-xs-8 padding-left-none" ng-show="pagination.totalItems > pagination.pageSize">
+                                    <!-- 分页  -->
+                                    <div class="col-xs-9">
+                                        <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                                    page="pagination.pageIndex"
+                                                    items-per-page="pagination.pageSize"
+                                                    max-size="pagination.maxSize"
+                                                    previous-text="{{pagination.previousText}}"
+                                                    next-text="{{pagination.nextText}}"
+                                                    first-text="{{pagination.firstText}}"
+                                                    last-text="{{pagination.lastText}}"
+                                                    class="pagination-small"
+                                                    boundary-links="true"
+                                                    on-select-page="onSelectPage(page)">
+                                        </pagination>
+                                    </div>
+                                    <div class="col-xs-3" style="padding-top:8px;">
+                                        <div class="input-group input-group-sm" style="width: 100px"
+                                             tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                            <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span ng-click="setActiveAreaTreeNode(this)" class="tree-node" ng-class="{'tree-node-active':node.id===activeAreaTreeNode.node.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="nodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content slideTree" ng-class="{'tree-node-active':node.id===activeAreaTreeNode.node.id}">-->
+        <!--<a class="btn btn-xs">-->
+            <!--<span ng-if="node.parentid === ''" class="glyphicon" style="width:12px;height:12px">-->
+                <!--<img src="assets/img/lemonade-icon_gomain-left.png" ng-click="toggle(this)" style="width: 24px;height: 24px;position: relative;top: 4px;right: 3px;">-->
+            <!--</span>-->
+            <!--<span ng-if="node.attribute === 'Y'" class="glyphicon" style="width:12px;height:12px">-->
+                <!--<img src="assets/img/icon-house1.png" style="width:24px;height:24px;padding-bottom: 8px;padding-right: 5px">-->
+            <!--</span>-->
+            <!--<div ng-if="node.nodes && node.nodes.length > 0">-->
+                <!--<span ng-if="node.parentid === ''"-->
+                        <!--class="glyphicon"-->
+                      <!--nodrag ng-click="toggle(this)">-->
+                <!--</span>-->
+                <!--<span ng-if="node.parentid != ''"-->
+                      <!--class="glyphicon"-->
+                      <!--nodrag ng-click="toggle(this)"-->
+                      <!--ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}">-->
+                <!--</span>-->
+            <!--</div>-->
+
+        <!--</a>-->
+        <!--<span ng-click="setActiveAreaTreeNode(this)">{{node.title}}</span>-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

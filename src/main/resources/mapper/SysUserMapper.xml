@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.SysUserMapper">
+	<resultMap type="com.zonekey.disrec.vo.SysUserView" id="data">
+		<result property="loginname" column="loginname"/>
+		<association property="roleList" column="loginname" select="getRoles"/>
+		<association property="scopeList" column="loginname" select="getScope"/>
+		<association property="authenticatid" column="loginname" select="findUserRole"/>
+	</resultMap>
+		<resultMap type="com.zonekey.disrec.vo.SysUserView" id="getUserList">
+		</resultMap>
+	<!-- sql绑定用户名 -->
+	<sql id="bindLoginname">
+		<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+	</sql>
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultMap="data">
+	<include refid="bindLoginname"/>
+		select 
+		a.id,a.loginname,a.name,b.name deptName,a.deptid,a.status,a.enable,
+		(select name from sys_code where id=a.status and deleteflag='0') statusName,
+		a.schoolYear+'' schoolYear,a.phone,a.sex,
+		(select name from sys_code where id=a.sex and deleteflag='0') sexName,
+		a.email,a.user_type usertype,
+		(select name from sys_code where id=a.user_type and deleteflag='0') usertypeName
+		,pictureurl,remark
+		 from sys_user a left join zonekey_dept b on a.deptid=b.id
+		  where  a.deleteflag = '0'
+		  and IF(
+				(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2 and c.isChecked='true')>0,
+					a.deptid in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2 and c.isChecked='true'),1=1) 
+		 <if test="treeid !=null and treeid !=''">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+		 <if test="treeid ==null or treeid ==''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+		 <if test="keywords != null">
+		 	<if test="keywords.deptid != null and keywords.deptid != ''">and a.deptid = #{keywords.deptid}</if>
+			<if test="keywords.sex != null and keywords.sex != ''">and a.sex = #{keywords.sex}</if>
+			<if test="keywords.email != null and keywords.email != '' ">and a.email like concat(#{keywords.email},'%')</if>
+			<if test="keywords.phone != null and keywords.phone != ''">and a.phone like concat(#{keywords.phone},'%')</if>
+			<if test="keywords.status != null and keywords.status != ''">and a.status = #{keywords.status}</if>
+			<if test="keywords.usertype != null and keywords.usertype != ''">and a.user_type=#{keywords.usertype}</if>
+			<if test="keywords.loginname!= null and keywords.loginname !=''">and a.loginname like concat('%',#{keywords.loginname},'%')</if>
+			<if test="keywords.name!= null and keywords.name !=''">and a.name like concat(#{keywords.name},'%') </if> 
+			<if test="keywords.param!= null and keywords.param !=''">and (a.name like concat('%',#{keywords.param},'%') or a.loginname like concat('%',#{keywords.param},'%'))</if>
+		</if>
+		<if test="page != null and page.offset != null and page.limit!=null">
+		order by  ${page.order} ${page.sort} 
+		limit  #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+	
+	<select id="findRangeByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultMap="data">
+		SELECT * FROM 
+			(SELECT a.loginname,a.name,a.enable, 
+				(SELECT COUNT(*) FROM 
+									user_range WHERE a.loginname=userid AND deleteflag=0
+									<if test="keywords != null">
+										<if test="keywords.rangeid != null and keywords.rangeid != ''">AND rangeid=#{keywords.rangeid}</if>  
+									</if>
+				) rangeTotal,
+				(SELECT COUNT(*) FROM 
+									user_role WHERE a.loginname=userid AND deleteflag=0
+									<if test="keywords != null">
+										<if test="keywords.roleid != null and keywords.roleid != ''"> 
+										
+										<if test="keywords.selectid == null or keywords.selectid == ''"> 
+											AND a.loginname IN (select userid from user_role ur where  ur.roleid = #{keywords.roleid})
+											</if>
+										
+											<if test="keywords.selectid != null and keywords.selectid != ''"> 
+											 AND a.loginname not IN (select userid from user_role ur where  ur.roleid = #{keywords.roleid})
+											</if>
+										
+										</if>
+									</if>
+				) roleTotal
+			FROM sys_user a WHERE a.deleteflag=0 
+				 <if test="keywords != null">
+					<if test="keywords.param != null and keywords.param != ''">and (a.loginname like concat(#{keywords.param},'%') or a.name like concat(#{keywords.param},'%')) </if>
+					<if test="keywords.loginname != null and keywords.loginname != ''">and a.loginname like concat(#{keywords.loginname},'%') </if>
+					<if test="keywords.name != null and keywords.name != ''">and a.name like concat(#{keywords.name},'%') </if>  
+				 </if>
+				<if test="treeid !=null and treeid !=''">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid ==''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			)	b	WHERE b.rangeTotal+b.roleTotal>0
+			<if test="keywords != null">
+				<if test="keywords.roleid != null and keywords.roleid != ''">
+					and b.roleTotal>0
+				</if>
+				<if test="keywords.rangeid != null and keywords.rangeid != ''">
+					and b.rangeTotal>0
+				</if>
+			</if>
+			<if test="page != null and page.offset != null and page.limit!=null">
+			order by  ${page.order} ${page.sort} 
+			limit  #{page.offset} ,#{page.limit}</if>
+	</select>
+	<select id="getRoles" resultType="com.zonekey.disrec.entity.SysRole">
+		select a.id,a.role_name as roleName from sys_role a right join user_role b on b.roleid=a.id
+		 where a.deleteflag=0 and b.deleteflag=0 and b.userid=#{loginname} order by a.role_name
+	</select>
+	<select id="getScope" resultType="map">
+		select a.id rangeid,a.name,a.typeid scopetype from zonekey_range a left join user_range b on a.id=b.rangeid where b.deleteflag=0 and  b.userid = #{loginname}
+	</select>
+	<!-- 获取范围用户基本信息end -->
+	<!-- 获取单个授权用户信息 -->
+	<select id="findRangeUser" parameterType="com.zonekey.disrec.vo.SysUserView" resultMap="getUserList">
+		select 
+			a.id,a.loginname,a.name,a.name value
+		from sys_user a
+		  where  a.deleteflag = 0 and a.user_type='1'
+		  <if test="name!=null and name !=''">
+		  	and a.name like concat(#{name},'%')
+		  </if>
+		  <if test="loginname!=null">
+		  	and a.loginname=#{loginname}
+		  </if>
+	</select>
+	<!-- 获取总数 -->
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+	<include refid="bindLoginname"/>
+		select count(*) from sys_user a left join zonekey_dept b on a.deptid=b.id
+		  where  a.deleteflag = '0'
+		  and IF(
+				(SELECT count(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2 and c.isChecked='true')>0,
+					a.deptid in (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=2 and c.isChecked='true'),1=1) 
+		<if test="keywords != null">
+			<if test="keywords.deptid != null and keywords.deptid != ''">and a.deptid = #{keywords.deptid}</if>
+			<if test="keywords.sex != null and keywords.sex != ''">and a.sex = #{keywords.sex}</if>
+			<if test="keywords.email != null">and a.email like concat(#{keywords.email},'%')</if>
+			<if test="keywords.phone != null ">and a.phone like concat(#{keywords.phone},'%')</if>
+			<if test="keywords.status != null and keywords.status != ''">and a.status = #{keywords.status}</if>
+			<if test="keywords.usertype != null and keywords.usertype != ''">and a.user_type=#{keywords.usertype}</if>
+			<if test="keywords.loginname!= null and keywords.loginname !=''">and a.loginname like concat('%',#{keywords.loginname},'%')</if>
+			<if test="keywords.name!= null and keywords.name !=''">and a.name like concat(#{keywords.name},'%') </if> 
+			<if test="keywords.param != null and keywords.param != ''">and (a.loginname like concat('%',#{keywords.param},'%') or a.name like concat('%',#{keywords.param},'%')) </if>
+		</if>
+		<if test="treeid !=null and treeid !=''">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+		<if test="treeid ==null or treeid ==''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+	</select>
+	<!-- 校验重复数 -->
+	<select id="check" parameterType="com.zonekey.disrec.entity.SysUser" resultType="int">
+		select count(*)	 from sys_user where deleteflag='0' and loginname =#{loginname}
+	</select>
+	<select id="rangeCount" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		SELECT count(*) FROM 
+			(SELECT a.loginname,a.name, 
+				(SELECT COUNT(*) FROM 
+									user_range WHERE a.loginname=userid AND deleteflag=0
+									<if test="keywords != null">
+										<if test="keywords.rangeid != null and keywords.rangeid != ''">AND rangeid=#{keywords.rangeid}</if>  
+									</if>
+				) rangeTotal, 
+				(SELECT COUNT(*) FROM 
+									user_role WHERE a.loginname=userid AND deleteflag=0
+									<if test="keywords != null">
+										<if test="keywords.roleid != null and keywords.roleid != ''"> 
+										
+											<if test="keywords.selectid == null or keywords.selectid == ''"> 
+											AND a.loginname IN (select userid from user_role ur where  ur.roleid = #{keywords.roleid})
+											</if>
+										
+											<if test="keywords.selectid != null and keywords.selectid != ''"> 
+											 AND a.loginname not IN (select userid from user_role ur where  ur.roleid = #{keywords.roleid})
+											</if>
+										</if>
+									</if>
+				) roleTotal
+			FROM sys_user a WHERE a.deleteflag=0 
+				 <if test="keywords != null">
+					<if test="keywords.param != null and keywords.param != ''">and (a.loginname like concat(#{keywords.param},'%') or a.name like concat(#{keywords.param},'%')) </if>
+					<if test="keywords.loginname != null and keywords.loginname != ''">and a.loginname like concat(#{keywords.loginname},'%') </if>
+					<if test="keywords.name != null and keywords.name != ''">and a.name like concat(#{keywords.name},'%') </if>   
+				</if>
+				<if test="treeid !=null and treeid !=''">and find_in_set(a.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid ==''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			)	b	WHERE b.rangeTotal+b.roleTotal>0
+				<if test="keywords != null">
+					<if test="keywords.roleid != null and keywords.roleid != ''">
+						and b.roleTotal>0
+					</if>
+					<if test="keywords.rangeid != null and keywords.rangeid != ''">
+						and b.rangeTotal>0
+					</if>
+				</if>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		update sys_user set
+		deleteflag='1',modifyuser=#{modifyuser},modifydate=sysDate(),loginname=CONCAT(loginname,sysDate())
+		where loginname in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.loginname}
+		</foreach>
+	</update>
+
+	<insert id="insert" parameterType="com.zonekey.disrec.vo.SysUserView">
+		insert into sys_user (id, name, loginname,
+		password, salt, phone,
+		status, deptid, remark, sex,
+		email, pictureURL, schoolyear,
+		createdate, createuser, user_type)
+		values (#{id}, #{name},
+		#{loginname},
+		#{password}, #{salt}, #{phone},
+		#{status}, #{deptid},
+		#{remark}, #{sex},
+		#{email}, #{pictureurl},
+		#{schoolyear},sysDate(), #{createuser},#{usertype})
+	</insert>
+	
+	<update id="update" parameterType="com.zonekey.disrec.entity.SysUser">
+		update sys_user
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="salt != null">
+				salt = #{salt,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="deptid != null">
+				deptid = #{deptid,jdbcType=CHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=CHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="pictureurl != null">
+				pictureURL = #{pictureurl,jdbcType=VARCHAR},
+			</if>
+			<if test="usertype != null">
+				user_type = #{usertype,jdbcType=CHAR},
+			</if>
+			<if test="enable != null">
+				enable = #{enable},
+			</if>
+			<if test="validateCode != null">
+				validateCode = #{validateCode},
+			</if>
+			<if test="checked != null">
+				checked = #{checked},
+			</if>
+			<!-- <if test="schoolyear != null">-->
+				schoolyear = #{schoolyear},
+			<!-- </if>-->
+				modifydate = sysDate(),
+			<if test="modifyuser != null">
+				modifyuser = #{modifyuser,jdbcType=CHAR},
+			</if>		
+				<!-- logindate = sysDate() -->
+		</set>
+		where loginname = #{loginname,jdbcType=CHAR}
+	</update>
+	<!-- 更新登陆时间 -->
+	<update id="updateLoginDateAndIp" parameterType="String">
+	    update sys_user set logindate = sysDate(),loginip = #{loginip} where loginname = #{loginname,jdbcType=CHAR} and deleteflag='0'
+	</update>
+	<!-- 获取邮箱 -->
+	<select id="getValidate" parameterType="string" resultType="map">
+		select email,validateCode,outDate from sys_user where loginname = #{loginname} and deleteflag='0'
+	</select>
+	<!-- 根据名字查找用户信息 -->
+	<select id="findByLoginname"  resultMap="data">
+		select id,name,loginname,phone,status,deptid,remark,sex,email,pictureurl,checked,DATE_FORMAT(logindate,'%Y年%c月%e日  %T') as logindate,loginip from sys_user where loginname = #{loginname} and password = #{password} and deleteflag='0'
+	</select>
+	<!-- 根据用户id查找用户权限 -->
+	<select id="findUserRole" parameterType="string"  resultType="string">
+		SELECT c.fun_code authenticatid FROM user_role a ,sys_role_function b ,sys_function c
+		 WHERE userid= #{loginname,jdbcType=CHAR}
+		  AND a.roleid=b.roleid AND b.functionid=c.id
+		  group by a.userid,c.fun_code 
+	</select>
+	<!-- 更改密码找回的验证码 -->
+	<update id="addEmailCode">
+		update sys_user set validateCode = #{validateCode},outDate = sysDate() where loginname=#{loginname} and deleteflag ="0"
+	</update>
+	<!-- 修改密码 -->
+	<update id="modifyPwd" parameterType="com.zonekey.disrec.entity.SysUser">
+		update sys_user set password=#{password} where loginname=#{loginname} and deleteflag ="0"
+	</update>
+	<!-- 根据名字查找用户信息 -->
+	<select id="finduserByLoginname"  parameterType="string" resultType="com.zonekey.disrec.vo.SysUserView">
+		select id,name,loginname,phone,deptid,remark,sex,email,pictureurl from sys_user where loginname = #{loginname} and deleteflag='0'
+	</select>
+	<!-- 根据用户名和密码查询用户 -->
+	<select id="getUserByNameAndPass"  resultType="com.zonekey.disrec.entity.SysUser">
+		select id,name,loginname,password,salt,phone,status,deptid,remark,sex,email,pictureurl,schoolyear,createdata,createuser,modifydate,modifyuser,deleteflag,user_type,checked,validatecode,outdate,enable,logindate,loginip from sys_user where loginname = #{loginname} and password = #{password} and deleteflag='0'
+	</select>
+	<!-- 新增用户临时表，导入时用 -->
+	<insert id="insertsysusermid" parameterType="com.zonekey.disrec.vo.SysUserView">
+		insert into sys_user_mid (id,loginname,
+		password, name,sexName, usertypeName,
+		schoolyear, email, phone, deptName,
+		excelbatch, flag, errordescribe,
+		createdate, createuser)
+		values (#{id}, #{loginname},
+		#{password},
+		#{name}, #{sexName}, #{usertypeName},
+		#{schoolyear}, #{email},
+		#{phone}, #{deptName},
+		#{excelbatch}, #{flag},
+		#{errordescribe},sysDate(), #{createuser})
+	</insert>
+	<select id="findsysusermid" resultType="com.zonekey.disrec.vo.SysUserView">
+		select * from sys_user_mid where excelbatch=#{excelbatch} and flag=#{flag}
+	</select>		
+	<select id="findOne" parameterType="string" resultType="com.zonekey.disrec.entity.SysUser">
+	    select * from sys_user where id =#{id}
+	</select>	
+</mapper>

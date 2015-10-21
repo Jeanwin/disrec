@@ -1,0 +1,67 @@
+<input type="hidden" id="urlParam3" value="{{livingAddress3}}"/>
+<div ng-if="(livingAddress3 == undefined) " class="player-wrapper" id="back-info3">
+    <div style="position: relative;top: 30%;">
+    	<i class="zkicon-fontsize-100 icon-ccamera" 
+	    style="position: relative;font-size: 88px;left: 0%;color: gray;"></i>  
+	    <!-- <h4 style="color:#fff">信号故障</h4> -->
+    </div>
+</div>
+<div ng-if="!(livingAddress3 == undefined) " style="background:#000;" class="player-wrapper">
+	<div id="flashContent3" >
+	    <p>
+	        To view this page ensure that Adobe Flash Player version 
+	        0.0.0 or greater is installed. 
+	    </p>
+	   
+	</div>
+</div>
+<noscript>
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" style="width:100%;height:100%;" id="polling_pll_3">
+        <param name="movie" value="coursepatrol3/RtmpPolling.swf" />
+        <param name="quality" value="high" />
+        <param name="bgcolor" value="#ffffff" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <param name="allowFullScreen" value="true" />
+        [if !IE]>
+        <object type="application/x-shockwave-flash" data="RtmpPolling.swf" class="player-wrapper">
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#ffffff" />
+            <param name="allowScriptAccess" value="sameDomain" />
+            <param name="allowFullScreen" value="true" />
+            <p> 
+                Either scripts and active content are not permitted to run or Adobe Flash Player version
+                0.0.0 or greater is not installed.
+            </p>
+
+            <a href="http://www.adobe.com/go/getflashplayer">
+                <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+            </a>
+
+        </object>
+
+    </object>
+</noscript>
+<script type="text/javascript">
+	// For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+	var swfVersionStr = "0.0.0";
+	// To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+	var xiSwfUrlStr = "playerProductInstall.swf";
+	var flashvars = {};
+	var params = {};
+	params.quality = "high";
+	params.bgcolor = "#000000";
+	params.allowscriptaccess = "sameDomain";
+	params.allowfullscreen = "true";
+	params.wmode = "opaque";
+	var attributes = {};
+	attributes.id = "polling_pll_3";
+	attributes.name = "polling_pll_3";
+	attributes.align = "middle";
+	swfobject.embedSWF(
+		"coursepatrol/RtmpPolling.swf", "flashContent3", 
+		"100%", "100%", 
+		swfVersionStr, xiSwfUrlStr, 
+		flashvars, params, attributes,onSWFcreated);
+	// JavaScript enabled so display the flashContent4 div in case it is not replaced with a swf object.
+	swfobject.createCSS("#flashContent3", "display:block;text-align:left;");
+</script>

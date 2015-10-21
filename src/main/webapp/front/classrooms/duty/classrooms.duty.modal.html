@@ -1,0 +1,129 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:340px;
+        overflow:auto;
+        
+    }
+    .modal{
+		overflow: hidden;
+		overflow-y: hidden;
+		top:10%;
+		left:30%;
+		right:inherit;
+	}
+    .modal-input{
+        width: 72px;
+        border-radius: 4px;
+        border:1px solid #a9a9a9;
+        text-align:center;
+    }
+    input[type=date] {
+		line-height: 23px;
+		width: 140px;
+	}
+	.isAllChecked {
+		box-shadow: -1px -1px 1px 1px rgba(255,0,0,0.6);
+    }
+    /*.fileinput-button input{
+        position: absolute;
+        top: 18px;
+        left: 20px;
+        margin: 0;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        /* font-size: 200px; */
+        direction: ltr;
+        cursor: pointer;
+        height: 37px;
+        width: 113px;
+    }*/
+</style>
+<div style="width:100%;padding-top:30px;" class="modal-body ng-scope">
+        <div class="col-xs-4 padding-left-right-none" style="padding-right: 30px;height: 400px">
+            <div style="margin: 0 0 8px 40px;font-size: 16px">选择教室</div>
+            <div>
+                <div ui-tree id="tree-root" data-drag-enabled="false" class="nodes_rendererSelect.html">
+                    <ol ui-tree-nodes ng-model="areaTree">
+                        <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_rendererSelect.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8" style="min-height:300px;">
+            <form name="frmAreaEditor" class="form-horizontal" role="form">
+           
+	            <div class="form-group">
+	                <label class="col-sm-12 control-label text-left">值班室名称</label>
+	                <div class="col-sm-12 margin-top-5">
+		                <input  class="form-control" required ng-model="duty.name">
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-12 control-label text-left">电话</label>
+	                <div class="col-sm-12">
+	                    <input  class="form-control margin-top-5" ng-model="duty.telephone" required>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-12 control-label text-left">报警邮箱</label>
+	                <div class="col-sm-12">
+	                    <input  class="form-control margin-top-5" ng-model="duty.warmEmail" required>
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-xs-12 control-label text-left" for="areaname">值班员</label>
+	                <div class="col-xs-12 margin-top-5">
+	                    <select name="selectd" class="form-control" ng-model="duty.Person"                             ng-change="getSelectedHoder()"
+                            ng-options="dutyuser.loginname +'-'+ dutyuser.name as dutyuser.loginname +'-'+ dutyuser.name for dutyuser in dutyUsers"
+                            required>
+                            <option value="">请选择</option>
+                    	</select>
+	
+	                </div>
+	            </div>
+	        </form>
+	        <div ng-if="okSave == '1'" style="max-height: 80px;overflow: auto;width: 100%;">
+				<span ng-repeat="errorArea in errorLists"><span style="padding-left:25px;color:red;padding-right:5px;">{{errorArea.areaName}}</span>已有值班室,请重新选择<br/></span>
+			</div>
+        </div>
+    
+</div>
+
+<div class="courseheader-button">
+ <button class="btn btn-primary btn-fristprimary margin-top-50" ng-click="checkClassroom()" ng-disabled="" style="width: 96px;height: 32px">校验教室</button>　　　
+    <button ng-disabled="(okSave == '1')  || frmAreaEditor.$invalid" class="btn btn-primary btn-fristprimary margin-top-50" ng-click="save()" ng-disabled="" style="width: 96px;height: 32px">保存</button>
+    <!-- <button ng-disabled="(okSave == '1') || frmAreaEditor.$invalid" class="btn btn-primary btn-fristprimary margin-top-50" ng-click="save()" ng-disabled="" style="width: 96px;height: 32px">保存</button>　　　　　　 -->
+    <button class="btn btn-default margin-top-50" ng-click="cancel()" style="width: 96px;height: 32px">取消</button>
+</div>
+<!-- ng-init="node.isSelected = isCheckedCourse(node.innerid)" -->
+
+
+<script type="text/ng-template" id="nodes_rendererSelect.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}" ng-click="setActiveAreaTreeNode(this)">
+        <!--<span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>-->
+        <!--<span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>-->
+        <input type="checkbox" ng-class="{'isAllChecked': node.halfFlag}" ng-model="node.isSelected" ng-click="checkAllTrees(node)">
+		<span title="{{node.title}}" style="max-width:calc(100% - 25px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_rendererSelect.html'">
+        </li>
+    </ol>
+
+</script>

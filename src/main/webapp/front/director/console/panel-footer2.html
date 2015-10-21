@@ -1,0 +1,103 @@
+<div style="position: absolute;width:300px;left:23px;right:5px;background: #2D343A;border-radius: 10px;">
+            <div style="width:300px;height: 10px;margin-top:10px;color:white;">
+                <button class="btn btn-xmrecord pull-left" style="margin-left: 3px;"></button>
+                <span class="pull-left">{{VideosInformations[1].title}}</span>
+                <!--{{VideosInformations[1].id}}-->
+                <input type="hidden" id="urlParam2" value="{{urlParam2}}"/>
+                <!--<div class="pull-right heig">-->
+                    <!--<div class=" btn-nav2" ng-click="setMain(Video.id)" ng-class="{'active':mainVideo===Video.id}">-->
+                        <!--<img  style="float:right" src="img/lemonade-icon.png" class=" btn-nav2" ng-click="setMain(Video.id)" ng-class="{'active':mainVideo===Video.id}">-->
+                    <!--</div>-->
+                    <!--<div class=" btn-nav2" ng-click="setMainOrSub(Video.id)" ng-class="{'active':deputyVideo===Video.id}">-->
+                <div class="pull-right" style="margin-right: 3px;">
+                	<img src="img/lemonade-icon3.png" 
+                       		class=" btn-nav2" ng-class="{'active':livingCardPara==='card1'}"
+                        	ng-click="dealLivingPara('card1')"
+                        	>
+                    <img src="img/lemonade-icon.png" class=" btn-nav2" ng-click="setMain(VideosInformations[1].id)" ng-class="{'active':mainVideo===VideosInformations[1].id}">
+                    <img src="img/lemonade-icon2.png" class=" btn-nav2" ng-click="setMainOrSub(VideosInformations[1].id)" ng-class="{'active':deputyVideo===VideosInformations[1].id}">
+                </div>
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div style="width:300px;">
+            	<!-- <section id="player-footer1" class="player-footer">
+		        </section> -->
+		        <div class="player-wrapper" id="back-info2"
+	            	style="width: 300px;height: 180px;display: block;text-align: center;position: relative;margin-top: 6.5%;background: black;">
+				    <div style="margin-top:10%;">
+				    	<i class="zkicon-fontsize-100 icon-ccamera" 
+					    style="position: relative;font-size: 88px;top: 8px;left: 0%;color: gray;"></i>  
+					    <h4>信号故障</h4>
+				    </div>
+				</div>
+		        <div id="flashContent2" class="player-wrapper">
+		            <p>
+		                To view this page ensure that Adobe Flash Player version 
+		                0.0.0 or greater is installed. 
+		            </p>
+		           
+		        </div>
+	        
+		        <!-- <noscript>
+		            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="300" height="180" id="lone_rtmp_player2">
+		                <param name="movie" value="lone_rtmp_player.swf" />
+		                <param name="quality" value="high" />
+		                <param name="bgcolor" value="#ffffff" />
+		                <param name="allowScriptAccess" value="sameDomain" />
+		                <param name="allowFullScreen" value="true" />
+		                [if !IE]>
+		                <object type="application/x-shockwave-flash" data="lone_rtmp_player.swf" width="300" height="180">
+		                    <param name="quality" value="high" />
+		                    <param name="bgcolor" value="#ffffff" />
+		                    <param name="allowScriptAccess" value="sameDomain" />
+		                    <param name="allowFullScreen" value="true" />
+		                    <p> 
+		                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+		                        0.0.0 or greater is not installed.
+		                    </p>
+		
+		                    <a href="http://www.adobe.com/go/getflashplayer">
+		                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+		                    </a>
+		
+		                </object>
+		
+		            </object>
+		        </noscript> --> 
+            </div>
+            <!-- <div style="width:300px;margin-top:60px;">
+                <div class="heig2">
+                    <div class=" btn-nav2" ng-class="{'active':livingCardPara==='card1'}">
+                        <img src="img/lemonade-icon3.png"
+							ng-click="dealLivingPara('card1')" >
+                    </div>
+                    <div class="pull-right btn-nav2">
+                        <img src="img/lemonade-icon4.png">
+                    </div>
+                </div>
+            </div> -->
+</div>
+<script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "0.0.0";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#000000";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            var attributes = {};
+            attributes.id = "lone_rtmp_player2";
+            attributes.name = "lone_rtmp_player2";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "lone_rtmp_player.swf", "flashContent2", 
+                "300", "180", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent3 div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent2", "display:block;text-align:left;");
+        </script>

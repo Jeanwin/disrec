@@ -1,0 +1,22 @@
+<div class="modal-header ng-scope">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </button>
+    <h3 class="modal-title">取消发布</h3>
+</div>
+<div class="modal-body ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-body" style="overflow: auto;height: 320px">
+        <div>确认取消发布{{selectedItems.length}}个资源信息吗！</div>
+        <table class="table" style="background-color: #d4ffea">
+            <tr ng-repeat="item in selectedItems">
+                <td>{{item.resourcename}}</td>
+            </tr>
+        </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <button class="btn btn-danger" ng-click="ok()">确认取消</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

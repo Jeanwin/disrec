@@ -1,0 +1,57 @@
+[
+    {
+    "currency": "01",
+    "rePaid": -250000,
+    "claimNo": "4172844012012010041",
+    "fxoEvent": "123",
+    "fhxComshareList": "123",
+    "fhxLayerList": "123",
+    "fhxLayerVoList": "123",
+    "fxoPayList": "123",
+    "exChangeRate": 1.203297,
+    "fhxLayerViewVoList": [
+        {
+            "treatyNo": "OPS20140001",
+            "treatyName": "险位超赔合同",
+            "tempTreatyNo": "123",
+            "layerNo": 1,
+            "currency": "123",
+            "egnpi": "123",
+            "gnpi": "123",
+            "rate": "123",
+            "mdp": "123",
+            "layerPremium": "123",
+            "rwp": "123",
+            "annd": 2500,
+            "thisAnnd" : 1100,
+            "usedd": 100000,
+            "excessLoss": 1000000,
+            "layerQuota": 1000000,
+            "layerType": "X",
+            "sectionNo": "A"
+        },
+        {
+            "treatyNo": "OPS20140002",
+            "treatyName": "险位超赔合同",
+            "tempTreatyNo": "123",
+            "layerNo": 1,
+            "currency": "123",
+            "egnpi": "123",
+            "gnpi": "123",
+            "rate": "123",
+            "mdp": "123",
+            "layerPremium": "123",
+            "rwp": "123",
+            "annd": 2500,
+            "thisAnnd" : 2100,
+            "usedd": 100000,
+            "excessLoss": 1000000,
+            "layerQuota": 1000000,
+            "layerType": "X",
+            "sectionNo": "A"
+        }
+    ],
+    "exRateMap": {},
+    "fhxTreatyQueryVOList": "123"
+}
+]

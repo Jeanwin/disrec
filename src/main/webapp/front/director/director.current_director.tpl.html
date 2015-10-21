@@ -1,0 +1,70 @@
+<style>
+    .modal-content {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #999;
+        border: 1px solid rgba(0, 0, 0, .2);
+        border-radius: 6px;
+        box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        background-clip: padding-box;
+        outline: 0;
+        width: 500px;
+        margin: 0 auto;
+    }
+    .modal{
+		overflow: hidden;
+		overflow-y: hidden;
+		right:inherit;
+		top:15%;
+		left:20%;
+	}
+	
+	@media screen and (max-width: 1024px){    
+	
+		.modal {
+			left: 0;
+		}
+	}
+}
+</style>
+
+<div style="width: 96%;height:100%;min-height: 200px;margin: 0 auto;margin-top: 5px;margin-bottom: 22px;">
+    <div style="padding: 20px;color: #71ADD1;font-family: '黑体';font-weight: bold;">
+        <h4 style="color:black;">申请导播权限</h4>
+    </div>
+    <div style="font-size: 17px;color: #777476;font-family: '黑体';" ng-if="!statusFlag">
+        <div style="margin-top: 9px;margin-left: 71px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;{{currentDirectorPeople}}正在导播，请等待回复，
+            <!-- <span style="color: red;" ng-if="!resetDirector">{{intervalFlagValue}}s</span>
+            <span style="color: red;" ng-if="resetDirector">{{intervalFlagValue2}}s</span> -->
+            <span style="color: red;" >{{intervalFlagValue}}</span>
+            <span style="color: red;" >{{intervalFlagValue2}}</span>
+            s无应答自动获取权限。
+            <!--等待时间为<span style="color: blue;">20s</span>。-->
+            
+        </div>
+        <div class="pull-right" style="margin-top: 45px;">
+            <a href="" class="btn btn-default"
+               style="color: #fff;width: 170px;margin-top: -10px;color: #8C8989;margin-left: 53px;margin-bottom: 5px;"
+               ng-click="closeWindow();">放弃申请</a>
+        </div>
+    </div>
+
+    <div style="font-size: 17px;color: #777476;font-family: '黑体';" ng-if="statusFlag">
+        <div class="getReqConfirm">
+            <div style="margin-top: 9px;margin-left: 71px;">
+                {{currentDirectorPeople}}拒绝了您的申请。
+            </div>
+
+            <div style="margin-top: 45px;" >
+                <a href="" class="btn btn-primary"
+                   style="color: #fff;background-color: #0073AE;border-color: #0073AE;width: 170px;margin-top: -10px;margin-left: 28px;margin-bottom: 5px;"
+                   ng-click="resetConsole();">重新申请</a>
+                <a href="" class="btn btn-default"
+                   style="color: #fff;width: 170px;margin-top: -10px;color: #8C8989;margin-left: 53px;margin-bottom: 5px;"
+                    ng-click="closeWindow();" >放弃申请</a>
+
+            </div>
+        </div>
+    </div>
+</div>

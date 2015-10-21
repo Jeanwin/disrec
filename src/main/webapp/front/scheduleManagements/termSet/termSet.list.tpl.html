@@ -1,0 +1,141 @@
+<!--区域-->
+<div class="container-fluid" style="position:absolute;width:100%;margin-top:-56px;z-index:1011;">
+    <div class="row" style="background-color:#e3e3e3;padding-top:10px;margin-top:0;">
+        <div class="row" style="padding-bottom: 10px">
+                <div class="col-xs-2" style="font-size: 23px;margin-left: 8px">
+                    学期设置
+                </div>
+                <div class="col-xs-8"></div>
+                <div class="col-xs-2 pull-right">
+                    <a class="close margin-right-20"  ng-href="#/scheduleManagements/edit"
+                       tooltip-placement="top" tooltip-popup-delay="300" tooltip="返回">
+                        <span class="glyphicon glyphicon-share-alt"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="whiteframe" >
+                <div class="padding-8 row" style="margin-left:8px">
+                    <button  class="btn btn-primary" ng-click="addTermModal()"><span class="glyphicon glyphicon-plus"></span>添加新学期</button>
+                </div>
+            </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body padding-0" style="min-height:482px">
+                <table class="table table-striped" style="text-align: center">
+                    <thead style="background-color: #ceecff;font-weight:bold">
+                        <td>学期</td>
+                        <td>开始日期</td>
+                        <td>周数</td>
+                        <td>操作</td>
+                    </thead>
+                    <tr ng-repeat="termset in termsets" style="text-align: center;">
+                        <td><span ng-if="termset.iscurrent==='1'" class="glyphicon glyphicon-ok" style="color: red"></span>{{termset.termname}}</td>
+                        <td>{{termset.startday}}</td>
+                        <td>{{termset.weeks}}</td>
+                        <td>
+                            <button class="btn btn-link" ng-click="editTermModal(termset)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button class="btn btn-link" ng-click="currentSemester(termset)"
+                                    tooltip-placement="top" tooltip-popup-delay="1000" tooltip="设为当前学期">
+                                <span class="glyphicon glyphicon-pushpin"></span>
+                                </button>
+                        </td>
+                    </tr>
+                </table>
+                <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 100px">
+                    <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+                </div>-->
+                <button ng-if="pagination.totalItems === 0" class="ondata">
+                    <span class="ondatatext">找不到您搜索的信息！</span>
+                </button>
+            </div>
+            <div class="panel-footer">
+                <div ng-if="pagination.totalItems > 0" class="row">
+
+                    <div class="col-xs-3" style="padding-top:8px;">
+                        <span>共找到{{pagination.totalItems}}条数据，</span>
+                            <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                    </div>
+
+                    <div class="col-xs-9" ng-show="pagination.totalItems > pagination.pageSize">
+                        <div class="col-xs-9">
+                            <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                        page="pagination.pageIndex"
+                                        items-per-page="pagination.pageSize"
+                                        max-size="pagination.maxSize"
+                                        previous-text="{{pagination.previousText}}"
+                                        next-text="{{pagination.nextText}}"
+                                        first-text="{{pagination.firstText}}"
+                                        last-text="{{pagination.lastText}}"
+                                        class="pagination-small"
+                                        boundary-links="true"
+                                        on-select-page="onSelectPage(page)">
+                            </pagination>
+                        </div>
+                        <div class="col-xs-3" style="padding-top:8px;">
+                            <div class="input-group input-group-sm" style="width: 100px"
+                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+<!--            <div class="panel-footer">
+                <div ng-if="pagination.totalItems !== 0">
+                    <span>共{{pagination.totalItems}}条数据</span>
+                    每页显示
+                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                    条
+                    <div style="float: right;margin-top: -32px" ng-show="termsets.length >= pagination.pageSize">
+                        <pagination
+                                class="pagination-sm pull-right"
+                                total-items="pagination.totalItems"
+                                    page="pagination.pageIndex"
+                                    items-per-page="pagination.pageSize"
+                                    max-size="pagination.maxSize"
+                                    previous-text="{{pagination.previousText}}"
+                                    next-text="{{pagination.nextText}}"
+                                    first-text="{{pagination.firstText}}"
+                                    last-text="{{pagination.lastText}}"
+                                    class="pagination-small"
+                                    boundary-links="true"
+                                    on-select-page="onSelectPage(page)">
+                        </pagination>
+                        <form style="margin-top: 20px;" class="pull-right form-inline">
+                            跳到<input style="width: 120px" class="form-control" type="number" ng-model="pageIndex" min="1" max="{{pagesize}}"/>页
+                            <a class="btn btn-default" ng-click="onSelectPage(pageIndex)">Go</a>
+                        </form>
+                    </div>
+                </div>
+            </div>-->
+
+
+
+
+
+        </div>
+    </div>
+</div>

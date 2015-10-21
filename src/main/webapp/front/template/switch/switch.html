@@ -1,0 +1,12 @@
+<div>
+    <div class='has-switch'>
+        <div ng-class="{'switch-on': status, 'switch-off': !status}" class="switch-animate">
+            <span class="switch-left">开</span>
+            <label>&nbsp;</label>
+            <span class="switch-right">关</span>
+            <input type="checkbox" class="switch" ng-bind="status">
+        </div>
+    </div>
+    <div ng-transclude></div>
+</div>
+

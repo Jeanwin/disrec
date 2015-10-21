@@ -1,0 +1,96 @@
+body{background:rgb(247, 247, 247);}
+.logo{padding:10px;width:85px;}
+.navbar-customer{
+	padding-top:0;
+	height: 44px;
+	min-height:43px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+/*.logo img{
+width: 70%;
+}*/
+.iphone-img{height: 170px;}
+#homepage{
+	margin-top: 0;
+}
+.deleteContent{
+	position: absolute;
+	right: 5px;
+	z-index: 4;
+	top: 6px;
+}
+.deleteContent{
+}
+.iphone-mouse-length{width: 800px;}
+/*#homepagecontentLive{
+	width: 800px;
+}*/
+.hot-video{float: left;margin-right: 10px;position: relative;}
+.iphone-news{
+	line-height: 20px;
+	padding-top: 3px;
+	font-size: 12px;
+}
+.iphone-show .nav-tabs{
+	margin-bottom: 15px;
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+}
+.iphone-show .nav-tabs>li{
+	float: left;
+	margin-bottom: -1px;
+	background: #fff;
+	font-size: 14px;
+	margin: 0;
+}
+.iphone-show li.active{
+	border-bottom: 2px solid #2474b3;
+}
+.iphone-show .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+	border:none;
+	color: #000
+}
+.fixed-bottom{
+	position: fixed;
+	bottom: 0;
+	background-color: #000;
+	opacity: 0.7;
+}
+.iphone-resourse{border-bottom: 1px solid #ccc; padding-top: 5px; padding-bottom: 5px;}
+.resourse-time{font-size: 12px;color:#8B8787;}
+.resourse-type{font-size: 45px;}
+.coursename{font-size: 12px;}
+.course-otherinfo{font-size: 12px;}
+.iphone-show{display: block;}
+.iphone-hide{display: none}
+.iphone-operation{
+	color: #7C7979;
+	background-color: rgb(231, 227, 227);
+	margin-top: -44px;
+	z-index: 9;
+	height: 43px;
+	padding-top:8px;
+}
+.bottom-operation{
+	padding-top: 10px;
+	color: #fff;
+	padding-bottom:10px;
+}
+.fix-top{position: fixed;}
+.bottom-operation .icon-delete{
+	font-size: 19px;
+	margin-right: 70px;
+}
+.resourse-title{line-height: 29px;float:left;}
+.iphone-operation .icon-chevron-left,.iphone-operation .icon-expand-more{font-size: 28px;}
+.iphone-operation .icon-delete,.iphone-operation .icon-folder{font-size: 20px;}
+.searchContent{
+	background-color: #fff;
+	font-size: 1px;
+	margin-right: -10px;
+}
+.searchContent ul{
+	padding-left: 10px;
+	list-style: none;
+}

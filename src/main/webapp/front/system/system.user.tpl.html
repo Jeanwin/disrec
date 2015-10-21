@@ -1,0 +1,285 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top:16px">
+        <div class="col-xs-2">
+            <div class="whiteframe">
+                <div>
+                    <div class="system-left-top font-overlay-1" title="{{areaTree[0].title}}" ng-if="!UnitArea.title">
+						<!-- <i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i> -->
+                    	<span>{{areaTree[0].title}}</span>
+                    </div>
+                    <div class="system-left-top font-overlay-1" title="{{UnitArea.title}}" ng-if="UnitArea.title">
+                    	<!-- <i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i> -->
+                    	<span>{{UnitArea.title}}</span>
+                    </div>
+                </div>
+                <div>
+                    <div ui-tree id="tree-root" data-drag-enabled="false">
+                        <ol ui-tree-nodes ng-model="areaTree">
+                            <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10">
+            <div class="whiteframe" style="margin-left:-16px">
+                <div class="padding-8 row">
+                    <div class="col-xs-5">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-fristprimary" ng-click="adduser(UnitArea)">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                添加用户
+                            </button>
+                            <button type="button" class="btn btn-default btn-fristprimary" ng-click="openImportUserModal(UnitArea)">
+                                <span class="glyphicon glyphicon-import"></span>
+                                导入用户
+                            </button>
+                            <button ng-disabled="selectedCount===0" class="btn btn-default" ng-click="delusers()">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch">
+                              <input type="text" class="form-control" placeholder="请输入用户ID或名称" ng-model="user.param">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="systemusers('1')"><span class="glyphicon glyphicon-search"></span></button>
+                              </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="pull-right">
+                            <button ng-show="hideAdvancedSearch" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                            <button ng-show="!hideAdvancedSearch" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div collapse="hideAdvancedSearch" class="advSearchPanel">
+
+                    <form class="form-inline" role="form">
+
+                        <div class="form-group">
+                            <label class="form-label" for="username">用户姓名</label>
+                            <input id="username" class="form-control" placeholder="用户姓名" ng-model="user.name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="userEmail">电子邮件</label>
+                            <input id="userEmail" class="form-control" placeholder="电子邮件" ng-model="user.email">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="user1" style="width:88px;">&nbsp;&nbsp;&nbsp;用户ID</label>
+                            <input id="user1" class="form-control" placeholder="用户ID" ng-model="user.loginname">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="userphone" style="width:88px;">电话</label>
+                            <input id="userphone" class="form-control" placeholder="电话" ng-model="user.phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="sex" style="width:88px;">&nbsp;&nbsp;&nbsp;性别</label>
+                            <select id="sex" ng-model="user.sex"class="form-control"
+                                    ng-options="sex.value as sex.name for sex in sexList">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="usertype" style="width:88px;">&nbsp;&nbsp;&nbsp;&nbsp;身份</label>
+                            <select id="usertype" ng-model="user.usertype" ng-options="classify.value as classify.name for classify in classfiyList"
+                                    class="form-control">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="width:88px;" for="status">&nbsp;&nbsp;&nbsp;状态</label>
+                            <select id="status" ng-model="user.status" ng-options="status.value as status.name for status in statusList"
+                                    class="form-control">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group pull-right" >
+                            <button class="btn btn-primary pull-right" ng-click="systemusers('1')">
+                                <span class="glyphicon glyphicon-search"></span>
+                                查询</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body padding-0" id="rightContent-height">
+                        <table class="table table-striped" style="text-align: center;word-break:break-all;">
+                        <thead class="formthead" style="background-color: #ceecff;font-weight:bold">
+                            <td style="WORD-WRAP: break-word" width="30">
+                                <input type="checkbox" ng-model="checkAll" ng-click="checkAllFacilitys()">
+                            </td>
+                            <td style="WORD-WRAP: break-word" width="120">
+                            	<span>用户ID</span>
+                            	<span>
+                                    <a href ng-show="sort.loginname == 'asc'" ng-click="orderby('loginname')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.loginname == 'desc'" ng-click="orderby('loginname')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="WORD-WRAP: break-word" width="120">
+                            	<span>用户姓名</span>
+                            	<span>
+                                    <a href ng-show="sort.name == 'asc'" ng-click="orderby('name')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.name == 'desc'" ng-click="orderby('name')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="WORD-WRAP: break-word" width="80">性别</td>
+                            <td style="WORD-WRAP: break-word" width="156">
+                            	<span>隶属机构</span>
+                            	<span>
+                            	
+                                    <a href ng-show="sort.deptid == 'asc'" ng-click="orderby('deptid')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.deptid == 'desc'" ng-click="orderby('deptid')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="WORD-WRAP: break-word" width="156">邮箱</td>
+                            <td style="WORD-WRAP: break-word" width="80">状态</td>
+                            <td style="WORD-WRAP: break-word" width="156">
+                            	<span>分类</span>
+                            	<span>
+                            	
+                                    <a href ng-show="sort.user_type == 'asc'" ng-click="orderby('user_type')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.user_type == 'desc'" ng-click="orderby('user_type')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                            </td>
+                            <td style="WORD-WRAP: break-word;white-space:nowrap;" width="120" >
+                                <span>入学年份</span>
+                            </td>
+                            <td style="WORD-WRAP: break-word" width="120">操作</td>
+                        </thead>
+                        <tr ng-repeat="user in userList">
+                            <td>
+                                <input type="checkbox" ng-model="user.checked" ng-change="oneCheck()">
+                            </td>
+                            <td>{{user.loginname}}</td>
+                            <td>{{user.name}}</td>
+                            <td>
+                                {{initSex(user.sex)}}
+                            </td>
+                            <td>{{user.deptName}}</td>
+                            <td>{{user.email}}</td>
+                            <td>
+                                {{initStatus(user.status)}}
+                            </td>
+                            <td>
+                                {{initClassfiy(user.usertype)}}
+                            </td>
+                            <td>{{user.schoolyear}}</td>
+                            <td style="white-space:nowrap;">
+                                <button ng-click="edituser(user)" class="btn-link" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+
+                                <button ng-click="deluser(user)" class="btn-link" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                        <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+                    </div>-->
+                    <button ng-if="pagination.totalItems === 0" class="ondata">
+                        <span class="ondatatext">找不到您搜索的信息！</span>
+                    </button>
+                    </div>
+                    <div class="panel-footer" style="padding-top:0;padding-bottom:4px;">
+                        <!-- <div ng-if="pagination.totalItems !== 0" class="row"> -->
+                        <div class="row">
+                            <div class="col-xs-3 padding-right-none"  style="padding-top:8px;">
+                                <span>共{{pagination.totalItems}}条数据，</span>
+                                每页
+                                <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
+                                条
+                            </div>
+                            <div class="col-xs-9 padding-left-right-none" ng-show="pagination.totalItems >= pagination.pageSize">
+                                <!-- 分页  -->
+                                <div class="col-xs-10 padding-left-right-none">
+                                    <pagination
+                                            class="pagination-sm pull-right"
+                                            total-items="pagination.totalItems"
+                                            page="pagination.pageIndex"
+                                            items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize"
+                                            previous-text="{{pagination.previousText}}"
+                                            next-text="{{pagination.nextText}}"
+                                            first-text="{{pagination.firstText}}"
+                                            last-text="{{pagination.lastText}}"
+                                            class="pagination-small"
+                                            boundary-links="true"
+                                            on-select-page="onSelectPage(page)">
+                                    </pagination>
+                                </div>
+                                <div class="col-xs-2 "  style="padding-top:8px;">
+                                    <div class="input-group input-group-sm" style="width: 88px"
+                                         tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                                    Go
+                                                </button>
+                                            </span>
+                                    </div><!-- /input-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span ng-click="setActiveArea(node)" class="tree-node" ng-class="{'tree-node-active':node.id===UnitArea.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+

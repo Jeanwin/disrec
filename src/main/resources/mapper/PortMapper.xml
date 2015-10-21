@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.PortMapper">
+
+    <!-- 根据服务id查询端口 -->
+	<select id="getByServerId" parameterType="String" resultType="com.zonekey.disrec.entity.Port">
+		select id, name, port from zonekey_port where deleteflag ='0' and serverid = #{serverid}
+	</select>
+   
+	<!-- 添加端口 -->
+	<insert id="insert" parameterType="com.zonekey.disrec.entity.Port">
+	     insert into zonekey_port(id,name,port,serverid,createdate,createuser) 
+	         values(#{id},#{name},#{port},#{serverid},sysDate(),#{createuser})  
+	</insert>
+	
+	<!-- 修改端口 -->
+	<update id="update" parameterType="com.zonekey.disrec.entity.Port">
+	     update zonekey_port set name = #{name}, port = #{port}, modifydate = sysDate(),modifyuser = #{modifyuser} where id = #{id}
+	</update>
+	
+	<!-- 根据服务id查询端口号，并过滤当前修改的端口号记录 -->
+	<select id="getByServerIdRest" parameterType="com.zonekey.disrec.entity.Port" resultType="com.zonekey.disrec.entity.Port">
+		select id, name, port from zonekey_port where deleteflag ='0' and serverid = #{serverid} and id != #{id}
+	</select>
+	
+	<!-- 删除端口 -->
+	<delete id="del" parameterType="com.zonekey.disrec.entity.Port">
+	     delete from zonekey_port where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,124 @@
+<style type="text/css">
+	.modal-dialog {
+		width: 1000px;
+	}
+</style>
+<div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3 ng-if="opera === 'edit'">编辑评审表</h3>
+            <h3 ng-if="opera !== 'edit'">新建评审表</h3>
+        </span>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" name="evaluationNewForm">
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">名称：</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" placeholder="" ng-model="classEvadata.name" required>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">描述：</label>
+		    <div class="col-sm-8">
+		      <textarea class="form-control" ng-model="classEvadata.description"></textarea>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">打分方式：</label>
+		    <div class="col-sm-3">
+		      <select class="form-control" ng-model="classEvadata.markType">
+		      	<option value="1">5分制</option>
+		      	<option value="2">分值</option>
+		      </select>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="col-sm-2 control-label">评审指标：</label>
+		    <div class="col-sm-10 col-xs-offset-2" style="border-top:1px #ccc dashed;margin-top:10px;max-height: 300px;overflow-x: hidden;">
+		    	<!-- <table style="width:100%;">
+		    		<thead style="color: #fac77a;background: none;border-bottom: 1px solid;line-height: 45px;">
+		    			<tr>
+		    				<td style="width:70px;">排序</td>
+		    				<td style="text-align:center;">指标名称</td>
+		    				<td style="width:60px;text-align:center;"></td>
+		    				<td style="width:70px;">分值</td>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<tr style="border-bottom: 1px solid #ccc;line-height: 55px;">
+		    				<td><input type="text" value="1" class="form-control orange-border-color" style="width:50px;background:none;"/></td>
+		    				<td><input type="text" class="form-control" placeholder="请填写指标内容，限制字数为50"/></td>
+		    				
+		    				<td style="width:30px;text-align:center;"><i class="icon-delete orange-color"></i></td>
+		    				<td><input type="text" value="5" class="form-control border-none" style="width:50px;"/></td>
+		    			</tr>
+		    			<tr style="border-bottom: 1px solid #ccc;line-height: 55px;">
+		    				<td><input type="text" value="1" class="form-control" style="width:50px;"/></td>
+		    				<td>
+		    					<i class="icon-nexttip"></i>
+		    					<input type="text" class="form-control" placeholder="请填写指标内容，限制字数为50" style="display: inline-block;width: 89%;"/>
+		    					<button class="btn btn-primary btn-xs btn-stroke"> 
+		    					<span class="glyphicon glyphicon-plus"></span> 
+		    					</button>
+		    				</td>
+		    				
+		    				<td style="width:30px;text-align:center;"><i class="icon-delete orange-color"></i></td>
+		    				<td><input type="text" value="5" class="form-control" style="width:50px;"/></td>
+		    			</tr>
+		    			<tr style="border-bottom: 1px solid #ccc;line-height: 55px;">
+		    				<td colspan="4" class="orange-color">
+		    					<i class="icon-nexttip"></i><i class="icon-add"></i>增加新字段
+		    				</td>
+		    			</tr>		    			
+		    		</tbody>
+		    	</table> -->
+		    	<ul style="list-style:none;padding-left:0">
+		    		<li class="col-xs-12" style="color: #fac77a;border-bottom: 1px solid orange;padding-bottom: 10px;padding-top: 10px;">
+		    			<ul style="list-style:none">
+		    				<li class="col-xs-1">排序</li>
+		    				<li class="col-xs-9">指标名称</li>
+		    				<li class="col-xs-1"></li>
+		    				<li class="col-xs-1">分值</li>
+		    			</ul>
+		    		</li>
+		    		<li class="col-xs-12 padding-left-right-none" ng-repeat="child in classEvadata.childList" style="border-bottom: 1px solid rgb(204, 204, 204);">
+		    			<ul class="col-xs-12" style="list-style:none;padding-left:0">
+		    				<li class="col-xs-1 padding-top-10 padding-bottom-10"><input type="text" value="1" class="form-control orange-border-color" style="width:50px;background:none;" ng-model="child.sort"/></li>
+		    				<li class="col-xs-9 padding-top-10 padding-bottom-10"><input type="text" class="form-control" placeholder="请填写指标内容，限制字数为50" ng-model="child.childKey"/></li>
+		    				<li class="col-xs-1 padding-top-10 padding-bottom-10"><i class="icon-delete orange-color" ng-click="deleteList('1',$index,child.parentId)"></i></li>
+		    				<li class="col-xs-1 padding-top-10 padding-bottom-10"><input type="text" value="5" class="form-control border-none" style="width:50px;" ng-model="child.childValue"/></li>
+		    				<li class="col-xs-12 padding-left-none padding-right-none padding-top-10 padding-bottom-10" ng-repeat="c in child.childList" style="border-top: 1px solid rgb(204, 204, 204);">
+			    				<ul class="col-xs-12 padding-right-none" style="list-style:none;padding-left:0">
+			    					<li class="col-xs-1">
+			    						<input type="text" value="1" class="form-control orange-border-color" style="width:50px;" ng-model="c.sort"/>
+			    					</li>
+				    				<li class="col-xs-9">
+				    					<i class="icon-nexttip"></i>
+				    					<input type="text" class="form-control" placeholder="请填写指标内容，限制字数为50" style="display: inline-block;width: 88%;" ng-model="c.childKey"/>
+				    					<button class="btn btn-primary btn-xs btn-stroke" ng-click="addnewList('2',c.parentId)"> 
+				    						<span class="glyphicon glyphicon-plus"></span> 
+				    					</button>				    					
+				    				</li>
+				    				<li class="col-xs-1"><i class="icon-delete orange-color" ng-click="deleteList('2',$index,c.parentId)"></i></li>
+				    				<li class="col-xs-1"><input type="text" value="5" class="form-control" style="width:50px;" ng-model="c.childValue"/></li>
+			    				</ul>
+		    				</li>
+		    			</ul>
+		    		</li>
+		    		<li class="orange-color col-xs-12" style="border-bottom: 1px solid rgb(204, 204, 204);padding-top:15px;padding-bottom:15px;" ng-click="addnewList('1','')">
+		    			<i class="icon-nexttip"></i><i class="icon-add"></i>增加新字段
+		    		</li>
+		    	</ul>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-4 col-sm-offset-5">
+		      <button class="btn btn-primary" ng-click="save()" ng-disabled="evaluationNewForm.$pristine || evaluationNewForm.$invalid" disabled="disabled">保存</button>
+		      <button class="btn btn-default" ng-click="cancel()">返回</button>
+		    </div>
+		</div>
+	</form>
+</div>

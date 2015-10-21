@@ -1,0 +1,59 @@
+<div class="modal-header ng-scope">
+    <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </a>
+    <h3>编辑管理员</h3>
+</div>
+<div class="modal-body ng-scope">
+    <form name="frmImpowerEditor" novalidate class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="name">管理员</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="name" placeholder="管理员" size="30" type="text" ng-model="impower.name"
+                        placeholder="管理员" typeahead-loading="loading..."
+                        typeahead="impower.loginname +'-'+  impower.name for impower in searchImpowers($viewValue)"
+                        typeahead-wait-ms="500"
+                        typeahead-on-select="searchImpowerName(impower.name)"
+                        required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">角色</label>
+            <div class="col-sm-10">
+                <span class="padding-8" ng-repeat="sysrole in sysroleList">
+                    <label>
+                        <input type="checkbox" ng-model="sysrole.checkbox">{{sysrole.roleName}}
+                    </label>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">教室范围</label>
+            <div class="col-sm-10">
+                <span class="padding-8" ng-repeat="classroom in classroomList">
+                    <label>
+                        <input type="checkbox" ng-model="classroom.checkbox">{{classroom.name}}
+                    </label>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">机构范围</label>
+            <div class="col-sm-10">
+                <span class="padding-8" ng-repeat="institution in institutionList">
+                    <label>
+                        <input type="checkbox" ng-model="institution.checkbox">{{institution.name}}
+                    </label>
+                </span>
+            </div>
+        </div>
+     </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="frmImpowerEditor.$pristine || frmImpowerEditor.$invalid" ng-click="editImpowersOk(impower.name)">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

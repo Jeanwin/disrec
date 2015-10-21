@@ -1,0 +1,133 @@
+<div class="container-fluid">
+<div class="whiteframe" style="margin-left:-16px">
+<div class="panel panel-default">
+<div class="panel-heading">
+    <span>RTMP方案</span>
+    <select ng-model="rtmpscheam" ng-change="RtmpscheamChange(rtmpscheam)"
+            ng-options="rtmpscheam.value as rtmpscheam.name for rtmpscheam in rtmpscheamok">
+
+    </select>  
+    <span style="color:red">功能还未实现</span>  
+</div>
+<div class="panel-body padding-0" style="overflow-x: auto">
+<table class="table table-striped" style="text-align:center ; overflow: auto">
+<thead>
+<tr>
+    <td>参数</td>
+    <td>电影</td>
+</tr>
+</thead>
+<tr>
+    <td>
+        视频编码类型：
+    </td>
+    <td>
+        <select ng-model="schem.videoCodeType" class="tacitwidth"
+                ng-options="videoCodeType.value as videoCodeType.name for videoCodeType in videoCodeTypeok">
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>
+        音频编码类型：
+    </td>
+    <td>
+        <select ng-model="schem.auditCodeType" class="tacitwidth"
+                ng-options="auditCodeType.value as auditCodeType.name for auditCodeType in auditCodeTypeok">
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>
+        BFrame：
+    </td>
+    <td>
+        <input ng-model="schem.bFrame" class="tacitwidth">
+    </td>
+</tr>
+<tr>
+    <td>
+        RecordProfile：
+    </td>
+    <td>
+        <select ng-model="schem.recordProfile" class="tacitwidth"
+                ng-options="recordProfile.value as recordProfile.name for recordProfile in recordProfileok">
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>
+        RecordLevel：
+    </td>
+    <td>
+        <select ng-model="schem.recordLevel" class="tacitwidth"
+                ng-options="recordLevel.value as recordLevel.name for recordLevel in recordLevelok">
+        </select>
+    </td>
+</tr>
+    <tr>
+        <td>
+            RecordEntropy：
+        </td>
+        <td>
+            <select ng-model="schem.recordEntropy" class="tacitwidth"
+                    ng-options="recordEntropy.value as recordEntropy.name for recordEntropy in recordEntropyok">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            RecordComplexity：
+        </td>
+        <td>
+            <select ng-model="schem.recordComplexity" class="tacitwidth"
+                    ng-options="recordComplexity.value as recordComplexity.name for recordComplexity in recordComplexityok">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            GOP：(1-100)
+        </td>
+        <td>
+            <input ng-model="schem.gop" class="tacitwidth">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            码率：
+        </td>
+        <td>
+            <select ng-model="schem.bitrate" class="tacitwidth"
+                    ng-options="bitrate.value as bitrate.name for bitrate in bitrateok">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            帧率：（1-60）
+        </td>
+        <td>
+            <input ng-model="schem.framerate" class="tacitwidth">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            分辨率：
+        </td>
+        <td>
+            <select ng-model="schem.movieResoluation" class="tacitwidth"
+                    ng-options="movieResoluation.value as movieResoluation.name for movieResoluation in movieResoluationok">
+            </select>
+        </td>
+    </tr>
+</table>
+</div>
+<div class="panel-footer" style="text-align: center">
+    <button class="btn btn-primary" ng-click="SaveRtmpSchem()">保存</button>
+    <button class="btn btn-default" type="reset" ng-click="">重置</button>
+    <button class="btn btn-default" ng-click="openRtmpSolutionModel(rtmpscheam)">方案应用到</button>
+</div>
+</div>
+</div>
+</div>

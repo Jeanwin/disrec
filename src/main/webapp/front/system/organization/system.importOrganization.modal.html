@@ -1,0 +1,120 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:160px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div ng-if="!error" class="modal-title">
+            <h3>导入机构</h3>
+        </div>
+        <div ng-if="error" class="modal-title">
+            <h3>导入结果</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+
+        <form ng-if="!error" name="frmAreaEditor" class="form-horizontal" form-validator="" novalidate role="form">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">导入位置</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input id="inputIcon" type="text" class="span2 form-control" placeholder="导入位置"
+                               ng-model="organizationPlace" readonly ng-click="organizationToggle()" required>
+                        <span class="input-group-addon" ng-click="organizationToggle()">
+                            <i class="glyphicon glyphicon-list"></i>
+                        </span>
+                        <!--<span  class="glyphicon glyphicon-search right"></span>-->
+                        <!--<span class="add-on"><i class="glyphicon glyphicon-search"></i></span>-->
+                    </div>
+                    <div collapse="hideTree">
+                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                            <ol ui-tree-nodes ng-model="areaTree">
+                                <li ng-repeat="node in areaTree" ui-tree-node ng-include="'bnodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="drop-box" ng-file-drop="onFileSelect($files)"
+                     ng-file-drag-over-class="optional-css-class-name-or-function">
+
+                    <div ng-if="!file" style="padding:32px">
+                        请拖拽课表模板文件到这里<br>
+                        <a href='system/groupTemplate.zip'>下载机构模板</a>
+                    </div>
+
+                    <div class="alert alert-danger" ng-if="error" type="error">上传失败</div>
+
+                    <div ng-if="file" style="padding:32px">
+                        <img src="assets/img/icons/icon-excel.png">
+                        <span class="progress" ng-show="progress > 0">
+                            <div style="width:{{progress}}%">{{progress}}%</div>
+                        </span>
+                        {{file.name}} ({{file.size}}KB)
+                    </div>
+                </div>
+                <div>
+                    <div class="js-fileapi-wrapper upload-btn">
+                        <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" accept="application/vnd.ms-excel" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div ng-if="error">
+            <h4>部分数据存在问题，未完成导入，可能原因为：</h4>
+            <ul>
+                <li>1、数据填写不符合要求。</li>
+                <li>2、数据重复</li>
+                <li>3、其它原因</li>
+            </ul>
+            <span>请导出问题数据，修改后再重新导入</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-if="!error" class="btn btn-primary"
+                ng-disabled="frmAreaEditor.$pristine || frmAreaEditor.$invalid || !file"
+                ng-click="Import()">导入
+        </button>
+        <!-- <button class="btn btn-primary" ng-if="error" data-ng-disabled="!file" ng-click="ExportData()">导出数据</button> -->
+        <a class="btn btn-primary" ng-if="error" data-ng-disabled="!file" href="../deptView/exportdept?excelbatch={{ErrorNum}}">导出数据</a>
+        <!-- <button class="btn btn-primary" ng-if="error" data-ng-disabled="!file" ng-click="Import()">重试</button> -->
+        <button class="btn btn-default" ng-click="cancel()">关闭</button>
+    </div>
+</div>
+
+<script type="text/ng-template" id="bnodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>
+        <span ng-click="setActiveAreaTreeNode(node)">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'bnodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>

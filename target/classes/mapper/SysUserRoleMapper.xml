@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.SysUserRoleMapper" >
+     <!-- 添加用户时，同时添加默认角色 -->
+     <insert id="insert" parameterType="com.zonekey.disrec.entity.SysUserRole">
+           insert into user_role(id,userid,roleid,createtime,createuser,deleteflag) values(#{id},#{userid},#{roleid},now(),#{createuser},0);
+     </insert>
+     <!-- 编辑用户时，更新用户角色 -->
+     <update id="update" parameterType="com.zonekey.disrec.entity.SysUserRole">
+           update user_role 
+           <set>
+               <if test="roleid != null">
+                       roleid = #{roleid,jdbcType=CHAR},
+               </if>
+               <if test="modifyuser != null">
+                       modifyuser = #{modifyuser,jdbcType=CHAR}, 
+               </if>
+                       modifydate = now(),                                       
+           </set>
+           where id = #{id,jdbcType=CHAR} and deleteflag='0'
+     </update>
+       <!-- 编辑用户时，更新用户角色 -->
+     <update id="delete" parameterType="com.zonekey.disrec.entity.SysUserRole">
+           update user_role 
+           <set>
+               <if test="deleteflag != null">
+                       deleteflag = #{deleteflag,jdbcType=CHAR},
+               </if>
+               <if test="modifyuser != null">
+                       modifyuser = #{modifyuser,jdbcType=CHAR}, 
+               </if>
+                       modifydate = now(),                                       
+           </set>
+           where id = #{id,jdbcType=CHAR} and deleteflag='0'
+     </update>
+     
+     <!-- 根据用户id和角色Id查找用户默认的角色 -->
+     <select id="findByUserAndRole" parameterType="String" resultType="com.zonekey.disrec.entity.SysUserRole">
+           select id,userid,roleid,createtime,createuser,modifydate,modifyuser,enable from user_role where deleteflag = '0' and userid = #{loginname} and roleid in('1','3') limit 1
+     </select>
+</mapper>

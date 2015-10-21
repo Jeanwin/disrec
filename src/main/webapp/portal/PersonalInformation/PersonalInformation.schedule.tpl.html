@@ -1,0 +1,477 @@
+<div class="container-fluid">
+    <div class="modal-body">
+        <div>
+            <div style="height: 24px;width: 8px;background-color: #fcb750"></div>
+            <div style="margin-left: 20px;margin-top: -30px;font-size: 24px">我的课表</div>
+        </div>
+
+        <div style="padding:30px 0 5px 5px;" class="row margin-left-none margin-right-none">
+            <div class="col-xs-9">
+                <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">　　直播课程　　
+                <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">　　录播课程　　
+                <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">　　有资源录像　　
+            </div>
+            <div class="col-xs-2 pull-right">
+                <form class="form-inline" role="form">
+                    <select class="noselectborderW"  ng-model="scheduletype" ng-change="class(scheduletype)">
+                        <option value="">第一周</option>
+                        <option value="2">第二周</option>
+                        <option value="3">第三周</option>
+                        <option value="4">第四周</option>
+                        <option value="5">第五周</option>
+                    </select>
+                    <!--<select class="form-control" style="width: 96px;" ng-model="schedule.weeks" ng-change="week(schedule)"-->
+                            <!--ng-options="weeks.id as weeks.value for weeks in WeekTimeList">-->
+                    <!--</select>-->
+                </form>
+            </div>
+        </div>
+        <div>
+            <table class="table1 table-striped">
+                <thead style="background-color: #0f97e5;font-weight:bold">
+                <tr style="color: #f1f1f1;text-align: center">
+                    <td></td>
+                    <td>星期一</td>
+                    <td>星期二</td>
+                    <td>星期三</td>
+                    <td>星期四</td>
+                    <td>星期五</td>
+                    <td>星期六</td>
+                    <td>星期日</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第一节</td>
+                    <td>
+                        <a style="text-decoration: none" href ng-href="#/PersonalInformation/detail">
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                        </a>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">英语</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr><tr>
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第二节</td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">英语</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr><tr>
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第三节</td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">英语</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr><tr class="schedule-line">
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第四节</td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">英语</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr><tr>
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第五节</td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">语文</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr><tr>
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第六节</td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-15.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr><tr>
+                    <td style="vertical-align: middle;text-align: center;color: #0050ff">第七节</td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span style="margin-left: 8px;">
+                            <img src="assets/img/lemon-elements-14.png" style="width: 10px;height: 10px">
+                        </span><span style="margin-left: 16px;">
+                            <img src="assets/img/lemon-elements-16.png" style="width: 10px;height: 10px">
+                        </span>
+                        <ul style="list-style: none;margin-left: -32px;margin-top: 8px">
+                            <li style="color: #acacac;font-size: 15px">数学</li>
+                            <li style="margin-bottom: 8px;color: #acacac;font-size: 15px">初三(1)班</li>
+                        </ul>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

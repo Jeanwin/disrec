@@ -1,0 +1,25 @@
+<div class="container-fluid" style="background-color: #f2f2f2">
+    <div style="margin: 32px 0 0 24px;color: #3ca9e8"><h4>您的关联机构</h4></div>
+    <div class="ReceivingSelection">
+        <div style="font-size: 14px;background-color: #fff">
+            <div style="margin-bottom: 8px;padding-left: 16px;">校长室（2人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;" ng-class="{'backchanage':backchanage2 ==='2'}">
+                <a href style="color: #000000"  ng-click="backChange('2')" class="aaa"><div>数学课科研组（21人）</div></a>
+            </div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">语文课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">英语课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;"  ng-class="{'backchanage':backchanage5 ==='5'}">
+                <a style="color: #000000" href ng-click="backChange('5')"><div>物理课科研组（21人）</div></a></div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">化学课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">地理课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">历史课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">自然课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">美术课科研组（21人）</div>
+            <div style="margin-bottom: 8px;padding-left: 16px;">体育课科研组（21人）</div>
+        </div>
+    </div>
+    <div style="margin: 24px 0 24px 24px">
+        <button class="btn btn-primary" style="width: 204px;box-shadow:#cecece 2px 2px 3px;" ng-click="ok()">保存</button>
+        <button class="btn btn-default" style="width: 204px;box-shadow:#cecece 2px 2px 3px;" ng-click="cancel()">取消</button>
+    </div>
+</div>

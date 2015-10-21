@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.TacticsMapper">
+	<select id="getupload"  resultType="map">
+		select a.id,a.typeid,a.starttime,a.endtime from zonekey_resource_upload_strategy a 
+	</select>
+	<select id="getstrategy"  resultType="map">
+		select b.id,b.typeid,b.space,b.days from zonekey_resource_remove_strategy b
+	</select>
+	<select id="getschedule"  resultType="map">
+		select a.id,a.typeid,a.week from zonekey_resource_curriculum_strategy a 
+	</select>
+	<select id="getwarm"  resultType="map">
+		select b.id,b.areaid,b.typeid,b.space,b.times from zonekey_resource_warn_strategy b
+	</select>
+	<update id="updateUpload" parameterType="map">
+		update zonekey_resource_upload_strategy
+		<set>
+			<if test="typeid!=null and typeid != ''">
+				typeid = #{typeid},
+				<if test="typeid==1">
+				starttime = #{starttime},endtime = #{endtime},
+				</if>
+				<if test="typeid==2">
+					starttime = null,endtime=null,
+				</if>
+			</if>
+			
+			modifytime = sysDate(),modifyuser=#{modifyuser}
+		</set>
+		where id = #{id}
+	</update>
+	<update id="updateStrategy" parameterType="map">
+		update zonekey_resource_remove_strategy
+		<set>
+			<if test="typeid!=null and typeid != ''">
+				typeid = #{typeid},
+			</if>
+			<if test="typeid==1">
+				space = ${space},days=0,
+			</if>
+			<if test="typeid==2">
+				days  = #{days},space=0,
+			</if>
+			modifytime = sysDate()
+		</set>
+		where id = #{id}
+	</update>
+	<update id="updateSchedule" parameterType="map">
+		update zonekey_resource_curriculum_strategy
+		<set>
+			<if test="typeid!=null and typeid != ''">
+				typeid = #{typeid},
+				<if test="typeid==2">
+					week=#{week},
+				</if>
+				<if test="typeid != 2">
+					week=null,
+				</if>
+			</if>
+			modifytime = sysDate(),modifyuser=#{modifyuser}
+		</set>
+		where id = #{id}
+	</update>
+	<update id="updateWarm" parameterType="map">
+		update zonekey_resource_warn_strategy
+		<set>
+			<if test="typeid!=null and typeid != ''">
+				typeid = #{typeid},
+			</if>
+			<if test="typeid==1">
+				space = ${space},times=0,
+			</if>
+			<if test="typeid==2">
+				times  = #{times},space=0,
+			</if>
+			modifytime = sysDate()
+		</set>
+		where id = #{id}
+	</update>
+	<insert id="insertUpload" parameterType="map">
+		insert into zonekey_resource_upload_strategy values(#{id},'0',#{typeid},null,#{starttime},#{endtime},sysDate(),null,#{createuser},null,'0')
+	</insert>
+	<insert id="insertStrategy" parameterType="map">
+		insert into zonekey_resource_remove_strategy values(#{id},'0',#{typeid},#{space},#{days},sysDate(),null,#{createuser},null)
+	</insert>
+	
+	<insert id="insertSchedule" parameterType="map">
+		insert into zonekey_resource_curriculum_strategy values(#{id},'0',#{typeid},#{week},null,null,sysDate(),null,#{createuser},null,'0')
+	</insert>
+	<insert id="insertWarm" parameterType="map">
+		insert into zonekey_resource_warn_strategy values(#{id},'0',#{typeid},#{space},#{times},sysDate(),null,#{createuser},null)
+	</insert>
+	<select id="getVideoInfo" parameterType="map" resultType="map">
+		select sort,name,filename,code,ismovie,enable from zonekey_resource_scheam where classscheam=#{value} order by sort
+	</select>
+	
+	<delete id="delByScheam" parameterType="string">
+		delete from zonekey_resource_scheam where classscheam=#{classscheam}
+	</delete>
+	<insert id="insertResoureScheam" parameterType="list">
+		insert into zonekey_resource_scheam(id,sort,name,filename,code,ismovie,classscheam,createuser,createdate,enable)
+		values
+		<foreach collection="list" item="map"  separator=",">
+			(#{map.id},#{map.sort},#{map.name},#{map.filename},#{map.code},#{map.ismovie},#{map.classscheam},#{map.createuser},sysDate(),#{map.enable})
+		</foreach>
+	</insert>
+	
+	<delete id="delByScheamClass" >
+		delete from zonekey_scheam_classroom 
+	</delete>
+	<insert id="insertScheamClass" parameterType="list">
+		insert into zonekey_scheam_classroom(id,areaid,classscheam,createuser,createdate)
+		values
+		<foreach collection="list" item="map" separator=",">
+			(#{map.mainid},#{map.id},#{map.classscheam},#{map.createuser},sysDate())
+		</foreach>
+	</insert>
+	<!-- 查询已选中的教室 -->
+	<select id="getAreaIds" parameterType="map" resultType="map">
+		select areaid from zonekey_scheam_classroom where classscheam=#{value}
+	</select>
+	<!-- 录像start -->
+	<select id="getVideoParams" parameterType="map" resultType="map">
+		select sort,videoscheam,address,cardType,backEnable,
+			backType,videoResolution,videoType,audioType,videoCodeType,
+			auditCodeType,bFrame,recordProfile,recordLevel,recordEntropy,
+			recordComplexity,gop,bitrate,framerate,format,movieResoluation
+		 from zonekey_video_scheam where videoscheam=#{value} order by sort
+	</select>
+	
+	<delete id="delVideoScheam" parameterType="string">
+		delete from zonekey_video_scheam where videoscheam=#{videoscheam}
+	</delete>
+	<insert id="insertVideoScheam" parameterType="list">
+		insert into zonekey_video_scheam
+		(
+				id,sort,videoscheam,address,cardType,
+				backEnable,backType,videoResolution,videoType,audioType,
+				videoCodeType,auditCodeType,bFrame,recordProfile,
+				recordLevel,recordEntropy,recordComplexity,gop,
+				bitrate,framerate,format,movieResoluation,createuser,createdate
+		)
+		values
+		<foreach collection="list" item="map"  separator=",">
+			(
+				#{map.id},#{map.sort},#{map.videoscheam},#{map.address},#{map.cardType},
+				#{map.backEnable},#{map.backType},#{map.videoResolution},#{map.videoType},#{map.audioType},
+				#{map.videoCodeType},#{map.auditCodeType},#{map.bFrame},#{map.recordProfile},
+				#{map.recordLevel},#{map.recordEntropy},#{map.recordComplexity},#{map.gop},
+				#{map.bitrate},#{map.framerate},#{map.format},#{map.movieResoluation},#{map.createuser},sysDate()
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="delApplyVideo" >
+		delete from zonekey_apply_video 
+	</delete>
+	<insert id="insertApplyVideo" parameterType="list">
+		insert into zonekey_apply_video(id,areaid,videoscheam,createuser,createdate)
+		values
+		<foreach collection="list" item="map" separator=",">
+			(#{map.mainid},#{map.areaid},#{map.videoscheam},#{map.createuser},sysDate())
+		</foreach>
+	</insert>
+	<!-- 查询已选中的教室 -->
+	<select id="getVideosAreaIds" parameterType="map" resultType="string">
+		select areaid from zonekey_apply_video where videoscheam=#{value}
+	</select>
+	<!-- 录像end -->
+	
+	<!-- rtsp start -->
+	<select id="getRtspParams" parameterType="map" resultType="map">
+		select  sort,videoCodeType,auditCodeType,bFrame,recordProfile,recordLevel,
+				recordEntropy,recordComplexity,gop,bitrate,framerate,movieResoluation
+		 from zonekey_rtsp_scheam where rtspscheam=#{value} order by sort
+	</select>
+	
+	<delete id="delRtspScheam" parameterType="string">
+		delete from zonekey_rtsp_scheam where rtspscheam=#{rtspscheam}
+	</delete>
+	<insert id="insertRtspScheam" parameterType="list">
+		insert into zonekey_rtsp_scheam
+		(
+				id,sort,rtspscheam,videoCodeType,auditCodeType,
+				bFrame,recordProfile,recordLevel,recordEntropy,
+				recordComplexity,gop,bitrate,framerate,
+				movieResoluation,createuser,createdate
+		)
+		values
+		<foreach collection="list" item="map"  separator=",">
+			(
+				#{map.id},#{map.sort},#{map.rtspscheam},#{map.videoCodeType},#{map.auditCodeType},
+				#{map.bFrame},#{map.recordProfile},#{map.recordLevel},#{map.recordEntropy},
+				#{map.recordComplexity},#{map.gop},#{map.bitrate},#{map.framerate},
+				#{map.movieResoluation},#{map.createuser},sysDate()
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="delApplyRtsp" >
+		delete from zonekey_rtsp_classroom 
+	</delete>
+	<insert id="insertApplyRtsp" parameterType="list">
+		insert into zonekey_rtsp_classroom(id,areaid,rtspscheam,createuser,createdate)
+		values
+		<foreach collection="list" item="map" separator=",">
+			(#{map.id},#{map.areaid},#{map.rtspscheam},#{map.createuser},sysDate())
+		</foreach>
+	</insert>
+	<!-- 查询已选中的教室 -->
+	<select id="getRtspAreaIds" parameterType="map" resultType="string">
+		select areaid from zonekey_rtsp_classroom where rtspscheam=#{value}
+	</select>
+	<!-- rtsp end -->
+	
+		<!-- rtmp start -->
+	<select id="getRtmpParams" parameterType="map" resultType="map">
+		select  videoCodeType,auditCodeType,bFrame,recordProfile,recordLevel,
+				recordEntropy,recordComplexity,gop,bitrate,framerate,movieResoluation
+		 from zonekey_rtmp_scheam where rtmpscheam=#{value}
+	</select>
+	
+	<delete id="delRtmpScheam" parameterType="string">
+		delete from zonekey_rtmp_scheam where rtmpscheam=#{rtmpscheam}
+	</delete>
+	<insert id="insertRtmpScheam" parameterType="map">
+		insert into zonekey_rtmp_scheam
+		(
+				id,rtmpscheam,videoCodeType,auditCodeType,
+				bFrame,recordProfile,recordLevel,recordEntropy,
+				recordComplexity,gop,bitrate,framerate,
+				movieResoluation,createuser,createdate
+				)
+		values
+			(
+				#{id},#{scheam},#{videoCodeType},#{auditCodeType},
+				#{bFrame},#{recordProfile},#{recordLevel},#{recordEntropy},
+				#{recordComplexity},#{gop},#{bitrate},#{framerate},
+				#{movieResoluation},#{createuser},sysDate()
+			)
+	</insert>
+	
+	<delete id="delApplyRtmp" >
+		delete from zonekey_rtmp_classroom 
+	</delete>
+	<insert id="insertApplyRtmp" parameterType="list">
+		insert into zonekey_rtmp_classroom(id,areaid,rtmpscheam,createuser,createdate)
+		values
+		<foreach collection="list" item="map" separator=",">
+			(#{map.id},#{map.areaid},#{map.rtmpscheam},#{map.createuser},sysDate())
+		</foreach>
+	</insert>
+	<!-- 查询已选中的教室 -->
+	<select id="getRtmpAreaIds" parameterType="map" resultType="string">
+		select areaid from zonekey_rtmp_classroom where rtmpscheam=#{value}
+	</select>
+	<!-- rtmp end -->
+</mapper>

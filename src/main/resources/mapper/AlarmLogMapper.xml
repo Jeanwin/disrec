@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.AlarmLogMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.AlarmLog">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="time" property="time" jdbcType="TIMESTAMP" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="dutyroom" property="dutyroom" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="CHAR" />
+		<result column="createuser" property="createuser" jdbcType="VARCHAR" />
+		<result column="modifyuser" property="modifyuser" jdbcType="VARCHAR" />
+		<result column="handel_time" property="handelTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') time, source, content, dutyroom,
+		state,DATE_FORMAT(handel_time,'%Y-%m-%d %H:%i:%s') handel_time
+	</sql>
+	<!-- sql绑定用户名 -->
+	<sql id="bindLoginname">
+		<bind name="_loginname"
+			value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()" />
+	</sql>
+
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+		select count(*) from sys_log_alarm a where 1=1
+		<if test="keywords != null">
+			<!-- <if test="keywords.startTime != null and keywords.startTime!= ''">and 
+				a.time > #{keywords.startTime}</if> <if test="keywords.endTime != null and 
+				keywords.endTime!= ''">and #{keywords.endTime} > a.time </if> -->
+			<if test="keywords.startTime != null and keywords.startTime!= ''">
+				<![CDATA[   and a.time>=  #{keywords.startTime}  ]]>
+			</if>
+			<if test="keywords.endTime != null and keywords.endTime!= ''">
+				<![CDATA[   and  #{keywords.endTime} >= a.time ]]>
+			</if>
+			<if test="keywords.source != null and keywords.source != ''">and a.source like concat('%', #{keywords.source},'%')
+			</if>
+			<if test="keywords.dutyroom != null and keywords.dutyroom != ''">and a.dutyroom like concat('%', #{keywords.dutyroom},'%')
+			</if>
+			<if test="keywords.content != null and keywords.content != ''">and (a.content like concat('%',#{keywords.content},'%')
+				or a.state=#{keywords.content}) </if>
+		</if>
+	</select>
+
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_log_alarm a where 1=1
+		<if test="keywords != null">
+			<!-- <if test="keywords.startTime != null and keywords.startTime!= ''">and 
+				a.time > #{keywords.startTime}</if> <if test="keywords.endTime != null and 
+				keywords.endTime!= ''">and #{keywords.endTime} > a.time </if> -->
+			<if test="keywords.startTime != null and keywords.startTime!= ''">
+				<![CDATA[   and a.time>=  #{keywords.startTime}  ]]>
+			</if>
+			<if test="keywords.endTime != null and keywords.endTime!= ''">
+				<![CDATA[   and  #{keywords.endTime} >= a.time ]]>
+			</if>
+			<if test="keywords.source != null and keywords.source != ''">and a.source like concat('%', #{keywords.source},'%')
+			</if>
+			<if test="keywords.dutyroom != null and keywords.dutyroom != ''">and a.dutyroom like concat('%', #{keywords.dutyroom},'%')
+			</if>
+			<if test="keywords.content != null and keywords.content != ''">and (a.content like concat('%',#{keywords.content},'%')
+				or a.state=#{keywords.content})</if>
+		</if>
+		order by a.time desc
+		<if test="page != null and page.offset != null and page.limit!=null">
+			limit #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+
+	<select id="isAlarmExist" parameterType="com.zonekey.disrec.entity.AlarmLog"
+		resultType="Integer">
+		select count(*) from sys_log_alarm where source=#{source} and
+		content=#{content}
+		and dutyroom=#{dutyroom} and state='0'
+		<if test="_loginname != null and _loginname != ''">
+			and createuser=#{_loginname}
+		</if>
+	</select>
+
+	<delete id="deleteAlarmExist" parameterType="com.zonekey.disrec.entity.AlarmLog">
+		delete from sys_log_alarm where source=#{source} and
+		content=#{content}
+		and dutyroom=#{dutyroom} and state='0'
+		<if test="_loginname != null and _loginname != ''">
+			and createuser=#{_loginname}
+		</if>
+	</delete>
+
+	<update id="updateAlarmExist" parameterType="com.zonekey.disrec.entity.AlarmLog">
+		update sys_log_alarm set time=sysDate()
+		where source=#{source} and content=#{content}
+		and dutyroom=#{dutyroom}
+		and state='0'
+		<if test="_loginname != null and _loginname != ''">
+			and createuser=#{_loginname}
+		</if>
+	</update>
+	
+	<insert id="saveAlarmLog" parameterType="com.zonekey.disrec.entity.AlarmLog">
+		<include refid="bindLoginname" />
+		insert into sys_log_alarm (id, time, source,
+		content, dutyroom, state, createuser)
+		values (#{id,jdbcType=CHAR}, sysDate(), #{source,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR}, #{dutyroom,jdbcType=VARCHAR},
+		#{state,jdbcType=CHAR}, #{_loginname})
+	</insert>
+
+	<update id="updateAlarmLog" parameterType="com.zonekey.disrec.entity.AlarmLog">
+		<include refid="bindLoginname" />
+		update sys_log_alarm
+		<set>
+			<if test="state != null">
+				state = #{state,jdbcType=CHAR},
+				modifyuser = #{_loginname},
+				handel_time=#{handelTime}
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+
+</mapper>

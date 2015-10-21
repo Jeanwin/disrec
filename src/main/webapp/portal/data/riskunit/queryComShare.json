@@ -1,0 +1,100 @@
+[
+    {
+        "riskUnitNo": 1,
+        "plyEdrComShares": [
+            {
+                "reinsType": "中再成数2014",
+                "riComCode": "521",
+                "riComName": "China P&C Re",
+                "riFComCode": null,
+                "riFComName": null,
+                "shareRate": 20,
+                "fShareRate": 0,
+                "currency": "CNY",
+                "amount": 283400,
+                "premium": 4110.2,
+                "oriAmount": 0,
+                "oriPremium": 0,
+                "chgAmount": 283400,
+                "chgPremium": 4110.2
+            },
+            {
+                "reinsType": "合约自留",
+                "riComCode": "123",
+                "riComName": "HUA TAI",
+                "riFComCode": null,
+                "riFComName": null,
+                "shareRate": 61,
+                "fShareRate": 0,
+                "currency": "CNY",
+                "amount": 864370,
+                "premium": 12536.11,
+                "oriAmount": 0,
+                "oriPremium": 0,
+                "chgAmount": 864370,
+                "chgPremium": 12536.11
+            },
+            {
+                "reinsType": "临分",
+                "riComCode": "113",
+                "riComName": "Bangkokins",
+                "riFComCode": null,
+                "riFComName": null,
+                "shareRate": 10,
+                "fShareRate": 0,
+                "currency": "CNY",
+                "amount": 141700,
+                "premium": 2055.1,
+                "oriAmount": 0,
+                "oriPremium": 0,
+                "chgAmount": 141700,
+                "chgPremium": 2055.1
+            },
+            {
+                "reinsType": "临分",
+                "riComCode": "562",
+                "riComName": "National Insurance Company of Iraq (NIC)",
+                "riFComCode": "462",
+                "riFComName": "Sutton Re",
+                "shareRate": 4,
+                "fShareRate": 0.04,
+                "currency": "CNY",
+                "amount": 56680,
+                "premium": 822.04,
+                "oriAmount": 0,
+                "oriPremium": 0,
+                "chgAmount": 56680,
+                "chgPremium": 822.04
+            },
+            {
+                "reinsType": "临分",
+                "riComCode": "562",
+                "riComName": "National Insurance Company of Iraq (NIC)",
+                "riFComCode": "511",
+                "riFComName": "R.K. Harrison Insurance Broker Limited.",
+                "shareRate": 5,
+                "fShareRate": 0.05,
+                "currency": "CNY",
+                "amount": 70850,
+                "premium": 1027.55,
+                "oriAmount": 0,
+                "oriPremium": 0,
+                "chgAmount": 70850,
+                "chgPremium": 1027.55
+            }
+        ],
+        "plyEdrXComShares": [
+            {
+                "reinsType": "临分超赔",
+                "layerNo": 1,
+                "currency": "CNY",
+                "excessLoss": 2000,
+                "stopLimit": 6000,
+                "layerQuota": 4000,
+                "layerChgPremium": 0,
+                "layerPremium": null,
+                "layerOriPremium": 783
+            }
+        ]
+    }
+]

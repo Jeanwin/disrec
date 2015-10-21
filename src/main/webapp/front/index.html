@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gte IE 8]><!-->
+<html class="no-js" id="ng-app" ng-controller="MainCtrl">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>{{config.app.name}} | {{config.app.version}}</title>
+    <!-- build:css assets/css/lemon.min.css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-lemon.css" />
+
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/form.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/icons.css" />
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/angular-ui-tree.min.css">
+    <link rel="stylesheet" href="assets/css/angular-ui-tree.lemon.css">
+    <link rel="stylesheet" href="assets/css/fullcalendar.css">
+    <link rel="stylesheet" href="assets/css/ng-animate.css">
+    <link rel="stylesheet" href="assets/css/angular-toggle-switch-bootstrap.css">
+    <link rel="stylesheet" href="assets/css/angular-toggle-switch.css">
+    <link rel="stylesheet" href="assets/css/angular-file-upload.css">
+    <link rel="stylesheet" href="assets/css/angular-growl.min.css">
+    <link rel="stylesheet" href="assets/css/angular.treeview.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/coursepatorlCss.css">
+    <link rel="stylesheet" href="assets/css/zkicon.css">
+    <link rel="stylesheet" href="assets/css/angular-chart.css">
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    
+
+    <!-- endbuild -->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <![endif]-->
+    <!-- build:js assets/js/lemon.min.js -->
+    <script src="assets/js/modernizr.js"></script>
+    <script src="common/PolyfillLoader.js"></script>
+    <!-- endbuild -->
+</head>
+<body >
+<!--[if lte IE 9]>
+<div>不支持此浏览器</div>
+<![endif]-->
+
+<div class="header" ng-class="{'default-cloth':choose==='1','yellow-cloth':choose==='2','blue-cloth':choose==='3','deepGreen-cloth':choose==='4'}">
+	<div ng-if="infoSet" class="top-bar" style="background:#FFF9D5;">
+        <div class="index-top" style="margin:auto 0px;text-align:center;color:red;">
+	               　<span >提示：如果页面无法正常显示或视频无法播放，我们向您推荐安装 谷歌浏览器 <a href="download/ChromeStandaloneSetup.1421221167.exe">离线下载</a></span>
+       		<span style="color:black;margin-left:10px;cursor:pointer;" >
+       			<a style="color:black;float:right;margin-right:20px;" ng-click="closeMsg();">
+       				<i class="zkicon-fontsize-100 zk-logo icon-close"></i>
+       				不再提示
+   				</a>
+     		</span>
+        </div>
+    </div>
+    <div ng-if="chromeset" class="top-bar" style="background:#FFF9D5;">
+        <div class="index-top" style="margin:auto 0px;text-align:center;color:red;">
+	        <span >提示：建议使用45版本以下的chrome浏览器<a href="download/ChromeStandaloneSetup.1421221167.exe">点击下载</a></span>
+       		<span style="color:black;margin-left:10px;cursor:pointer;" >
+       			<a style="color:black;float:right;margin-right:20px;" ng-click="closechromeMsg();">
+       				<i class="zkicon-fontsize-100 zk-logo icon-close"></i>
+       				不再提示
+   				</a>
+     		</span>
+        </div>
+    </div>
+    <div class="top-bar">
+        <div class="index-top">
+            <span ng-if="global.user.terms.id>0">
+                {{global.user.terms.termname}}
+               第{{global.user.terms.week}}周
+                {{global.user.terms.weekdate}}
+             </span>　
+             <span ng-if="Oldterm.id===0" style="font-size: 18px;color: red">
+                {{Oldterm.desc}}
+             </span>
+
+               <span>{{global.user.terms.date}}</span>
+               　<span>{{global.user.name}}</span>
+               　<span>{{global.user.roleList[0].roleName}}</span>
+       <span ng-click="modifyPassword()" style="cursor:pointer;">密码修改</a></span>
+               　<span><a href="/disrec/logout">退出</a></span>
+        <span>
+           <span class="tooltipTest-item margin-left-10">
+               <i class="icon-cloth" ng-click="showCloth=!showCloth"></i>
+            </span>
+           <span ng-show="showCloth" class="cloth">
+            <span class="clothe-color default-cloth" ng-class="{'choose':choose==='1'}" ng-click="choose='1';changeCloth('1')"></span>
+           	<span class="clothe-color yellow-cloth" ng-class="{'choose':choose==='2'}" ng-click="choose='2';changeCloth('2')"></span>
+            <span class="clothe-color blue-cloth" ng-class="{'choose':choose==='3'}" ng-click="choose='3';changeCloth('3')"></span>
+            <!-- <span class="clothe-color red-cloth" ng-class="{'choose':choose==='4'}" ng-click="choose='4';changeCloth('4')"></span> -->
+            <!-- <span class="clothe-color green-cloth" ng-class="{'choose':choose==='5'}" ng-click="choose='5';changeCloth('5')"></span> -->
+            <span class="clothe-color deepGreen-cloth" ng-class="{'choose':choose==='4'}" ng-click="choose='6';changeCloth('4')"></span>
+            <!-- <span class="clothe-color linearBlue-cloth" ng-class="{'choose':choose==='7'}" ng-click="choose='7';changeCloth('7')"></span> -->
+           </span>
+       </span>
+               　<span ng-click="openAbsystem()" class="glyphicon glyphicon-exclamation-sign btn-link"></span>
+        </div>
+    </div>
+    <div class="pull-left" style="margin-right:-110px;margin-left:10px;">
+        <img src="{{logoInfo.desktopPictureurl}}" style="height:85px;">
+    </div>
+    <ul class="top-nav">
+        
+        <li ng-if="global.user.authenticatid.indexOf('auth_sy_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 1}">
+            <a ng-href="#/dashboard">
+                <div class="imgSize">
+                    <i class="icon-home fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                首页
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_classrooms_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 2}">
+            <a ng-href="#/classrooms/daily">
+                <div class="imgSize">
+                    <i class="icon-business fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                教室管理
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_scheduleManagements_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 3}">
+            <a ng-href="#/scheduleManagements/live">
+                <div class="imgSize">
+                    <i class="icon-web fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    课表管理
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_director_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 4}">
+            <a ng-href="#/director">
+                <div class="imgSize">
+                    <i class="icon-games fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    导播台
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_coursepatrol_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 5}">
+            <a ng-href="#/coursepatrol/0">
+                <div class="imgSize">
+                    <i class="icon-border-all fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    课程巡视
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_resource_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 6}">
+            <a ng-href="#/resource/upload">
+                <div class="imgSize">
+                    <i class="icon-view-quilt fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    资源管理
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_teachResearch_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 10}">
+            <a ng-href="#/teachResearch/listenModal">
+                <div class="imgSize">
+                    <i class=" icon-book2 fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    教研管理
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_portal_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 7}">
+            <a ng-href="#/portal">
+                <div class="imgSize">
+                    <i class="icon-laptop-chromebook fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    门户管理
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_logstatistical_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 11}">
+            <a ng-href="#/logs">
+                <div class="imgSize">
+                    <i class="icon-laptop-chromebook fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    日志管理
+                </div>
+            </a>
+        </li>
+        <!-- <li ng-if="global.user.authenticatid.indexOf('auth_logstatistical_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 9}">
+                   <a ng-href="#/statistical">
+                       <div class="imgSize">
+                           <i class="icon-laptop-chromebook fontSize-30"></i>
+                       </div>
+                       <div class="fontSize">
+                           统计
+                       </div>
+                   </a>
+               </li>  -->       
+        <li ng-if="global.user.authenticatid.indexOf('auth_system_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 8}">
+            <a ng-href="#/system/user/{{}}/{{}}">
+                <div class="imgSize">
+                    <i class="icon-storage fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    系统设置
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_message_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 12}">
+            <a ng-href="#/message">
+                <div class="imgSize">
+                    <i class="icon-storage fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    消息
+                </div>
+            </a>
+        </li>
+        <li ng-if="global.user.authenticatid.indexOf('auth_mhcms_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 13}">
+            <a ng-href="#/cms">
+                <div class="imgSize">
+                    <i class="icon-storage fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    门户
+                </div>
+            </a>
+        </li>
+        
+        <!-- <li ng-if="global.user.authenticatid.indexOf('auth_information_url_view')>=0" class="btn-nav" ng-class="{'mainactive':mainactive === 9}">
+            <a ng-href="#/information">
+                <div class="imgSize">
+                    <i class="icon-textsms fontSize-30"></i>
+                </div>
+                <div class="fontSize">
+                    消息
+                </div>
+            </a>
+        </li> -->
+    </ul>
+
+</div>
+
+<div ui-view="main"></div>
+<div class="call" ng-show="hasCall">
+	<div ng-controller="DirectorSeize">
+		<div class="info">
+			<span class="">语音呼叫:</span>
+			<div>
+				<i class="glyphicon glyphicon-user"></i>
+				<span>高一三班</span><span style="font-size:12px;">&nbsp;正在呼叫.....</span>
+			</div>
+		</div>
+		<div class="opera">
+			<div class="acceptCall">
+				<i class="icon-call-on"></i>
+				<p class="margin-top-15">接听</p>
+			</div>
+			<div class="rejectCall">
+				<i class="icon-call-end"></i>
+				<p class="margin-top-15">拒绝</p>
+			</div>
+		</div>
+    </div>
+</div>
+<!-- ng-if="warm" -->
+<div class="call" ng-show="hasWarm">
+<div ng-controller="DirectorSeize">
+	<div class="info">
+		<span class="">报警:</span>
+		<div>
+			<i class="glyphicon glyphicon-user"></i>
+			<span>{{warmData.areaName}}</span><span style="font-size:12px;">&nbsp;{{warmData.clues}}</span>
+		</div>
+	</div>
+	<div class="opera">
+		<div class="acceptCall" style="background:none">
+			<!-- <i class="icon-call-on"></i>
+			<p class="margin-top-15">进入教室</p> -->
+			<button class="btn btn-default" ng-click="openConsole(warmData.mac,3,null,null,null,null,1,0)">进入教室</button>
+		</div>
+		<div class="rejectCall" style="background:none">
+			<!-- <i class="icon-call-end"></i>
+			<p class="margin-top-15">关闭</p> -->
+			<button class="btn btn-default" ng-click="closeWarm()">关闭</button>
+		</div>
+	</div>
+	<div class="infoCount"><span>消息</span><span>{{WarmCount}}</span></div>
+    </div>
+</div>
+<div style="margin-bottom:0;text-align:center;color: #cecece">Copyright©2014 现代中庆 www.zonekey.com.cn 版权所有 服务热线：400 898 9001</div>
+
+<div class="splash-window">
+    <div class="center">
+       loading...
+    </div>
+</div>
+<!--//非干扰消息提示-->
+<div growl></div>
+
+<script src="assets/js/lib/require.js" data-main="common/main.js?v=1.0.0"></script>
+
+</body>

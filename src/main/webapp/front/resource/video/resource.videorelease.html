@@ -1,0 +1,23 @@
+<div class="modal-header ng-scope">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </button>
+    <h3 class="modal-title">视频发布</h3>
+</div>
+<div class="modal-body ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-body" style="overflow: auto;height: 320px">
+            <table class="table" style="background-color: #d4ffea">
+                <h4>请确认你要发布的视频</h4>
+                <tr ng-repeat="item in selectedItems">
+                    <td>{{item.resourcename}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+   <!--  发布到：精品视频<select><option>语文</option><option>数学</option><option>英语</option></select>栏目下 -->
+</div>
+<div class="modal-footer ng-scope">
+    <button class="btn btn-primary" ng-click="ok()">确认发布</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

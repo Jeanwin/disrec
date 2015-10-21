@@ -1,0 +1,35 @@
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title" >
+            <h3 ng-if="!editingMode">添加服务器</h3>
+            <h3 ng-if="editingMode">编辑服务器</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form name="frmAreaEditor" class="form-horizontal" novalidate role="form">
+            <div class="form-group form-inline">
+                <label class="col-xs-3 control-label">服务器名称</label>
+                <div class="col-xs-9"><input ng-model="server.name" class="form-control"></div>
+            </div>
+            <div class="form-group form-inline">
+                <label class="col-xs-3 control-label">类型</label>
+                <div class="col-xs-9">
+                    <select ng-model="server.type" class="form-control" ng-options="serverType.value as serverType.name for serverType in SelectServerTypeList"
+                            style="width: 179px">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <label class="col-xs-3 control-label">地址</label>
+                <div class="col-xs-9"><input ng-model="server.address" class="form-control"></div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="SaveServer(server)">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

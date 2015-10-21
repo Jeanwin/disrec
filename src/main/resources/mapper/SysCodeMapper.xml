@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zonekey.disrec.dao.SysCodeMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.SysCode">
+		<id column="id" jdbcType="CHAR" property="id" />
+		<result column="parentid" jdbcType="CHAR" property="parentid" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="SHORTNAME" jdbcType="VARCHAR" property="shortname" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="LEVEL" jdbcType="TINYINT" property="level" />
+		<result column="CHILDCOUNT" jdbcType="SMALLINT" property="childcount" />
+		<result column="DEFAULT_VALUE" jdbcType="BIT" property="defaultValue" />
+		<result column="createdate" jdbcType="TIMESTAMP" property="createdate" />
+		<result column="createuser" jdbcType="CHAR" property="createuser" />
+		<result column="modifydate" jdbcType="TIMESTAMP" property="modifydate" />
+		<result column="modifyuser" jdbcType="CHAR" property="modifyuser" />
+		<result column="deleteflag" jdbcType="CHAR" property="deleteflag" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, parentid, NAME, SHORTNAME, sort, LEVEL,
+		CHILDCOUNT,
+		DEFAULT_VALUE, createdate,
+		createuser, modifydate,
+		modifyuser, deleteflag
+	</sql>
+
+	<select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_code
+		where id = #{id,jdbcType=CHAR} and deleteflag='0'
+	</select>
+
+	<select id="findSopeAll" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_code
+		where parentid = #{id,jdbcType=CHAR}
+	</select>
+
+
+	<select id="findPageBy" parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.SysCodeView">
+		SELECT a.id,a.name,a.parentid,a.sort,a.value,(select name from sys_code where id = a.parentid) parentName
+		FROM sys_code a where a.parentid not in ('0',(select id from sys_code where parentid='0')) and a.deleteflag='0'
+		<if test="keywords != null and keywords.name != null and keywords.name != ''">
+			and name like concat(#{keywords.name},"%")
+		</if>
+		<if test="treeid != null">
+			and parentid =#{treeid}
+		</if>
+		order by a.parentid,case  when a.sort is null then -1 end ,a.sort
+		LIMIT #{page.offset} ,#{page.limit}
+	</select>
+
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		SELECT count(*) FROM sys_code a
+		 where a.parentid not in ('0',(select id from sys_code where parentid='0')) and a.deleteflag='0'
+		<if test="keywords != null and keywords.name != null and keywords.name != ''">
+			and name like concat(#{keywords.name},"%")
+		</if>
+		<if test="treeid != null">
+			and parentid =#{treeid}
+		</if>
+	</select>
+	
+	<select id="checkCount" parameterType="com.zonekey.disrec.entity.SysCode" resultType="int">
+		select count(*) from sys_code where parentid =#{parentid} and deleteflag='0'
+		<if test="name != null">
+			and name =#{name}
+		</if>
+		<if test="value != null">
+			and value =#{value}
+		</if>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		update sys_code set deleteflag='1',modifyuser=#{modifyuser,jdbcType=CHAR},modifydate=sysDate() where id =#{id,jdbcType=CHAR}
+	</update>
+	<!-- 逻辑删除 子节点-->
+	<update id="deleteChilds" parameterType="com.zonekey.disrec.entity.SysCode">
+		update sys_code set deleteflag='1',modifyuser=#{modifyuser,jdbcType=CHAR},modifydate=sysDate() where parentid =#{id,jdbcType=CHAR}
+	</update>
+	<insert id="insert" parameterType="com.zonekey.disrec.entity.SysCode">
+		insert into sys_code(id,parentid,name,value,sort,createuser,createdate)
+		values(#{id},#{parentid},#{name},#{value},#{sort},#{createuser},sysDate())
+	</insert>
+	
+	<update id="update" parameterType="com.zonekey.disrec.entity.SysCode">
+		update sys_code
+		<set>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=CHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="shortname != null">
+				SHORTNAME = #{shortname,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				LEVEL = #{level,jdbcType=TINYINT},
+			</if>
+			<if test="childcount != null">
+				CHILDCOUNT = #{childcount,jdbcType=SMALLINT},
+			</if>
+			<if test="defaultValue != null">
+				DEFAULT_VALUE = #{defaultValue,jdbcType=BIT},
+			</if>
+			<if test="value != null">
+				value = #{value},
+			</if>
+		modifydate = sysDate(),modifyuser = #{modifyuser,jdbcType=CHAR}
+		</set>
+		where id = #{id,jdbcType=CHAR} and deleteflag='0'
+	</update>
+	
+	<!-- 获取设备类型信息 -->
+	<select id="findDiviceType" resultType="map">
+		SELECT id,name value FROM sys_code where parentid=10 and deleteflag='0' order by sort
+	</select>
+	<!-- 获取设备类型信息 end -->
+	<!-- 获取设备类型信息 -->
+	<select id="findType" parameterType="string" resultType="map">
+		SELECT id,name, value FROM sys_code where parentid=#{id} and deleteflag='0' order by sort
+	</select>
+	<!-- 获取设备类型信息 -->
+	<select id="getCode" parameterType="string" resultType="map">
+		select a.name,a.value,a.id 
+		from sys_code a,sys_code b 
+		where a.deleteflag=0 and b.deleteflag=0 and a.parentid = b.id and b.value =#{value} order by a.sort
+	</select>
+	<!-- 获取设备类型信息 end -->
+	<select id="getDicTree" resultMap="nodes">
+		select id ,name from sys_code where parentid='0' and deleteflag='0' 
+	</select>
+	<resultMap type="map" id="nodes">
+		<result property="id" column="id"/>
+		<association property="nodes" column="id" select="getData"/>
+	</resultMap>
+	
+	<select id="getData" resultType="map">
+		select id ,name,value,sort from sys_code where parentid=#{id} and deleteflag='0' order by sort
+	</select>
+	<!-- 查字典id -->
+	<select id="getCodeByName"  resultType="string">
+		select a.value from sys_code a,sys_code b 
+		where a.deleteflag=0 and b.deleteflag=0 and a.parentid = b.id and b.value =#{parentValue} and a.name = #{name}
+	</select>
+</mapper>

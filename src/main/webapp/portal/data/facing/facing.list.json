@@ -1,0 +1,28 @@
+{
+    "total": 52702,
+    "data": [
+        {
+            "plyNo": "1013249012004000004",
+            "startDate": {
+                "nanos": 0,
+                "time": 1072886400000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 0,
+                "year": 104,
+                "timezoneOffset": -480,
+                "day": 4,
+                "date": 1
+            },
+            "sumPrm": 9900,
+            "sumAmt": 9900,
+            "plyAppNo": null,
+            "riskUnitNo": 0,
+            "facNo": "1013249012004000004-03",
+            "edrNo": "1013249012004000004-03",
+            "endDate": null,
+            "facAmtCur": "01",
+            "sumProp": 45
+        }]
+}

@@ -1,0 +1,93 @@
+.angular-ui-tree-nodes .angular-ui-tree-nodes li{
+    /*padding-left: 12px;*/
+    /*margin-left: 12px;*/
+    /*border-left: dotted 1px #c0c0c0;*/
+}
+
+div[ui-tree] {
+    /* prevent user selection */
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* default */
+    font-family: Tahoma;
+    font-size:13px;
+    color: #555;
+    text-decoration: none;
+    border: 1px solid #D3D3D3;
+    background: #f9f9f9;
+    min-height:300px;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+div[ui-tree] li .expanded {
+    padding: 1px 10px;
+    background-image: url("../img/folder.png");
+    background-repeat: no-repeat;
+}
+
+div[ui-tree] li .collapsed {
+    padding: 1px 10px;
+    background-image: url("../img/folder-closed.png");
+    background-repeat: no-repeat;
+}
+
+div[ui-tree] li ul.line{
+    background:url(../img/line_conn.gif) 0 0 repeat-y;
+}
+
+div[ui-tree] li span.button {
+    line-height:0;
+    margin:0;
+    width:16px;
+    height:16px;
+    display: inline-block;
+    vertical-align:middle;
+    border:0 none;
+    cursor: pointer;
+    outline:none;
+    background-color:transparent;
+    background-repeat:no-repeat;
+    background-attachment: scroll;
+    background-image:url("../img/zTreeStandard.png");
+    *background-image:url("../img/zTreeStandard.gif")
+}
+
+div[ui-tree] li span.button.center_close {
+    background-position: -74px -18px;
+}
+
+div[ui-tree] li span.button.center_open{
+    background-position:-92px -18px
+}
+
+div[ui-tree] li span.button.roots_open{
+    background-position:-92px 0
+}
+
+div[ui-tree] li span.button.roots_close{
+    background-position:-74px 0
+}
+
+div[ui-tree] li span.button.ico_open{
+    margin-right:2px;
+    background-position:-110px -16px;
+    vertical-align:top;
+    *vertical-align:middle
+}
+
+div[ui-tree] li i, div[ui-tree] li span {
+    cursor: pointer;
+}
+
+
+div[ui-tree] li span.button.ico_close{
+    margin-right:2px;
+    background-position:-110px 0;
+    vertical-align:top;
+    *vertical-align:middle
+}

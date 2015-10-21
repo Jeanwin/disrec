@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.ServerMapper">
+	<resultMap type="com.zonekey.disrec.entity.Server" id="data">
+		<result property="id" column="id"/>
+		<association property="ports" column="id" select="getPorts"/>
+	</resultMap>
+	
+	<!-- 查询全部服务 -->
+	<select id = "findAll" resultMap="data">
+	     select id, name, type, address from zonekey_server where deleteflag ='0' 
+	</select>
+	
+	<select id = "findByMap" parameterType="map"  resultMap="data">
+	     select server.* from zonekey_device d LEFT JOIN zonekey_device_server s ON d.id = s.deviceid
+		left join zonekey_server server on s.serverid = server.id 
+		 where 
+		 <if test="IP !=null and IP != ''">
+		  AND IP=#{IP}
+		 </if>
+		  <if test="MAC !=null and MAC != ''">
+		 AND  MAC=#{MAC}
+		 </if>
+	</select>
+	
+	
+	<!-- 根据服务id查询端口 -->
+	<select id="getPorts" resultType="com.zonekey.disrec.entity.Port">
+		 select id, name, port from zonekey_port where deleteflag ='0' and serverid = #{serverid}
+	</select>
+	
+	<!-- 根据类别查询服务器 -->
+	<select id="getServerByType" parameterType="String" resultType="string">
+	     select concat(a.address,":",b.port) from zonekey_server a,zonekey_port b where a.deleteflag = '0' 
+	          and b.deleteflag = '0' and a.type = #{type} and a.id=b.serverid limit 1 
+	</select>
+		<!-- 根据类别查询服务器 -->
+	<select id="getServerMessageByType" parameterType="String" resultType="com.zonekey.disrec.entity.Server">
+	     select a.* from zonekey_server a,zonekey_port b where a.deleteflag = '0' 
+	          and b.deleteflag = '0' and a.type = #{type} and a.id=b.serverid limit 1 
+	</select>
+	<!-- 查询id不为当前id的所有服务记录 -->
+	<select id="findRest" parameterType="String" resultType="com.zonekey.disrec.entity.Server">
+	     SELECT id, NAME, TYPE, address FROM zonekey_server WHERE deleteflag ='0' AND id != #{id}
+	</select>
+	
+    <!-- 根据id查询服务器 -->
+    <select id="findOne" parameterType="String" resultType="com.zonekey.disrec.entity.Server"> 
+        select id,name,type,address,createdate,createuser,modifydate,modifyuser,deleteflag 
+            from zonekey_server where id = #{id} 
+	</select>
+	
+    <!-- 修改服务器配置 -->
+    <update id="update" parameterType="com.zonekey.disrec.entity.Server">
+        update zonekey_server set name = #{name}, type = #{type}, address = #{address} where id = #{id} and deleteflag = '0'     
+    </update>
+   
+    <!-- 添加服务器 -->
+    <insert id ="insert" parameterType="com.zonekey.disrec.entity.Server">
+        insert into zonekey_server( id,name,type,address,createdate,createuser )
+            values(#{id}, #{name},#{type},#{address},sysDate(),#{createuser})
+    </insert> 
+    
+    <!-- 删除服务器配置 -->
+    <delete id ="del" parameterType="com.zonekey.disrec.entity.Server">
+        delete from zonekey_server where id =#{id} 
+    </delete>
+        <!-- 根据id查询服务器 -->
+    <select id="findDeviceServer" parameterType="map" resultType="com.zonekey.disrec.vo.DeviceServerView"> 
+       select ds.*,d.name,d.ip, d.areaid,'1' as flag from zonekey_device_server ds left join zonekey_device d on ds.deviceid= d.id
+       where 1=1
+        <if test="name != null and name != ''">
+			and d.ip like concat('%',#{name},'%')
+		</if> 
+	</select>
+	 <select id="findDeviceByServer" parameterType="map" resultType="com.zonekey.disrec.vo.DeviceView"> 
+       select d.* from zonekey_device_server ds  join zonekey_device d on ds.deviceid= d.id
+        where 1 = 1
+       <if test="serverid !=null and serverid != ''">
+       AND ds.serverid = #{serverid}
+       </if>
+      	and d.deleteflag = '0'
+       and ds.deleteflag = '0'
+	</select>
+	
+     <!-- 添加服务器 -->
+    <insert id ="addOrRemoveDeviceServer" parameterType="com.zonekey.disrec.vo.DeviceServerView">
+        insert into zonekey_device_server( id,deviceid,serverid,deleteflag )
+            values(#{id}, #{deviceid},#{serverid},#{deleteflag})
+    </insert> 
+    
+        <delete id ="removeDeviceServer" >
+         delete from zonekey_device_server 
+    </delete>
+    
+    
+</mapper>

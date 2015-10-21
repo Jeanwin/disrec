@@ -1,0 +1,46 @@
+<div xmlns="http://www.w3.org/1999/html" style="height:500px">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </button>
+        <span class="modal-title" >
+            <h3>上传LOGO</h3>
+        </span>
+    </div>
+    <div class="modal-body" >
+        <div class="col-xs-12" >
+            <div class="drop-box" style="height:350px"  ng-file-drop="onFileSelect($files)"
+                 ng-file-drag-over-class="optional-css-class-name-or-function">
+                <div ng-if="!file" style="padding:32px">
+                    请拖拽上传LOGO到这里
+                </div>
+
+                <div class="alert alert-danger" ng-if="error" type="error">上传失败</div>
+                <table align="center">
+                        <tr ng-repeat="lists in file">
+                            <td>文件名:</td>
+                            <td>{{lists.name}}</td>
+                            <td>　　　</td>
+                            <td>大小:</td>
+                            <td>{{lists.size/1024}}KB</td>
+                        </tr>
+                </table>
+
+                <!--<div ng-if="lists" style="float:left"  ng-repeat="lists in file">-->
+                    <!--<img src="assets/img/icons/icon-excel.png">-->
+                    <!--<!--<span class="progress" ng-show="progress > 0">-->
+                        <!--<div style="width:{{progress}}%">{{progress}}%</div>-->
+                    <!--</span>-->
+                     <!--{{lists.name}} ({{lists.size}}KB) </br>-->
+                <!--</div>-->
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-if="upload && progress < 100 && !error" ng-click="abort()">取消上传</button>
+        <button class="btn btn-primary" ng-if="!upload" data-ng-disabled="!file" ng-click="startUpload()">开始导入</button>
+        <button class="btn btn-primary" ng-if="error" data-ng-disabled="!file" ng-click="startUpload()">重试</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

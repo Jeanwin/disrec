@@ -1,0 +1,69 @@
+<div class="container-fluid" style="background-color: #f2f2f2;border-radius: 4px;width: 500px;">
+    <div class="row" style="font-size:18px;color: #a3a3a3;padding: 40px 0 24px 0">
+        <div class="col-xs-3" style="border-right: solid 2px #27ace6;">
+            <a href ng-click="ImportData()" ng-class="{'ImportData':ImportDataModal===true}" style="text-decoration: none">导入资料</a>
+        </div>
+        <div class="col-xs-3" style="margin-left: 16px;">
+            <a href ng-click="uploading()" ng-class="{'ImportData':uploadingModal===true}" style="text-decoration: none">上传</a>
+        </div>
+        <div class="col-xs-3 pull-right" style="font-size: 16px">已选3个文件</div>
+    </div>
+    <div ng-show="ImportDataModal === true">
+        <div ui-tree id="tree-root" data-drag-enabled="false" style="overflow: auto;height: 320px;">
+            <ol ui-tree-nodes ng-model="areaTree">
+                <li ng-repeat="node in areaTree" ui-tree-node ng-include="'resources_renderer.html'"></li>
+            </ol>
+        </div>
+    </div>
+
+    <div ng-show="uploadingModal === true" style="margin-bottom: 20px">
+        <div class="col-xs-12">
+            <div class="drop-box" ng-file-drop="onFileSelect($files)"
+                 ng-file-drag-over-class="optional-css-class-name-or-function"
+                 ng-show="dropSupported">
+
+                <div ng-if="!file" style="padding:32px">
+                    请拖拽课表模板文件到这里<br>
+                    <a href='system/userTemplate.zip'>下载用户模板</a>
+                </div>
+
+                <div class="alert alert-danger" ng-if="error" type="error">上传失败</div>
+
+                <div ng-if="file" style="padding:32px">
+                    <img src="assets/img/icons/icon-excel.png">
+                    <span class="progress" ng-show="progress > 0">
+                        <div style="width:{{progress}}%">{{progress}}%</div>
+                    </span>
+                    {{file.name}} ({{file.size}}KB)
+                </div>
+            </div>
+            <div>
+                <div class="js-fileapi-wrapper upload-btn" style="margin-bottom: 20px;">
+                    <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 24px 0 24px 0">
+        <button class="btn btn-primary" style="width: 233px">添加</button>
+        <button class="btn btn-default" style="width: 232px" ng-click="cancel()">取消</button>
+    </div>
+</div>
+
+<script type="text/ng-template" id="resources_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===ActiveFolder.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span ng-click="setActiveFolder(node)" title="{{node.title}}"
+              style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}
+        </span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'resources_renderer.html'" >
+        </li>
+    </ol>
+
+</script>

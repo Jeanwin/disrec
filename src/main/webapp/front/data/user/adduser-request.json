@@ -1,0 +1,15 @@
+﻿[{
+    "innerid": "102",
+    "name": "zhengshan",
+    "password": "aeeqwwo",
+    "deptid": "18",
+    "sex": "1",
+    "phone": "1518774878",
+    "email": "gao@163.com",
+    "remark": "ceshishuju",
+    "state": "1",
+    "pictureURL": "http://localhost:8080/nic.pege",
+    "schoolyear": "20140101",
+    "usertype": "2"
+}
+]

@@ -1,0 +1,200 @@
+<input type="hidden" id="urlParam4" value="{{livingAddress4}}"/>
+<input type="hidden" id="pollingFlag" value="{{pollingFlag}}"/>
+<input type="hidden" id="pollingchangeFlag" value="{{pollingchangeFlag}}"/>
+<input type="hidden" id="pollingcacheNumber" value="{{pollingcacheNumber}}"/>
+<input type="hidden" id="pollingcacheFlag" value="{{pollingcacheFlag}}"/>
+<input type="hidden" id="pollingcacheCount" value="{{pollingcacheCount}}"/>
+<!-- <div ng-if="(livingAddress4== undefined || livingAddress4== '') " class="player-wrapper" id="back-info4">
+    <div style="position: relative;top: 30%;">
+    	<i class="zkicon-fontsize-100 icon-ccamera" 
+	    style="position: relative;font-size: 88px;left: 0%;color: gray;"></i>  
+	    <h4 style="color:#fff">信号故障</h4>
+    </div>
+</div> -->
+<div  style="background:#000;" class="player-wrapper">
+	<div id="flashContent4" >
+	    <p>
+	        To view this page ensure that Adobe Flash Player version 
+	        0.0.0 or greater is installed. 
+	    </p>
+	   
+	</div>
+</div>
+
+<noscript>
+    <object  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" style="width:100%;height:100%;" id="living_liv_4">
+        <param name="movie" value="coursepatrol4/RtmpPlayer_buff_1s.swf" />
+        <param name="quality" value="high" />
+        <param name="bgcolor" value="#ffffff" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <param name="allowFullScreen" value="true" />
+        [if !IE]>
+        <object type="application/x-shockwave-flash" data="RtmpPlayer_buff_1s.swf" class="player-wrapper">
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#ffffff" />
+            <param name="allowScriptAccess" value="sameDomain" />
+            <param name="allowFullScreen" value="true" />
+            <p> 
+                Either scripts and active content are not permitted to run or Adobe Flash Player version
+                0.0.0 or greater is not installed.
+            </p>
+
+            <a href="http://www.adobe.com/go/getflashplayer">
+                <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+            </a>
+
+        </object>
+
+    </object>
+</noscript> 
+<script type="text/javascript">
+
+	/* initSwf("living_liv_1", "flashContent1");
+	initSwf("living_liv_3", "flashContent3");
+	initSwf("living_liv_4", "flashContent4");
+
+	function initSwf(cid, divid) {
+		 var swfVersionStr = "0.0.0";
+	     // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+	     var xiSwfUrlStr = "playerProductInstall.swf";
+	     var flashvars = {};
+	     var params = {};
+	     params.quality = "high";
+	     params.bgcolor = "#000000";
+	     params.allowscriptaccess = "sameDomain";
+	     params.allowfullscreen = "true";
+	     var attributes = {};
+	     attributes.id = cid;
+	     attributes.name = cid;
+	     attributes.align = "middle";
+	     swfobject.embedSWF(
+	         "coursepatrol/lone_rtmp_player.swf", divid, 
+	         "100%", "100%", 
+	         swfVersionStr, xiSwfUrlStr, 
+	         flashvars, params, attributes,onSWFcreated);
+	
+	} */
+
+     // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+     var swfVersionStr = "0.0.0";
+     // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+     var xiSwfUrlStr = "playerProductInstall.swf";
+     var flashvars = {};
+     var params = {};
+     params.quality = "high";
+     params.bgcolor = "#000000";
+     params.allowscriptaccess = "sameDomain";
+     params.allowfullscreen = "true";
+     params.wmode = "opaque";
+     var attributes = {};
+     attributes.id = "living_liv_4";
+     attributes.name = "living_liv_4";
+     attributes.align = "middle";
+     swfobject.embedSWF(
+         "coursepatrol/RtmpPlayer_buff_1s.swf", "flashContent4", 
+         "100%", "100%", 
+         swfVersionStr, xiSwfUrlStr, 
+         flashvars, params, attributes,onSWFcreated);
+     // JavaScript enabled so visibility the flashContent7 div in case it is not replaced with a swf object.
+	 
+	 function onRtmpPlayerloadMethod(){
+    	 console.log("run start...");
+		var sh  = window.setInterval(function(){
+			var url1 = document.getElementById("urlParam1").value;
+			var url3 = document.getElementById("urlParam3").value;
+			var url4 = document.getElementById("urlParam4").value;
+
+			if(url1 === "urlParam1" || url3 === "urlParam3" || url4 === "urlParam4"){
+				$("#back-info1").css("visibility","yes");
+				$("#flashContent1").css("visibility","hidden");
+				$("#living_liv_1").css("visibility","hidden");
+				$("#back-info3").css("visibility","yes");
+				$("#flashContent3").css("visibility","hidden");
+				$("#living_liv_3").css("visibility","hidden");
+				$("#back-info4").css("visibility","yes");
+				$("#flashContent4").css("visibility","hidden");
+				$("#living_liv_4").css("visibility","hidden");
+				//如果url未获取到，将图片显示，视屏隐藏，
+			} else {
+				clearInterval(sh);
+				console.log("url1's value is :　",url1);
+				console.log("url3's value is :　",url3);
+				console.log("url4's value is :　",url4);
+				
+				console.log("living ....",thisMovie('living_liv_1'));
+				//console.log("new living... " ,thisMovie('living_liv_1').initRtmpPlayer);
+				
+				//去掉 获取到流地址后，如果无视屏的图片处理机制 （3路）
+				
+				try{
+						thisMovie('living_liv_1').RtmpPlayer_Volume(1);
+				} catch(e){
+					//throw(e);
+				}
+				try{
+						thisMovie('living_liv_1').initRtmpPlayer(url1);
+						thisMovie('living_liv_3').initRtmpPlayer(url3);
+						thisMovie('living_liv_4').initRtmpPlayer(url4);
+				} catch(e){
+					//throw(e);
+				}
+				
+				
+				//如果url获取到，将图片隐藏，视屏显示，
+				/* if(url1 != ""){
+					console.log(thisMovie('living_liv_1'),thisMovie('living_liv_1').initRtmpPlayer,url1);
+					thisMovie('living_liv_1').initRtmpPlayer(url1);
+					try{
+						thisMovie('living_liv_1').RtmpPlayer_Volume(1);
+					} catch(e){
+						//throw(e);
+					}
+					
+					$("#back-info1").css("visibility","hidden");
+					$("#flashContent1").css("visibility","yes");
+					$("#living_liv_1").css("visibility","yes");
+				} else if(url1 === ""){
+					$("#back-info1").css("visibility","yes");
+					$("#flashContent1").css("visibility","hidden");
+					$("#living_liv_1").css("visibility","hidden");
+				}
+				if(url3 != ""){
+					thisMovie('living_liv_3').initRtmpPlayer(url3);
+					
+					$("#back-info3").css("visibility","hidden");
+					$("#flashContent3").css("visibility","yes");
+					$("#living_liv_3").css("visibility","yes");
+				} else if(url3 === ""){
+					$("#back-info3").css("visibility","yes");
+					$("#flashContent3").css("visibility","hidden");
+					$("#living_liv_3").css("visibility","hidden");
+				}
+				if(url4 != ""){
+					thisMovie('living_liv_4').initRtmpPlayer(url4);
+					$("#back-info4").css("visibility","hidden");
+					$("#flashContent4").css("visibility","yes");
+					$("#living_liv_4").css("visibility","yes");
+				} else if(url4 === ""){
+					$("#back-info4").css("visibility","yes");
+					$("#flashContent4").css("visibility","hidden");
+					$("#living_liv_4").css("visibility","hidden");
+				} */
+			}
+		}, 1000);
+	}
+
+	function thisMovie(movieName) {
+		if (navigator.appName.indexOf("Microsoft") != -1) {
+			return window[movieName]
+		}
+		else {
+			return document[movieName]
+		}
+	}
+	function onSWFcreated(info){
+		console.log(info);
+		info.ref.className = "player-wrapper";
+		SwfContcrlor.interFace().addswf(info);
+	}
+	
+</script>

@@ -1,0 +1,82 @@
+
+<nav class="navbar navbar-static-top systemmain" role="navigation">
+    <div class="btn-group btn btn-group-lg container-fluid nav navbar-nav">
+
+
+        <a href="#" ng-class="{'active':active===2}"
+           ng-if="global.user.authenticatid.indexOf('auth_classrooms_daily_url_view')>=0"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/daily"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            教室日常
+        </a>
+        <a href="#"
+           ng-if="global.user.authenticatid.indexOf('auth_classrooms_setup_url_view')>=0"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/setup"
+           ng-class="{'active':active===0}"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            教室设置
+        </a>
+        <a href="#"
+           ng-if="global.user.authenticatid.indexOf('auth_classrooms_facility_url_view')>=0"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/facility"
+           ng-class="{'active':active===1}"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            设备设置
+        </a>
+        <!-- <a href="#" ng-class="{'active':active===4}"
+               ng-if="global.user.authenticatid.indexOf('auth_classrooms_version_url_view')>=0"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/version"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            版本管理
+        </a> -->
+        <!-- <a href="#" ng-class="{'active':active===5}"
+       ng-if="global.user.authenticatid.indexOf('auth_classrooms_broadcast_url_view')>=0"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/broadcast"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            广播管理
+        </a> -->
+        <!-- ng-if="global.user.authenticatid.indexOf('auth_classrooms_fixedTask_url_view')>=0" -->
+         <a  ng-if="global.user.authenticatid.indexOf('auth_time_tark_url_view')>=0" href="#" ng-class="{'active':active===8}"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/fixedTask"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            定时任务
+        </a>
+        <a  ng-if="global.user.authenticatid.indexOf('auth_classrooms_cardSet_url_view')>=0" href="#" ng-class="{'active':active===9}"       
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/cardSet"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            卡管理
+        </a>
+        <a  ng-if="global.user.authenticatid.indexOf('auth_classrooms_duty_url_view')>=0" href="#" ng-class="{'active':active===7}"       
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/duty"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            值班室
+        </a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_classrooms_tactics_url_view')>=0" href="#" ng-class="{'active':active===3}"       
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/tactics"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            教室策略
+        </a>
+        
+        <!-- <a href="#" ng-class="{'active':active===6}"
+       ng-if="global.user.authenticatid.indexOf('auth_classrooms_log_url_view')>=0"
+           class="btn btn-fristprimary btn-nav"
+           ng-href="#/classrooms/log"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">
+            教室日志
+        </a> -->
+        <!--<button type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===0}"><a href="#" ng-href="#/classrooms/setup" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">教室设置</a></button>-->
+        <!--<button type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===1}"><a href="#" ng-href="#/classrooms/facility" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">设备管理</a></button>-->
+        <!--<button type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===2}"><a href="#" ng-href="#/classrooms/daily" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">教室日常管理</a></button>-->
+    </div>
+</nav>
+<div ui-view="classroom-manage"></div>
+

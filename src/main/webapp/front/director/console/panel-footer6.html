@@ -1,0 +1,242 @@
+<div style="position: absolute;width:300px;left:43px;right:5px;background: #2D343A;border-radius: 10px;">
+    <div style="width:300px;height: 10px;margin-top:10px;color:white;">
+        <button class="btn btn-xmrecord pull-left" style="margin-left: 3px;"></button>
+        <span class="pull-left">{{VideosInformations[5].title}}</span>
+        <!--{{VideosInformations[5].id}}-->
+        <input type="hidden" id="urlParam6" value="{{urlParam6}}"/>
+        <!--<div class="pull-right heig">-->
+        <!--<div class=" btn-nav2" ng-click="setMain(Video.id)" ng-class="{'active':mainVideo===Video.id}">-->
+        <!--<img  style="float:right" src="img/lemonade-icon.png" class=" btn-nav2" ng-click="setMain(Video.id)" ng-class="{'active':mainVideo===Video.id}">-->
+        <!--</div>-->
+        <!--<div class=" btn-nav2" ng-click="setMainOrSub(Video.id)" ng-class="{'active':deputyVideo===Video.id}">-->
+        <div class="pull-right" style="margin-right: 3px;">
+        	<img src="img/lemonade-icon3.png" 
+                       		class=" btn-nav2" ng-class="{'active':livingCardPara==='card5'}"
+                        	ng-click="dealLivingPara('card5')"
+                        	>
+            <img src="img/lemonade-icon.png" class=" btn-nav2" ng-click="setMain(VideosInformations[5].id)" ng-class="{'active':mainVideo===VideosInformations[5].id}">
+            <img src="img/lemonade-icon2.png" class=" btn-nav2" ng-click="setMainOrSub(VideosInformations[5].id)" ng-class="{'active':deputyVideo===VideosInformations[5].id}">
+        </div>
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+    <div style="width:300px;">
+        <!-- <section id='player-footer5' class="player-footer">
+        </section> -->
+        <div class="player-wrapper" id="back-info6"
+           	style="width: 300px;height: 180px;display: block;text-align: center;position: relative;margin-top: 6.5%;background: black;">
+		    <div style="margin-top:10%;">
+		    	<i class="zkicon-fontsize-100 icon-ccamera" 
+			    style="position: relative;font-size: 88px;top: 8px;left: 0%;color: gray;"></i>  
+			    <h4>信号故障</h4>
+		    </div>
+		</div>
+        <div id="flashContent6" class="player-wrapper">
+	            <p>
+	                To view this page ensure that Adobe Flash Player version 
+	                0.0.0 or greater is installed. 
+	            </p>
+	           
+	        </div>
+        
+	        <!-- <noscript>
+	            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="300" height="180" id="lone_rtmp_player6">
+	                <param name="movie" value="lone_rtmp_player.swf" />
+	                <param name="quality" value="high" />
+	                <param name="bgcolor" value="#ffffff" />
+	                <param name="allowScriptAccess" value="sameDomain" />
+	                <param name="allowFullScreen" value="true" />
+	                [if !IE]>
+	                <object type="application/x-shockwave-flash" data="lone_rtmp_player.swf" width="300" height="180">
+	                    <param name="quality" value="high" />
+	                    <param name="bgcolor" value="#ffffff" />
+	                    <param name="allowScriptAccess" value="sameDomain" />
+	                    <param name="allowFullScreen" value="true" />
+	                    <p> 
+	                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+	                        0.0.0 or greater is not installed.
+	                    </p>
+	
+	                    <a href="http://www.adobe.com/go/getflashplayer">
+	                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+	                    </a>
+	
+	                </object>
+	
+	            </object>
+	        </noscript>  -->
+    </div>
+    <!-- <div style="width:300px;margin-top:60px;">
+        <div class="heig2">
+            <div class=" btn-nav2" ng-class="{'active':livingCardPara==='card5'}">
+                <img src="img/lemonade-icon3.png"
+							ng-click="dealLivingPara('card5')" >
+            </div>
+            <div class="pull-right btn-nav2">
+                <img src="img/lemonade-icon4.png">
+            </div>
+        </div>
+    </div> -->
+</div>
+
+<script type="text/javascript">
+     // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+     var swfVersionStr = "0.0.0";
+     // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+     var xiSwfUrlStr = "playerProductInstall.swf";
+     var flashvars = {};
+     var params = {};
+     params.quality = "high";
+     params.bgcolor = "#000000";
+     params.allowscriptaccess = "sameDomain";
+     params.allowfullscreen = "true";
+     var attributes = {};
+     attributes.id = "lone_rtmp_player6";
+     attributes.name = "lone_rtmp_player6";
+     attributes.align = "middle";
+     swfobject.embedSWF(
+         "lone_rtmp_player.swf", "flashContent6", 
+         "300", "180", 
+         swfVersionStr, xiSwfUrlStr, 
+         flashvars, params, attributes);
+     // JavaScript enabled so display the flashContent7 div in case it is not replaced with a swf object.
+     swfobject.createCSS("#flashContent6", "display:block;text-align:left;");
+	function onRtmpPlayerload(){
+		var sh  = window.setInterval(function(){
+			var url7 = document.getElementById("movieParam").value;
+			var url1 = document.getElementById("urlParam1").value;
+			var url2 = document.getElementById("urlParam2").value;
+			var url3 = document.getElementById("urlParam3").value;
+			var url4 = document.getElementById("urlParam4").value;
+			var url5 = document.getElementById("urlParam5").value;
+			var url6 = document.getElementById("urlParam6").value;
+			if(url1 === "urlParam1" || url2 === "urlParam2" || url3 === "urlParam3" || 
+				url4 === "urlParam4" || url5 === "urlParam5" || url6 === "urlParam6" || 
+				url7 === "urlParam7"){
+				console.log("未获取到值");
+				$("#back-info1").css("display","block");
+				$("#flashContent1").css("display","none");
+				$("#lone_rtmp_player1").css("display","none");
+				
+				$("#back-info2").css("display","block");
+				$("#flashContent2").css("display","none");
+				$("#lone_rtmp_player2").css("display","none");
+				
+				$("#back-info3").css("display","block");
+				$("#flashContent3").css("display","none");
+				$("#lone_rtmp_player3").css("display","none");
+				
+				$("#back-info4").css("display","block");
+				$("#flashContent4").css("display","none");
+				$("#lone_rtmp_player4").css("display","none");
+				
+				$("#back-info5").css("display","block");
+				$("#flashContent5").css("display","none");
+				$("#lone_rtmp_player5").css("display","none");
+				
+				$("#back-info6").css("display","block");
+				$("#flashContent6").css("display","none");
+				$("#lone_rtmp_player6").css("display","none");
+				
+				$("#back-info7").css("display","block");
+				$("#flashContent7").css("display","none");
+				$("#lone_rtmp_player7").css("display","none");
+			} else {
+				 clearInterval(sh);
+				console.log("url7's value is :　"+url7);
+				console.log("url1's value is :　"+url1);
+				console.log("url2's value is :　"+url2);
+				console.log("url3's value is :　"+url3);
+				console.log("url4's value is :　"+url4);
+				console.log("url5's value is :　"+url5);
+				console.log("url6's value is :　"+url6);
+				if(url1 != ""){
+					thisMovie('lone_rtmp_player1').initRtmpPlayer(url1);
+					$("#back-info1").css("display","none");
+					$("#flashContent1").css("display","block");
+				} else if(url1 === ""){
+					$("#back-info1").css("display","block");
+					$("#flashContent1").css("display","none");
+					$("#lone_rtmp_player1").css("display","none");
+				}
+				if(url2 != ""){
+					thisMovie('lone_rtmp_player2').initRtmpPlayer(url2);
+					$("#back-info2").css("display","none");
+					$("#flashContent2").css("display","block");
+				} else if(url2 === ""){
+					$("#back-info2").css("display","block");
+					$("#flashContent2").css("display","none");
+					$("#lone_rtmp_player2").css("display","none");
+				}
+				
+				if(url3 != ""){
+					thisMovie('lone_rtmp_player3').initRtmpPlayer(url3);
+					$("#back-info3").css("display","none");
+					$("#flashContent3").css("display","block");
+				} else if(url3 === ""){
+					$("#back-info3").css("display","block");
+					$("#flashContent3").css("display","none");
+					$("#lone_rtmp_player3").css("display","none");
+				}
+				
+				if(url4 != ""){
+					thisMovie('lone_rtmp_player4').initRtmpPlayer(url4);
+					$("#back-info4").css("display","none");
+					$("#flashContent4").css("display","block");
+				} else if(url4 === ""){
+					$("#back-info4").css("display","block");
+					$("#flashContent4").css("display","none");
+					$("#lone_rtmp_player4").css("display","none");
+				}
+				
+				if(url5 != ""){
+					thisMovie('lone_rtmp_player5').initRtmpPlayer(url5);
+					$("#back-info5").css("display","none");
+					$("#flashContent5").css("display","block");
+				} else if(url5 === ""){
+					$("#back-info5").css("display","block");
+					$("#flashContent5").css("display","none");
+					$("#lone_rtmp_player5").css("display","none");
+				}
+				
+				if(url6 != ""){
+					thisMovie('lone_rtmp_player6').initRtmpPlayer(url6);
+					$("#back-info6").css("display","none");
+					$("#flashContent6").css("display","block");
+				} else if(url6 === ""){
+					$("#back-info6").css("display","block");
+					$("#flashContent6").css("display","none");
+					$("#lone_rtmp_player6").css("display","none");
+				}
+				
+				if(url7 != ""){
+					thisMovie('lone_rtmp_player7').initRtmpPlayer(url7);
+					$("#back-info7").css("display","none");
+					$("#flashContent7").css("display","block");
+				} else if(url7 === ""){
+					$("#back-info7").css("display","block");
+					$("#flashContent7").css("display","none");
+					$("#lone_rtmp_player7").css("display","none");
+				}
+				/* thisMovie('lone_rtmp_player7').initRtmpPlayer(url7);
+				thisMovie('lone_rtmp_player1').initRtmpPlayer(url1);
+				thisMovie('lone_rtmp_player2').initRtmpPlayer(url2);
+				thisMovie('lone_rtmp_player3').initRtmpPlayer(url3);
+				thisMovie('lone_rtmp_player4').initRtmpPlayer(url4);
+				thisMovie('lone_rtmp_player5').initRtmpPlayer(url5);
+				thisMovie('lone_rtmp_player6').initRtmpPlayer(url6); */
+				//thisMovie('lone_rtmp_player').initRtmpPlayer("rtmp://192.168.12.117:51935/zonekey","00E04CC20811Living1");
+				//thisMovie('lone_rtmp_player').initRtmpPlayer("rtmp://192.168.12.133/vod/flvs/7");
+			} 
+		}, 3000);
+
+	}
+	function thisMovie(movieName) {
+		if (navigator.appName.indexOf("Microsoft") != -1) {
+			return window[movieName]
+		}
+		else {
+			return document[movieName]
+		}
+	}
+</script>

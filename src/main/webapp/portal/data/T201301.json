@@ -1,0 +1,164 @@
+{
+	"id": "T201301", 
+	"name": "2013 COMBINED MARINE AND NON-MARINE QUOTA SHARE & SURPLUS TREATY Property Surplus", 
+    "name_short": "2013 Combined M & NM QS/Surplus (Property Surplus)", 
+	"treaty_type": "溢额",
+	"business_type": "分出",
+	"year": 2013,
+	"start_date":"2013-01-01",
+	"end_date":"2013-12-31",
+	"cancelation_notice_date":"2013-12-21",
+	"algorithm":{
+		"method":"001",
+		"basic_factor":"001",
+		"billing_period":"002",
+		"billing_days":30,
+		"settle_days":45
+	},
+    "inwards": [{
+        "code": "R000062", 
+        "name": "太平再保险有限公司北京分公司",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "7.5",
+		"claim_share":"",
+		"primary": ""
+    },
+	{
+        "code": "R000066", 
+        "name": "BEST RE- Far East Regional Office, Labuan, Malaysia",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "3.0",
+		"claim_share":"",
+		"primary":"" 
+    },
+	{
+        "code": "R000069", 
+        "name": "General Insurance Corportation of India, Mumbai, India",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "7.5",
+		"claim_share":"",
+		"primary":"" 
+    },
+	{
+        "code": "R000076", 
+        "name": "Sompo Japan Reinsurance Co Ltd, Hong Kong on behalf of Sompo Japan Insurance",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "7.0",
+		"claim_share":"",
+		"primary":"" 
+    },
+	
+		{
+        "code": "R000077", 
+        "name": "Swiss Reinsurance Co Ltd, Singapore",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "35.0",
+		"claim_share":"",
+		"primary":"" 
+    },
+		{
+        "code": "R000079", 
+        "name": "XL Re Ltd, Singapore",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "6.0",
+		"claim_share":"",
+		"primary":"" 
+    },
+		{
+        "code": "R000081", 
+        "name": "Trust Internatinal, Bahrain",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "3.5",
+		"claim_share":"",
+		"primary":"" 
+    },
+		{
+        "code": "R000082", 
+        "name": "Societe Centrale De Reassurance, Morocco",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "0.5",
+		"claim_share":"",
+		"primary":"" 
+    },
+		{
+        "code": "R000083", 
+        "name": "Liberty Mutual Insurance Europe Limited, HongKong",
+		"broker":"Guy Carpenter & Company Private Limited",
+		"share": "30.0",
+		"claim_share":"",
+		"primary":"" 
+    }
+	], 
+    "departments": [{
+        "code": "00000000", 
+        "name": "总公司"
+	}], 
+	"renewal_history":[{
+		"date":"2011-01-01",
+		"relative":"345345",
+		"parent":"父合约编号:PT201106"
+	},
+	{
+		"date":"2012-01-01",
+		"relative":"5564334",
+		"parent":"父合约编号:PT201206"
+	}],
+    "sections": [{
+        "code": "A", 
+        "name": "财产险溢额", 
+        "currency": "CNY",
+		"outward_ratio":"",
+		"fixed_fee_ratio":25,
+		"inward_to_outward_ratio": "002",
+		"max_limit": 280000000,
+		"tax_rate":0,
+		"massive_claim_limit":1000000,
+		"cash_claim_limit":500,
+		"major_business_ratio_limit":100.0,
+		"sub_business_ratio_limit":100.0,
+		"shareholder_business_ratio_limit":0,
+		"settle_method":"S01",
+		"settle_year":0,
+		"lost_assessment_scope":"整个危险单位的估损",
+		"products": [{
+			"code": "0101",
+			"name": "财产基本险"
+		},
+		{
+			"code": "0102",
+			"name": "财产综合险"
+		},
+		{
+			"code": "0104",
+			"name": "财产一切险"
+		},
+		{
+			"code": "0107",
+			"name": "营业中断保险险"
+		},
+		{
+			"code": "0120",
+			"name": "贷款抵押物财产保险"
+		},
+		{
+			"code": "0124",
+			"name": "中小企业综合保险"
+		},
+		{
+			"code": "0301",
+			"name": "家庭财产综合保险"
+		}],
+		"fee": {
+			"type": "固定",
+			"min_limit": 0,
+			"basic_claim_rate": 0,
+			"claim_rates":""	
+		},
+		"exclusions":[{
+			"product_code":"",
+			"product_name":"",
+			"code":"",
+			"description":""
+		}]
+    }]
+}

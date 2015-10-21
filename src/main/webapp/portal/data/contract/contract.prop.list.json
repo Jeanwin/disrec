@@ -1,0 +1,302 @@
+{
+    "total": 192,
+    "data": [
+        {
+            "contStatus": "6",
+            "contGrpTypCde": "B",
+            "contYear": "2017",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1514649600000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 11,
+                "year": 117,
+                "timezoneOffset": -480,
+                "day": 0,
+                "date": 31
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201702",
+            "refNme": "生效2016",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1483200000000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 0,
+                "year": 117,
+                "timezoneOffset": -480,
+                "day": 0,
+                "date": 1
+            },
+            "tmpContNo": "16007"
+        },
+        {
+            "contStatus": "6",
+            "contGrpTypCde": "B",
+            "contYear": "2016",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1401379200000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 4,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 5,
+                "date": 30
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201602",
+            "refNme": "合同简称dd",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1398614400000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 3,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 1,
+                "date": 28
+            },
+            "tmpContNo": "16003"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "B",
+            "contYear": "2016",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1403712000000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 5,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 4,
+                "date": 26
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201603",
+            "refNme": "除外责任2016",
+            "contBgnTm": null,
+            "tmpContNo": "16004"
+        },
+        {
+            "contStatus": "6",
+            "contGrpTypCde": "B",
+            "contYear": "2016",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1483113600000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 11,
+                "year": 116,
+                "timezoneOffset": -480,
+                "day": 6,
+                "date": 31
+            },
+            "inoutMrk": "1",
+            "contNo": "1PB201601",
+            "refNme": "生效2016",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1451577600000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 0,
+                "year": 116,
+                "timezoneOffset": -480,
+                "day": 5,
+                "date": 1
+            },
+            "tmpContNo": "16005"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "B",
+            "contYear": "2016",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1497024000000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 5,
+                "year": 117,
+                "timezoneOffset": -480,
+                "day": 6,
+                "date": 10
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201601",
+            "refNme": "生效2016合同全称",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1451577600000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 0,
+                "year": 116,
+                "timezoneOffset": -480,
+                "day": 5,
+                "date": 1
+            },
+            "tmpContNo": "16006"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "H",
+            "contYear": "2015",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1451491200000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 11,
+                "year": 115,
+                "timezoneOffset": -480,
+                "day": 4,
+                "date": 31
+            },
+            "inoutMrk": "1",
+            "contNo": "OPH201501",
+            "refNme": null,
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1420041600000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 0,
+                "year": 115,
+                "timezoneOffset": -480,
+                "day": 4,
+                "date": 1
+            },
+            "tmpContNo": "14026"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "B",
+            "contYear": "2015",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1482854400000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 11,
+                "year": 116,
+                "timezoneOffset": -480,
+                "day": 3,
+                "date": 28
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201504",
+            "refNme": "延长期间增加险种",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1430150400000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 3,
+                "year": 115,
+                "timezoneOffset": -480,
+                "day": 2,
+                "date": 28
+            },
+            "tmpContNo": "14044"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "B",
+            "contYear": "2014",
+            "contEndTm": null,
+            "inoutMrk": "1",
+            "contNo": "OPB201403",
+            "refNme": "除外责任",
+            "contBgnTm": null,
+            "tmpContNo": "14002"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "B",
+            "contYear": "2014",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1400515200000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 4,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 2,
+                "date": 20
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201404",
+            "refNme": "接受人名称",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1396281600000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 3,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 2,
+                "date": 1
+            },
+            "tmpContNo": "14004"
+        },
+        {
+            "contStatus": "3",
+            "contGrpTypCde": "B",
+            "contYear": "2014",
+            "contEndTm": {
+                "nanos": 0,
+                "time": 1402070400000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 5,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 6,
+                "date": 7
+            },
+            "inoutMrk": "1",
+            "contNo": "OPB201405",
+            "refNme": "T",
+            "contBgnTm": {
+                "nanos": 0,
+                "time": 1401379200000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 4,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 5,
+                "date": 30
+            },
+            "tmpContNo": "14027"
+        }
+    ]
+}

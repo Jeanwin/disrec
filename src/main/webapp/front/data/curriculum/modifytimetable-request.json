@@ -1,0 +1,22 @@
+﻿{
+    "id": "0001",
+    "date": "20140909",
+    "weekdate": "5",
+    "classid": "第三节",
+    "areaid": "001室",
+    "userid": "张老师",
+    "state": "在线",
+    "areastate": "在线",
+    "subject": "数学",
+    "coursedesc": "三角函数的概念",
+    "deptid": "初二(3)",
+    "live": "0",
+    "livemodel": "1",
+    "record": "1",
+    "video": "2",
+    "resource": "0",
+    "weeks": "9",
+    "classnum": "7",
+    "classniddlerecord": "0",
+    "intercourse": "1"
+}

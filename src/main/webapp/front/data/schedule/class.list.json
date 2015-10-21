@@ -1,0 +1,44 @@
+{
+    "total": 2,
+    "data": [
+        {
+            "id": "10",
+            "parentid": "2",
+            "name": "006教室",
+            "parentname": "1号楼",
+            "attribute": "Y"
+        },
+        {
+            "id": "5",
+            "parentid": "2",
+            "name": "001教室",
+            "parentname": "1号楼",
+            "attribute": "Y",
+            "deptid": "10"
+        },
+        {
+            "id": "6",
+            "parentid": "2",
+            "name": "002教室",
+            "parentname": "1号楼",
+            "attribute": "Y",
+            "deptid": "11"
+        },
+        {
+            "id": "7",
+            "parentid": "2",
+            "name": "003教室",
+            "parentname": "1号楼",
+            "attribute": "Y",
+            "deptid": "12"
+        },
+        {
+            "id": "8",
+            "parentid": "2",
+            "name": "004教室",
+            "parentname": "1号楼",
+            "attribute": "Y",
+            "deptid": "13"
+        }
+    ]
+}

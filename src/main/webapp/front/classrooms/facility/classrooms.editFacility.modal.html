@@ -1,0 +1,196 @@
+<style>
+    .setColor{
+        background-color: #afebff;
+    }
+</style>
+
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3 ng-if="operationFlag==='update'">编辑设备</h3>
+            <h3 ng-if="operationFlag==='save'">添加设备</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form name="frmAreaEditor" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaTitle"><span style="color: red">*</span>所属教室</label>
+
+                <div class="col-sm-6">
+                    <!--typeahead="state.id +'-'+ state.value as state.id +'-'+ state.value for state in getByReturn('areaname',$viewValue) | filter:$viewValue "-->
+                    <div class="input-group">
+                        <input name="areaname"
+                               ng-click="getByReturn('areaname',facility.areaname);toggleTree('')"
+                               class="form-control"
+                               id="areaTitle"
+                               type="text"
+                               ng-model="facility.areaname"
+                           placeholder="所属教室" typeahead-loading="loading..."
+                            ng-blur="checkAutoMessage('areaname', facility);areanameCheckDispaly=true"
+                           typeahead="state.id+'-'+state.value as state.innerid+'-'+ state.value for state in getByReturn('areaname',$viewValue) | filter:$viewValue "
+                           typeahead-wait-ms="500"
+                           typeahead-on-select="searchParentDevice(facility.areaname);toggleTree('ImmediatelyClose')"
+                           required>
+                        <span class="input-group-addon" ng-click="getByReturn('areaname',facility.areaname);toggleTree('')">
+                            <i class="glyphicon glyphicon-th" popup-placement="right" popup-auto-show="ClassTimePopupIsShown"></i>
+                        </span>
+                    </div>
+                    <div collapse="hideTree" class="dropdown-tree-wrapper">
+                        <div style="cursor: pointer;list-style-type: none;"
+                            ng-repeat="typeValue in autoMessageArray"
+                            ng-class="{'setColor' : typeValue.getColor}"
+                            ng-click="setautoMessageValue('areaname', facility, typeValue);setColor(typeValue)">
+                            <span style="margin-left: 15px;">{{typeValue.value}}</span>
+                        </div>
+                    </div>
+                    <!-- <div ng-show="areanameCheckDispaly">
+                        <span ng-show="frmAreaEditor.areaname.$error.required">
+                        	<div style="color: red">必须输入教室</div>
+                        </span>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="name"><span style="color: red">*</span>设备名称</label>
+                <div class="col-sm-6">
+                <!--<input class="form-control popup"-->
+                    <input name="name" class="form-control"
+                       id="name"
+                       placeholder="设备名称"
+                       ng-change="checkFacilityName(parentDevices)"
+                       ng-blur="nameCheckDispaly=true"
+                       ng-pattern=/^.{1,15}$/
+                       ng-model="facility.name"
+                       required
+                        >
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none">                    
+                    <span ng-show="showFacilityNameError">
+                        <div style="color: red">*该设备已存在</div>
+                    </span>
+                    <span ng-show="frmAreaEditor.name.$error.pattern">
+                        <div style="color: red">长度1-15个字符</div>
+                    </span>                   
+                </div>
+            </div>
+            <!--{{facility.typeid}}qq-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span style="color: red">*</span>设备类型</label>
+                <div class="col-sm-6">
+                    <select name="selectd" class="form-control" ng-model="facility.typeid"
+                            ng-blur="typeidCheckDispaly=true"
+                            ng-change="checkType()"
+                            ng-options="department.value as department.name for department in deviceDepartment"
+                            required>
+                            <option value="">请选择</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none">                    
+                    <!-- <span ng-show="frmAreaEditor.selectd.$error.required">
+                        <div style="color: red">必须选择设备类型</div>
+                    </span> -->
+                    <span ng-show="showFacilityType">
+                        <div style="color: red">该教室下已有一台录播机</div>
+                    </span>                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">父设备</label>
+                <div class="col-sm-6">
+                <select class="form-control" ng-model="facility.parentid"
+                        ng-options="device.id as device.value for device in parentDevices">
+                    <option value="">请选择</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="IP"><span style="color: red">*</span>IP地址</label>
+                <div class="col-sm-6">
+                    <input name="ip" class="form-control"
+                       id="IP"
+                       placeholder="请输入IP地址"
+                       ng-model="facility.ip"
+                       ng-blur="ipCheckDispaly=true"
+                       ng-pattern = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/
+                        required
+                        >
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none padding-right-none">                  
+                    <span ng-show="frmAreaEditor.ip.$error.pattern">
+                        <div style="color: red">必须是000.000.000.000格式</div>
+                    </span>                   
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="MAC"><span style="color: red">*</span>MAC地址</label>
+                <div class="col-sm-6">
+                    <input name="mac" class="form-control"
+                           id="MAC"
+                           placeholder="请输入MAC地址"
+                           ng-model="facility.mac"
+                           ng-change="checkMac()" 
+                           ng-pattern=/^[A-Fa-f\d]{2}[A-FA-Fa-f\d]{2}[A-FA-Fa-f\d]{2}[A-FA-Fa-f\d]{2}[A-FA-Fa-f\d]{2}[A-FA-Fa-f\d]{2}$/
+                            required
+                      >
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none padding-right-none">
+                 <!-- <span ng-show="frmAreaEditor.mac.$error.required">
+                    <div style="color: red">必须输入MAC</div>
+                 </span> -->
+                     <span ng-show="!frmAreaEditor.mac.$error.required&&frmAreaEditor.mac.$error.pattern">
+                        <div style="color: red">必须是00242119BDE4格式</div>
+                    </span>
+                    <span ng-show="showMacRequired">
+                        <div style="color: red">MAC必须唯一</div>
+                     </span>
+                </div>
+            </div>
+			<div class="form-group">
+                <label class="col-sm-2 control-label" for="MAC">视频源数</label>
+                <div class="col-sm-6">
+                    <input name="videoRe" class="form-control"
+                           id="videoRe"
+                           placeholder="0-7的数字"
+                           ng-model="facility.camera" 
+                           ng-pattern=/^[0-7]$/
+                      >
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none padding-right-none">
+                     <span ng-show="frmAreaEditor.videoRe.$error.pattern">
+                        <div style="color: red">必须是0-7数字</div>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">主设备</label>
+                <div class="col-sm-6">
+                    <div class="btn-group">
+                        <button class="btn btn-default" ng-model="facility.mostly" ng-click="checkMostly(parentDevices,facility)"
+                                btn-radio="'0'">是</button>
+                        <button class="btn btn-default" ng-model="facility.mostly"
+                                ng-click = "checkMostlyNo()"
+                                btn-radio="'1'"
+                                >否</button>
+                    </div>
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none">
+                    <span ng-show="showFacilityMinError">
+                        <div style="color: red">*该教室已存在主设备</div>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-default" type="reset" ng-click="">重填</button>
+              <button class="btn btn-primary" ng-disabled="frmAreaEditor.$pristine || frmAreaEditor.$invalid || showFacilityNameError || showFacilityMinError || showMacRequired || showFacilityType || frmAreaEditor.ip.$error.pattern || frmAreaEditor.name.$error.pattern || frmAreaEditor.videoRe.$error.pattern" ng-click="Facilitysave(facility)">保存</button>
+              <button class="btn btn-default" ng-click="cancel()">取消</button>
+          </div>
+        </form>
+    </div>
+    
+</div>

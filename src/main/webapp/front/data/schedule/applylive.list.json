@@ -1,0 +1,34 @@
+[
+    {
+        "id": "13",
+        "parentid": null,
+        "name": "003教室",
+        "innerid": null,
+        "attribute": null,
+        "userid": null,
+        "deptid": null,
+        "state": null,
+        "sort": null,
+        "createdate": null,
+        "modifydate": null,
+        "createuser": null,
+        "modifyuser": null,
+        "deleteflag": null
+    },
+    {
+        "id": "11",
+        "parentid": null,
+        "name": "001教室",
+        "innerid": null,
+        "attribute": null,
+        "userid": null,
+        "deptid": null,
+        "state": null,
+        "sort": null,
+        "createdate": null,
+        "modifydate": null,
+        "createuser": null,
+        "modifyuser": null,
+        "deleteflag": null
+    }
+]

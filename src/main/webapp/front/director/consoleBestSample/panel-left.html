@@ -1,0 +1,160 @@
+<div class="panel panel-console">
+    <div style="position: relative;top: 50px;">
+        <div class="panel-body">
+            <section class="sect">
+                切换特效
+                <div class="">
+
+                    <div class=" btn-nav" ng-click="setEffect('11',port)" ng-class="{'active':activeEffect==='11'}">
+                        <img src="img/lemonade-icon_icon-transition-1.png">
+                    </div>
+
+                    <div class=" btn-nav"  ng-click="setEffect('0',port)" ng-class="{'active':activeEffect==='0'}">
+                        <img src="img/lemonade-icon_icon-transition-2.png">
+                    </div>
+
+                    <div class=" btn-nav"  ng-click="setEffect('1',port)" ng-class="{'active':activeEffect==='1'}">
+                        <img src="img/lemonade-icon_icon-transition-3.png">
+                    </div>
+
+                    <div class=" btn-nav"  ng-click="setEffect('2',port)" ng-class="{'active':activeEffect==='2'}">
+                        <img src="img/lemonade-icon_icon-transition-5.png">
+                    </div>
+
+
+                        <div class=" btn-nav"  ng-click="setEffect('3',port)" ng-class="{'active':activeEffect==='3'}">
+                            <img src="img/lemonade-icon_icon-transition-6.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('4',port)" ng-class="{'active':activeEffect==='4'}">
+                            <img src="img/lemonade-icon_icon-transition-4.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('7',port)" ng-class="{'active':activeEffect==='7'}">
+                            <img src="img/lemonade-icon_icon-transition-7.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('8',port)" ng-class="{'active':activeEffect==='8'}">
+                            <img src="img/lemonade-icon_icon-transition-8.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('6',port)" ng-class="{'active':activeEffect==='6'}">
+                            <img src="img/lemonade-icon_icon-transition-9.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('5',port)" ng-class="{'active':activeEffect==='5'}">
+                            <img src="img/lemonade-icon_icon-transition-10.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('9',port)" ng-class="{'active':activeEffect==='9'}">
+                            <img src="img/lemonade-icon_icon-transition-11.png">
+                        </div>
+
+                        <div class=" btn-nav"  ng-click="setEffect('10',port)" ng-class="{'active':activeEffect==='10'}">
+                            <img src="img/lemonade-icon_icon-transition-12.png">
+                        </div>
+                </div>
+                <!--这个时间也先注掉用的时候在打开--------------------------------------------------------------------------->
+                <!--时间<input type="number" size="4" style="width:80px">秒-->
+            </section>
+            <!--字幕与台标设置还不确定，功能先注掉用的时候在打开----------------------------------------------------------->
+            <!--<section class="sect">
+                字幕与台标设置
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class=" btn-nav"  ng-click="setEffect('13')" ng-class="{'active':activeEffect==='13'}">
+                            <img src="img/lemonade-icon_icon-subtitle.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class=" btn-nav"  ng-click="setEffect('14')" ng-class="{'active':activeEffect==='14'}">
+                            <img src="img/lemonade-icon_icon-logo.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class=" btn-nav"  ng-click="setEffect('15')" ng-class="{'active':activeEffect==='15'}">
+                            <img src="img/lemonade-icon_icon-transition-12.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class=" btn-nav"  ng-click="setEffect('16')" ng-class="{'active':activeEffect==='16'}">
+                            <img src="img/lemonade-icon_icon-transition-12.png">
+                        </div>
+                    </div>
+                </div>
+            </section>-->
+            <section class="sect">
+                画中画
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class=" btn-nav"  ng-click="setHzh('Insert')" ng-class="{'active':PIP==='Insert'}">
+                            <img src="img/lemonade-icon_icon-pip-layout-1.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class=" btn-nav"  ng-click="setHzh('LeftRight')" ng-class="{'active':PIP==='LeftRight'}">
+                            <img src="img/lemonade-icon_icon-pip-layout-2.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class=" btn-nav"  ng-click="setHzh('Tile')" ng-class="{'active':PIP==='Tile'}">
+                            <img src="img/lemonade-icon_icon-pip-layout-3.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class=" btn-nav"  ng-click="setHzh('000')" ng-class="{'active':PIP==='000'}">
+                            <img src="img/lemonade-icon_icon-pip-layout-4.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class=" btn-nav"  ng-click="setHzh('change')">
+                            <img src="img/lemonade-icon_icon-pip-layout-5.png">
+                        </div>
+                    </div>
+                </div>
+                画中画设置<br><br>
+                位置
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setLoc('LU')" ng-class="{'active':PIPLocation==='LU'}">
+                            <img src="img/lemonade-icon_icon-pip-position-2.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setLoc('RU')" ng-class="{'active':PIPLocation==='RU'}">
+                            <img src="img/lemonade-icon_icon-pip-position-1.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setLoc('LD')" ng-class="{'active':PIPLocation==='LD'}">
+                            <img src="img/lemonade-icon_icon-pip-position-3.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setLoc('RD')" ng-class="{'active':PIPLocation==='RD'}">
+                            <img src="img/lemonade-icon_icon-pip-position-4.png">
+                        </div>
+                    </div>
+
+                </div>
+                大小
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setSize('1')" ng-class="{'active':PIPSize==='1'}">1</div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setSize('2')" ng-class="{'active':PIPSize==='2'}">2</div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setSize('3')" ng-class="{'active':PIPSize==='3'}">3</div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class=" btn-nav"  ng-click="setSize('4')" ng-class="{'active':PIPSize==='4'}">4</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,156 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top:16px">
+        <div class="col-xs-2">
+            <div class="whiteframe">
+                <div>
+                    <div class="system-left-top font-overlay-1" title="{{activeTreeNode.node.name}}">当前区域：{{activeTreeNode.node.name}}</div>
+                    <div>
+                    	<button  ng-if="global.user.authenticatid.indexOf('auth_system_data_type_button_add')>=0" class="btn btn-link" ng-click="editCategory()" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="添加分类">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <button ng-disabled="open1" ng-if="global.user.authenticatid.indexOf('auth_system_data_type_button_edit')>=0" class="btn btn-link" ng-click="editCategory(activeTreeNode.node)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑分类">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button  ng-if="global.user.authenticatid.indexOf('auth_system_data_type_button_delete')>=0" ng-disabled="open1" class="btn btn-link has-error" ng-click="deleteCategory(activeArea)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除分类">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <div ui-tree id="tree-root" data-drag-enabled="false">
+                        <ol ui-tree-nodes ng-model="dicTree">
+                            <li ng-repeat="node in dicTree" ui-tree-node ng-include="'category_tree_nodes.html'"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10">
+
+            <div class="whiteframe" style="margin-left:-16px">
+                <div style="padding:8px;" class="row">
+                    <div class="col-xs-8">
+                        <button  ng-if="global.user.authenticatid.indexOf('auth_system_data_content_button_add')>=0" class="btn btn-primary" ng-click="editCode()">
+                            <span class="glyphicon glyphicon-plus"></span>添加代码</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入分类名称" ng-model="numdata.name">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="searchCodes('1')"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body padding-0" id="rightContent-height">
+                        <table class="table table-striped" style="text-align: center">
+                            <thead class="formthead" >
+                           	<td  style="WORD-WRAP: break-word" width="340">父级分类</td>
+                            <td>代码名称</td>
+                            <td>代码值</td>
+                            <td>显示顺序</td>
+                            <td>操作</td>
+                            </thead>
+                            <tr ng-repeat="code in dataList">
+                                <td>{{code.parentName}}</td>
+                                <td>{{code.name}}</td>
+                                <td>{{code.value}}</td>
+                                <td>{{code.sort}}</td>
+                                <td>
+                                    <button  ng-if="global.user.authenticatid.indexOf('auth_system_data_content_button_edit')>=0"  class="btn-link" ng-click="editCode(code)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>　
+                                    <button  ng-if="global.user.authenticatid.indexOf('auth_system_data_content_button_delete')>=0"  class="btn-link" ng-click="deleteCode(code)" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <button ng-if="pagination.totalItems === 0" class="ondata">
+                            <span class="ondatatext">找不到您搜索的信息！</span>
+                        </button>
+                    </div>
+                    <div class="panel-footer" style="padding-top:1px;padding-bottom:1px;">
+                        <!-- <div ng-if="pagination.totalItems > 0" class="row"> -->
+                        <div class="row">
+
+                            <div class="col-xs-4" style="padding-top:8px;">
+                                <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                            </div>
+
+                            <div class="col-xs-8 padding-left-none" ng-show="pagination.totalItems > pagination.pageSize">
+                                <div class="col-xs-10 padding-left-right-none">
+                                    <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                                page="pagination.pageIndex"
+                                                items-per-page="pagination.pageSize"
+                                                max-size="pagination.maxSize"
+                                                previous-text="{{pagination.previousText}}"
+                                                next-text="{{pagination.nextText}}"
+                                                first-text="{{pagination.firstText}}"
+                                                last-text="{{pagination.lastText}}"
+                                                class="pagination-small"
+                                                boundary-links="true"
+                                                on-select-page="onSelectPage(page)">
+                                    </pagination>
+                                </div>
+                                <div class="col-xs-2" style="padding-top:8px;">
+                                    <div class="input-group input-group-sm" style="width: 95px"
+                                         tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                                Go
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="category_tree_nodes.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span ng-click="setActiveAreaTreeNode(this)" class="tree-node" ng-class="{'tree-node-active':node.id===activeTreeNode.node.id}" ng-click="setActiveAreaTreeNode(this)">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.name}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'category_tree_nodes.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="category_tree_nodes.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content" ng-class="{'tree-node-active':node.id===activeTreeNode.node.id}">-->
+        <!--<span ng-if="!(node.nodes && node.nodes.length > 0)" class="glyphicon" style="width:12px;height:12px">-->
+            <!--<span class="glyphicon glyphicon-book"></span>-->
+        <!--</span>-->
+        <!--<a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)">-->
+            <!--<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>-->
+        <!--</a>-->
+        <!--<span ng-click="setActiveAreaTreeNode(this)">{{node.name}}</span>-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'category_tree_nodes.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

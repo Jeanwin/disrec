@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <div class="whiteframe" style="margin-left:-16px">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span>教室配置方案</span>
+                <select ng-model="scheam" ng-click="selectScheam(scheam)"
+                        ng-options="scheam.value as scheam.name for scheam in classScheam">
+                </select>
+                <span style="color:red">功能还未实现</span>
+            </div>
+            <div class="panel-body padding-0" style="overflow-x: auto">
+                <table class="table table-striped" style="text-align:center">
+                    <thead>
+                        <tr>
+                            <td>启用</td>
+                            <td>视频源</td>
+                            <td>显示名称</td>
+                            <td>录像文件名称</td>
+                            <td>跟踪机编号</td>
+                            <td>电影</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            <input ng-model="videoInfo1.enable"  type="checkbox">
+                        </td>
+                        <td>一号源</td>
+                        <td>
+                            <input ng-model="videoInfo1.name">
+                        </td>
+                        <td>
+                            <input ng-model="videoInfo1.filename">
+                        </td>
+                        <td>
+                            <select class="tacitwidth" ng-model="videoInfo1.code"
+                                    ng-options="code.value as code.name for code in deviceCode">
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ismovie" ng-click="ismovie1()" ng-model="videoInfo1.ismovie">
+                        </td>
+                    </tr>
+                   <tr>
+                        <td>
+                            <input ng-model="videoInfo2.enable"  type="checkbox">
+                        </td>
+                        <td>二号源</td>
+                        <td>
+                            <input ng-model="videoInfo2.name">
+                        </td>
+                        <td>
+                            <input ng-model="videoInfo2.filename">
+                        </td>
+                        <td>
+                            <select class="tacitwidth" ng-model="videoInfo2.code"
+                                    ng-options="code.value as code.name for code in deviceCode">
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ismovie" ng-click="ismovie2()" ng-model="videoInfo2.ismovie">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input ng-model="videoInfo3.enable"  type="checkbox">
+                        </td>
+                        <td>三号源</td>
+                        <td>
+                            <input ng-model="videoInfo3.name">
+                        </td>
+                        <td>
+                            <input ng-model="videoInfo3.filename">
+                        </td>
+                        <td>
+                            <select class="tacitwidth" ng-model="videoInfo3.code"
+                                    ng-options="code.value as code.name for code in deviceCode">
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ismovie" ng-click="ismovie3()" ng-model="videoInfo3.ismovie">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input ng-model="videoInfo4.enable"  type="checkbox">
+                        </td>
+                        <td>四号源</td>
+                        <td>
+                            <input ng-model="videoInfo4.name">
+                        </td>
+                        <td>
+                            <input ng-model="videoInfo4.filename">
+                        </td>
+                        <td>
+                            <select class="tacitwidth" ng-model="videoInfo4.code"
+                                    ng-options="code.value as code.name for code in deviceCode">
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ismovie" ng-click="ismovie4()" ng-model="videoInfo4.ismovie">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input ng-model="videoInfo5.enable"  type="checkbox">
+                        </td>
+                        <td>五号源</td>
+                        <td>
+                            <input ng-model="videoInfo5.name">
+                        </td>
+                        <td>
+                            <input ng-model="videoInfo5.filename">
+                        </td>
+                        <td>
+                            <select class="tacitwidth" ng-model="videoInfo5.code"
+                                    ng-options="code.value as code.name for code in deviceCode">
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ismovie" ng-click="ismovie5()" ng-model="videoInfo5.ismovie">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input ng-model="videoInfo6.enable"  type="checkbox">
+                        </td>
+                        <td>六号源</td>
+                        <td>
+                            <input ng-model="videoInfo6.name">
+                        </td>
+                        <td>
+                            <input ng-model="videoInfo6.filename">
+                        </td>
+                        <td>
+                            <select class="tacitwidth" ng-model="videoInfo6.code"
+                                    ng-options="code.value as code.name for code in deviceCode">
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ismovie" ng-click="ismovie6()"ng-model="videoInfo6.ismovie">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+                <button class="btn btn-primary" ng-click="saveScheam(scheam)">保存</button>
+                <button class="btn btn-default" type="reset" ng-click="">重置</button>
+                <button class="btn btn-default" ng-click="openVideoSolutionModel(scheam)">应用到</button>
+            </div>
+        </div>
+    </div>
+</div>

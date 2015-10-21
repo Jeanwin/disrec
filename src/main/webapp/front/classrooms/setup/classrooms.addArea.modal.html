@@ -1,0 +1,116 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:160px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3>添加区域</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+
+        <form name="frmAreaEditor" class="form-horizontal" form-validator="" novalidate role="form">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属区域</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input id="inputIcon" type="text" class="span2 form-control" placeholder="所属区域" ng-model="parentTitle" readonly ng-click="toggleTree()" required>
+                        <span class="input-group-addon" ng-click="toggleTree()">
+                            <i class="glyphicon glyphicon-list"></i>
+                        </span>
+                    <!--<span  class="glyphicon glyphicon-search right"></span>-->
+                    <!--<span class="add-on"><i class="glyphicon glyphicon-search"></i></span>-->
+                    </div>
+                    <div collapse="hideTree">
+                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                            <ol ui-tree-nodes ng-model="areaTree">
+                                <li ng-repeat="node in areaTree" ui-tree-node ng-include="'bnodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!--<input class="form-control" id="parentTitle" placeholder="所属区域" ng-model="area.parent.title">-->
+                </div>
+            </div>
+
+
+            <div class="form-group" collapse="parentTitle===''">
+                <label class="col-sm-2 control-label" for="areaTitle"><span style="color: red">*</span>区域名称</label>
+                <div class="col-sm-8">
+                    <input name="area" class="form-control" id="areaTitle"
+                           placeholder="同级类区域名称不能重名"
+                           ng-change="checkAreaName()"
+                           ng-model="area.name"                          
+                           ng-pattern=/^.{1,20}$/
+                           required>                                        
+                </div>
+                <div class="col-sm-2 padding-top-5 padding-left-none">
+                    <span ng-show="frmAreaEditor.area.$error.pattern" style="color: red">必须20字内</span>
+                    <span ng-show="showAreaNameError" style="color: red">不能重名</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="areaOrder">显示顺序</label>
+                <div class="col-sm-4">
+                    <input type="text" name="order" value="1"  class="form-control" id="areaOrder" placeholder="1"  ng-model="area.sort" ng-pattern=/^[1-9]\d{0,2}$/>                    
+                </div>
+                <div class="col-sm-4 padding-top-5 padding-left-none">
+                    <span ng-show="frmAreaEditor.order.$error.pattern" style="color: red">必须1-999范围内的数字</span>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="frmAreaEditor.$pristine || frmAreaEditor.$invalid || frmAreaEditor.area.$error.required || frmAreaEditor.area.$error.pattern || frmAreaEditor.order.$error.pattern || showAreaNameError" ng-click="save()">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>
+
+<script type="text/ng-template" id="bnodes_renderer.html">
+    <span ng-if="node.nodes && node.nodes.length > 0" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>
+        <span ng-click="setActiveAreaTreeNode(this)">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'bnodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+
+<!--<script type="text/ng-template" id="bnodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content" ng-class="{'tree-node-active':node.id===activeArea.id}">-->
+        <!--<a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)">-->
+            <!--<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>-->
+        <!--<span ng-click="setActiveAreaTreeNode(this)">{{node.title}}</span>-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'bnodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

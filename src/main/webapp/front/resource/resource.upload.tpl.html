@@ -1,0 +1,259 @@
+<div class="container-fluid" >
+<div class="row" style="margin-top:16px">
+    <!--tree-->
+    <!--<div class="col-md-2 resourceuploadleft">-->
+    <div class="col-md-2 padding-right-none" >
+        <div class="whiteframe">
+            <div class="system-left-top font-overlay-1" title="{{activeAreaTreeNode.title}}" ng-if="activeAreaTreeNode.title">
+            	<i class="icon-swap-horiz" ng-click="toggleArea1()" style="color:#0071b7;font-size:30px;vertical-align: middle;cursor:pointer"></i>
+                    <span>{{activeAreaTreeNode.title}}</span>
+            </div>
+            <!--未选中区域的时候显示的内容-->
+            <div class="system-left-top font-overlay-1"  ng-if="!activeAreaTreeNode.title">当前区域:未选中区域</div>
+            <!--……………………………………………………………遍历树……………………………………………………………………………-->
+            <div>
+            	<div ui-tree id="tree1-root" data-drag-enabled="false">
+                    <ol ui-tree-nodes id="tree1-nodes" ng-model="areaTree">
+                        <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右边区域-->
+    <div class="col-md-10" >
+    	<div class="whiteframe">
+        <div style="padding-top: 4px">
+           <!--  <div class="col-xs-9">
+                <input type="checkbox">
+                <span>上传完毕删除本地文件</span>
+                <input type="checkbox">
+                <span>自动上传</span>
+            </div> -->
+            <div class="col-xs-4">
+                <div class="btn-group">
+                    <button  ng-disabled="selectedCount===0" class="btn btn-primary" ng-click="openReleasedFacilityModal()">
+                        <span class="glyphicon glyphicon-open"></span>
+                        手动上传</button>  　　
+                    <!-- <button ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openDeleteFacilityModal()">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        手动删除
+                    </button> -->
+                </div>
+            </div>
+            <div class="col-xs-5 col-xs-offset-1">
+            <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch===true">
+                <input  type="text" ng-model="upload.name" class="form-control" placeholder="请输入资源名称">
+                <span class="input-group-btn">
+                        <button ng-click="resourceupmidBywhere('1')" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+	        </div>
+	        <div class="col-xs-2 pull-right">
+	            <div class="pull-right">
+	                <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+	                <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+	            </div>
+	        </div>
+            <br><br>
+        </div>
+        <div collapse="hideAdvancedSearch" class="advSearchPanel">
+
+    <form class="form-inline" role="form">
+
+        <div class="form-group">
+            <label class="form-label" for="video">创建时间</label>
+            <input ng-model="upload.startdate" type="date" datepicker2 id="video" class="form-control" />
+            至
+            <input ng-model="upload.enddate" type="date" datepicker2 class="form-control" />
+        </div>
+
+        <div class="form-group">
+        	<label class="form-label" for="video">上传状态</label>
+            <select class="form-control" style="width: 108px;"  ng-model="upload.uploadstate">
+            	 <option value="">全部</option>
+                 <option value="0">已提交到上传任务</option>
+                 <option value="1">正在上传</option>
+                 <option value="2">上传成功</option>
+            </select>
+        </div>
+        <div class="form-group">
+                    <label class="form-label" for="edit10">课程名</label>
+                    <input id="edit10" class="form-control" placeholder="课程名" ng-model="upload.course">
+                </div>
+        <div class="form-group">
+                    <label class="form-label" for="edit10">教师名称</label>
+                    <input id="edit10" class="form-control" placeholder="教师名称" ng-model="upload.username">
+        </div>
+        <div class="form-group">
+                    <label class="form-label" for="edit10">班级名称</label>
+          <input id="edit10" class="form-control" placeholder="班级名称" ng-model="upload.deptname">
+                </div>
+       <!--  <div class="form-group">
+        	<label class="form-label" for="video">删除状态</label>
+            <select class="form-control" style="width: 108px;"  ng-model="upload.uploaddeletestatus">
+            	 <option value="">全部</option>
+                 <option value="1">正在删除</option>
+                 <option value="2">删除成功</option>
+                 <option value="3">删除失败</option>
+            </select>
+        </div> -->
+        <button class="btn btn-primary pull-right" ng-click="resourceupmidBywhere('1')">
+            <span class="glyphicon glyphicon-search"></span>
+            查询</button>
+
+    </form>
+</div>
+        <div class="panel panel-default">
+            <div class="panel-body padding-0" id="rightContent-height">
+            <table class="table table-striped" style="text-align: center">
+                <thead class="formthead">
+                    <tr>
+                        <td>
+                            <input type="checkbox" ng-model="checkAll" ng-click="checkAllUploads()"><!--全选-->
+                        </td>
+                        <td style="WORD-WRAP: break-word" width="156">资源名称</td>
+                        <td>创建时间</td>
+                        <!-- <td>视频机位</td>
+                        <td>大小</td>
+                        <td style="WORD-WRAP: break-word" width="156">描述</td> -->
+                        <td>上传状态</td>
+                        <td>教师</td>
+                        <td>班级</td>
+                        <td>课程</td>
+                        <!-- <td>删除状态</td> -->
+                        <!-- <td>操作</td> -->
+                    </tr>
+                </thead>
+                <!--遍历输出内容-->
+                <tr ng-repeat="upload in resourceList">
+                    <td>
+                        <input type="checkbox" ng-model="upload.checked">
+                    </td>
+                    <td>{{upload.name}}</td>
+                    <td>{{upload.createdate}}</td>
+                   <!--  <td>{{upload.objectpos}}</td>
+                    <td>{{upload.size}}</td>
+                    <td>{{upload.description}}</td> -->
+                    <td>{{upload.uploadstate}}</td>
+                    <td>{{upload.username}}</td>
+                    <td>{{upload.deptname}}</td>
+                    <td>{{upload.course}}</td>
+                    <!-- <td>{{upload.uploaddeletestatus}}</td> -->
+                    <!--  <td>
+                        <button ng-if="upload.uploadstate==='未上传'" class="btn btn-link" onclick=""
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="启动上传">
+                            <span class="glyphicon glyphicon-open"></span>
+                            </button>
+                        <button ng-if="upload.uploadstate==='正在上传'" class="btn btn-link" onclick=""
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="停止上传">
+                            <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                    </td> -->
+                </tr>
+            </table>
+
+            <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+            </div>-->
+            <button ng-if="pagination.totalItems === 0" class="ondata">
+                <span class="ondatatext">没有找到相关信息！</span>
+            	<!-- <span ng-if="!getDataReady" class="ondatatext">数据正在加载，请稍等...</span>
+                                <span  ng-if="getDataReady" class="ondatatext">找不到您搜索的信息！</span> -->
+            </button>
+            </div>
+
+            <div class="panel-footer" style="padding-top:1px;padding-bottom:1px;">
+
+                <!-- <div ng-if="pagination.totalItems > 0" class="row"> -->
+                <div class="row">
+
+                    <div class="col-xs-4" style="padding-top:8px;">
+                        <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                    </div>
+
+                    <div class="col-xs-6 padding-left-right-none" ng-show="pagination.totalItems > pagination.pageSize">
+                        <!-- 分页  -->
+                        <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                    page="pagination.pageIndex"
+                                    items-per-page="pagination.pageSize"
+                                    max-size="pagination.maxSize"
+                                    previous-text="{{pagination.previousText}}"
+                                    next-text="{{pagination.nextText}}"
+                                    first-text="{{pagination.firstText}}"
+                                    last-text="{{pagination.lastText}}"
+                                    class="pagination-small"
+                                    boundary-links="true"
+                                    on-select-page="onSelectPage(page)">
+                        </pagination>
+                    </div>
+                    <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+
+                        <div class="input-group input-group-sm" style="width: 100px"
+                             tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                            <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                        Go
+                                    </button>
+                                </span>
+                        </div><!-- /input-group -->
+                        <!--<div class="input-group input-group-sm">
+                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{(pagination.totalItems + 0.5)/pagination.pageSize}}">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="selectPage(pageIndex)">Go</button>
+                        </span>
+                        </div>&lt;!&ndash; /input-group &ndash;&gt;-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span ng-click="setActiveAreaTreeNode(node)" class="tree-node" ng-class="{'tree-node-active':node.id===activeAreaTreeNode.id}">
+        <span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>
+        <span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked" style="vertical-align:middle;margin-top:-13px;"></span>
+        <span title="{{node.title}}" style="max-width:calc(100% - 60px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node collapsed="true" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="nodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content slideTree" ng-class="{'tree-node-active':node.id===activeAreaTreeNode.id}">-->
+        <!--<a class="btn btn-xs">-->
+            <!--<span ng-if="areaTree.node.id === ''" class="glyphicon" style="width:12px;height:12px">-->
+                <!--<img src="assets/img/icon-house2.png" style="width:24px;height:24px;padding-bottom: 8px">-->
+            <!--</span>-->
+            <!--<span ng-if="!(node.nodes && node.nodes.length > 0)" class="glyphicon" style="width:12px;height:12px">-->
+                <!--<img src="assets/img/icon-house1.png" style="width:24px;height:24px;padding-bottom: 8px;padding-right: 5px">-->
+            <!--</span>-->
+            <!--<span class="glyphicon" ng-if="node.nodes && node.nodes.length > 0"-->
+                  <!--nodrag ng-click="toggle(this)"-->
+                  <!--ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}">-->
+            <!--</span>-->
+        <!--</a>    -->
+        <!--<span style="" ng-click="setActiveAreaTreeNode(node)">{{node.title}}</span>-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

@@ -1,0 +1,23 @@
+﻿[
+    {
+        "starttime": "08:00",
+        "endtime": "09:00",
+        "iclass": 1,
+        "name": "第一节"
+    },{
+    "starttime": "09:00",
+    "endtime": "10:00",
+    "iclass": 2,
+    "name": "第二节"
+},{
+    "starttime": "10:00",
+    "endtime": "11:00",
+    "iclass": 3,
+    "name": "第三节"
+},{
+    "starttime": "11:00",
+    "endtime": "12:00",
+    "iclass": 4,
+    "name": "第四节"
+}
+]

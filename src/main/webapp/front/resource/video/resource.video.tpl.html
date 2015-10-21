@@ -1,0 +1,365 @@
+<div class="resourcereleased">
+<div class="whiteframe">
+    <div style="padding:8px 8px 8px 10px;" class="row">
+        <div class="col-xs-5">
+            <div class="btn-group">
+                <!-- <button  ng-disabled="selectedCount===0" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>
+                    下载</button> -->
+                <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openVideoRelease()">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    发布</button>
+                <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openCancelVideoRelease()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    取消发布</button>
+                <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openDeleteVideoModal()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    删除
+                </button>
+                
+            </div>
+            <div style="display:inline">
+            	<span>已用容量</span>
+	        	<span>{{usedHd}}</span>
+	        	<span>总容量</span>
+	        	<span>{{totalHD}}</span>
+            </div>
+        </div>
+        <div class="col-xs-4 col-xs-offset-1 padding-right-none">
+            <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch===true">
+                <input  type="text" ng-model="videoResource.resourcename" class="form-control" placeholder="请输入资源名称">
+                <span class="input-group-btn">
+                        <button ng-click="resourcevideos('1')" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="pull-right">
+                <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+            </div>
+        </div>
+    </div>
+<div>
+<div collapse="hideAdvancedSearch" class="advSearchPanel">
+    <!--<div style="border-bottom: solid 1px #c0c0c0;padding:4px 16px">
+        <h4>
+            <span class="glyphicon glyphicon-search"></span>
+            查询条件
+        </h4>
+    </div>-->
+
+    <form class="form-inline" role="form">
+
+        <div class="form-group">
+            <label class="form-label" for="video">创建时间</label>
+            <input ng-model="videoResource.startdate" type="date" id="video" class="form-control" />
+            至
+            <input ng-model="videoResource.enddate" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="video2">作者</label>
+            <input id="video2" class="form-control" placeholder="作者" ng-model="videoResource.username">
+        </div>
+        <div class="form-group">
+            <label class="form-label">学科</label>
+            <select class="form-control" style="border-radius:4px;width: 95px" ng-model="videoResource.subject" 
+                            ng-options="cour.value as cour.name for cour in subjectList">
+             </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">阶段</label>
+            <select class="form-control" style="border-radius:4px;width: 95px" ng-model="videoResource.grade" 
+                            ng-options="cour.value as cour.name for cour in gradeList">
+             </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">类型</label>
+            <select class="form-control" style="border-radius:4px;width: 95px" ng-model="videoResource.resourcetype" 
+                            ng-options="cour.value as cour.name for cour in resourcetypeList">
+             </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">自定义分类1</label>
+            <select class="form-control" style="border-radius:4px;width: 95px" ng-model="videoResource.selfType1" 
+                            ng-options="cour.value as cour.name for cour in selfType1List">
+             </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">自定义分类2</label>
+            <select class="form-control" style="border-radius:4px;width: 95px" ng-model="videoResource.selfType2" 
+                            ng-options="cour.value as cour.name for cour in selfType2List">
+             </select>
+             <!-- <select class="form-control" style="border-radius:4px;width: 95px" ng-model="selfType2">
+             	<option label=""></option>
+             </select> -->
+        </div>
+        <div class="form-group">
+            <label class="form-label">自定义分类3</label>
+            <select class="form-control" style="border-radius:4px;width: 95px" ng-model="videoResource.selfType3" 
+                            ng-options="cour.value as cour.name for cour in selfType3List">
+             </select>
+        </div>
+        <button class="btn btn-primary pull-right" ng-click="resourcevideos('1')">
+            <span class="glyphicon glyphicon-search"></span>
+            查询</button>
+
+    </form>
+    <!--<div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-primary pull-right" ng-click="inquire()">
+                <span class="glyphicon glyphicon-search"></span>
+                查询</button>
+        </div>
+    </div>-->
+</div>
+</div>
+    <!--<div class="formheader">-->
+    <div class="panel panel-default">
+        <div class="panel-body padding-0" style="min-height:467px">
+            <table class="table table-striped" style="text-align: center">
+                <thead class="formthead">
+                <!--全选按钮-->
+                <td style="WORD-WRAP: break-word" width="40"><input type="checkbox" ng-model="checkAll" ng-click="checkAllVideo()"></td>
+                <td style="WORD-WRAP: break-word" width="100">资源名称</td>
+                <td>
+                <span>作者</span>
+                            	<span>
+                                    <a href ng-show="sort.username == 'asc'" ng-click="orderby('username')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.username == 'desc'" ng-click="orderby('username')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                </td>
+                <td style="WORD-WRAP: break-word" width="156">
+                    <span>视频来源</span>
+                	<span>
+                        <a href ng-show="sort.areaname == 'asc'" ng-click="orderby('areaname')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.areaname == 'desc'" ng-click="orderby('areaname')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>创建时间</span>
+                	<span>
+                        <a href ng-show="sort.createdate == 'asc'" ng-click="orderby('createdate')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.createdate == 'desc'" ng-click="orderby('createdate')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span> 
+                </td>
+                <td>
+                    <span>学科</span>
+                    <span>
+                        <a href ng-show="sort.subject == 'asc'" ng-click="orderby('subject')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.subject == 'desc'" ng-click="orderby('subject')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>阶段</span>
+                    <span>
+                        <a href ng-show="sort.grade == 'asc'" ng-click="orderby('grade')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.grade == 'desc'" ng-click="orderby('grade')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>类型</span>
+                    <span>
+                        <a href ng-show="sort.resourcetype == 'asc'" ng-click="orderby('resourcetype')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.resourcetype == 'desc'" ng-click="orderby('resourcetype')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>自定义分类1</span>
+                    <span>
+                        <a href ng-show="sort.selfType1 == 'asc'" ng-click="orderby('selfType1')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.selfType1 == 'desc'" ng-click="orderby('selfType1')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>自定义分类2</span>
+                    <span>
+                        <a href ng-show="sort.selfType2 == 'asc'" ng-click="orderby('selfType2')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.selfType2 == 'desc'" ng-click="orderby('selfType2')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span>自定义分类3</span>
+                    <span>
+                        <a href ng-show="sort.selfType3 == 'asc'" ng-click="orderby('selfType3')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                class="btn-link glyphicon glyphicon-chevron-up">
+                        </a>
+                        <a href ng-show="sort.selfType3 == 'desc'" ng-click="orderby('selfType3')"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                class="btn-link glyphicon glyphicon-chevron-down">
+                        </a>
+                    </span>
+                </td>
+                <td>大小(M)</td>
+                <td>
+                <span>发布状态</span>
+                            	<span>
+                                    <a href ng-show="sort.publishstate == 'asc'" ng-click="orderby('publishstate')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="升序"
+                                            class="btn-link glyphicon glyphicon-chevron-up">
+                                    </a>
+                                    <a href ng-show="sort.publishstate == 'desc'" ng-click="orderby('publishstate')"
+                                            tooltip-placement="top" tooltip-popup-delay="1000" tooltip="降序"
+                                            class="btn-link glyphicon glyphicon-chevron-down">
+                                    </a>
+                                </span>
+                </td>
+               <!--  <td>删除状态</td> -->
+                
+                <!-- <td>观看数</td> -->
+               <!--  <td>转码</td> -->
+                <td>操作</td>
+                </thead>
+                 <!--遍历数据-->
+                <tr ng-repeat="video in videoList">
+                    <td><input type="checkbox" ng-model="video.checked"></td>
+                    <!--<td><a ng-click="resourceNameLocation(video)" >{{video.resourcename}}</a></td>  -->
+                    <!-- <td><button ng-click="openClickVideo(video)">{{video.resourcename}}</button></td> -->
+                    <td ng-if="video.status !== '1'">{{video.resourcename}}</td>
+                    <td ng-if="video.size > 10 && video.status == '1'"><a target="_blank" ng-href="#/resource/resourcename/{{video}}">{{video.resourcename}}</a></td>
+                    <td ng-if="video.size <= 10 && video.status == '1'"><a href="" ng-click="openClickVideo('size')">{{video.resourcename}}</a></td>
+                    <td>{{video.username}}</td>
+                    <td>{{video.areaname}}</td>
+                    <td>{{video.createdate}}</td>
+                    <td>{{video.subjectname}}</td>
+                    <td>{{video.gradename}}</td>
+                    <td>{{video.resourcetypename}}</td>
+                    <td>{{video.selfType1name}}</td>
+                    <td>{{video.selfType2name}}</td>
+                    <td>{{video.selfType3name}}</td>
+                     <td>{{video.size}}</td>
+                    <td ng-if="video.publishstate==='0'">未发布</td>
+                    <td ng-if="video.publishstate==='1'">已发布</td>
+                    <!-- <td>{{video.uploaddeletestatus}}</td> -->
+                   
+                    <!-- <td>{{video.watchwatchnum}}</td> -->
+                    <td>
+<!-- 	                    <span ng-if="video.status == '2'" class="btn btn-link" ng-click="openVideoState(video.status,video.floder,$index)" -->
+<!--                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="开启"> -->
+<!-- 	                        		转码 -->
+<!-- 	                    </span> -->
+<!-- 	                    <span ng-if="video.status == '0'"> -->
+<!-- 	                        		转码中 -->
+<!-- 	                    </span> -->
+	                    <span  class="btn  btn-link"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="播放">
+	                        		<a target="_blank" ng-href="#/resource/resourcename/{{video}}">播放</a>
+<!-- 	                    </span> -->
+                   
+                    	<span class="btn btn-link" ng-click="openVideoSetModel(video)"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="设置">
+	                        <span class="glyphicon glyphicon-wrench"></span>
+	                    </span>
+                    </td>
+                </tr>
+            </table>
+
+            <button ng-if="pagination.totalItems === 0" class="ondata">
+                <span ng-if="!getDataReady" class="ondatatext">数据正在加载，请稍等...</span>
+                    <span ng-if="getDataReady" class="ondatatext">找不到您搜索的信息！</span>
+                <!-- <a ng-href="#/resource/videoShow">test</a> -->
+            </button>
+
+            <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+            </div>-->
+        </div>
+
+        <div class="panel-footer">
+
+            <div ng-if="pagination.totalItems > 0" class="row">
+
+                <div class="col-xs-3" style="padding-top:8px;">
+                    <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                </div>
+
+                <div class="col-xs-7" ng-show="pagination.totalItems > pagination.pageSize">
+                    <!-- 分页  -->
+                    <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                page="pagination.pageIndex"
+                                items-per-page="pagination.pageSize"
+                                max-size="pagination.maxSize"
+                                previous-text="{{pagination.previousText}}"
+                                next-text="{{pagination.nextText}}"
+                                first-text="{{pagination.firstText}}"
+                                last-text="{{pagination.lastText}}"
+                                class="pagination-small"
+                                boundary-links="true"
+                                on-select-page="onSelectPage(page)">
+                    </pagination>
+                </div>
+                <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+                    <div class="input-group input-group-sm" style="width: 100px"
+                         tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                        Go
+                                    </button>
+                                </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

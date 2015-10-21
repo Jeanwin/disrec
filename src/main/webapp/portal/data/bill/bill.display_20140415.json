@@ -1,0 +1,140 @@
+
+
+
+{
+    "total": 6,
+    "data": [
+        {
+            "sectionNo": "A",
+            "balance": 9.99,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0001",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "B",
+            "balance": 23.34,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0002",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "C",
+            "balance": 9.99,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0001",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "D",
+            "balance": 23.34,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0002",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "E",
+            "balance": 9.99,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0001",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "F",
+            "balance": 23.34,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0002",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "B",
+            "balance": 23.34,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0002",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "C",
+            "balance": 9.99,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0001",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "D",
+            "balance": 23.34,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0002",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "E",
+            "balance": 9.99,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0001",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "F",
+            "balance": 23.34,
+            "accPeriod": "2014-04M",
+            "reinsCode": "0002",
+            "billNo": "OPS20140001-20140301-A-CNY",
+            "contNo": "OPS20140001",
+            "layerNo": 1,
+            "billStatus": "暂存",
+            "billTyp": "预付",
+            "currency": "CNY"
+        }
+    ]
+}

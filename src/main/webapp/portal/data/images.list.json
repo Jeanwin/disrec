@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "resourcename": "20140817东101-001",
+        "username": "刘老师",
+        "areaname": "2号楼002教室",
+        "publishtime": "2014-8-12"
+    },
+    {
+        "id": "2",
+        "resourcename": "20140817东101-001",
+        "username": "张老师",
+        "areaname": "2号楼001教室",
+        "publishtime": "2014-8-17"
+    },
+    {
+        "id": "3",
+        "resourcename": "20140817东101-001",
+        "username": "李老师",
+        "areaname": "3号楼003教室",
+        "publishtime": "2014-8-27"
+    },
+    {
+        "id": "4",
+        "resourcename": "20140817东101-001",
+        "username": "沈老师",
+        "areaname": "4号楼004教室",
+        "publishtime": "2014-8-28"
+    },
+    {
+        "id": "5",
+        "resourcename": "20140817东101-001",
+        "username": "王老师",
+        "areaname": "4号楼001教室",
+        "publishtime": "2014-8-31"
+    }
+]

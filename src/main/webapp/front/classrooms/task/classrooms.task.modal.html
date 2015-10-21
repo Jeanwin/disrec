@@ -1,0 +1,143 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:340px;
+        overflow:auto;
+        
+    }
+    .modal-content{
+    	height:435px;
+    }
+    .modal{
+		overflow: hidden;
+		overflow-y: hidden;
+		top:10%;
+		left:30%;
+		right:inherit;
+	}
+    .modal-input{
+        width: 100px;
+        border-radius: 4px;
+        border:1px solid #a9a9a9;
+        text-align:center;
+    }
+    input[type=date] {
+		line-height: 23px;
+		width: 140px;
+	}
+	.isAllChecked {
+		box-shadow: -1px -1px 1px 1px rgba(255,0,0,0.6);
+    }
+    label.btn{
+    	padding:3px 6px;
+    	font-size:12px;
+    }
+</style>
+<div style="width:100%;padding-top:30px;" class="modal-body ng-scope">
+        <div class="col-xs-4 padding-left-right-none" style="padding-right: 30px;height: 400px">
+            <div style="margin: 0 0 8px 40px;font-size: 16px">选择教室</div>
+            <div>
+                <div ui-tree id="tree-root" data-drag-enabled="false" class="nodes_rendererSelect.html">
+                    <ol ui-tree-nodes ng-model="areaTree">
+                        <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_rendererSelect.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="row margin-bottom-10">
+                <span class="col-xs-12 padding-top-none padding-bottom-5 courseheader-title">选择设备</span>
+                <select class="form-control col-xs-offset-1" ng-change="splitData(task.taskTypetemp)"  style="border-radius:4px;width: 130px" ng-model="task.taskTypetemp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in FsystenCode">
+                 				<option value="">请选择</option>
+                 </select>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 padding-left-none margin-top-15 margin-bottom-10">
+                    <span class="courseheader-title">执行时间</span>
+                </div>
+                <div class="col-xs-12 margin-left-15 padding-right-none margin-bottom-10">
+                    <input type="date" class="modal-input" datepicker2 ng-model="task.execStart">至
+                    <input type="date" class="modal-input" datepicker2 ng-model="task.execEnd">
+                </div>
+                <div class="col-xs-12 padding-right-none margin-top-10 margin-bottom-10">
+	                <div class="btn-group">
+				        <label class="btn btn-default" ng-model="task.weekMap.Mon" btn-checkbox>星期一</label>
+				        <label class="btn btn-default" ng-model="task.weekMap.Tues" btn-checkbox>星期二</label>
+				        <label class="btn btn-default" ng-model="task.weekMap.Wed" btn-checkbox>星期三</label>
+				        <label class="btn btn-default" ng-model="task.weekMap.Thur" btn-checkbox>星期四</label>
+				        <label class="btn btn-default" ng-model="task.weekMap.Fri" btn-checkbox>星期五</label>
+				        <label class="btn btn-default" ng-model="task.weekMap.Sat" btn-checkbox>星期六</label>
+				        <label class="btn btn-default" ng-model="task.weekMap.Sun" btn-checkbox>星期日</label>
+				    </div>
+                    <!-- <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期一</span>
+                    </span>
+                    <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期二</span>
+                    </span>
+                    <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期三</span>
+                    </span>
+                    <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期四</span>
+                    </span>
+                    <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期五</span>
+                    </span>
+                    <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期六</span>
+                    </span>
+                    <span class="col-xs-3 padding-right-none">
+                        <input type="radio" name="weekselect" />
+                        <span>星期日</span>
+                    </span> -->
+                </div>
+                <div class="col-xs-12 margin-left-15 padding-right-none margin-bottom-10 margin-top-15">
+                    <span>开始时间：</span> 
+                    <input type="time" class="modal-input" ng-model="task.startTime"/>
+                </div>
+            </div>
+        </div>
+    
+</div>
+<div class="courseheader-button">
+    <button class="btn btn-primary btn-fristprimary margin-top-50" ng-click="save()" style="width: 96px;height: 32px">保存</button>　　　
+    <button class="btn btn-default margin-top-50" ng-click="cancel()" style="width: 96px;height: 32px">取消</button>
+</div>
+
+
+<script type="text/ng-template" id="nodes_rendererSelect.html">
+
+     <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}" ng-click="setActiveAreaTreeNode(this)">
+        <!--<span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>-->
+        <!--<span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>-->
+        <input type="checkbox" ng-class="{'isAllChecked': node.halfFlag}" ng-model="node.isSelected" ng-click="checkAllTrees(node)">
+		<span title="{{node.title}}" style="max-width:calc(100% - 25px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_rendererSelect.html'">
+        </li>
+    </ol>
+
+</script>

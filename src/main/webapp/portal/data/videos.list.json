@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "resourcename": "高一数学之三角函数",
+        "username": "刘梅",
+        "areaname": "002教室",
+        "createdate": "2014-8-17 21:23:45",
+        "state": "已发布",
+        "watchnum": "23"
+    },
+    {
+        "id": "2",
+        "resourcename": "高二语文孔雀东南飞",
+        "username": "王峰",
+        "areaname": "002教室",
+        "createdate": "2014-8-17 21:23:45",
+        "state": "已发布",
+        "watchnum": "23"
+    },
+    {
+        "id": "3",
+        "resourcename": "高三语文老人与海",
+        "username": "张老师",
+        "areaname": "002教室",
+        "createdate": "2014-8-17 21:23:45",
+        "state": "已发布",
+        "watchnum": "23"
+    },
+    {
+        "id": "4",
+        "resourcename": "高一物理牛顿第一定律",
+        "username": "李老师",
+        "areaname": "002教室",
+        "createdate": "2014-8-17 21:23:45",
+        "state": "已发布",
+        "watchnum": "23"
+    }
+]

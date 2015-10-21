@@ -1,0 +1,24 @@
+[
+    {
+        "id": "0001",
+        "date": "20140908",
+        "weekdate": "星期一",
+        "classname":"第二节",
+        "areaname": "二班",
+        "username": "李老师",
+        "course": "数学",
+        "state": "离线",
+        "areastate": "离线"
+    },
+    {
+        "id": "0002",
+        "date": "20140909",
+        "weekdate": "星期二",
+        "classname": "第三节",
+        "areaname": "一班",
+        "username": "张老师",
+        "course": "语文",
+        "state": "在线",
+        "areastate": "在线"
+    }
+]

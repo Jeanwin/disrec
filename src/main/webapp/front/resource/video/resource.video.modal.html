@@ -1,0 +1,143 @@
+<style>
+.dropdown-menu{
+        width:255px;
+        max-height: 290px;
+        overflow-y: auto;
+    }
+   .modal-dialog{width:800px;}
+</style>
+<div class="modal-header ng-scope">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </button>
+    <h3 class="modal-title">属性设置</h3>
+</div>
+
+<div class="modal-body ng-scope">
+    <form name="frmAreaEditor" class="form-horizontal" role="form">
+        <div class="col-xs-3" style="text-align:center">
+
+            <div class="drop-box" style="width:160px;height:186px">
+                 <div ng-if="!file" style="padding-top: 73px;">
+                                封面图片  (<500kb)
+                 </div>
+                <div ng-if="!imgCheckflag">
+                    <img style="position: relative; left: -1%;margin-top: -62%;width: 160px;height: 186px;" ng-src="{{iptemp+video.uploadPic}}">
+                </div>
+                <div ng-if="imgCheckflag">
+                    <img style="position: relative; left: -1%;margin-top: -1%;width: 160px;height: 186px;" ng-src="{{imgDataurl}}">
+                </div>
+            </div>
+            <div>
+                <div class="js-fileapi-wrapper upload-btn">
+                    <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" style="width:175px"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="videoName"><span style="color:red">*</span>名称</label>
+                <div class="col-sm-9">
+                    <input class="form-control" id="videoName" placeholder="资源名称" type="text" ng-model="video.resourcename" required>
+                </div>
+            </div>
+    
+             <div class="form-group">
+                 <label for="inputTeacher" class="col-sm-3 control-label">作者</label>
+                 <div class="col-sm-9">
+    
+                     <div class="input-group">
+                         <input id="inputTeacher" class="form-control" placeholder="请输入教师名称"
+                                ng-click="searchTeacher('username',schedule.username)"
+                                ng-model="video.username"
+                                typeahead-loading="loading..."
+                                ng-blur="checkAutoMessageUser('username', video);"
+                                typeahead="teacher.id +','+ teacher.name as teacher.loginname +'-'+ teacher.name for teacher in searchTeacher('username',$viewValue)"
+                                typeahead-wait-ms="500"
+                                typeahead-on-select="selectTeacher();toggleTreeUser('ImmediatelyCloseUser')"
+                                required>
+                         <span class="input-group-addon" ng-click="searchTeacher('username',schedule.username);toggleTreeUser('')">
+                             <i class="glyphicon glyphicon-th" popup-placement="right" popup-auto-show="ClassTimePopupIsShown"></i>
+                         </span>
+                     </div>
+                     <div collapse="hideTreeUser" class="dropdown-tree-wrapper">
+                         <div style="cursor: pointer;list-style-type: none;"
+                              ng-repeat="typeValue in searchimpowerList"
+                              ng-class="{'setColor' : typeValue.getColor}"
+                              ng-click="setautoMessageValueUser('username', video, typeValue);setColor(typeValue)">
+                             <span style="margin-left: 15px;">{{typeValue.name}}</span>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+    
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video1">学科</label>
+                <div class="col-sm-9">
+                 <select class="form-control" ng-change="splitData('subject',video.subjectTemp)"  style="border-radius:4px;width: 130px" ng-model="video.subjectTemp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in selectListData.subjectList">
+                 				<option value="">请选择</option>
+                 </select>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video2">适用阶段</label>
+                <div class="col-sm-9">
+                    <select class="form-control" ng-change="splitData('grade',video.gradeTemp)" style="border-radius:4px;width: 130px" ng-model="video.gradeTemp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in selectListData.gradeList">
+                 				<option value="">请选择</option>
+                 </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video3">类型</label>
+                <div class="col-sm-9">
+                    <select class="form-control" ng-change="splitData('resourcetype',video.resourcetypeTemp)" style="border-radius:4px;width: 130px" ng-model="video.resourcetypeTemp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in selectListData.resourcetypeList">
+                				<option value="">请选择</option>
+                 </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video4">自定义分类1</label>
+                <div class="col-sm-9">
+                    <select class="form-control" ng-change="splitData('selfType1',video.selfType1Temp)" style="border-radius:4px;width: 130px" ng-model="video.selfType1Temp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in selectListData.selfType1List">
+                    			<option value="">请选择</option>
+                    </select>
+                    <br/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video5">自定义分类2</label>
+                <div class="col-sm-9">
+                    <select class="form-control" ng-change="splitData('selfType2',video.selfType2Temp)" style="border-radius:4px;width: 130px" ng-model="video.selfType2Temp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in selectListData.selfType2List">
+                 			<option value="">请选择</option>
+                 </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video6">自定义分类3</label>
+                <div class="col-sm-9">
+                    <select class="form-control" ng-change="splitData('selfType3',video.selfType3Temp)" style="border-radius:4px;width: 130px" ng-model="video.selfType3Temp" 
+                                ng-options="cour.name + ',' + cour.value as cour.name + ',' + cour.value for cour in selectListData.selfType3List">
+                    		<option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="video7">备注</label>
+                <div class="col-sm-9">
+                <textarea  class="form-control" id="video4" placeholder="备注" type="text" ng-model="video.description">
+                </textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer ng-scope">
+    <button class="btn btn-primary"  ng-click="ok(currentSelected.subject,currentSelected.grade,currentSelected.resourcetype,currentSelected.selfType1,currentSelected.selfType2,currentSelected.selfType3)">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

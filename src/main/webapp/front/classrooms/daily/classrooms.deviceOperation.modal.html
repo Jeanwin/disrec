@@ -1,0 +1,24 @@
+<style>
+	.modal{
+		top:20%;
+		left:20%
+	}
+	.modal-content{
+		width:50%;
+	}
+</style>
+<div>
+    <!-- <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <h3 class="modal-title">删除设备</h3>
+    </div> -->
+    <div class="modal-body" style="padding:20px 10px 10px;text-align:center;">
+        <h4>确定<b>{{DeviceBtnType}}</b></h4>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok(DeviceBtnType)" focus-me="true">确认</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

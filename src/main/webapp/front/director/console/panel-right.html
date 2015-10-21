@@ -1,0 +1,290 @@
+<div class="panel panel-console">
+    <div style="position: relative;top: 50px;">
+        <div class="panel-body">
+            <section class="sect">
+               
+                <div style="position:relative;left:10%;">
+                 录像
+                <br/>
+	                <div class="row">
+	                    <div class="col-xs-4">
+	                        <!--<div class=" btn-nav" ng-if="videotapeId==='PauseRecord'"  ng-click="videotape('StartRecord')" >-->
+	                            <!--<img src="img/lemonade-icon_icon-player-recard.png">-->
+	                        <!--</div>-->
+	
+	                        <div class=" btn-nav" ng-if="videotapeId==='PauseRecord' && recordingStartOperationDisable != 'RecordingStart'"
+	                             ng-click="videotape('StartRecord')" >
+	                            <img src="img/lemonade-icon_icon-player-recard.png">
+	                        </div>
+	                        <div style="background-color: #14293c;border-color: #e7e7e7;width: 26px;height: 26px;border-radius: 4px;overflow: hidden;display: inline-block;margin: 2px;"
+	                             ng-if="videotapeId==='PauseRecord' && recordingStartOperationDisable === 'RecordingStart'" >
+	                            <img src="img/lemonade-icon_icon-player-recard.png">
+	                        </div>
+	
+	                        <!--<div class=" btn-nav" ng-if="videotapeId==='StartRecord'" ng-click="videotape('PauseRecord')" >-->
+	                            <!--<img src="img/lemonade-icon_icon-player-panse.png">-->
+	                        <!--</div>-->
+	
+	                        <div class=" btn-nav"
+	                             ng-if="videotapeId==='StartRecord' && recordingPauseOperationDisable != 'RecordingPause'"
+	                             ng-click="videotape('PauseRecord')" >
+	                            <img src="img/lemonade-icon_icon-player-panse.png">
+	                        </div>
+	                        <div style="background-color: #14293c;border-color: #e7e7e7;width: 26px;height: 26px;border-radius: 4px;overflow: hidden;display: inline-block;margin: 2px;"
+	                             ng-if="videotapeId==='StartRecord' && recordingPauseOperationDisable === 'RecordingPause'" >
+	                            <img src="img/lemonade-icon_icon-player-panse.png">
+	                        </div>
+	                       <!-- <div class=" btn-nav" ng-if="videotapeId==='StartRecord'|| videotapeId==='ResumeRecord'" ng-click="videotape('PauseRecord')" >
+	                            <img src="img/lemonade-icon_icon-player-panse.png">
+	                        </div>-->
+	                        <!--<div class=" btn-nav" ng-if="videotapeId==='PauseRecord' " ng-click="videotape('ResumeRecord')" >
+	                            <img src="img/lemonade-icon_icon-player-play.png">
+	                        </div>-->
+	                    </div>
+	                    <div class="col-xs-4">
+	                    	<!-- <div class=" btn-nav"  ng-click="setEffect('26')" ng-class="{'active':activeEffect==='26'}">
+	                            <img src="img/lemonade-icon_icon-player-stop.png">
+	                        </div>-->
+	                         <div class=" btn-nav"  ng-click="videotape('StopRecord')" ng-class="{'active':videotapeId==='StopRecord'}">
+	                           <img src="img/lemonade-icon_icon-player-stop.png">
+	                       </div>
+	                    </div>
+	                    <div class="col-xs-4">
+	                    </div>
+	                </div>
+                </div>
+               
+                <div style="position:relative;left:10%;">
+                 直播
+                <br/>
+	                <div class="row">
+	                    <div class="col-xs-4">
+	                        <!--<div class=" btn-nav" ng-if="liveMode==='stop'" ng-click="setLiveMode('start')" ng-class="{'active':liveMode==='start'}">-->
+	                            <!--<img src="img/lemonade-icon_icon-player-panse.png">-->
+	                        <!--</div>-->
+	                        <div class=" btn-nav" ng-if="liveMode==='start' && livingStartOperationDisable != 'LivingStart'" ng-click="setLiveMode('start')" >
+	                            <img src="img/lemonade-icon_icon-player-play.png">
+	                        </div>
+	                        <div style="background-color: #14293c;border-color: #e7e7e7;width: 26px;height: 26px;border-radius: 4px;overflow: hidden;display: inline-block;margin: 2px;opacity: 0.5;" ng-if="liveMode==='start' && livingStartOperationDisable === 'LivingStart'" >
+	                            <img src="img/lemonade-icon_icon-player-play.png">
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-4">
+	                    	<div class=" btn-nav" ng-if="livingStopOperationDisable != 'LivingStop'" ng-click="setLiveMode('stop')" ng-class="{'active':liveMode==='stop'}" >
+	                            <img src="img/lemonade-icon_icon-player-stop.png">
+	                        </div>
+	
+	                        <div style="background-color: #14293c;border-color: #e7e7e7;width: 26px;height: 26px;border-radius: 4px;overflow: hidden;display: inline-block;margin: 2px;opacity: 0.5;" 
+	                        ng-if="livingStopOperationDisable == 'LivingStop'" ng-class="{'active':liveMode==='stop'}" >
+	                            <img src="img/lemonade-icon_icon-player-stop.png">
+	                        </div>
+	
+	                        <!--<div class=" btn-nav"  ng-click="setEffect('28')" ng-class="{'active':activeEffect==='28'}">-->
+	                            <!--<img src="img/lemonade-icon_icon-player-stop.png">-->
+	                        <!--</div>-->
+	                    </div>
+	                    <div class="col-xs-4">
+	                    </div>
+	                </div>
+                </div>
+            </section>
+            <section   class="sect">
+                
+                <div style="position:relative;left:10%;">
+                音量 {{volume}}
+                <br/>
+	                <div class="row">
+	                    <div class="col-xs-12">
+	                        <input   type="range" min="0" step="1" max="100" ng-model="volume" ng-change="onVolumeChange(volume)">
+	                    </div>
+	                </div>
+                </div>
+                <!--跟踪模式先注掉用的时候在打开----------------------------------------------------------------------------->
+              <!--  跟踪模式
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class=" btn-nav"  ng-click="setTracker('29')" ng-class="{'active':activeTracker==='29'}">
+                            <img src="img/lemonade-icon_icon-trancking-1.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class=" btn-nav"  ng-click="setTracker('30')" ng-class="{'active':activeTracker==='30'}">
+                            <img src="img/lemonade-icon_icon-trancking-2.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class=" btn-nav"  ng-click="setTracker('31')" ng-class="{'active':activeTracker==='31'}">
+                            <img src="img/lemonade-icon_icon-trancking-3.png">
+                        </div>
+                    </div>
+                </div>-->
+            </section>
+            <section class="sect">
+                
+                <div style="position:relative;left:10%;">
+                云台控制
+                <br/>
+                <select style="color:gray;margin-top:2%;" ng-model="dealModel" ng-change="dealLivingPara(dealModel)">
+                	<option value="card0">教师</option>
+                	<option value="card1">教室全景</option>
+                	<option value="card2">学生</option>
+                	<option value="card3">学生全景</option>
+                	<option value="card5">板书</option>
+                </select>
+                <br/>
+                &nbsp;
+                
+	                <div class="row" style="margin: 0px auto;text-align: center;">
+	                    <div class="col-xs-4">
+	                        <div class="leftCtrl btn-nav" ng-mouseup="setVideo2('')"  ng-mousedown="setVideo2('4')" ng-class="{'active':activeVideo2==='4'}">
+	                            <!--4 云台控制left-->
+	                            <a><img src="img/lemonade-icon_icon-PTZ-direction-left.png"></a>
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-4">
+	                        <div>
+	                            <!--8 云台控制up-->
+	                            <div class="upCtrl btn-nav" ng-mouseup="setVideo2('')"  ng-mousedown="setVideo2('8')"   ng-class="{'active':activeVideo2==='8'}">
+	                                <a><img src="img/lemonade-icon_icon-PTZ-direction-up.png"></a>
+	                            </div>
+	                            <!--2 云台控制down-->
+	                            <div class="downCtrl btn-nav"  ng-mouseup="setVideo2('')"  ng-mousedown="setVideo2('2')" ng-class="{'active':activeVideo2==='2'}">
+	                                <a><img src="img/lemonade-icon_icon-PTZ-direction-down.png"></a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-4">
+	                        <!--6 云台控制right-->
+	                        <div class="rightCtrl btn-nav"  ng-mouseup="setVideo2('')"  ng-mousedown="setVideo2('6')" ng-class="{'active':activeVideo2==='6'}">
+	                            <a><img src="img/lemonade-icon_icon-PTZ-direction-right.png"></a>
+	                        </div>
+	                    </div>
+	                </div><br><br><br><br/>
+	                <div class="row">
+	                    <div class="col-xs-3">
+	                        <!-- 1  + 云台控制推近-->
+	                        <div class=" btn-nav"  ng-mouseup="setVideo2('')"  ng-mousedown="setVideo2('1')" ng-class="{'active':activeVideo2==='1'}">
+	                            <a><img src="img/lemonade-icon_icon-PTZ-zoom-in.png"></a>
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-3">
+	                    </div>
+	                    <div class="col-xs-4">
+	                    	<!-- 3 - 云台控制拉远 -->
+	                        <div class=" btn-nav"  ng-mouseup="setVideo2('')"  ng-mousedown="setVideo2('3')" ng-class="{'active':activeVideo2==='3'}">
+	                            <a><img src="img/lemonade-icon_icon-PTZ-zoom-out.png"></a>
+	                        </div>
+	                    </div>
+	                </div>
+				</div>
+            </section>
+            <section class="sect">
+                
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-6">-->
+                        <!--<div class=" btn-nav"  ng-click="operConsole('-1')" ng-class="{'active':activeEffect==='32'}">-->
+                            <!--<img src="img/lemonade-icon_icon-PTZ-pana.png">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-6">-->
+                        <!--<div class=" btn-nav"  ng-click="operConsole('0')" ng-class="{'active':activeMem==='0'}">-->
+                            <!--<img src="img/lemonade-icon_icon-PTZ-mem.png">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div style="position:relative;left:10%;">
+                预置位操作
+                <br/>
+	                <div class="row">
+	                    <div class="col-xs-3">
+		                    <div class=" btn-nav" ng-click="operConsole('1')" style="margin: 0px auto;text-align: center;">
+		                        1
+		                    </div>
+		                </div>    
+						<div class="col-xs-3">
+		                    <div class=" btn-nav" ng-click="operConsole('2')" style="margin: 0px auto;text-align: center;">
+		                        2
+		                    </div>
+						</div>   
+						<div class="col-xs-4"> 
+		                    <div class=" btn-nav" ng-click="operConsole('3')" style="margin: 0px auto;text-align: center;">
+		                        3
+		                    </div>
+		                </div>
+	                </div>
+	                <div class="row">
+						<div class="col-xs-3">
+		                    <div class=" btn-nav" ng-click="operConsole('4')" style="margin: 0px auto;text-align: center;">
+		                        4
+		                    </div>
+	                    </div>
+						<div class="col-xs-3">
+		                    <div class=" btn-nav" ng-click="operConsole('5')" style="margin: 0px auto;text-align: center;">
+		                        5
+		                    </div>
+	                    </div>
+						<div class="col-xs-4">
+		                    <div class=" btn-nav" ng-click="operConsole('6')" style="margin: 0px auto;text-align: center;">
+		                        6
+		                    </div>
+	                   	</div>
+	                </div>
+	
+	                <div class="row">
+	                	<div class="col-xs-3">
+		                    <div class=" btn-nav" ng-click="operConsole('7')" style="margin: 0px auto;text-align: center;">
+		                        7
+		                    </div>
+	                   	</div>
+						<div class="col-xs-3">
+		                    <div class=" btn-nav" ng-click="operConsole('8')" style="margin: 0px auto;text-align: center;">
+		                        8
+		                    </div>
+	                    </div>
+						<div class="col-xs-4">
+		                    <div ng-if="user.authenticatid.indexOf('auth_director_memory_url_view')>=0" class=" btn-nav"  ng-click="operConsole('0')" ng-class="{'active':activeMem==='0'}">
+		                        <img src="img/lemonade-icon_icon-PTZ-mem.png">
+		                    </div>
+	                    </div>
+	                </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!--<script type="text/javascript">-->
+
+    <!--function xxx(){-->
+        <!--alert("left");-->
+    <!--}-->
+
+    <!--function TestCtrl($scope) {-->
+        <!--$scope.page = 1;-->
+        <!--$scope.getData = function () {-->
+            <!--console.log($scope.page);-->
+        <!--}-->
+        <!--$scope.GoPage = function (target) {-->
+            <!--$scope.page = target.getAttribute('data');-->
+            <!--this.getData();-->
+        <!--}-->
+    <!--}-->
+
+    <!--//<![CDATA[-->
+    <!--/*function xxx(){-->
+        <!--alert("left");-->
+    <!--}-->
+
+    <!--$(function(){-->
+        <!--$("#send").click(function(){-->
+            <!--$.get("get1.php", {-->
+                        <!--username :  $("#username").val() , //传入参数-->
+                        <!--content :  $("#content").val()-->
+                    <!--}, function (data, textStatus){-->
+                        <!--$("#resText").html(data); // 把返回的数据添加到页面上-->
+                    <!--}-->
+            <!--);-->
+        <!--})-->
+    <!--})*/-->
+    <!--//]]>-->
+<!--</script>-->

@@ -1,0 +1,84 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:360px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+    .isAllChecked {
+    	/* background: green;
+		padding: 2px 2px 0px; */
+		box-shadow: -1px -1px 1px 1px rgba(255,0,0,0.6);
+    }
+</style>
+<div class="modal-header">
+    <span class="modal-title" >
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </button>
+        <h3>节次应用</h3>
+    </span>
+</div>
+<div class="modal-body">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-xs-7" style="text-align: center">当前应用到的适用教室<b>{{SelectItem.length}}</b>间</div>
+            <div ui-tree id="tree-root" data-drag-enabled="false" class="applydropDownHeight col-xs-7">
+                <ol ui-tree-nodes ng-model="areaTree">
+                    <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div> 
+            <div class="col-xs-5 padding-right-none" style="color:red;">
+                <span ng-repeat = "nodelistname in nodelistName">{{nodelistname.nodeName}}已经存在于{{nodelistname.createUser}},请修改。 <br/>  </span>   
+            	<!-- <span>数据处理中，请静候</span> -->
+            </div>  
+                        
+        </div>
+    </div>
+</div>
+<div class="modal-footer" style="margin-top: -16px;">	
+	<!-- <button class="btn btn-default" ng-show="modifyApply">修改</button> -->
+	<button class="btn btn-default" ng-show="applying">处理中...</button>
+    <button class="btn btn-primary" ng-show="!applying" ng-click="ok(Classtime)" ng-disabled="applyEnsure">保存</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}" ng-click="setActiveAreaTreeNode(this)">
+        <input  ng-init="node.isSelected = isCheckedClassroom(node.id)"  ng-class="{'isAllChecked': node.halfFlag}"  type="checkbox" ng-model="node.isSelected" ng-click="checkAllTrees(node)">{{node.title}}
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+
+<!--<script type="text/ng-template" id="nodes_renderer.html">-->
+    <!--<div ui-tree-handle class="tree-node tree-node-content">-->
+
+        <!--<a class="btn btn-xs" ng-if="node.nodes && node.nodes.length > 0" nodrag ng-click="toggle(this)">-->
+            <!--<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>-->
+        <!--</a>-->
+        <!--<input  ng-init="node.isSelected = isCheckedClassroom(node.id)"  type="checkbox" ng-model="node.isSelected" ng-click="checkAllApplys(node)">{{node.title}}-->
+    <!--</div>-->
+    <!--<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">-->
+        <!--<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">-->
+        <!--</li>-->
+    <!--</ol>-->
+<!--</script>-->

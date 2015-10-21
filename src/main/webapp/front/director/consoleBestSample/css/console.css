@@ -1,0 +1,246 @@
+body{
+    background-color:#E2E2E2;
+
+}
+.header{
+    padding:8px;
+}
+
+.panel-login{
+    background-color:#5a83e5;
+    color: #d4d4d4;
+    box-shadow: 0 0 6px 1px rgba(0,0,0,0.3)
+}
+
+/*.footer .col-md-2{
+    height: 160px;
+    background-color:#2d343a;
+    color: #fff;
+    padding:8px;
+}*/
+
+.leftCtrl{
+    position:absolute;
+    left:32px;
+    top:37px;
+}
+.rightCtrl{
+    position:absolute;
+    left:-32px;
+    top:37px;
+}
+.upCtrl{
+    position:absolute;
+    left:0px;
+    top:16px;
+}
+.downCtrl{
+    position:absolute;
+    left:0px;
+    top:55px;
+}
+
+
+
+.btn-nav {
+    background-color: #14293c;
+    border-color: #e7e7e7;
+    width:26px;
+    height:26px;
+    border-radius: 4px;
+    overflow:hidden;
+    display: inline-block;
+    margin: 2px;
+}
+
+.btn-nav:hover {
+    background-color: #6c6b68;
+    border-color: #fff;
+}
+
+.btn-nav.active {
+    background-color: #4b5fff;
+    border: solid 2px #fff;
+    box-shadow: 0 0 2px 4px rgba(90, 117, 255, 0.75);
+}
+.btn-nav2 {
+    background-color: #14293c;
+    border-color: #e7e7e7;
+    width:18px;
+    height:18px;
+    border-radius: 3px;
+    overflow:hidden;
+    display: inline-block;
+    margin: 1px;
+}
+
+.btn-nav2:hover {
+    background-color: #6c6b68;
+    border-color: #fff;
+}
+
+.btn-nav2.active {
+    background-color: #4b5fff;
+    border: solid 1px #fff;
+    box-shadow: 0 0 2px 4px rgba(90, 117, 255, 0.75);
+}
+
+.heig{
+    height: 22px;
+}
+.heig2{
+    height: 22px;
+}
+img{
+    vertical-align: super !important;
+}
+
+.btn-record {
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 50%;
+    padding: 8px;
+    background-color: red;
+}
+.btn-xmrecord {
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: red;
+    margin-top: 5px;
+    margin-right: 8px;
+}
+.pane2-heading{
+    padding: 1px 14px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.player-wrapper {
+   overflow:hidden;
+   height: 467px;
+}
+.player-footer {
+   /*overflow:hidden;*/
+   height: 145px;
+}
+.no-padding {
+    padding: 0
+}
+
+.sect {
+    margin-bottom: 24px;
+}
+
+/*20141125 update */
+
+.panel-console{
+    background-color:#2d343a;
+    color: #d4d4d4;
+    box-shadow: 0 0 6px 1px rgba(0,0,0,0.3);
+    height: 700px;
+}
+
+.container-fluid  {
+    min-width: 1100px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#titleTestStyle {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    right: 0;
+    /* bottom: 0; */
+    width: 100%;
+    min-width: 600px;
+    height: 50px;
+    /* background: red; */
+    margin-bottom: 1%;
+}
+
+.wrap {
+    overflow: scroll;
+    /* height: 80%; */
+    min-height: 200px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 190px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 190px;
+}
+
+#secondRowStyle {
+    /*height:190px;*/
+    /*width: 100%;*/
+    /*min-width: 600px;*/
+    /*position: relative;*/
+    /*bottom: 0;*/
+    /*background: #2d343a;*/
+    display: inline-flex;
+    /*display:-ms-inline-flexbox;*//*设置内联级Flexbox容器*//*	*/
+}
+
+.footContent {
+    min-width: 1100px;
+    /*background: red;*/
+}
+
+/*.footContent:after {*/
+    /*content: '';*/
+    /*color: red;*/
+    /*position: fixed;*/
+    /*left: 100%;*/
+    /*top: 0;*/
+    /*border-left: 46px solid white;*/
+    /*border-top: 192px solid white;*/
+    /*border-right: 46px solid white;*/
+/*}*/
+
+.interWrap{
+    margin-left:200px;
+    background:#eee;
+    margin-top:-25px;
+}	  /* 当作右列的背景色 */
+
+.content {
+    margin-right:170px;
+    zoom:1;
+    background:#ccc;
+}	  /* 当作中列的背景色 */
+.content:after {
+    content:'';
+    display:block;
+    clear:both;
+}
+.middle{
+    float:left;
+    width:100%;
+}
+.sidebar{
+    float:left;
+    position:relative;
+    width:200px;
+    margin-left:-210px;
+    /*left:-100%;*/
+}
+.rightBar{
+    float:left;
+    position:relative;
+    left: 0.5%;
+    width:170px;
+    margin-right:-170px;
+}

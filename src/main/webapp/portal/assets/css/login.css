@@ -1,0 +1,32 @@
+.login-wrapper {
+    position:fixed;
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    text-align: center;
+    background-image:-webkit-radial-gradient(circle, rgba(97, 105, 120, 0),rgb(39, 40, 41)),url('../img/sativa.png');
+    background-size:cover;
+}
+
+.login-wrapper .login-window {
+    width:502px;
+    background:#fff;
+    border:solid 1px #ccc;
+    padding:30px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:160px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+}
+
+.login-wrapper .login-window form{
+    margin-bottom: 20px;
+}
+
+.login-window .header {
+    font-size:24px;
+    color:#519ddb;
+    text-align: left;
+    border:none;
+}

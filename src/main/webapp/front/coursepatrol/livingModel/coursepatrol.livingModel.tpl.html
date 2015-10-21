@@ -1,0 +1,35 @@
+<style>
+	.modal-content {
+		width:1050px;
+	}
+</style>
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3>轮询直播</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+		<div ng-if="livingFlag" >
+			<div class="row">
+				<div class="col-xs-6">
+					<div ng-include="'coursepatrol/coursepatrol.mainLiving.tpl.html'"></div>
+				</div>
+				<div class="col-xs-6">
+					<div ng-include="'coursepatrol/coursepatrol.mainLiving2.tpl.html'"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div ng-include="'coursepatrol/coursepatrol.mainLiving3.tpl.html'"></div>
+				</div>
+				<div class="col-xs-6">
+					<div ng-include="'coursepatrol/coursepatrol.mainLiving4.tpl.html'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

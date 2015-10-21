@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="assets/css/main.css" />
+<div class="container-fluid">
+    <!--tree-->
+    <div class="col-md-2">
+        <div>当前区域</div>
+        <div>
+
+        </div>
+    </div>
+    <!--右边区域-->
+    <div class="col-md-10">
+        <div>
+            <form>
+                <button class="btn-link" ng-click="coursetouropen()">设置轮巡</button>　　　<a class="glyphicon glyphicon-play" ng-href="coursetour/coursetourmain/coursetourTV.html"></a>
+                　　　　布局 <select>
+                <option>2*2</option>
+                <option>3*3</option>
+                <option>4*4</option>
+            </select>
+
+            </form>
+        </div>
+        <div>
+            <tabset>
+                <tab heading="电视墙">
+                <ul class="classroom-list">
+                   <li>视频信息<button>抓拍</button>　　<button>导播</button>　　　<a class="btn btn-default" ng-href="coursetour/coursetourmain/coursetourscrn.html">点击屏幕</a></li>
+                   <li>视频信息<button>抓拍</button>　　<button>导播</button></li>
+                </ul><ul class="classroom-lists">
+                   <li>视频信息<button>抓拍</button>　　<button>导播</button></li>
+                   <li>视频信息<button>抓拍</button>　　<button>导播</button></li>
+                </ul>
+                    <button class="btn btn-link" ng-click="#">上一组</button>　　<button  class="btn btn-link" ng-click="#">下一组</button>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

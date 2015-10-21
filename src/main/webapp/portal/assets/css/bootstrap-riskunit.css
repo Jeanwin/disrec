@@ -1,0 +1,23 @@
+.panel {
+    background-color: #BFDAF5;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#D4e3F6),to(#BFDAF5));
+    box-shadow: inset 0 1px 1px #E3F2FF, 1px 1px 4px rgba(40, 53, 80, 0.4);
+}
+
+.panel-default {
+    border-color: #a8bace;
+}
+
+.panel-default>.panel-heading {
+    color: #2e618c;
+    background:none;
+    border:none;
+}
+
+.panel-body {
+    border: solid 1px #a8bace;
+    padding: 3px;
+    background-color: #fff;
+    margin: 0 6px 6px 6px;
+    overflow: scroll;
+}

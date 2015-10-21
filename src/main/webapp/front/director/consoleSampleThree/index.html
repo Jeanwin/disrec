@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="no-js" id="ng-app" ng-controller="ConsoleMainCtrl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>录播系统-导播台</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap-lemon.css" />
+    <link rel="stylesheet" type="text/css" href="css/vedio.css">
+    <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="../../assets/css/zkicon.css">
+    <!-- endbuild -->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <![endif]-->
+    <!-- build:js assets/js/lemon.min.js -->
+    <script type="text/javascript" src="../../assets/js/jquery/jquery-1.4.2.min.js"></script>
+    <!-- endbuild -->
+    <style>
+   		.directorFighting {
+   			visibility : hidden;
+   		}
+   	</style>
+</head>
+<body>
+<!-- <button ng-click="sendMessage()">WebSocket测试</button> -->
+<!--[if lte IE 9]>
+<div>不支持此浏览器</div>
+<![endif]-->
+<div id="vedio-live" ng-class="{'directorFighting' : directorFighting}">
+        <div class="small-live-list" style="color:#fff;">
+        	<!-- //左上角录播状态
+            <div class="col-xs-2 text-right record-condition">
+                <span ng-show="recordStateSet">
+                                <span ng-show="recordStatus==1">                   
+                                    <i class="icon-lens camera-lens"></i>
+                                    <span>正在录像</span>
+                                </span>
+                                <span ng-show="recordStatus==2">                   
+                                    <i class="icon-lens camera-tempPause"></i>
+                                    <span>暂停录像</span>
+                                </span> 
+                            </span>                
+                            <span ng-show="!recordStateSet">
+                                <i class="icon-pause camera-pause"></i>
+                                <span>未录像</span>
+                            </span> 
+            </div>            
+			<div class="col-xs-1" style="line-height:60px;font-size:20px;">
+                <i class="zkicon icon-brocast" ng-click="setLiveMode('stop')"></i>
+			</div>
+             -->
+			<div class="col-xs-4 col-xs-offset-3 header-info"
+				style="padding-top: 10px; padding-bottom: 10px; width: 50%;">
+				<table class="" ng-hide="changTime">
+					<tr>
+						<td>教室</td>
+						<td>课程</td>
+						<td>教师</td>
+						<td>系统时间</td>
+						<td ng-if="!laterCourseFlag">倒计时</td>
+						<td ng-if="laterCourseFlag">课程开始时间</td>
+					</tr>
+					<tr>
+						<td>{{className}}</td>
+						<td>{{courseName}}</td>
+						<td>{{teacherName}}</td>
+						<td>{{clock}}</td>
+						<!-- <td>10:23:07</td> -->
+						<td ng-if="!laterCourseFlag">{{remainTime}} <i
+							class="change-time glyphicon glyphicon-pencil"
+							ng-click="changeTime()"></i>
+						</td>
+						<td ng-if="laterCourseFlag">{{courseStartTime}}</td>
+					</tr>
+				</table>
+				<div style="padding-top: 6px;" ng-hide="!changTime">
+					<span class="col-xs-4">设置直播结束时间</span>
+					<div class="col-xs-4" style="margin-bottom: 6px;">
+						<span class="zktime hour">{{remainHours}}</span> <span>:</span> <span
+							class="zktime minute"> <span
+							class="hour-change-large glyphicon glyphicon-chevron-up"
+							style="margin-top: -18px;"
+							ng-click="lastTimeObject.LastTimeModel=dealLastTime('add')"></span>
+							{{lastTimeObject.LastTimeModel}} <span
+							class="hour-change-small glyphicon glyphicon-chevron-down"
+							style="margin-top: 28px;"
+							ng-click="lastTimeObject.LastTimeModel=dealLastTime('remove')"></span>
+						</span> <span>:</span> <span class="zktime second">{{lastTimeObject.LastSecos}}</span>
+					</div>
+					<div class="col-xs-4" style="text-align: right;">
+						<button class="zkbtn"
+							ng-click="changeTimeOk(lastTimeObject.LastTimeModel,lastTimeObject.LastSecos)">
+							<span class="glyphicon glyphicon-ok"></span>&nbsp;确定
+						</button>
+						<button class="zkbtn" ng-click="changeTimeCancel()">
+							<span class="glyphicon glyphicon-remove"></span>&nbsp;取消
+						</button>
+					</div>
+
+				</div>
+			</div>
+            <div class="col-xs-2 text-right" style="line-height:60px;" ng-if="recordStatus==0">未录像<span class="btn btn-primary" style="margin-left:15px;" ng-click="openStartRecordModal()">开始录像</span></div>
+            <div class="col-xs-2 text-right" style="line-height:60px;" ng-if="recordStatus==1">正在录像<span class="btn btn-primary" style="margin-left:15px;" ng-click="PauseRecord()">暂停</span><span class="btn btn-primary" style="margin-left:15px;" ng-click="StopRecord()">停止</span></div>
+            <div class="col-xs-2 text-right" style="line-height:60px;" ng-if="recordStatus==2">暂停录像<span class="btn btn-primary" style="margin-left:15px;" ng-click="ResumeRecord()">恢复</span><span class="btn btn-primary" style="margin-left:15px;" ng-click="StopRecord()">停止</span></div>
+             <!-- <div class="col-xs-1 pull-right" style="font-size:20px;line-height:60px;color:#fff;">
+                 <span class="zkicon glyphicon glyphicon-refresh" ng-click="freshState()"></span>
+              </div> --> 
+		</div> 
+        <div class="small-live" ng-class="{active:isShow}">             
+            <div class="small-child-live small-leftTop-live" ng-class="{active:isActive1}" >
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='1'}">
+                    <div class="vedio-meta-title vedio-meta-entry" >                        
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[0].title}}</span> <!-- 获取视屏列表信息 -->
+                       <!--  <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='1'}" ng-click="toggleCondition('1','3000')" style="margin-top:-1px;">LIVE</button> -->
+                        <i class="zkicon zkicon-fontsize-23 icon-cam-control pull-right" ng-class="{'btn-bCloud':bCloud==='1'}" ng-hide="isShow" ng-click="toggleCloud(VideosInformations[0].title,'1')"></i> 
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio(VideosInformations[0].title,'1')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('1')"></i> 
+					</div>                                      
+                </div> 
+                <div class="vedio-img" ng-include="'../../director/consoleSampleThree/left-top-video.html'"></div>     
+                                               
+            </div> 
+             
+            <div class="small-child-live small-rightTop-live" ng-class="{active:isActive4}">
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='4'}">
+                    <div class="vedio-meta-title vedio-meta-entry">
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[3].title}}</span>
+                        
+                        <!-- <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='4'}" ng-click="toggleCondition('4','3003')" style="margin-top:-1px;">LIVE</button> -->
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio(VideosInformations[3].title,'4')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('4')"></i> 
+                    </div>                                      
+                </div>                
+                    <div class="vedio-img" ng-include="'../../director/consoleSampleThree/right-bottom-video.html'"></div>               
+            </div> 
+            <div class="small-child-live small-rightBottom-live" ng-class="{active:isActive2}">
+
+                <div class="vp v-meta padding-left-none padding-right-none" ng-class="{'bac-danger':bDanger==='2'}">
+                    <div class="vedio-meta-title vedio-meta-entry">
+                        <i class="zkicon-fontsize-17 icon-ccamera"></i>
+                        <span class="classic">{{VideosInformations[1].title}}</span>
+                        
+                        <!-- <button class="btn pull-right" ng-class="{'btn-danger':bDanger==='2'}" ng-click="toggleCondition('2','3001')" style="margin-top:-1px;">LIVE</button> -->
+                        <i class="zkicon zkicon-fontsize-23 icon-cam-control pull-right" ng-class="{'btn-bCloud':bCloud==='2'}" ng-hide="isShow" ng-click="toggleCloud(VideosInformations[1].title,'2')"></i> 
+                        <i class="zkicon zkicon-fontsize-26 icon-tomax pull-right" ng-hide="isShow" ng-click="resizeVedio(VideosInformations[1].title,'2')"></i>
+                        <i class="zkicon zkicon-fontsize-22 icon-all_video margin-right-10 pull-right" ng-show="isShow" ng-click="resizeSmallVedio('2')"></i> 
+                    </div>                                      
+                </div>
+                <div class="vedio-img" ng-include="'../../director/consoleSampleThree/left-bottom-video.html'"></div>             
+                                            
+            </div>            
+        </div>
+        <div class="center-controller" ng-class="{activeCloud:isShow}" ng-show="!isActive4&&centerControllerstate">
+            <div class="col-xs-4 padding-right-none">
+                <div class="center-command padding-top-10">
+                    <span>中控控制命令</span>
+                    <div class="toggle-btn-group padding-top-15 row">
+                        <span class="col-xs-3 padding-1 col-xs-offset-2" style="text-align:center; ">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('OpenCSN')">上课</a>
+                        </span>
+                        <span class="col-xs-3 padding-1" style="text-align:center;">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('CloseCSN')" >下课</a>
+                        </span>
+                        <span class="col-xs-3 padding-1" style="text-align:center;">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('Reboot')">重启</a>
+                        </span>
+                    </div>
+                </div>
+                <hr  style="border-color:rgb(72,72,72)"/>
+                <div class="video-toggle padding-top-10">
+                    <span>视频源切换</span>
+                    <div class="toggle-btn-group margin-top-15 col-xs-11 col-xs-offset-1">
+                        <span class="col-xs-3 padding-1" style="text-align:center;">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('PS_Computer')"><i class="icon-mainunit"></i></a>
+                            <span class="btn-typename">电脑一</span>
+                        </span>
+                        <span class="col-xs-3 padding-1" style="text-align:center; ">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('PS_Computer2')"><i class="icon-mainunit"></i></a>
+                            <span class="btn-typename">电脑二</span>
+                        </span>
+                        <span class="col-xs-3 padding-1" style="text-align:center;">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('PS_Notepad')"><i class="icon-notebook "></i></a>
+                            <span class="btn-typename">笔记本</span>
+                        </span>
+                        <span class="col-xs-3 padding-1" style="text-align:center;">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('PS_DShow')"><i class="icon-booth"></i></a>
+                            <span class="btn-typename">展播</span>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-4 padding-right-none">
+                <div class="col-xs-12 togglebtn-group  padding-left-right-none padding-top-10">
+                	<div class='col-xs-12'>
+	                    <span class="col-xs-6 btn-lable">中控面板</span>
+	                    <div class="col-xs-6">
+	                        <div class="btn-group">
+	                            <a class="btn btn-default btn-xs" ng-model="radioModel4" btn-radio="'Left'" selected ng-click="sendCentralControlCmd('EnablePanel')">启用</a>
+	                            <a class="btn btn-default btn-xs" ng-model="radioModel4" btn-radio="'Middle'" ng-click="sendCentralControlCmd('DisablePanel')">关闭</a>
+	                        </div>
+	                    </div>
+                    </div>
+                    <div class='col-xs-12 padding-top-10'>
+	                    <span class="col-xs-6 btn-lable">PC控制</span>
+	                    <div class="col-xs-6">
+	                        <div class="btn-group">
+	                            <label class="btn btn-default btn-xs" ng-model="radioModel3" btn-radio="'Left'" ng-click="sendCentralControlCmd('OpenPC')" checked>开机</label>
+	                            <label class="btn btn-default btn-xs" ng-model="radioModel3" btn-radio="'Middle'" ng-click="sendCentralControlCmd('ClosePC')">关闭</label>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class='col-xs-12 padding-top-10'>
+	                    <span class="col-xs-6 btn-lable">电控锁开关</span>
+	                    <div class="col-xs-6">
+	                        <div class="btn-group">
+	                            <label class="btn btn-default btn-xs active" ng-model="radioModel2" btn-radio="'Left'" ng-click="sendCentralControlCmd('OpenLock')">开启</label>
+	                            <label class="btn btn-default btn-xs" ng-model="radioModel2" btn-radio="'Middle'" ng-click="sendCentralControlCmd('CloseLock')">关闭</label>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class='col-xs-12 padding-top-10'>
+	                    <span class="col-xs-6 btn-lable">投影机开关</span>
+	                    <div class="col-xs-6">
+	                        <div class="btn-group">
+	                            <label class="btn btn-default btn-xs active" ng-model="radioModel1" btn-radio="'Left'" ng-click="sendCentralControlCmd('OpenProjector')">启用</label>
+	                            <label class="btn btn-default btn-xs" ng-model="radioModel1" btn-radio="'Middle'" ng-click="sendCentralControlCmd('CloseProjector')">关闭</label>
+	                        </div>
+	                    </div>
+	                 </div>
+	                 <div class='col-xs-12 padding-top-10'>
+	                 	<div class="col-xs-6 pull-right">
+	                 		<i class="icon-light white-color font-size-18"></i>
+	                 		<span style="color:red;">220h</span>
+	                 	</div>
+	                 </div>
+	                 <div class="col-xs-12">
+	                 	<div class="col-xs-6" style="color:#fff;">电动幕控制</div>
+	                 </div>
+	                 <div class="col-xs-11 video-toggle col-xs-offset-1">
+	                 	<div class="toggle-btn-group margin-top-15 col-xs-11 col-xs-offset-1" ng-model='CustomScreenState'>
+	                        <span class="col-xs-4 padding-1" style="text-align:center;">
+	                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('ScreenDown')" ng-style="showColor(2)"><i class="icon-curtain-down"></i></a>
+	                        </span>
+	                        <span class="col-xs-4 padding-1" style="text-align:center;">
+	                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('ScreenUp')" ng-style="showColor(3)"><i class="icon-curtain-up"></i></a>
+	                        </span>
+	                        <span class="col-xs-4 padding-1" style="text-align:center;">
+	                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="sendCentralControlCmd('ScreenStop')" ng-style="showColor(0,1)"><i class="icon-pause"></i></a>
+	                        </span>
+	                    </div>
+	                 </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="video-toggle IPphone padding-top-10">
+                    <span>IP电话</span>
+                    <div class="toggle-btn-group padding-top-10 col-xs-7 col-xs-offset-3">
+                        <span class="col-xs-12 padding-1" style="text-align:center;">
+                            <a href="" class="col-xs-12 cloud-btn cloud-btn-1"><i class=" icon-call-on"></i></a>
+                            <span class="btn-typename">0.00.01</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="mycrophone col-xs-12 padding-left-right-none padding-top-10">
+                	<span class="white-color">话筒音量</span>
+                	<div class="col-xs-11 col-xs-offset-1 padding-top-10">
+                		<i class=" icon-mic inline-block"></i>
+                		<input type="range" min="0" step="1" max="7" ng-model="mic" class="width-80 inline-block">
+                	</div>
+                </div>
+                <div class="mycrophone col-xs-12 padding-left-right-none padding-top-10">
+                	<span class="white-color">音箱音量</span>
+                	<div class="col-xs-11 col-xs-offset-1 padding-top-10">
+                		<i class=" icon-mic inline-block"></i>
+                		<input type="range" min="0" step="1" max="7" ng-model="vol" class="width-80 inline-block">
+                	</div>
+                </div>
+            </div>
+        </div>
+        <div class="cloud-live" ng-class="{activeCloud:isShow,'cloud-live-recodeOnly':recordedBroadcaststate==1}" ng-show="!isActive4">
+            <div class="cloud-live-title inactive-child col-xs-12">
+            	<span ng-if="couldControl === undefined" class="dedicate">{{VideosInformations[3].title}}</span>
+                <!-- <span class="dedicate">{{couldControl.title}}</span> -->
+                <span class="" style="font-size:16px;width:74px;display:inline-block;">云台控制</span>
+                <span class="" >
+                	<input type="radio" ng-model="couldControl.title" ng-click="toggleCloud(couldControl.title,'1')" value="教师" />教师
+                	&nbsp;&nbsp;
+                	<input type="radio" ng-model="couldControl.title" ng-click="toggleCloud(couldControl.title,'2')" value="学生" />学生
+                	&nbsp;&nbsp;
+                	<!-- <input type="radio" ng-model="couldControl.title" ng-click="toggleCloud(couldControl.title,'3')" value="教师全景" />教室全景 -->
+                </span>                
+                <button class="btn btn-default" style="margin:0 15px 0 350px">手动</button><button class="btn btn-default">自动</button>
+            </div>
+            <div class="cloud-live-title inactive-child col-xs-6">
+                <!-- <span>预置位操作</span> -->
+            </div>
+            <div class="col-xs-5 active-child vp v-meta-hover padding-left-none padding-right-none cloud-Btn"
+            	style="position: absolute;top: 20%;">                 
+                <embed src="icons-lastest.svg" id="svgmapctrl" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/">                 
+            </div>
+            
+            <div class="col-xs-6 active-child cloud-num">  
+            	<div class="col-xs-12" style="margin-top:25px;margin-bottom:5px;">   
+	                <span class="col-xs-5 pull-right padding-1">
+	                    <a ng-if="user.authenticatid.indexOf('auth_director_memory_url_view')>=0" href="" class="col-xs-12 cloud-btn cloud-btn-remember" ng-click="operConsole('0')" ng-class="{'active':activeMem==='0'}">记忆</a>               	
+	                </span>
+	            </div>  
+                <span class="col-xs-4 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-1" ng-click="operConsole('1')">1</a>
+                </span>
+                <span class="col-xs-4 padding-1" >
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-2" ng-click="operConsole('2')">2</a>
+                </span>
+                <span class="col-xs-4 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-3" ng-click="operConsole('3')">3</a>
+                </span>
+                <span class="col-xs-4 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-4" ng-click="operConsole('4')">4</a>
+                </span>
+                <span class="col-xs-4 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-5" ng-click="operConsole('5')">5</a>
+                </span>
+                <span class="col-xs-4 padding-1" >
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-6" ng-click="operConsole('6')">6</a>
+                </span>
+                <!-- <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-7" ng-click="operConsole('7')">7</a>
+                </span>
+                <span class="col-xs-3 padding-1">
+                    <a href="" class="col-xs-12 cloud-btn cloud-btn-8" ng-click="operConsole('8')">8</a>
+                </span>     -->              
+            </div>           
+        </div>
+</div>
+<!--install by wanghan-->
+<div class="splash-window">
+    <div class="center">
+       loading...
+    </div>
+</div>
+<!--end install-->
+<script src="../../assets/js/lib/require.js" data-main="../../director/consoleSampleThree/main.js?v=1.1"></script>
+<script type="text/javascript" src="../../coursepatrol/SwfContcrlor.js"></script>
+<script type="text/javascript" src="../../coursepatrol/swfobject.js"></script>
+<!-- <script type="text/javascript" src="swfobject.js"></script> -->
+<script type="text/javascript">
+    function cameramovebyclick(vw,vh,x,y){
+        var evt = document.createEvent( 'HTMLEvents' );
+        evt.initEvent('cameramovebyclick', true, true);
+        evt.vw = vw;
+        evt.vh = vh;
+        evt.x = x;
+        evt.y =y;
+        window.dispatchEvent(evt);  
+    }
+    var allowMouseWheelOnTheVideo = true;
+	function mouseWheelOnTheVideo(v,w,h){
+		if(w<720){return;}
+		if(allowMouseWheelOnTheVideo){
+			allowMouseWheelOnTheVideo = false;
+			setTimeout(function(){allowMouseWheelOnTheVideo = true},2000);
+			var evt = document.createEvent( 'HTMLEvents' );
+            evt.initEvent('mouseWheelOnTheVideo', true, true);
+            evt.v = v;
+            window.dispatchEvent(evt);  
+		}	
+	}
+    
+</script>
+</body>

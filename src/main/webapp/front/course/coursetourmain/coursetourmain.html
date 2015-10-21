@@ -1,0 +1,41 @@
+<div style="background-color: #f2f2f2;padding-top: 40px;width: 720px;">
+<div class="modal-body ng-scope">
+    <div class="container-fluid">
+        <div class="col-md-4" style="padding-right: 30px;background-color: #ffffff;height: 400px">
+            <div>选择教室</div>
+            <div>
+                <div ui-tree>
+                    <ol ui-tree-nodes ng-model="data">
+                        <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div><span class="courseheader-title">选择机位</span><span class="courseheader-line">　　　　　　　　　　　　　　　　　　　　　</span></br>
+            　<div style="font-family: '微软雅黑'">
+                  <span class="courseheader-type"><input type="checkbox">　教师</span>
+                  <span class="courseheader-type"><input type="checkbox">　教师全景</span>
+                　<span class="courseheader-type"><input type="checkbox">　学生</span>
+              </div>
+              <div class="courseheader-interval">
+                    <span class="courseheader-type"><input type="checkbox">　学生全景</span>
+                 　 <span style="padding-left: 14px;color: #000000"><input type="checkbox">　VGA</span>
+                    <span style="padding-left: 100px"><input type="checkbox">　板书</span>
+              </div>
+            </div>
+            <div>
+                <span class="courseheader-title">分屏设置</span><span class="courseheader-line">　　　　　　　　　　　　　　　　　　　　　</span></br>
+                <div class="courseheader-content"><select style="border-radius:4px;width: 72px">　<option>2 * 2</option><option>3 * 3</option><option>4 * 4</option></select></div>
+            </div><div>
+                <span class="courseheader-title">自动翻页</span><span class="courseheader-line">　　　　　　　　　　　　　　　　　　　　　</span></br>
+                <div class="courseheader-content">间隔　<input style="width: 80px;border-radius: 4px">　秒</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="courseheader-button">
+    <button class="btn btn-primary" ng-click="save()" style="width: 96px;height: 32px">保存</button>　　　
+    <button class="btn btn-default" ng-click="save()" style="width: 96px;height: 32px">取消</button>
+</div>
+</div>

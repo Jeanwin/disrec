@@ -1,0 +1,61 @@
+
+<nav class="navbar navbar-static-top systemmain" role="navigation">
+    <div class="btn-group btn btn-group-lg container-fluid nav navbar-nav">
+        <a href="#" ng-href="#/scheduleManagements/live"
+           ng-if="global.user.authenticatid.indexOf('auth_scheduleManagements_live_url_view')>=0"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===0}">直播课表
+        </a>
+        <a href="" ng-href="#/scheduleManagements/week"
+           ng-if="global.user.authenticatid.indexOf('auth_scheduleManagements_week_url_view')>=0"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===1}">周课表
+        </a>
+        <a href="" ng-href="#/scheduleManagements/edit"
+           ng-if="global.user.authenticatid.indexOf('auth_scheduleManagements_edit_url_view')>=0"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===2}">课表编辑
+        </a>
+        <a href="" ng-href="#/scheduleManagements/myschedule"
+        	ng-if="global.user.authenticatid.indexOf('auth_scheduleManagements_myschedule_url_view')>=0"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===3}">我的课表
+        </a>
+        <a href="" ng-href="#/scheduleManagements/handleRecord"
+          ng-if="global.user.authenticatid.indexOf('auth_scheduleManagements_manual_url_view')>=0"
+           style="font-family:'微软雅黑';font-size: 14px;color: #ffffff"
+           class="btn btn-fristprimary btn-nav"
+           ng-class="{'active':active===4}">手动录课
+        </a>
+        <!--<button type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===0}"><a ng-href="#/scheduleManagements/live" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">直播课表</a></button>-->
+        <!--<button type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===1}"><a ng-href="#/scheduleManagements/week" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">周课表</a></button>-->
+        <!--<button type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===2}"><a ng-href="#/scheduleManagements/edit" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">课表编辑</a></button>-->
+    </div>
+    <div style="margin-top:10px;margin-right: 16px" ng-if="active===2" class="pull-right row">
+         　
+        <!-- <a class="btn btn-primary btn-sm" ng-href="#/scheduleManagements/termSet">
+            <span class="glyphicon glyphicon-th-list"></span>
+            学期设置</a> -->
+        <a href="" ng-href="#/scheduleManagements/termSet"
+           ng-if="global.user.authenticatid.indexOf('auth_termSet_list_url_view')>=0"
+           style="font-family:'微软雅黑';color: #ffffff"
+           class="btn btn-primary btn-fristprimary btn-sm"
+           ng-class="{'active':active===2}"><span class="glyphicon glyphicon-th-list"></span> &nbsp;学期设置
+        </a>
+        <a href="" ng-href="#/scheduleManagements/Classtime"
+           ng-if="global.user.authenticatid.indexOf('auth_Classtime_list_url_view')>=0"
+           style="font-family:'微软雅黑';color: #ffffff"
+           class="btn btn-primary btn-fristprimary btn-sm"
+           ng-class="{'active':active===2}"><span class="glyphicon glyphicon-th"></span>
+            &nbsp;节次设置</a>
+        </a>
+       <!--  <a class="btn btn-primary btn-sm" ng-href="#/Classtime">
+            <span class="glyphicon glyphicon-th"></span>
+            节次设置</a> -->
+    </div>
+</nav>
+<div class="ng-scope" ui-view="scheduleManagements-manage"></div>

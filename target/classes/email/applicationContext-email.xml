@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+	default-lazy-init="true">
+
+	<description>Email配置</description>
+	<!-- 用于生成HTML邮件内容的velocity配置 -->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="resourceLoaderPath" value="classpath:velocity" />
+	    <property name="velocityProperties">
+	      <props>
+	        <prop key="resource.loader">file</prop>
+	        <prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader</prop>
+	        <prop key="velocimacro.library"/>
+	        <prop key="input.encoding">utf-8</prop>
+	        <prop key="output.encoding">utf-8</prop>
+	        <prop key="runtime.log.logsystem.class">org.apache.velocity.runtime.log.NullLogSystem</prop>
+	      </props>
+	    </property>
+  	</bean>
+	
+	<bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
+        <property name="host" value="${mail.host}" />  
+        <property name="javaMailProperties">  
+            <props>  
+                <prop key="mail.smtp.auth">${mail.auth}</prop>  
+                <prop key="mail.smtp.timeout">${mail.timeout}</prop>  
+            </props>  
+        </property>  
+        <property name="username" value="${mail.username}"/>  
+        <property name="password" value="${mail.password}"/>  
+    </bean>  
+   
+</beans>

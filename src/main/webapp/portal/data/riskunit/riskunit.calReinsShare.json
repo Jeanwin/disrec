@@ -1,0 +1,36 @@
+[
+    {
+    "riskUnitNo":"1",
+    "plyEdrComShares": [
+        {
+            "reinsType":"临分",
+            "riComCode":"001",
+            "riComName":"接收人1",
+            "riFComCode":"001",
+            "riFComName":"最终接收人",
+            "shareRate":"接受比例10%",
+            "fShareRate":"最终接受比例30%",
+            "currency":"人民币",
+            "amount":"最新保额100000",
+            "premium":"最新保费",
+            "oriAmount":"原保额20000",
+            "oriPremium":"原保费30000",
+            "chgAmount":"保额变化量2222",
+            "chgPremium":"保费变化量2222"
+        }
+    ],
+    "plyEdrXComShares":[
+        {
+            "reinsType":"临分",
+            "layerNo":"层号2",
+            "currency":"人民币",
+            "excessLoss":"起赔点0.1",
+            "stopLimit":"止陪点1.2",
+            "layerQuota":"赔偿限额01111",
+            "layerChgPremium":"层保费变化量123",
+            "layerPremium":"层最新保费1234",
+            "layerOriPremium":"原层保费123443"
+        }
+    ]
+    }
+]

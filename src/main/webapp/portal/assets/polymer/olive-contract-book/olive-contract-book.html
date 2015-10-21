@@ -1,0 +1,122 @@
+<link href="../core-selector/core-selector.html" rel="import">
+<link href="../core-animated-pages/core-animated-pages.html" rel="import">
+
+<polymer-element name="olive-contract-book" extends="core-selector" notap attributes="transitions
+            contYear
+            refNme
+            contBgnTm
+            contEndTm
+            contGrpTypCde
+            contStatus
+            inoutMrk
+            allowOpen">
+
+  <template>
+
+    <link href="olive-contract-book.css" rel="stylesheet">
+
+    <core-animated-pages selected="{{page}}" transitions="hero-transition" on-core-animated-pages-transition-end="{{complete}}">
+
+        <section class="chip-container" hero-p on-tap="{{transition}}" >
+            <div id="thumnail" hero-id="{{contYear}}-{{inoutMrk}}">
+                <div>
+                    a--{{contYear.contYear}}---a
+                </div>
+                <div>{{refNme}}</div>
+                <div>{{contBgnTm}}</div>
+                <div>{{contEndTm}}</div>
+                <div>{{contGrpTypCde}}</div>
+                <div>{{contStatus}}</div>
+                <div>{{inoutMrk}}</div>
+            </div>
+        </section>
+        <section id="details">
+            <div class="card" horizontal hero-id="{{contYear}}-{{inoutMrk}}" hero on-tap="{{transition}}">
+                <div class="card-left" hero>
+                    <div class="card-album-title">{{contYear}}</div>
+                    <div class="card-album-artist">{{contBgnTm}}</div>
+                </div>
+                <div class="card-right" flex>
+                    <div layout horizontal center>
+                        <div>
+                            <div class="card-icon" ></div>
+                        </div>
+                        <div flex>
+                                <div class="card-album-title">{{contYear}}</div>
+                                <div class="card-album-artist">{{refNme}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      </core-animated-pages>
+
+  </template>
+
+  <script>
+
+    Polymer('olive-contract-book', {
+
+      page: 0,
+      publish: {
+          compact: false, // 紧凑模式
+          autoLoad: false,// 自动装载数据
+          allowOpen:false, //允许展开
+          readonly: true, //只读模式
+          selected: false //是否选中
+      },
+
+      contYear: {},
+
+      transition: function(e) {
+        if (this.page === 0) {
+            //this.selectedAlbum = e.target.templateInstance.model.item;
+            this.page = 1;
+        } else {
+            this.page = 0;
+        }
+      },
+
+       //方法：
+       load : function(){
+            if(this.contStatus === '3'){
+                $("#thumnail").css("background", "red");
+                alert("load...");
+            }
+           alert("load...");
+       },    //装载数据
+       open : function(){
+
+       },  //展开
+       close : function(){
+
+       },  //收回
+       toggle : function(e){
+           if(this.allowOpen === true){
+               console.log("open ...");
+               $("#detail").css("display","block");
+               this.allowOpen = false;
+           }else {
+               console.log("close ...");
+               console.log(e);
+               this.allowOpen = true;
+           }
+
+       },  //切换展开收回
+
+       //事件：
+       contractLoadComplete : function(){
+
+       }, //装载数据完成
+       contractOpened : function(){
+
+       },   //展开完成
+       contractClosed : function(){
+
+       } //关闭完成
+    });
+
+  </script>
+
+</polymer-element>

@@ -1,0 +1,199 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:472px;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+    
+    .isAllChecked {
+    	/* background: green;
+		padding: 2px 2px 0px; */
+		box-shadow: -1px -1px 1px 1px rgba(255,0,0,0.6);
+    }
+</style>
+<div class="container-fluid">
+    <div class="row" style="margin-top:16px">
+        <div class="col-md-9">
+            <div class="whiteframe">
+                <div class="padding-8 row">
+                    <div class="col-xs-8">
+                        <div class="btn-group">
+                            <button class="btn btn-primary" ng-click="AddScope(scopetype)">
+                                <span class="glyphicon glyphicon-plus"></span>添加范围
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="btn-group pull-right">
+                            <label class="btn btn-default" ng-model="scopetype"
+                                   btn-radio="'1'" ng-click="editScope('tree',ClassroomScopes[0])">教室范围</label>
+                            <label class="btn btn-default" ng-model="scopetype"
+                                   btn-radio="'2'" ng-click="editScope('trees',OrganizationScopes[0])">机构范围</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-0" style="min-height:521px">
+
+                    <table class="table table-striped" style="text-align: center" ng-if="scopetype === '2'">
+                        <thead class="formthead" style="background-color: #ceecff;font-weight:bold">
+                         <td style="WORD-WRAP: break-word" width="40">
+                            <!--  <input type="checkbox" ng-model="checkAll" ng-click="checkAllFacilitys()">-->
+                        </td>
+                        <td style="WORD-WRAP: break-word" width="100">范围</td>
+                        <td style="text-align:right; padding-right:20px;">操作</td>
+                        </thead>
+                        <tr ng-repeat="scope in OrganizationScopes">
+                            <td>
+                                <!-- <input type="checkbox" ng-model="user.checked" ng-change="oneCheck()"> -->
+                            </td>
+                            <td>
+                                <a href class="btn btn-link" ng-click="editScope('trees',scope)">{{scope.name}}</a>
+                            </td>
+                            <td style="text-align:right; padding-right:20px;">
+                                <button class="btn btn-link" ng-click="openDeleteScopeModal(scope)" ng-disabled="scope.enable ==='N'"
+                                        tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-striped" style="text-align: center" ng-if="scopetype === '1'">
+                        <thead class="formthead" style="background-color: #ceecff;font-weight:bold">
+                        <td style="WORD-WRAP: break-word" width="40">
+                           <!-- <input type="checkbox" ng-model="checkAll" ng-click="checkAllFacilitys()"> --> 
+                        </td> 
+                        <td style="WORD-WRAP: break-word" width="100">范围</td>
+                        <td style="text-align:right; padding-right:20px;">操作</td>
+                        </thead>
+                        <tr ng-repeat="scope in ClassroomScopes">
+                            <td>
+                                <!--  <input type="checkbox" ng-model="user.checked" ng-change="oneCheck()">-->
+                            </td>
+                            <td>
+                                <a href class="btn btn-link" ng-click="editScope('tree',scope)">{{scope.name}}</a>
+                            </td>
+                            <td style="text-align:right; padding-right:20px;">
+                                <button class="btn btn-link" ng-click="openDeleteScopeModal(scope)"  ng-disabled="scope.enable ==='N'"
+                                        tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-footer">
+
+                    <div ng-if="pagination.totalItems > 0" class="row">
+
+                        <div class="col-xs-3" style="padding-top:8px;">
+                            <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                        </div>
+
+                        <div class="col-xs-9" ng-show="pagination.totalItems > pagination.pageSize">
+                            <!-- 分页  -->
+                            <div class="col-xs-9">
+                                <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                            page="pagination.pageIndex"
+                                            items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize"
+                                            previous-text="{{pagination.previousText}}"
+                                            next-text="{{pagination.nextText}}"
+                                            first-text="{{pagination.firstText}}"
+                                            last-text="{{pagination.lastText}}"
+                                            class="pagination-small"
+                                            boundary-links="true"
+                                            on-select-page="onSelectPage(page)">
+                                </pagination>
+                            </div>
+                            <div class="col-xs-3" style="padding-top:8px;">
+
+                                <div class="input-group input-group-sm" style="width: 100px"
+                                     tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                                    <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                        </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="whiteframe" style="margin-left:-16px;margin-top: 2px" ng-if="scope">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: #fff">
+                        <form name="frmAreaEditor" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-xs-8">
+                                    <input  class="form-control" id="scopeName" placeholder="当前范围" type="text" ng-model="scope.name">
+                                </div>
+                                <div class="col-xs-4">
+                                    <button class="btn btn-primary" ng-disabled="scope.enable ==='N'" ng-click="addNewScope(scope)">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-body">
+                        <div ui-tree id="tree-root" data-drag-enabled="false">
+                            <ol ui-tree-nodes ng-model="scope.areaTree">
+                                <li ng-repeat="node in scope.areaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="nodes_renderer.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}" ng-click="setActiveAreaTreeNode(this)">
+        <!--<span ng-if="node.nodes && node.nodes.length > 0" class="button" ng-class="{'ico_close': collapsed, 'ico_open': !collapsed}"></span>-->
+        <!--<span ng-if="node.nodes && node.nodes.length === 0" class="glyphicon glyphicon-unchecked"></span>-->
+        <input type="checkbox" ng-class="{'isAllChecked': node.halfFlag}" ng-model="node.isSelected" ng-click="checkAllTrees(node)">
+		<span title="{{node.title}}" style="max-width:calc(100% - 25px);text-overflow:ellipsis;overflow:hidden;display:inline-block;white-space:nowrap;">{{node.title}}</span>
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+
+</script>
+

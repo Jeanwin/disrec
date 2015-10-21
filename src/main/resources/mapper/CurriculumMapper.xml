@@ -1,0 +1,1552 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.CurriculumMapper">
+
+	<sql id="Base_Column_List">
+		id, termid, classid, areaid, userid, deptid,
+		date,weeks,weekdate,record,live,classniddlerecord,course,`subject`,
+		course_desc,video,livemodel,intercourse,state,areastate,classnum,createtime
+	</sql>
+	<select id="findOne" parameterType="java.lang.String"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select
+		id, termid, classid, areaid, userid
+		from
+		zonekey_curriculum
+		where id = #{id,jdbcType=CHAR}
+	</select>
+	<select id="findByPage" resultType="com.zonekey.disrec.entity.Curriculum"
+		parameterType="java.lang.Integer">
+		<!-- SELECT * FROM (SELECT <include refid="Base_Column_List" />, rownum 
+			as row_num FROM RMS_ORG) s where 1=1 and s.row_num between #{offset} and 
+			#{limit} SELECT * FROM `content` AS t1 JOIN (SELECT id FROM `content` ORDER 
+			BY id desc LIMIT ".($page-1)*$pagesize.", 1) AS t2 WHERE t1.id <= t2.id ORDER 
+			BY t1.id desc LIMIT $pagesize; select <include refid="Base_Column_List" /> 
+			from RMS_ORG as t1 JOIN (SELECT id FROM RMS_ORG ORDER BY id desc limit #{offset}, 
+			1) as t2 WHERE t1.id <= t2.id ORDER BY t1.id desc limit #{limit}; -->
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_curriculum order by id desc limit #{offset}, #{limit}
+	</select>
+
+	<select id="count" resultType="long">
+		SELECT
+		count(*)
+		FROM
+		zonekey_curriculum
+	</select>
+	<select id="findAll" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		*
+		FROM zonekey_curriculum
+		order by id desc
+	</select>
+	<!-- 按条件查询直播课表 -->
+	<select id="findLiveCurriculum" resultType="com.zonekey.disrec.entity.Curriculum"
+		parameterType="com.zonekey.disrec.vo.PageBean">
+		select * from (
+		SELECT
+		a.id,a.termid,a.areaid,c.deptid,c.name as
+		areaname,a.userid,u.name as
+		username,a.date,replace(left(SYSDATE(),10
+		),'-','')as nowdate
+		,a.weekdate ,a.classnum as classnum,a.subject,
+		a.subjectattribute,a.imageurl,
+		a.class_relation,a.sameclass,a.course_desc as coursedesc
+		,min(replace(a.starttime,':',''))
+		as
+		cmin,MAX(replace(a.endtime,':','')) as cmax,MAX(a.endtime)AS cmax2
+		FROM zonekey_curriculum a ,zonekey_area c ,sys_user u
+		where
+		a.areaid=c.id AND u.id=a.userid AND a.live='1' and a.deleteflag = '0'
+		<if test="keywords != null">
+			<if test="keywords.startdate!=null and keywords.startdate!=''">and a.date >= #{keywords.startdate}</if>
+			<if test="keywords.enddate!=null and keywords.enddate!=''"> and #{keywords.enddate} >= a.date</if>
+			<if test="keywords.userid!=null and keywords.userid!=''"> and a.userid = #{keywords.userid} </if>
+			<if test="keywords.areaname!=null and keywords.areaname!=''"> and c.name like concat('%',#{keywords.areaname},'%')
+			</if>
+			<if test="keywords.classnum!=null and keywords.classnum!=''"> and a.classnum = #{keywords.classnum}</if>
+			<if test="keywords.weekdate!=null and keywords.weekdate!=''"> and weekdate = #{keywords.weekdate}</if>
+			<if test="keywords.subject!=null and keywords.subject!=''"> and a.subject like concat('%',#{keywords.subject},'%')
+			</if>
+			<if test="keywords.username!=null and keywords.username!=''"> and u.name like concat('%',#{keywords.username},'%')
+			</if>
+		</if>
+		<if
+			test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			and a.date >= replace(left(SYSDATE(),10 ),'-','')
+		</if>
+		GROUP BY a.date,a.weekdate ,a.sameclass ,areaname,username
+		)a
+		where 1=1
+		<if
+			test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			AND CONCAT(a.date,' ',a.cmax2) >= NOW()
+		</if>
+		<if test="keywords != null">
+			<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(a.deptid,getdeptChildLst(#{treeid}))
+				</if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			</if>
+			<if
+				test="(keywords.startdate==null or keywords.startdate=='') and (keywords.enddate==null or keywords.enddate=='')"> and CONCAT(a.date,' ',a.cmax2) >= NOW()</if>
+		</if>
+		<if
+			test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid !=''">and find_in_set(a.areaid,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(a.areaid,getareaChildLst(0)) </if>
+		</if>
+
+		<if
+			test="page !=null and page.offset != null and page.limit!=null and page.order==''">
+			order by a.date ,CONCAT(date,a.cmax) ,CONCAT(date,a.cmin) ASC
+			limit #{page.offset} ,#{page.limit}
+		</if>
+		<if
+			test="page !=null and page.offset != null and page.limit!=null and page.order!=''">
+			order by ${page.order} ${page.sort}
+			limit #{page.offset}
+			,#{page.limit}
+		</if>
+
+	</select>
+
+	<select id="findLiveCount" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+		select count(*) from (
+		SELECT
+		a.id,a.termid,a.areaid,c.deptid,c.name as
+		areaname,a.userid,u.name as
+		username,a.date,replace(left(SYSDATE(),10
+		),'-','')as nowdate
+		,a.weekdate ,a.classnum as classnum,a.subject,
+		a.imageurl,
+		a.class_relation,a.sameclass,a.course_desc as coursedesc
+		,min(replace(a.starttime,':',''))
+		as
+		cmin,MAX(replace(a.endtime,':','')) as cmax,MAX(a.endtime)AS cmax2
+		FROM zonekey_curriculum a ,zonekey_area c ,sys_user u
+		where
+		a.areaid=c.id AND u.id=a.userid AND a.live='1' and a.deleteflag = '0'
+		<if test="keywords != null">
+			<if test="keywords.startdate!=null and keywords.startdate!=''">and a.date >= #{keywords.startdate}</if>
+			<if test="keywords.enddate!=null and keywords.enddate!=''"> and #{keywords.enddate} >= a.date</if>
+			<if test="keywords.userid!=null and keywords.userid!=''"> and a.userid = #{keywords.userid} </if>
+			<if test="keywords.areaname!=null and keywords.areaname!=''"> and c.name like concat('%',#{keywords.areaname},'%')
+			</if>
+			<if test="keywords.classnum!=null and keywords.classnum!=''"> and a.classnum = #{keywords.classnum}</if>
+			<if test="keywords.weekdate!=null and keywords.weekdate!=''"> and weekdate = #{keywords.weekdate}</if>
+			<if test="keywords.subject!=null and keywords.subject!=''"> and a.subject like concat('%',#{keywords.subject},'%')
+			</if>
+			<if test="keywords.username!=null and keywords.username!=''"> and u.name like concat('%',#{keywords.username},'%')
+			</if>
+		</if>
+		<if
+			test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			and a.date >= replace(left(SYSDATE(),10 ),'-','')
+		</if>
+		<!-- <if test="keywords==null">and a.date >= replace(left(SYSDATE(),10 
+			),'-','')</if> -->
+		GROUP BY a.date,a.weekdate ,a.sameclass ,areaname,username
+		)a
+		where 1=1
+		<if
+			test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			AND CONCAT(a.date,' ',a.cmax2) >= NOW()
+		</if>
+		<if test="keywords != null">
+			<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(a.deptid,getdeptChildLst(#{treeid}))
+				</if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(a.deptid,getdeptChildLst(0)) </if>
+			</if>
+			<if
+				test="(keywords.startdate==null or keywords.startdate=='') and (keywords.enddate==null or keywords.enddate=='')"> and CONCAT(a.date,' ',a.cmax2) >= NOW()</if>
+		</if>
+		<if
+			test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid !=''">and find_in_set(a.areaid,getareaChildLst(#{treeid})) </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(a.areaid,getareaChildLst(0)) </if>
+		</if>
+		order by a.date ASC
+
+	</select>
+	<!-- 根据 termid 和 classnum 去课表基础表中查 开始时间 strtime\结束时间 endtime -->
+	<select id="findStartAndEndtime" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		replace(b.starttime,':','') as starttime,replace(b.endtime,':','') as
+		endtime from zonekey_curriculumbase b WHERE
+		b.id=
+		(
+		SELECT
+		distinct(a.classid )
+		from zonekey_curriculum a
+		WHERE a.termid=#{termid}
+		AND a.classnum =#{classnum}
+		)
+	</select>
+	<!-- 根据 termid 和 classnum 去课表基础表中查 开始时间 strtime -->
+	<select id="findStartTime" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		replace(b.starttime,':','') as starttime from zonekey_curriculumbase b
+		WHERE
+		b.id=
+		(
+		SELECT distinct(a.classid )
+		from zonekey_curriculum a
+		WHERE
+		a.termid=#{termid} AND a.classnum =#{classnum}
+		)
+	</select>
+
+	<!-- 根据 termid 和 classnum 去课表基础表中查 结束时间 endtime -->
+	<select id="findEndtime" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		replace(b.endtime,':','') as endtime from zonekey_curriculumbase b
+		WHERE
+		b.id=
+		(
+		SELECT distinct(a.classid )
+		from zonekey_curriculum a
+		WHERE
+		a.termid=#{termid} AND a.classnum =#{classnum}
+		)
+	</select>
+	<!-- 按id查询直播课表 -->
+	<select id="findLiveCurriculumById" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		a.id,a.userid ,a.subject,a.course_desc FROM zonekey_curriculum a
+		where
+		id =#{id}
+	</select>
+	<!-- 查询周课表课表 -->
+	<select id="findWeekCurriculum" resultType="com.zonekey.disrec.entity.Curriculum">
+
+		select * from
+		(
+		SELECT
+		c.id,c.sameclass,c.classnum,c.weeks,c.date,c.weekdate,a.`name` as
+		areaname,c.areaid,ifnull((select name from zonekey_dept where
+		id=a.deptid),'')as deptname ,a.deptid, u.`name` as
+		username,c.`subject`,c.live,c.record,c.livemodel,c.video,replace(c.starttime,':','')
+		as starttime, replace(c.endtime,':','') as endtime,
+		(CASE WHEN c.id in(
+		SELECT a.id FROM
+		zonekey_curriculum a , zonekey_resource r where
+		r.curriculumid=a.id )
+		THEN '1' ELSE '0' END) as isresource
+		from
+		zonekey_curriculum c
+		,zonekey_area a ,sys_user u
+		where
+		c.areaid =a.id AND
+		c.userid=u.id and c.deleteflag='0'
+		<if test="areaid!=null and areaid!=''"> and c.areaid = #{areaid}</if>
+		<if test="weeks!=null and weeks!=''"> and c.weeks = #{weeks}</if>
+		<if test="termid!=null and termid!=''"> and c.termid = #{termid}</if>
+		<if test="live!=null and live!=''"> and c.live = #{live}</if>
+		<if test="record!=null and record!=''"> and c.record = #{record}</if>
+		order by c.areaid
+		) cc
+		where 1=1
+		<if test="isresource!=null and isresource!=''"> AND cc.isresource=#{isresource}</if>
+	</select>
+	<!-- 周课表查询，返给页面所有数据 -->
+	<select id="findWeekCurriculumList" parameterType="com.zonekey.disrec.entity.CurriculumParamForWeek"
+		resultType="com.zonekey.disrec.entity.CurriculumParamForWeek">
+		select a1.*,(CASE WHEN left(NOW(),10)=a1.today THEN '今天' ELSE
+		right(a1.today,5) end) as subtoday,
+		ctime >CONCAT(today,'
+		',a1.classstarttime) showstatus ,c.*
+		from (
+		select areaid as
+		classareaid,LEFT(starttime,5) as
+		classstarttime,left(endtime,5) as
+		classendtime,rqid as
+		weekdate,rq,i_class as classnum,now()
+		ctime,b.today from
+		zonekey_curriculumbase a ,(
+		select 1 rqid, '星期一'
+		rq,#{monDate} today from dual
+		union
+		select 2 rqid, '星期二'rq, #{tuesDate}
+		today from dual
+		union
+		select 3 rqid, '星期三'rq, #{wednesDate} today from
+		dual
+		union
+		select 4 rqid, '星期四'rq ,#{thursDate} today from dual
+		union
+		select 5 rqid, '星期五'rq ,#{friDate} today from dual
+		union
+		select 6 rqid,
+		'星期六' rq, #{saturDate} today from dual
+		union
+		select 7 rqid, '星期日'rq
+		,#{sunDate} today from dual
+
+		) b where 1=1
+		<if test="classbatch!=null and classbatch!=''"> AND classbatch=#{classbatch}</if>
+		<if test="areaid!=null and areaid!=''"> AND areaid=#{areaid}</if>
+		) a1
+		left JOIN
+		(select abc.* ,u.name as username,ifnull((select name
+		from zonekey_dept where
+		id=abc.deptid),'')as deptname ,abc.course_desc
+		as coursedesc,
+		CASE WHEN
+		abc.id in(
+		SELECT DISTINCT(ar.id) FROM
+		zonekey_curriculum ar , zonekey_resource r where r.curriculumid=ar.id
+		)
+		THEN '1' ELSE '0' END as isresource
+
+		from zonekey_curriculum abc
+		,sys_user u where 1=1
+		<if test="areaid!=null and areaid!=''"> AND abc.areaid=#{areaid}</if>
+		<if test="weeks!=null and weeks!=''"> AND abc.weeks=#{weeks}</if>
+		and abc.deleteflag=0 and u.id=abc.userid) c
+		on a1.classareaid=c.areaid
+		and a1.today=c.date and
+		a1.classnum=c.classnum
+		<if test="live!=null and live!=''"> and c.live = #{live}</if>
+		<if test="record!=null and record!=''"> and c.record = #{record}</if>
+		<if test="isresource!=null and isresource!=''"> and c.isresource = #{isresource}</if>
+		order by today,a1.classnum
+	</select>
+	<!-- 周课表查询，返给页面所有数据 -->
+	<select id="findWeekCurriculumListWithMobile" parameterType="com.zonekey.disrec.entity.CurriculumParamForWeek"
+		resultType="com.zonekey.disrec.entity.CurriculumParamForWeek">
+		(select a1.*,(CASE WHEN left(NOW(),10)=a1.today THEN '今天' ELSE
+		right(a1.today,5) end) as subtoday,
+		ctime >CONCAT(today,'
+		',a1.classstarttime) showstatus ,c.*
+		from (
+		select areaid as
+		classareaid,LEFT(starttime,5) as
+		classstarttime,left(endtime,5) as
+		classendtime,rqid as
+		weekdate,rq,i_class as classnum,now()
+		ctime,b.today from
+		zonekey_curriculumbase a ,(
+		select 1 rqid, '星期一'
+		rq,#{monDate} today from dual
+		union
+		select 2 rqid, '星期二'rq, #{tuesDate}
+		today from dual
+		union
+		select 3 rqid, '星期三'rq, #{wednesDate} today from
+		dual
+		union
+		select 4 rqid, '星期四'rq ,#{thursDate} today from dual
+		union
+		select 5 rqid, '星期五'rq ,#{friDate} today from dual
+		union
+		select 6 rqid,
+		'星期六' rq, #{saturDate} today from dual
+		union
+		select 7 rqid, '星期日'rq
+		,#{sunDate} today from dual
+
+		) b where 1=1
+		<if test="classbatch!=null and classbatch!=''"> AND classbatch=#{classbatch}</if>
+		<if test="areaid!=null and areaid!=''"> AND areaid=#{areaid}</if>
+		) a1
+		left JOIN
+		(select abc.* ,u.name as username,ifnull((select name
+		from zonekey_dept where
+		id=abc.deptid),'')as deptname ,abc.course_desc
+		as coursedesc,
+		CASE WHEN
+		abc.id in(
+		SELECT DISTINCT(ar.id) FROM
+		zonekey_curriculum ar , zonekey_resource r where r.curriculumid=ar.id
+		)
+		THEN '1' ELSE '0' END as isresource
+
+		from zonekey_curriculum abc
+		,sys_user u where 1=1
+		<if test="areaid!=null and areaid!=''"> AND abc.areaid=#{areaid}</if>
+		<if test="weeks!=null and weeks!=''"> AND abc.weeks=#{weeks}</if>
+		and abc.deleteflag=0 and u.id=abc.userid) c
+		on a1.classareaid=c.areaid
+		and a1.today=c.date and
+		a1.classnum=c.classnum
+		<if test="live!=null and live!=''"> and c.live = #{live}</if>
+		<if test="record!=null and record!=''"> and c.record = #{record}</if>
+		<if test="isresource!=null and isresource!=''"> and c.isresource = #{isresource}</if>
+		WHERE sameclass is NULL
+		order by today,a1.classnum)
+		union ALL
+		(select
+		a1.*,(CASE WHEN left(NOW(),10)=a1.today THEN '今天' ELSE
+		right(a1.today,5) end) as subtoday,
+		ctime >CONCAT(today,'
+		',a1.classstarttime) showstatus ,c.*
+		from (
+		select areaid as
+		classareaid,LEFT(starttime,5) as
+		classstarttime,left(endtime,5) as
+		classendtime,rqid as
+		weekdate,rq,i_class as classnum,now()
+		ctime,b.today from
+		zonekey_curriculumbase a ,(
+		select 1 rqid, '星期一'
+		rq,#{monDate} today from dual
+		union
+		select 2 rqid, '星期二'rq, #{tuesDate}
+		today from dual
+		union
+		select 3 rqid, '星期三'rq, #{wednesDate} today from
+		dual
+		union
+		select 4 rqid, '星期四'rq ,#{thursDate} today from dual
+		union
+		select 5 rqid, '星期五'rq ,#{friDate} today from dual
+		union
+		select 6 rqid,
+		'星期六' rq, #{saturDate} today from dual
+		union
+		select 7 rqid, '星期日'rq
+		,#{sunDate} today from dual
+
+		) b where 1=1
+		<if test="classbatch!=null and classbatch!=''"> AND classbatch=#{classbatch}</if>
+		<if test="areaid!=null and areaid!=''"> AND areaid=#{areaid}</if>
+		) a1
+		left JOIN
+		(select abc.* ,u.name as username,ifnull((select name
+		from zonekey_dept where
+		id=abc.deptid),'')as deptname ,abc.course_desc
+		as coursedesc,
+		CASE WHEN
+		abc.id in(
+		SELECT DISTINCT(ar.id) FROM
+		zonekey_curriculum ar , zonekey_resource r where r.curriculumid=ar.id
+		)
+		THEN '1' ELSE '0' END as isresource
+
+		from zonekey_curriculum abc
+		,sys_user u where 1=1
+		<if test="areaid!=null and areaid!=''"> AND abc.areaid=#{areaid}</if>
+		<if test="weeks!=null and weeks!=''"> AND abc.weeks=#{weeks}</if>
+		and abc.deleteflag=0 and u.id=abc.userid) c
+		on a1.classareaid=c.areaid
+		and a1.today=c.date and
+		a1.classnum=c.classnum
+		<if test="live!=null and live!=''"> and c.live = #{live}</if>
+		<if test="record!=null and record!=''"> and c.record = #{record}</if>
+		<if test="isresource!=null and isresource!=''"> and c.isresource = #{isresource}</if>
+		GROUP BY sameclass,editclassbatch HAVING sameclass IS NOT NULL
+		order by
+		today,a1.classnum)
+	</select>
+	<!-- 我的课表查询，返给页面所有数据 -->
+	<select id="findMyWeekCurriculumList" parameterType="com.zonekey.disrec.entity.CurriculumParamForWeek"
+		resultType="com.zonekey.disrec.entity.CurriculumParamForWeek">
+		select a1.*,(CASE WHEN left(NOW(),10)=a1.today THEN '今天' ELSE
+		right(a1.today,5) end) as subtoday,
+		ctime >CONCAT(today,'
+		',a1.classstarttime) showstatus ,c.*,(select `name` from zonekey_area
+		where id=c.areaid) as areaname,(select innerid from zonekey_area where
+		id=c.areaid) as areano
+		from (
+		select areaid as
+		classareaid,LEFT(starttime,5) as
+		classstarttime,left(endtime,5) as
+		classendtime,rqid as
+		weekdate,rq,i_class as classnum,now()
+		ctime,b.today from
+		zonekey_curriculumbase a ,(
+		select 1 rqid, '星期一'
+		rq,#{monDate} today from dual
+		union
+		select 2 rqid, '星期二'rq, #{tuesDate}
+		today from dual
+		union
+		select 3 rqid, '星期三'rq, #{wednesDate} today from
+		dual
+		union
+		select 4 rqid, '星期四'rq ,#{thursDate} today from dual
+		union
+		select 5 rqid, '星期五'rq ,#{friDate} today from dual
+		union
+		select 6 rqid,
+		'星期六' rq, #{saturDate} today from dual
+		union
+		select 7 rqid, '星期日'rq
+		,#{sunDate} today from dual
+
+		) b where 1=1
+		<if test="classbatch!=null and classbatch!=''"> AND classbatch=#{classbatch}</if>
+		AND ISNULL(areaid)
+
+		) a1
+		left JOIN
+		(select abc.* ,u.name as
+		username,ifnull((select name from zonekey_dept where
+		id=abc.deptid),'')as deptname ,abc.course_desc as coursedesc,
+		CASE WHEN
+		abc.id in(
+		SELECT DISTINCT(ar.id) FROM
+		zonekey_curriculum ar ,
+		zonekey_resource r where r.curriculumid=ar.id )
+		THEN '1' ELSE '0' END
+		as isresource
+
+		from zonekey_curriculum abc ,sys_user u where 1=1 AND
+		abc.userid=u.id
+		<if test="userno!=null and userno!=''"> AND u.loginname=#{userno}</if>
+		<if test="weeks!=null and weeks!=''"> AND abc.weeks=#{weeks}</if>
+		and abc.deleteflag=0 and u.id=abc.userid) c
+		on a1.today=c.date and
+		a1.classnum=c.classnum
+		<if test="live!=null and live!=''"> and c.live = #{live}</if>
+		<if test="record!=null and record!=''"> and c.record = #{record}</if>
+		<if test="isresource!=null and isresource!=''"> and c.isresource = #{isresource}</if>
+		order by today,a1.classnum
+	</select>
+	<!-- 周课表查询，返给页面所有数据 （这种情况适用于如果所选教室没有匹配当当前方案中，仍然可以查出所有数据，以及这个教室在这周内之前所设的数据）该sql备用 -->
+	<select id="findWeekCurriculumList_bak" parameterType="com.zonekey.disrec.entity.CurriculumParamForWeek"
+		resultType="com.zonekey.disrec.entity.CurriculumParamForWeek">
+		select a1.*,
+		ctime >CONCAT(today,' ',a1.classstarttime) showstatus ,c.*
+		from (
+		select areaid as classareaid,starttime as classstarttime,endtime
+		as
+		classendtime,rqid as weekdate,rq,i_class as classnum,now()
+		ctime,b.today from zonekey_curriculumbase a ,(
+		select 1 rqid, '星期一'
+		rq,#{monDate} today from dual
+		union
+		select 2 rqid, '星期二'rq, #{tuesDate}
+		today from dual
+		union
+		select 3 rqid, '星期三'rq, #{wednesDate} today from
+		dual
+		union
+		select 4 rqid, '星期四'rq ,#{thursDate} today from dual
+		union
+		select 5 rqid, '星期五'rq ,#{friDate} today from dual
+		union
+		select 6 rqid,
+		'星期六' rq, #{saturDate} today from dual
+		union
+		select 7 rqid, '星期日'rq
+		,#{sunDate} today from dual
+
+		) b where 1=1
+		<if test="classbatch!=null and classbatch!=''"> AND classbatch=#{classbatch}</if>
+		AND ISNULL(areaid)
+
+		) a1
+		left JOIN
+		(select abc.* ,
+		CASE WHEN abc.id in(
+		SELECT DISTINCT(ar.id) FROM
+		zonekey_curriculum ar , zonekey_resource r
+		where r.name=ar.resourcefloder )
+		THEN '1' ELSE '0' END as isresource
+
+		from zonekey_curriculum abc where 1=1
+		<if test="areaid!=null and areaid!=''"> AND abc.areaid=#{areaid}</if>
+		<if test="weeks!=null and weeks!=''"> AND abc.weeks=#{weeks}</if>
+		and abc.deleteflag=0) c
+		on a1.today=c.date and a1.classnum=c.classnum
+		<if test="live!=null and live!=''"> and c.live = #{live}</if>
+		<if test="record!=null and record!=''"> and c.record = #{record}</if>
+		<if test="isresource!=null and isresource!=''"> and c.isresource = #{isresource}</if>
+		order by today,a1.classnum
+	</select>
+	<!-- 查询周课表课表 -->
+	<select id="findWeekCurriculum_bak" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		a.id,b.`name` as
+		classname,a.weekdate,a.userid,a.`subject`,ifnull((select name from
+		zonekey_dept where id=a.deptid),'')as deptname
+		,a.deptid,a.areaid,a.termid,a.weeks,a.live,a.record,
+		(CASE WHEN a.id
+		in(
+		SELECT a.id FROM
+		zonekey_curriculum a , zonekey_resource r where
+		r.curriculumid=a.id )
+		THEN '1' ELSE '0' END) as isresource
+		from
+		zonekey_curriculum a ,zonekey_curriculumbase b,zonekey_resource r
+		WHERE a.classid=b.id and a.termid=b.termid
+		<if test="areaid!=null"> and a.areaid = #{areaid}</if>
+		<if test="weeks!=null"> and a.weeks = #{weeks}</if>
+		<if test="live!=null"> and a.live = #{live}</if>
+		<if test="record!=null"> and a.record = #{record}</if>
+		<if test="isresource!=null"> AND r.curriculumid=a.id</if>
+	</select>
+	<!-- 查询可编辑课表 -->
+	<select id="findEditCurriculum" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select * from (
+		SELECT
+		a.id,a.termid,c.name as areaname,c.id as
+		areaid,c.innerid as areano,u.name as
+		username,u.id as
+		userid,ifnull((select name from zonekey_dept where
+		id=a.deptid),'')as
+		deptname ,a.deptid as
+		deptid,a.weeks,a.date,replace(left(SYSDATE(),10
+		),'-','')as nowdate
+		,a.weekdate ,a.classnum as
+		classnum,a.subject,a.subjectattribute,
+		a.class_relation,a.sameclass,a.course_desc as coursedesc
+		,min(replace(a.starttime,':',''))
+		as
+		cmin,MAX(replace(a.endtime,':','')) as
+		cmax,a.live,a.record,a.classniddlerecord,a.editclassbatch,a.intercourse,a.livemodel,a.video,a.isupload
+		FROM zonekey_curriculum a ,zonekey_area c ,sys_user u
+		where
+		a.areaid=c.id AND u.id=a.userid and a.deleteflag=0
+		<if test="keywords != null">
+			<if test="keywords.startdate!=null and keywords.startdate!=''">and a.date >= #{keywords.startdate}</if>
+			<if test="keywords.enddate!=null and keywords.enddate!=''"> and #{keywords.enddate} >= a.date</if>
+			<if
+				test="(keywords.startdate==null or keywords.startdate=='') and (keywords.enddate==null or keywords.enddate=='') and (keywords.weeks==null or keywords.weeks=='')"> and a.date >= replace(left(SYSDATE(),10 ),'-','')</if>
+			<if test="keywords.userid!=null and keywords.userid!=''"> and a.userid = #{keywords.userid} </if>
+			<if test="keywords.username!=null and keywords.username!=''"> and
+				u.name like concat('%',#{keywords.username},'%')</if>
+			<if test="keywords.live!=null and keywords.live!=''"> and a.live =
+				#{keywords.live}
+			</if>
+			<if test="keywords.record!=null and keywords.record!=''"> and
+				a.record = #{keywords.record}
+			</if>
+			<if test="keywords.intercourse!=null and keywords.intercourse!=''">
+				and a.intercourse = #{keywords.intercourse}
+			</if>
+			<if test="keywords.weekdate!=null and keywords.weekdate!=''"> and a.weekdate = #{keywords.weekdate}</if>
+			<if test="keywords.classnum!=null and keywords.classnum!=''"> and a.classnum = #{keywords.classnum}</if>
+			<if test="keywords.subject!=null and keywords.subject!=''"> and a.subject like concat('%',#{keywords.subject},'%')
+			</if>
+			<if test="keywords.deptname!=null and keywords.deptname!=''"> and d.name like concat('%',#{keywords.deptname},'%')
+			</if>
+			<if test="keywords.weeks!=null and keywords.weeks!=''"> and a.weeks = #{keywords.weeks}</if>
+		</if>
+		<!-- <if test="keywords != null and keywords.temp == ''"> -->
+		<!-- and a.date >= replace(left(SYSDATE(),10 ),'-','')</if> -->
+		GROUP BY a.date,a.weekdate ,a.sameclass ,areaname,username
+		)mid where
+		1=1
+		<if test="keywords == null">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(mid.areaid,getareaChildLst(#{treeid}))
+			</if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(mid.areaid,getareaChildLst(0)) </if>
+		</if>
+		<if test="keywords != null">
+			<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(mid.deptid,getdeptChildLst(#{treeid}))
+				</if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(mid.deptid,getdeptChildLst(0)) </if>
+			</if>
+			<if test=" keywords.temp == null or  keywords.temp == ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(mid.areaid,getareaChildLst(#{treeid}))
+				</if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(mid.areaid,getareaChildLst(0)) </if>
+			</if>
+			<if test="keywords.serchclumn!=null and keywords.serchclumn!=''">and username like concat('%',#{keywords.serchclumn},'%')
+				or subject like concat('%',#{keywords.serchclumn},'%') or areaname
+				like concat('%',#{keywords.serchclumn},'%')</if>
+		</if>
+
+		<if
+			test="page !=null and page.offset != null and page.limit!=null and page.order==''">
+			order by mid.date ,CONCAT(mid.date,mid.cmax)
+			,CONCAT(mid.date,mid.cmin)
+			limit #{page.offset} ,#{page.limit}
+		</if>
+		<if
+			test="page !=null and page.offset != null and page.limit!=null and page.order!=''">
+			order by ${page.order} ${page.sort}
+			limit #{page.offset}
+			,#{page.limit}
+		</if>
+	</select>
+
+	<!-- 查询可编辑课表 -->
+	<select id="findEditCount" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+		select count(*) from (
+		SELECT
+		a.id,a.termid,c.name as areaname,c.id as
+		areaid,u.name as username,u.id as userid,a.deptid
+		as
+		deptid,a.weeks,a.date,a.weekdate ,a.classnum as classnum,a.subject,
+		a.class_relation,a.sameclass
+		,a.live,a.record,a.classniddlerecord,a.editclassbatch,a.intercourse,a.livemodel,a.video
+		FROM zonekey_curriculum a ,zonekey_area c ,sys_user u
+		where
+		a.areaid=c.id AND u.id=a.userid and a.deleteflag=0
+		<if test="keywords != null">
+			<if test="keywords.startdate!=null and keywords.startdate!=''">and a.date >= #{keywords.startdate}</if>
+			<if test="keywords.enddate!=null and keywords.enddate!=''"> and #{keywords.enddate} >= a.date</if>
+			<if
+				test="(keywords.startdate==null or keywords.startdate=='') and (keywords.enddate==null or keywords.enddate=='')"> and a.date >= replace(left(SYSDATE(),10 ),'-','')</if>
+			<if test="keywords.userid!=null and keywords.userid!=''"> and a.userid = #{keywords.userid} </if>
+			<if test="keywords.username!=null and keywords.username!=''"> and
+				u.name like concat('%',#{keywords.username},'%')</if>
+			<if test="keywords.live!=null and keywords.live!=''"> and a.live =
+				#{keywords.live}
+			</if>
+			<if test="keywords.record!=null and keywords.record!=''"> and
+				a.record = #{keywords.record}
+			</if>
+			<if test="keywords.intercourse!=null and keywords.intercourse!=''">
+				and a.intercourse = #{keywords.intercourse}
+			</if>
+			<if test="keywords.weekdate!=null and keywords.weekdate!=''"> and a.weekdate = #{keywords.weekdate}</if>
+			<if test="keywords.classnum!=null and keywords.classnum!=''"> and a.classnum = #{keywords.classnum}</if>
+			<if test="keywords.subject!=null and keywords.subject!=''"> and a.subject like concat('%',#{keywords.subject},'%')
+			</if>
+			<if test="keywords.deptname!=null and keywords.deptname!=''"> and d.name like concat('%',#{keywords.deptname},'%')
+			</if>
+			<if test="keywords.weeks!=null and keywords.weeks!=''"> and a.weeks = #{keywords.weeks}</if>
+		</if>
+
+		<!-- <if test="keywords != null and keywords.temp == ''">and a.date >= 
+			replace(left(SYSDATE(),10 ),'-','')</if> -->
+		GROUP BY a.date,a.weekdate ,a.sameclass ,areaname,username
+		order by
+		a.date ASC
+		) d where 1=1
+		<if test="keywords == null">
+			<if test="treeid !=null and treeid != '' ">and find_in_set(d.areaid,getareaChildLst(#{treeid}))  </if>
+			<if test="treeid ==null or treeid == ''">and find_in_set(d.areaid,getareaChildLst(0)) </if>
+		</if>
+		<if test="keywords != null">
+			<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(d.deptid,getdeptChildLst(#{treeid}))
+				</if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(d.deptid,getdeptChildLst(0)) </if>
+			</if>
+			<if test=" keywords.temp == null or  keywords.temp == ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(d.areaid,getareaChildLst(#{treeid}))
+				</if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(d.areaid,getareaChildLst(0)) </if>
+			</if>
+			<if test="keywords.serchclumn!=null and keywords.serchclumn!=''">and username like concat('%',#{keywords.serchclumn},'%')
+				or subject like concat('%',#{keywords.serchclumn},'%') or areaname
+				like concat('%',#{keywords.serchclumn},'%')</if>
+		</if>
+	</select>
+	<!-- 按条件查询课表 -->
+	<select id="findCurriculumByWhere" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		*
+		from zonekey_curriculum a
+		WHERE 1=1 and deleteflag='0'
+		<if test="userid!=null"> and a.userid = #{userid}</if>
+		<if test="areaid!=null"> and a.areaid = #{areaid}</if>
+		<if test="weeks!=null"> and a.weeks = #{weeks}</if>
+		<if test="weekdate!=null"> and a.weekdate = #{weekdate}</if>
+		<if test="classid!=null"> and a.classid = #{classid}</if>
+		<if test="sameclass!=null"> and a.sameclass = #{sameclass}</if>
+		<if test="editclassbatch!=null"> and a.editclassbatch = #{editclassbatch}</if>
+
+	</select>
+	<!-- 按条件查询课表（为excel导入使用） -->
+	<select id="findCurriculumForImport" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		*
+		from zonekey_curriculum_mid a
+		WHERE 1=1
+		<!-- userid 可能需要注掉 -->
+		<!-- <if test="userid!=null"> and a.userid = #{userid}</if> -->
+		<if test="areaid!=null"> and a.areaid = #{areaid}</if>
+		<if test="weekdate!=null"> and a.weekdate = #{weekdate}</if>
+		<if test="termid!=null"> and a.termid = #{termid}</if>
+		<if test="excelbatch!=null"> AND excelbatch =#{excelbatch}</if>
+		<!-- 2014-10-26 add -->
+		and a.flag='1'
+		<!-- <if test="weeks!=null"> and a.weeks = #{weeks}</if> <if test="classnum!=null"> 
+			and a.classnum = #{classnum}</if> -->
+
+	</select>
+
+	<!-- 查找有没有已存在的节次 -->
+	<select id="findCurriculumByDate" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		*
+		from zonekey_curriculum a
+		WHERE 1=1 and deleteflag='0'
+		<!-- <if test="userid!=null"> and a.userid = #{userid}</if> -->
+		<if test="areaid!=null"> and a.areaid = #{areaid}</if>
+		<if test="date!=null"> and a.date = #{date}</if>
+		<!-- termid 可有可无 -->
+		<!-- <if test="termid!=null"> and a.termid = #{termid}</if> -->
+		<if test="classnum!=null"> and a.classnum = #{classnum}</if>
+
+	</select>
+	<!-- 按id修改直播课表 -->
+	<update id="updateLiveCurriculumById" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		<if test="userid != null">
+			userid = #{userid},
+		</if>
+		<if test="subject != null">
+			subject = #{subject},
+		</if>
+		<if test="subjectattribute != null">
+			subjectattribute = #{subjectattribute},
+		</if>
+
+		<if test="coursedesc != null">
+			course_desc = #{coursedesc},
+		</if>
+		<if test="imageurl != null">
+			imageurl = #{imageurl},
+		</if>
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where 1=1
+		<if test="date!=null">and date = #{date} </if>
+		<if test="sameclass!=null">and sameclass = #{sameclass} </if>
+		<!-- <if test="weeks!=null">and weeks = #{weeks}</if> <if test="weekdate!=null">and 
+			weekdate = #{weekdate}</if> -->
+		<if test="areaid!=null">and areaid = #{areaid}</if>
+		<!-- <if test="userid!=null">and userid = #{userid}</if> -->
+	</update>
+	<!--取消直播课表 -->
+	<update id="cancelLiveCurriculum" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		live = '0',
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where 1=1
+		<if test="date!=null">and date = #{date} </if>
+		<if test="sameclass!=null">and sameclass = #{sameclass} </if>
+		<!-- <if test="weeks!=null">and weeks = #{weeks}</if> <if test="weekdate!=null">and 
+			weekdate = #{weekdate}</if> -->
+		<if test="areaid!=null">and areaid = #{areaid}</if>
+		<!-- <if test="userid!=null">and userid = #{userid}</if> -->
+	</update>
+
+	<!--删除直播课表 -->
+	<update id="deleteLiveCurriculum" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		deleteflag = '1',
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where 1=1
+		<if test="date!=null">and date = #{date} </if>
+		<if test="sameclass!=null">and sameclass = #{sameclass} </if>
+		<!-- <if test="weeks!=null">and weeks = #{weeks}</if> <if test="weekdate!=null">and 
+			weekdate = #{weekdate}</if> -->
+		<if test="areaid!=null">and areaid = #{areaid}</if>
+		<if test="userid!=null">and userid = #{userid}</if>
+	</update>
+
+	<!--删除可编辑课表 -->
+	<update id="deleteEditCurriculum" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		deleteflag = '1',
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where 1=1
+		<if test="date!=null">and date = #{date} </if>
+		<if test="sameclass!=null">and sameclass = #{sameclass} </if>
+		<if test="weeks!=null">and weeks = #{weeks}</if>
+		<if test="weekdate!=null">and weekdate = #{weekdate}</if>
+		<if test="areaid!=null">and areaid = #{areaid}</if>
+		<if test="userid!=null">and userid = #{userid}</if>
+	</update>
+	<!--删除可编辑课表 -->
+	<delete id="deleteEditCurriculumForedit" parameterType="com.zonekey.disrec.entity.Curriculum">
+		delete from zonekey_curriculum
+		where 1=1
+		and editclassbatch =
+		#{editclassbatch}
+		<!-- and sameclass = #{sameclass} and weeks = #{weeks} and weekdate = #{weekdate} 
+			and areaid = #{areaid} -->
+
+	</delete>
+	<!-- 手动新增课表 -->
+	<insert id="insertCurriculum" parameterType="com.zonekey.disrec.entity.Curriculum">
+		insert into
+		zonekey_curriculum
+		(id,termid,areaid,userid,deptid,date,`subject`,subjectattribute,course_desc,live,livemodel,record,video,weeks,weekdate,classid,classniddlerecord,intercourse,sameclass,starttime,endtime,classnum,class_relation,createtime,deleteflag,editclassbatch,imageurl,resourcefloder,isupload)
+		values(#{id},#{termid},#{areaid},#{userid},#{deptid},#{date},#{subject},#{subjectattribute},#{coursedesc},#{live},#{livemodel},#{record},#{video},#{weeks},#{weekdate},#{classid},#{classniddlerecord},#{intercourse},#{sameclass},#{starttime},#{endtime},#{classnum},#{classRelation},sysDate(),#{deleteflag},#{editclassbatch},#{imageurl},#{resourcefloder},#{isupload})
+	</insert>
+
+	<!-- 按id修改可编辑课表 -->
+	<update id="updateEditCurriculum" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		<if test="subject != null">
+			subject = #{subject},
+		</if>
+		<if test="subjectattribute != null">
+			subjectattribute = #{subjectattribute},
+		</if>
+		<if test="userid != null">
+			userid = #{userid},
+		</if>
+		<if test="deptid != null">
+			deptid = #{deptid},
+		</if>
+		<if test="weekdate != null">
+			weekdate = #{weekdate},
+		</if>
+		<if test="starttime != null">
+			starttime = #{starttime},
+		</if>
+		<if test="endtime != null">
+			endtime = #{endtime},
+		</if>
+		<if test="live != null">
+			live = #{live},
+		</if>
+		<if test="livemodel != null">
+			livemodel = #{livemodel},
+		</if>
+		<if test="record != null">
+			record = #{record},
+		</if>
+		<if test="video != null">
+			video = #{video},
+		</if>
+		<if test="classniddlerecord != null">
+			classniddlerecord = #{classniddlerecord},
+		</if>
+		<if test="intercourse != null">
+			intercourse = #{intercourse},
+		</if>
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where 1=1
+		<if test="date!=null">and date = #{date} </if>
+		<if test="sameclass!=null">and sameclass = #{sameclass} </if>
+		<if test="weeks!=null">and weeks = #{weeks}</if>
+		<if test="weekdate!=null">and weekdate = #{weekdate}</if>
+		<if test="areaid!=null">and areaid = #{areaid}</if>
+	</update>
+	<!-- 根据批次删除该批次下面的课表 -->
+	<!--<delete id="deleteCurriculumByClassbatch" parameterType="com.zonekey.disrec.entity.Curriculum"> 
+		delete from zonekey_curriculum where editclassbatch = #{editclassbatch} </delete> -->
+	<delete id="deleteCurriculumBySamedate" parameterType="com.zonekey.disrec.entity.Curriculum">
+		delete
+		from zonekey_curriculum
+		where date = #{date} and sameclass=
+		#{sameclass}
+
+	</delete>
+	<!-- 新增临时课表 -->
+	<insert id="insertCurriculumlinshi" parameterType="com.zonekey.disrec.entity.Curriculum">
+		insert into
+		zonekey_curriculum_mid
+		(id,termid,userid,areaid,deptid,sameclass,userno,username,areano,areaname,subject,deptno,deptname,weeksbefore,weekdate,weeks,classnumbefore,classnumafter,weeksafter,live,livemodel,record,video,classniddlerecord,intercourse,excelbatch,flag,errordescribe,isupload)
+		values(#{id},#{termid},#{userid},#{areaid},#{deptid},#{sameclass},#{userno},#{username},#{areano},#{areaname},#{subject},#{deptno},#{deptname},#{weeksbefore},#{weekdate},#{weeks},#{classnumbefore},#{classnumafter},#{weeksafter},#{live},#{livemodel},#{record},#{video},#{classniddlerecord},#{intercourse},#{excelbatch},#{flag},#{errordescribe},#{isupload})
+	</insert>
+	<!-- 修改临时课表 -->
+	<update id="updateCurriculumlinshi" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update
+		zonekey_curriculum_mid set
+		flag = #{flag},errordescribe
+		=#{errordescribe}
+		where id = #{id}
+	</update>
+	<!-- 按条件查询临时课表 -->
+	<select id="findCurriculummid" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT * from zonekey_curriculum_mid a
+		WHERE 1=1
+		<if test="userno!=null"> AND userno=#{userno} </if>
+		<if test="username!=null"> AND username =#{username} </if>
+		<if test="areano!=null"> AND areano =#{areano} </if>
+		<if test="areaname!=null"> AND areaname =#{areaname} </if>
+		<if test="weeksbefore!=null"> AND weeksbefore=#{weeksbefore} </if>
+		<if test="weekdate!=null"> AND weekdate=#{weekdate} </if>
+		<if test="classnumbefore!=null"> AND classnumbefore =#{classnumbefore} </if>
+		<if test="termid!=null"> AND termid =#{termid}</if>
+		<if test="flag!=null"> AND flag =#{flag}</if>
+		<if test="excelbatch!=null"> AND excelbatch =#{excelbatch}</if>
+	</select>
+	<!-- 修改临时表 -->
+	<!-- <update id="updateCurriculummid" parameterType="com.zonekey.disrec.entity.Curriculum"> 
+		update zonekey_curriculum_mid set userno= #{userno},username = #{username},areano 
+		= #{areano},areaname = #{areaname},subject = #{subject},deptno = #{deptno},deptname 
+		= #{deptname},weeksbefore = #{weeksbefore},weekdate = #{weekdate},classnumbefore 
+		= #{classnumbefore},live = #{live},livemodel = #{livemodel},record = #{record},video 
+		= #{video},classniddlerecord = #{classniddlerecord},intercourse = #{intercourse},excelbatch 
+		= #{excelbatch},flag = #{flag},errordescribe = #{errordescribe} where id 
+		= #{id} </update> -->
+	<!-- 修改临时表 -->
+	<update id="updateCurriculummid" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update
+		zonekey_curriculum_mid set
+		flag = #{flag},errordescribe
+		=#{errordescribe}
+		where id = #{id}
+	</update>
+	<!-- 按id修改直播课表 -->
+	<update id="updateCurriculumById" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		<if test="termid != null">
+			termid = #{termid},
+		</if>
+		<if test="areaid != null">
+			areaid = #{areaid},
+		</if>
+		<if test="userid != null">
+			userid = #{userid},
+		</if>
+		<if test="deptid != null">
+			deptid = #{deptid},
+		</if>
+		<if test="coursedesc != null">
+			course_desc = #{coursedesc},
+		</if>
+		<if test="live != null">
+			live = #{live},
+		</if>
+		<if test="record != null">
+			record = #{record},
+		</if>
+		<if test="video != null">
+			video = #{video},
+		</if>
+		<if test="weeks != null">
+			weeks = #{weeks},
+		</if>
+		<if test="weekdate != null">
+			weekdate = #{weekdate},
+		</if>
+		<if test="classid != null">
+			classid = #{classid},
+		</if>
+		<if test="classniddlerecord != null">
+			classniddlerecord = #{classniddlerecord},
+		</if>
+		<if test="intercourse != null">
+			intercourse = #{intercourse},
+		</if>
+		<if test="sameclass != null">
+			sameclass = #{sameclass},
+		</if>
+		<if test="starttime != null">
+			starttime = #{starttime},
+		</if>
+		<if test="endtime != null">
+			endtime = #{endtime},
+		</if>
+		<if test="date != null">
+			date = #{date},
+		</if>
+		<if test="subject != null">
+			subject = #{subject},
+		</if>
+		<if test="livemodel != null">
+			livemodel = #{livemodel},
+		</if>
+		<if test="classnum != null">
+			classnum = #{classnum},
+		</if>
+
+		<if test="classRelation != null">
+			class_relation = #{classRelation},
+		</if>
+
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where id = #{id}
+	</update>
+
+	<!-- 查看当前时间的课节(设备调用) -->
+	<select id="findClassByTime" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select
+		classbase.*
+		, CONCAT(classbase.username1,' ',classbase.subject,'
+		',classbase.deptname) username
+		,(select d.mac from zonekey_device d
+		where d.areaid=classbase.areaid and
+		d.mostly='0' and d.deleteflag=0 )
+		as mac
+		from
+		(SELECT
+		c.id,c.date,c.sameclass,c.editclassbatch,c.classnum,a.`name` as
+		areaname,c.areaid,u.`name` as
+		username1,c.resourcefloder,ifnull((select name from zonekey_dept where
+		id=c.deptid),'')as deptname ,c.deptid,c.`subject`,
+		case c.live when '1'
+		then '是' else '否' end as live,
+		case c.record when '1' then '是' else '否'
+		end as
+		record,c.livemodel,c.video,replace(c.starttime,':','')
+		as
+		starttime, replace(c.endtime,':','') as endtime
+
+		from
+		zonekey_curriculum
+		c,(SELECT * FROM zonekey_area a WHERE 1=1
+		<if test="treeid !=null and treeid !=''">and FIND_IN_SET(a.id,getareaChildLst(#{treeid}))</if>
+		) a
+		,sys_user u
+
+		where
+		c.areaid =a.id AND c.userid=u.id
+		and CONCAT(c.date,'
+		',c.endtime)>=NOW()
+		and c.deleteflag=0
+		<if test="keywords != null">
+			<if test="keywords.live != null and keywords.live != '' ">and c.live =#{keywords.live}</if>
+			<if test="keywords.record != null and keywords.record != ''">and c.record =#{keywords.record} </if>
+		</if>
+		order by c.date,c.classnum ) classbase
+
+		limit 1
+
+	</select>
+	<!-- 简单版导播台调用 -->
+	<select id="findSimpleClassByTime" parameterType="com.zonekey.disrec.entity.Curriculum"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select
+		classbase.*
+		,(select d.mac from zonekey_device d where
+		d.areaid=classbase.areaid and
+		d.mostly='0' and d.deleteflag=0 ) as mac
+		from
+		(SELECT c.date,c.sameclass,c.classnum,a.`name` as
+		areaname,c.areaid,u.`name`
+		as
+		username,ifnull((select name from
+		zonekey_dept where id=c.deptid),'')as deptname
+		,c.deptid,c.`subject`,
+		case c.live when '1' then '是' else '否' end as live,
+		case c.record when
+		'1' then '是' else '否' end as
+		record,c.livemodel,c.video,replace(c.starttime,':','')
+		as starttime,
+		replace(c.endtime,':','') as endtime
+		,min(replace(c.starttime,':',''))
+		as cmin,MAX(replace(c.endtime,':','')) as cmax
+
+		from
+		zonekey_curriculum c
+		,zonekey_area a ,sys_user u
+		where
+		c.id=#{id} and
+		c.areaid =a.id AND
+		c.userid=u.id
+
+		GROUP BY c.areaid,username,c.sameclass
+		order by
+		c.date,c.classnum ) classbase
+
+
+	</select>
+	<!-- 查看当前时间的课节条数(设备调用) -->
+	<select id="findClassByTimeCount" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+		select
+		count(*)
+		from
+		(SELECT c.sameclass,c.classnum,a.`name`
+		as areaname,c.areaid,u.`name` as
+		username,ifnull((select name from
+		zonekey_dept where
+		id=c.deptid),'')as deptname
+		,c.deptid,c.`subject`,c.live,c.record,c.livemodel,c.video,replace(c.starttime,':','')
+		as starttime, replace(c.endtime,':','') as endtime
+		,min(replace(c.starttime,':',''))
+		as
+		cmin,MAX(replace(c.endtime,':','')) as cmax
+
+		from
+		zonekey_curriculum c
+		,zonekey_area a ,sys_user u
+		where
+		c.date >= substr(NOW(), 1, 10) and
+		c.areaid =a.id AND c.userid=u.id
+		GROUP BY c.areaid,username,c.sameclass
+		order by c.areaid) classbase
+		where classbase.cmax >=
+		replace(substr(NOW(), 12, 19),':','') and
+		replace(substr(NOW(), 12,
+		19),':','')>= classbase.cmin
+	</select>
+
+	<!-- 查看当前时间的课节 -->
+	<select id="testCurriculum" resultType="com.zonekey.disrec.entity.Curriculum"
+		parameterType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		a.id,a.termid,c.name as areaname,u.name as
+		username,a.date,replace(left(SYSDATE(),10
+		),'-','')as nowdate
+		,a.weekdate ,a.classnum as classnum,a.subject,
+		a.class_relation,a.sameclass
+		,min(replace(a.starttime,':',''))
+		as
+		cmin,MAX(replace(a.endtime,':','')) as cmax
+		FROM zonekey_curriculum a
+		,zonekey_area c ,sys_user u
+		where a.areaid=c.id AND u.id=a.userid
+		<if test="startdate!=null">and a.date >= #{startdate}</if>
+		<if test="enddate!=null"> and #{enddate} >= a.date</if>
+		<if test="startdate==null and enddate==null"> and a.date >= replace(left(SYSDATE(),10 ),'-','')</if>
+		<if test="areaid!=null"> and a.areaid = #{areaid} </if>
+		<if test="userid!=null"> and a.userid = #{userid} </if>
+		GROUP BY a.date,a.weekdate ,a.sameclass ,areaname,username
+		order by
+		a.date ASC
+	</select>
+	<!-- 修改课表中文件夹资源下载状态 -->
+	<update id="updateCurriculumuploadismanual" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update
+		zonekey_curriculum set
+		upload_is_manual = 'Y'
+		where resourcefloder
+		= #{resourcefloder}
+	</update>
+
+	<!-- 修改课表中文件夹资源删除状态 -->
+	<update id="updateCurriculumuploadisdelete" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update
+		zonekey_curriculum set
+		upload_is_delete = 'Y'
+		where resourcefloder
+		= #{resourcefloder}
+	</update>
+	<!-- 该方案批次是否存在还未上的课 -->
+	<select id="findForDeleteCurriculumbase" parameterType="com.zonekey.disrec.entity.Curriculumbase"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select
+		max(c.classnum) as maxclass,c.* from
+		zonekey_curriculum c where
+		c.classid=#{classbatch} and
+		c.date>=left(NOW(), 10) and
+		c.deleteflag='0'
+	</select>
+	<!-- 查询该方案中，还未上的课 -->
+	<select id="findForEditCurriculumbase" parameterType="com.zonekey.disrec.entity.Curriculumbase"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select * from
+		( select MIN(starttime) as cmin,max(c2.endtime) as
+		cmax,c2.* from
+		zonekey_curriculum c2 where 1=1
+		<if test="classbatch != null and classbatch != ''">
+			and c2.classid = #{classbatch}
+		</if>
+		<if test="areaid != null and areaid != ''">
+			and c2.areaid = #{areaid}
+		</if>
+
+		and c2.deleteflag='0' and c2.date >= left(NOW(), 10)
+
+		GROUP BY
+		c2.date,c2.weekdate,c2.sameclass,c2.areaid,c2.userid
+		)zc
+		where
+		CONCAT(zc.date,' ',zc.cmin) >NOW()
+	</select>
+	<!-- 查询该方案中，还未上的课 -->
+	<select id="findWillCurriculumByAreaAndBase" parameterType="com.zonekey.disrec.entity.Curriculumbase"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select * from
+		( select MIN(starttime) as cmin,max(c2.endtime) as
+		cmax,c2.* from
+		zonekey_curriculum c2 where 1=1
+		<if test="datebegin != null and datebegin != ''">
+			and c2.date >= #{datebegin}
+		</if>
+		<if test="dateend != null and dateend != ''">
+			and #{dateend} >=c2.date
+		</if>
+		<if test="areaid != null and areaid != ''">
+			and c2.areaid = #{areaid}
+		</if>
+
+		and c2.deleteflag='0' and c2.date >= left(NOW(), 10)
+
+		GROUP BY
+		c2.date,c2.weekdate,c2.sameclass,c2.areaid,c2.userid
+		)zc
+		where
+		CONCAT(zc.date,' ',zc.cmin) >NOW()
+	</select>
+	<!-- 按id修改课表上课时间 注掉if条件为了复用2014-11-13 -->
+	<update id="updateCurriculumTimeById" parameterType="com.zonekey.disrec.entity.Curriculum">
+		update zonekey_curriculum set
+		<!-- <if test="starttime != null"> -->
+		starttime = #{starttime},
+		<!-- </if> <if test="endtime != null"> -->
+		endtime = #{endtime},
+		<!-- </if> <if test="classid != null"> -->
+		classid = #{classid},
+		<!-- </if> -->
+		modifyuser=#{modifyuser},modifydate=sysDate()
+		where id = #{id}
+	</update>
+	<!-- 设备调用 -->
+	<select id="findClassByAreaidAndTime" parameterType="com.zonekey.disrec.entity.Curriculum"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select * from(
+		SELECT
+		a.id,
+		a.classid,
+		a.termid,
+		c. NAME AS areaname,
+		c.id
+		AS areaid,
+		c.innerid AS areano,
+		u. NAME AS username,
+		u.id AS userid,
+		ifnull(
+		(
+		SELECT
+		NAME
+		FROM
+		zonekey_dept
+		WHERE
+		id = a.deptid
+		),
+		''
+		) AS deptname,
+		a.deptid,
+		a.weeks,
+		a.date,
+
+		a.weekdate,
+		a.classnum AS classnum,
+		a. SUBJECT,
+		a.class_relation,
+		a.sameclass,
+		a.course_desc AS coursedesc,
+
+		a.live,
+		a.record,
+		a.classniddlerecord,
+		a.editclassbatch,
+		a.intercourse,
+		a.livemodel,
+		a.video,
+		max(a.resourcefloder) resourcefloder,
+		CONCAT(a.date,' ',min(a.starttime)) as starttime,
+		CONCAT(a.date,'
+		',max(a.endtime)) as endtime
+		FROM
+		zonekey_curriculum a,
+		zonekey_area c,
+		sys_user u
+		WHERE
+		a.areaid = c.id
+		AND u.id = a.userid
+		AND a.deleteflag = 0
+		AND
+		a.date=left(NOW(),10)
+		<!-- AND a.endtime>=RIGHT(NOW(),8) AND CONCAT(a.date,' ',a.starttime) >= 
+			NOW() -->
+		AND find_in_set(
+		a.areaid,
+		getareaChildLst (#{areaid})
+		)
+		<!-- 兼容大节次课程 -->
+		GROUP BY
+		a.date,
+		a.weekdate,
+		a.sameclass,
+		areaname,
+		username
+		ORDER BY
+		a.date,a.endtime ASC
+		) med
+		where med.endtime>=NOW()
+	</select>
+
+
+	<!-- 设备调用大节次课使用 -->
+	<select id="findClassByAreaidAndTimeWithSameClass"
+		parameterType="com.zonekey.disrec.entity.Curriculum" resultType="com.zonekey.disrec.entity.Curriculum">
+		SELECT
+		a.id,
+		a.classid,
+		a.termid,
+		c. NAME AS areaname,
+		c.id AS areaid,
+		c.innerid AS areano,
+		u. NAME AS username,
+		u.id AS userid,
+		ifnull(
+		(
+		SELECT
+		NAME
+		FROM
+		zonekey_dept
+		WHERE
+		id = a.deptid
+		),
+		''
+		) AS deptname,
+		a.deptid,
+		a.weeks,
+		a.date,
+		a.weekdate,
+		a.classnum AS classnum,
+		a. SUBJECT,
+		a.class_relation,
+		a.sameclass,
+		a.course_desc AS coursedesc,
+		a.live,
+		a.record,
+		a.classniddlerecord,
+		a.editclassbatch,
+		a.intercourse,
+		a.livemodel,
+		a.video,
+		a.resourcefloder,
+		CONCAT(a.date,' ',a.starttime) as
+		starttime,
+		CONCAT(a.date,' ',a.endtime) as endtime
+		FROM
+		zonekey_curriculum a,
+		zonekey_area c,
+		sys_user u
+		WHERE
+		a.areaid = c.id
+		AND
+		u.id = a.userid
+		AND a.deleteflag = 0
+		AND
+		a.date=left(NOW(),10)
+		AND
+		a.endtime>=RIGHT(NOW(),8)
+		<!-- AND CONCAT(a.date,' ',a.starttime) >= NOW() -->
+		AND find_in_set(
+		a.areaid,
+		getareaChildLst (#{areaid})
+		)
+		GROUP BY
+		a.date,
+		a.weekdate,
+		a.sameclass,
+		areaname,
+		username
+		ORDER BY
+		a.date,a.endtime ASC
+	</select>
+
+	<!-- 查教室正在上的课（教室接口） -->
+	<select id="findClassByAreaid" parameterType="string"
+		resultType="com.zonekey.disrec.entity.Curriculum">
+		select
+		classbase.*,(select d.mac from zonekey_device d where
+		d.areaid=classbase.areaid and
+		d.mostly='0' and d.deleteflag=0 ) as mac
+		from
+		(SELECT c.sameclass,c.classnum,a.`name` as
+		areaname,c.areaid,u.`name` as
+		username,ifnull((select name from
+		zonekey_dept where
+		id=c.deptid),'')as deptname
+		,c.deptid,c.`subject`,c.live,c.record,c.livemodel,c.video,replace(c.starttime,':','')
+		as starttime, replace(c.endtime,':','') as endtime
+		,min(replace(c.starttime,':',''))
+		as
+		cmin,MAX(replace(c.endtime,':','')) as cmax
+
+		from
+		zonekey_curriculum c
+		,zonekey_area a ,sys_user u
+
+		where
+		c.date = substr(NOW(), 1, 10) and
+		c.areaid =a.id AND c.userid=u.id
+		<if test="areaid !=null and areaid !=''">and find_in_set(c.areaid,getareaChildLst(#{areaid})) </if>
+
+		GROUP BY c.areaid,username,c.sameclass
+		order by c.areaid) classbase
+		where classbase.cmax >= replace(substr(NOW(), 12, 19),':','') and
+		replace(substr(NOW(), 12, 19),':','')>= classbase.cmin
+	</select>
+	<!-- 根据教室的id查教室下面的资源文件夹 -->
+	<select id="findResourcefloderByAraeaid" resultType="map"
+		parameterType="map">
+		select resourcefloder from zonekey_curriculum where
+		NOW()>CONCAT(date,'
+		',endtime) and record='1' and areaid=#{areaid}
+		ORDER BY date
+	</select>
+	<!-- -->
+	<update id="updateEndtimeByBatch" parameterType="string">
+		UPDATE
+		zonekey_curriculum c
+		SET c.endtime = #{endtime}
+		WHERE
+		c.id = #{id}
+	</update>
+	<!-- 根据批次号获取结束时间（设备调用） -->
+	<select id="selectEndtimeByBatch" parameterType="string"
+		resultType="string">
+		select CONCAT(c.date,' ',c.endtime) as endtime from
+		zonekey_curriculum c where id = #{id}
+	</select>
+	
+	<select id="checkTeacherTime" parameterType="com.zonekey.disrec.entity.Curriculum" resultType="Integer">
+				select count(*) from(
+		SELECT
+			a.id,
+			a.classid,
+			a.termid,
+			c. NAME AS areaname,
+			c.id AS areaid,
+			c.innerid AS areano,
+			u. NAME AS username,
+			u.id AS userid,
+			ifnull(
+				(
+					SELECT
+						NAME
+					FROM
+						zonekey_dept
+					WHERE
+						id = a.deptid
+				),
+				''
+			) AS deptname,
+			a.deptid,
+			a.weeks,
+			a.date,
+			a.weekdate,
+			a.classnum AS classnum,
+			a. SUBJECT,
+			a.class_relation,
+			a.sameclass,
+			a.course_desc AS coursedesc,
+			a.live,
+			a.record,
+			a.classniddlerecord,
+			a.editclassbatch,
+			a.intercourse,
+			a.livemodel,
+			a.video,
+			max(a.resourcefloder) resourcefloder,
+			CONCAT(a.date,' ',min(a.starttime)) as starttime,
+			CONCAT(a.date,' ',max(a.endtime)) as endtime
+		FROM
+			zonekey_curriculum a,
+			zonekey_area c,
+			sys_user u
+		WHERE
+			a.areaid = c.id
+		AND u.id = a.userid
+		AND a.deleteflag = 0
+		AND a.date=left(NOW(),10)
+        and a.areaid=(select areaid from zonekey_device where mac=#{mac} and deleteflag='0')
+		GROUP BY
+			a.date,
+			a.weekdate,
+			a.sameclass,
+			areaname,
+			username
+		ORDER BY
+			a.date,a.endtime ASC
+		) med
+        where med.endtime>=NOW()
+        and userid=(select id from sys_user where loginname=#{username})
+        and <![CDATA[med.starttime<=NOW()]]>
+	</select>
+	<!-- 根据批次号获取录像文件名字（设备调用） 暂时不用 -->
+	<select id="selectResourcefloderByBatch" parameterType="string"
+		resultType="string">
+		select a.resourcefloder from zonekey_curriculum a where
+		a.editclassbatch=#{editclassbatch} limit 1
+	</select>
+</mapper>

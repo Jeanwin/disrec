@@ -1,0 +1,80 @@
+{
+    "total": 40,
+    "data":[
+        {
+            "cataCode": "CAT0101",
+            "cataName": "菲特洪水",
+            "certiNo": "417284401201201004100001",
+            "insuredName": "李成俊",
+            "policyNo": "1172844012011000033",
+            "retPaid": 909181.66,
+            "claimNo": "4172844012012010041",
+            "damageDate": {
+                "nanos": 0,
+                "time": 1394380800000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 2,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 1,
+                "date": 10
+            },
+            "riskUnit":"确认天加！",
+            "retSumNoPaid": 0,
+            "retRate": 50,
+            "currency": "01"
+        },
+        {
+            "cataCode": "CAT0102",
+            "cataName": "菲特洪水",
+            "certiNo": "417284401201201004100002",
+            "insuredName": "李成俊",
+            "policyNo": "1172844012011000033",
+            "retPaid": 909181.66,
+            "claimNo": "4172844012012010041",
+            "damageDate": {
+                "nanos": 0,
+                "time": 1394380800000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 2,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 1,
+                "date": 10
+            },
+            "riskUnit":"确认天加！",
+            "retSumNoPaid": 0,
+            "retRate": 50,
+            "currency": "01"
+        },
+        {
+            "riskUnit":"确认添加！！",
+            "cataCode": "CAT0103",
+            "cataName": "菲特洪水2",
+            "certiNo": "23421342423401201004100005",
+            "insuredName": "李成俊2",
+            "policyNo": "1455658989099876534243",
+            "retPaid": 149991.01,
+            "claimNo": "98765434567843452041",
+            "damageDate": {
+                "nanos": 0,
+                "time": 1394380800000,
+                "minutes": 0,
+                "seconds": 0,
+                "hours": 0,
+                "month": 2,
+                "year": 114,
+                "timezoneOffset": -480,
+                "day": 1,
+                "date": 10
+            },
+            "retSumNoPaid": 0,
+            "retRate": 50,
+            "currency": "01"
+        }
+    ]
+}

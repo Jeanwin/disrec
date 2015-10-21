@@ -1,0 +1,175 @@
+<div class="panel panel-console">
+    <div style="position: relative;top: 50px;">
+        <div class="panel-heading">
+            PGM
+            <button class="btn btn-record pull-right"></button>
+        </div>
+        <div class="panel-body no-padding" align="center">
+        	<input type="hidden" id="movieParam" value="{{movieParam}}"/>
+        	<!-- {{movieParam}} -->
+            <!-- <section class="player-wrapper" id="player-footer">
+            </section> -->
+            <div class="player-wrapper" id="back-info7" 
+            style="width: 686px;height: 386px;display: block;text-align: center;position: relative;margin-top: 0%;background: black;">
+			    <i class="zkicon-fontsize-100 icon-ccamera" 
+			    style="position: absolute;font-size: 100px;top: 30%;left: 44%;"></i>  
+			    <h4>信号故障</h4>
+			</div>
+            <div id="flashContent7" class="player-wrapper">
+	            <p>
+	                To view this page ensure that Adobe Flash Player version 
+	                0.0.0 or greater is installed. 
+	            </p>
+	           
+	        </div>
+        
+	        <!-- <noscript >
+	            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="686" height="386" id="lone_rtmp_player7">
+	                <param name="movie" value="lone_rtmp_player.swf" />
+	                <param name="quality" value="high" />
+	                <param name="bgcolor" value="#ffffff" />
+	                <param name="allowScriptAccess" value="sameDomain" />
+	                <param name="allowFullScreen" value="true" />
+	                [if !IE]>
+	                <object type="application/x-shockwave-flash" data="lone_rtmp_player.swf" width="686" height="386">
+	                    <param name="quality" value="high" />
+	                    <param name="bgcolor" value="#ffffff" />
+	                    <param name="allowScriptAccess" value="sameDomain" />
+	                    <param name="allowFullScreen" value="true" />
+	                    <p> 
+	                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+	                        0.0.0 or greater is not installed.
+	                    </p>
+	
+	                    <a href="http://www.adobe.com/go/getflashplayer">
+	                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+	                    </a>
+	
+	                </object>
+	
+	            </object>
+	        </noscript>   -->   
+        </div>
+
+        <div class="panel-footer" style="margin-top:15px;">
+            <div class="row">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-2">
+                <section>直播状态：{{String_[0]}}</section>
+                </div>
+                <div class="col-xs-2">
+                <section>录播时间：{{String_[1]}}</section>
+                </div>
+                <div class="col-xs-2">
+                <section>跟踪模式：{{String_[2]}}</section>
+                </div>
+                <div class="col-xs-2">
+                <section>磁盘剩余：{{remainSize}}GB</section>
+                </div>
+                <div class="col-xs-2">
+                </div>
+                <!--刻录制：{{}}小时(暂时注释掉)-->
+                <!--<div class="col-xs-2 pull-right">-->
+                <!--<section>刻录制：{{}}小时</section>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "0.0.0";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#000000";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            var attributes = {};
+            attributes.id = "lone_rtmp_player7";
+            attributes.name = "lone_rtmp_player7";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "lone_rtmp_player.swf", "flashContent7", 
+                "686", "386", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent7", "display:block;text-align:left;");
+			function thisMovie(movieName) {
+				if (navigator.appName.indexOf("Microsoft") != -1) {
+					return window[movieName]
+				}
+				else {
+					return document[movieName]
+				}
+			}
+        </script>
+
+
+
+<script>
+
+//     function startplay(){
+//         var AX=document.getElementById("film_player");
+//         var url = "rtsp://root:root@192.168.12.47:554/session0.mpg";
+//         AX.set_video_url(url);
+
+//     }
+//     function stopplay() {
+//         var AX=document.getElementById("film_player");
+
+
+//         AX.video_stop();
+//     }
+</script>
+
+
+<!--20141124 cancel-->
+<!--<script src="jwplayer.js"></script>-->
+<!--<script type="text/javascript" >-->
+    <!--var VideoUrl='rtsp://root:root@192.168.12.47:554/session0.mpg';-->
+<!--//      var VideoUrl='live/3.mp4';-->
+
+    <!--//"rtmp://192.168.12.56/record/2014-08-26 11.40.25/mp4:TeacherFull.mp4";-->
+        <!--//'video/Student.mp4';-->
+<!--//            'video/predation.mp4'-->
+<!--</script>-->
+
+
+
+<!--<script type="text/javascript">-->
+    <!--jwplayer('myVideoId').setup({-->
+        <!--//skin_key: 'skin/six.xml',-->
+        <!--file:VideoUrl,-->
+        <!--width:'93%',-->
+        <!--height:'360',-->
+        <!--aspectratio:'16:9',-->
+        <!--image:'defaultimage.jpg',-->
+        <!--//primary:'flash',-->
+        <!--atuostart:true,-->
+        <!--repeat:true,-->
+        <!--listbar:{-->
+            <!--postion:'right',-->
+            <!--size:320-->
+        <!--}-->
+    <!--});-->
+
+    <!--jwplayer('myVideoId').onVolume(function(event) {-->
+        <!--//console.log('The volume has changed', event);-->
+        <!--alert('The volume is now:'+event.volume);-->
+    <!--});-->
+
+    <!--//下载-->
+    <!--jwplayer().addButton(-->
+            <!--'download.png',-->
+            <!--'Download Video',-->
+            <!--function(){-->
+                <!--window.location.href = jwplayer().getplaylistItem()['file'];-->
+            <!--},-->
+            <!--'download'-->
+    <!--);-->
+<!--</script>-->

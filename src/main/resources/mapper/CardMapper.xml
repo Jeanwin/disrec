@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.CardMapper">
+	<resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.Card">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+		<result column="card_type" property="cardType" jdbcType="CHAR" />
+		<result column="card_person" property="cardPerson" jdbcType="VARCHAR" />
+		<result column="createuser" property="createuser" jdbcType="VARCHAR" />
+		<result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+		<result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+		<result column="modifyuser" property="modifyuser" jdbcType="VARCHAR" />
+		<result column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+		<result column="card_state" property="cardState" jdbcType="CHAR" />
+		<result column="card_person_id" property="cardPersonId"
+			jdbcType="VARCHAR" />
+		<result column="loss_date" property="lossDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, card_number, card_type, card_person, DATE_FORMAT(createdate,'%Y-%m-%d
+		%H:%i:%s') createdate, createuser, modifydate, modifyuser,
+		deleteflag, card_state, card_person_id,DATE_FORMAT(loss_date,'%Y-%m-%d %H:%i:%s')
+		loss_date
+	</sql>
+	<!-- sql绑定用户名 -->
+	<sql id="bindLoginname">
+		<bind name="_loginname"
+			value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()" />
+	</sql>
+	<insert id="saveCard" parameterType="com.zonekey.disrec.entity.Card">
+		<include refid="bindLoginname" />
+		insert into zonekey_classroom_card (id, card_number, card_type,
+		card_person,
+		createdate, createuser, card_state,
+		card_person_id)
+		values (#{id,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR},
+		#{cardType,jdbcType=CHAR},
+		#{cardPerson,jdbcType=VARCHAR},
+		sysDate(), #{_loginname,jdbcType=VARCHAR}, #{cardState,jdbcType=CHAR},
+		#{cardPersonId,jdbcType=VARCHAR})
+	</insert>
+	<update id="update" parameterType="com.zonekey.disrec.entity.Card">
+		<include refid="bindLoginname" />
+		update zonekey_classroom_card
+		<set>
+			<if test="cardNumber != null">
+				card_number = #{cardNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="cardType != null">
+				card_type = #{cardType,jdbcType=CHAR},
+			</if>
+			<if test="cardPerson != null">
+				card_person = #{cardPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="cardPersonId != null">
+				card_person_id = #{cardPersonId,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteflag != null">
+				deleteflag = #{deleteflag,jdbcType=VARCHAR},
+			</if>
+			
+			modifydate = sysDate(),
+			modifyuser = #{_loginname,jdbcType=VARCHAR}
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteByKeys">
+		update zonekey_classroom_card set deleteflag='1' where id in
+		<foreach collection="list" open="(" close=")" separator=","
+			item="map">
+			#{map.id}
+		</foreach>
+	</delete>
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultType="long">
+		select count(*) from zonekey_classroom_card a where a.deleteflag = '0'
+		<if test="keywords != null">
+			<if test="keywords.keyword != null and keywords.keyword!= ''"> and (a.card_number like
+				concat('%',#{keywords.keyword},'%') or a.card_person like
+				concat('%',#{keywords.keyword},'%'))</if>
+			<!-- <if test="keywords.cardNumber != null and keywords.cardNumber!= ''">and 
+				a.card_number = #{keywords.cardNumber}</if> <if test="keywords.cardPerson 
+				!= null and keywords.cardPerson != ''">and a.card_person = #{keywords.cardPerson}</if> -->
+			<!-- <if test="keywords.cardState != null and keywords.cardState != ''">and 
+				a.card_state = #{keywords.cardState}</if> -->
+		</if>
+	</select>
+
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_classroom_card a where a.deleteflag = '0'
+		<if test="keywords != null">
+			<if test="keywords.keyword != null and keywords.keyword!= ''"> and (a.card_number like
+				concat('%',#{keywords.keyword},'%') or a.card_person like
+				concat('%',#{keywords.keyword},'%'))</if>
+			<!-- <if test="keywords.cardNumber != null and keywords.cardNumber!= ''">and 
+				a.card_number = #{keywords.cardNumber}</if> <if test="keywords.cardPerson 
+				!= null and keywords.cardPerson != ''">and a.card_person = #{keywords.cardPerson}</if> -->
+			<!-- <if test="keywords.cardState != null and keywords.cardState != ''">and 
+				a.card_state = #{keywords.cardState}</if> -->
+		</if>
+		order by a.createdate desc
+		<if test="page != null and page.offset != null and page.limit!=null">
+			limit #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+
+	<update id="lossCard" parameterType="com.zonekey.disrec.entity.Card">
+		<include refid="bindLoginname" />
+		update zonekey_classroom_card
+		<set>
+			<if test="cardState != null">
+				card_state = #{cardState,jdbcType=CHAR},
+			</if>
+			<if test="lossDate != null">
+				loss_date = #{lossDate},
+			</if>
+			modifydate = sysDate(),
+			modifyuser = #{_loginname,jdbcType=VARCHAR},
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="findCardByCardNum" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from zonekey_classroom_card a where
+		a.card_number=#{cardNumber,jdbcType=VARCHAR} and a.deleteflag='0'
+	</select>
+
+	<select id="getTeacherList" resultType="com.zonekey.disrec.entity.SysUser">
+		select * from sys_user where user_type='1' and deleteflag='0'
+	</select>
+
+	<select id="getgetAllSpecialCard" resultType="map">
+		select card_number cardNumber,card_person cardPerson,card_state cardState
+		from zonekey_classroom_card where card_type = '1'
+	</select>
+
+	<select id="getCardInformation" resultType="com.zonekey.disrec.entity.Card" parameterType="String">
+		select id,card_person cardPerson,card_type cardType,card_person_id cardPersonId from
+		zonekey_classroom_card where card_number = #{cardNumber} and
+		deleteflag='0'
+	</select>
+</mapper>

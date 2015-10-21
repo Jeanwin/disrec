@@ -1,0 +1,23 @@
+{
+    "total" :2,
+    "data" :[
+        {
+            "eventCode": "E20140101",
+            "serialNo": 1,
+            "eventcDesc": "E2014事故描述",
+            "currency": "01",
+            "cataCode": "CAT0101",
+            "cataName": "台风菲特",
+            "residualSum": 1200000
+        },
+        {
+            "eventCode": "E20140101",
+            "serialNo": 2,
+            "eventcDesc": "E2014事故描述",
+            "currency": "01",
+            "cataCode": "CAT0101",
+            "cataName": "台风菲特",
+            "residualSum": 4000000
+        }
+    ]
+}

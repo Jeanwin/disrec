@@ -1,0 +1,147 @@
+<div class="portalnotice">
+
+    <div class="row" style="padding:8px">
+        <div class="col-xs-8">
+            <a ng-href="#/portal/announce">
+                <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    发布公告</button>
+            </a>
+        </div>
+
+        <div class="col-xs-2">
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label class="form-label" for="select">类型</label>
+                    <select ng-model="noticeResource.name" id="select" class="form-control" ng-click="inquire()">
+                        <option value="">全部</option>
+                        <option>网站公告</option>
+                        <option>新闻公告</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-1">
+            <button ng-show="hideAdvancedSearch" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+            <button ng-show="!hideAdvancedSearch" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+        </div>
+        <div class="col-xs-1">
+                <button ng-disabled="selectedCount===0" class="btn btn-default pull-right" ng-click="openDeleteNoticeModal()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    删除
+                </button>
+        </div>
+    </div>
+    <div collapse="hideAdvancedSearch" class="advSearchPanel">
+
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <label class="form-label" style="width: 88px" for="notice">标题</label>
+                <input ng-model="noticeResource.username" id="notice" class="form-control" placeholder="标题">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" style="width: 88px" for="notice2">创建时间</label>
+                <input ng-model="noticeResource.startdate" type="date" id="notice2" class="form-control" />
+                <label style="width: 88px">至</label>
+                <input ng-model="noticeResource.enddate" type="date" class="form-control" />
+            </div>
+
+            <button class="btn btn-primary pull-right" ng-click="inquire()">
+                <span class="glyphicon glyphicon-search"></span>
+                查询</button>
+        </form>
+        <!--<div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-primary pull-right" ng-click="inquire()">
+                    <span class="glyphicon glyphicon-search"></span>查询</button>
+            </div>
+        </div>-->
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body padding-0" style="min-height:467px">
+            <table class="table table-striped" style="text-align: center">
+                <thead class="formthead">
+                <td><input type="checkbox" ng-model="checkAll" ng-click="checkAllNotice()"></td>
+                <td>标题</td>
+                <td>分类</td>
+                <td>创建时间</td>
+                <td>浏览人数</td>
+                <td>　　操作</td>
+                </thead>
+                <tr ng-repeat="notice in noticeList">
+                    <td><input type="checkbox" ng-model="notice.checked"></td>
+                    <td>{{notice.title}}</td>
+                    <td>{{notice.classify}}</td>
+                    <td>{{notice.time}}</td>
+                    <td>{{notice.num}}</td>
+                    <td>
+                        <button ng-if="notice.id==='1'" class="btn btn-link" ng-click="#"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="取消置顶">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                            </button>
+                        <button ng-if="notice.id!=='1'" class="btn btn-link" ng-click="#"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="置顶">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                            </button>
+                        <a ng-href="#/portal/announce"
+                           tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑"
+                                >
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+
+            <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 100px">
+                <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+            </div>-->
+            <button ng-if="pagination.totalItems === 0" class="ondata">
+                <span class="ondatatext">找不到您搜索的信息！</span>
+            </button>
+        </div>
+
+        <div class="panel-footer">
+
+                <div ng-if="pagination.totalItems > 0" class="row">
+
+                    <div class="col-xs-3" style="padding-top:8px;">
+                        <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                    </div>
+
+                    <div class="col-xs-7" ng-show="pagination.totalItems > pagination.pageSize">
+                        <!-- 分页  -->
+                        <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                    page="pagination.pageIndex"
+                                    items-per-page="pagination.pageSize"
+                                    max-size="pagination.maxSize"
+                                    previous-text="{{pagination.previousText}}"
+                                    next-text="{{pagination.nextText}}"
+                                    first-text="{{pagination.firstText}}"
+                                    last-text="{{pagination.lastText}}"
+                                    class="pagination-small"
+                                    boundary-links="true"
+                                    on-select-page="onSelectPage(page)">
+                        </pagination>
+                    </div>
+                    <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+                        <div class="input-group input-group-sm" style="width: 100px"
+                             tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                            <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{(pagination.totalItems + 0.5)/pagination.pageSize}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">Go</button>
+                                </span>
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+    </div>
+    </div>
+</div>

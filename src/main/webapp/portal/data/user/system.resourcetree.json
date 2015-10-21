@@ -1,0 +1,102 @@
+﻿[
+    {
+        "id": "1",
+        "title": "全部文件",
+        "attribute": null,
+        "sort": "0",
+        "innerid": null,
+        "nodes": [
+            {
+                "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                "title": "QQ",
+                "attribute": "16",
+                "sort": "0",
+                "innerid": null,
+                "nodes": [
+                    {
+                    "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                    "title": "QQ",
+                    "attribute": "16",
+                    "sort": "0",
+                    "innerid": null,
+                    "nodes": []
+                }
+                ]
+            },
+            {
+                "id": "2",
+                "title": "xunleiKK",
+                "attribute": "16",
+                "sort": "0",
+                "innerid": null,
+                "nodes": [
+                    {
+                    "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                    "title": "QQ",
+                    "attribute": "16",
+                    "sort": "0",
+                    "innerid": null,
+                    "nodes": []
+                }]
+            },
+            {
+                "id": "20fc4eb9546d4e4b9e31b44e67623396",
+                "title": "Modal",
+                "attribute": "16",
+                "sort": "0",
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                        "title": "QQ",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            },
+            {
+                "id": "dd117d9e79b94adebec60aa8b9eebee6",
+                "title": "12222",
+                "attribute": "15",
+                "sort": "1",
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                        "title": "QQ",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": []
+                    },{
+                        "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                        "title": "QQ",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            },
+            {
+                "id": "1a4b24f62dcb4f869e75a8917956c39f",
+                "title": "UserName",
+                "attribute": "420f2d6f5d2e4582afbdf58d69a08bbe",
+                "sort": null,
+                "innerid": null,
+                "nodes": [
+                    {
+                        "id": "0a87793f772e4b8a90dd0a9bcaab48a3",
+                        "title": "QQ",
+                        "attribute": "16",
+                        "sort": "0",
+                        "innerid": null,
+                        "nodes": []
+                    }
+                ]
+            }
+        ]
+    }
+]

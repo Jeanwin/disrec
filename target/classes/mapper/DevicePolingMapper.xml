@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.DevicePolingMapper" >
+	<sql id="Base_Column_List">
+		id, userid, areainfo, deviceinfo, polingset, polingtime, createdate,createuser,modifydate,
+		modifyuser, deleteflag
+	</sql>
+  
+  <!-- 添加新学期 -->
+	<insert id="insertDevicePoling" parameterType="com.zonekey.disrec.entity.DevicePoling">
+		insert into zonekey_device_poling (id, userid, areainfo, deviceinfo, polingset, polingtime, createdate,createuser,modifydate,modifyuser,roundType) 
+		values(#{id}, #{userid}, #{areainfo}, #{deviceinfo}, #{polingset}, #{polingtime}, now(),#{createuser},#{modifydate},#{modifyuser},#{roundType})
+	</insert>
+	<!-- 查找 -->
+	<select id="findDevicePoling" parameterType="string" resultType="com.zonekey.disrec.entity.DevicePoling">
+		select * from zonekey_device_poling where userid= #{loginname}
+	</select>
+	<update id="updateDevicePoling" parameterType="com.zonekey.disrec.entity.DevicePoling">
+		update zonekey_device_poling set areainfo =#{areainfo},deviceinfo =#{deviceinfo},polingset=#{polingset}, polingtime =#{polingtime} ,modifydate=NOW(),modifyuser=#{modifyuser},roundType=#{roundType} where userid=#{userid}
+	</update>
+	
+	<!-- 查找 -->
+	<select id="findDevicePolingSetByAreaid" resultType="com.zonekey.disrec.entity.DevicePoling">
+		select * from zonekey_device_poling where  userid=#{loginname}
+	</select>
+  </mapper>

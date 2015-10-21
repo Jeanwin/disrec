@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.DeviceMapper">
+	<select id="findByAreaId" parameterType="map" resultType="map">
+			select a.id,a.name value,mostly,ip
+			 from zonekey_device a where a.deleteflag = 0 
+				<if test="id !=null">and a.areaid = #{id} </if>
+	</select>
+	<!-- sql绑定用户名 -->
+	<sql id="bindLoginname">
+		<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+	</sql>
+	<!--  -->
+	<select id="findDevice" parameterType="map" resultType="map">
+			select *
+			 from zonekey_device a where a.deleteflag = 0 
+				<if test="id !=null">and a.areaid = #{id} </if>
+				<if test="mostly !=null">and a.mostly = #{mostly} </if>
+				<!--<if test="typeid !=null">and a.typeid = #{typeid} </if> -->
+	</select>
+	<!-- 获取所有设备 -->
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.DeviceView">
+		<include refid="bindLoginname"/>
+		select a.id,a.name,a.parentid,a.camera,
+		(select name from zonekey_device where id=a.parentid) parentname,
+		a.ip,a.mac,a.typeid,
+		a.areaid,a.mostly,
+		b.name  areaname
+		from zonekey_device a join zonekey_area b on b.id=a.areaid
+		  where a.deleteflag = 0 
+		<if test="keywords != null">
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.typeid != null and keywords.typeid != ''">and a.typeid =#{keywords.typeid}</if>
+			<if test="keywords.mac !=null and keywords.mac !=''">and a.mac like concat('%',#{keywords.mac},'%')</if>
+			<if test="keywords.ip !=null and keywords.ip !=''">and a.ip like concat('%',#{keywords.ip},'%')</if>
+		<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(b.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(b.deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid !=''">and find_in_set(a.areaid,getareaChildLst(#{treeid})) </if>
+		<if test="treeid ==null or treeid==''">and find_in_set(a.areaid,getareaChildLst(0))</if>
+		</if>
+		
+		AND
+		 IF(
+				(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+					a.areaid IN (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=1 and c.isChecked='true'),1=1) 
+		<if test="page !=null and page.offset != null and page.limit!=null">
+		order by  ${page.order} ${page.sort}
+		limit  #{page.offset} ,#{page.limit}</if>
+	</select>
+	<!-- 获取总数 -->
+	<select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+	<include refid="bindLoginname"/>
+		select count(*) from zonekey_device a join zonekey_area b on b.id=a.areaid
+		where a.deleteflag = 0
+		<if test="keywords != null">
+			<if test="keywords.name != null and keywords.name != ''">and a.name like concat('%',#{keywords.name},'%')</if>
+			<if test="keywords.typeid != null and keywords.typeid != ''">and a.typeid =#{keywords.typeid}</if>
+			<if test="keywords.mac !=null and keywords.mac !=''">and a.mac like concat('%',#{keywords.mac},'%')</if>
+			<if test="keywords.ip !=null and keywords.ip !=''">and a.ip like concat('%',#{keywords.ip},'%')</if>
+		<if test="keywords.temp != null  and keywords.temp != ''">
+				<if test="treeid !=null and treeid != '' ">and find_in_set(b.deptid,getdeptChildLst(#{treeid})) </if>
+				<if test="treeid ==null or treeid == ''">and find_in_set(b.deptid,getdeptChildLst(0)) </if>
+			</if>
+		</if>
+		<if test="keywords == null or keywords.temp == null or  keywords.temp == ''">
+			<if test="treeid !=null and treeid !=''">and find_in_set(a.areaid,getareaChildLst(#{treeid})) </if>
+		<if test="treeid ==null or treeid==''">and find_in_set(a.areaid,getareaChildLst(0))</if>
+		</if>
+		AND
+		 IF(
+				(SELECT COUNT(*) FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=1)>0,
+					a.areaid IN (SELECT c.scopeid FROM user_range a,zonekey_range b,range_scope c  WHERE userid=#{_loginname}
+					AND a.rangeid=b.id 
+					AND b.id=c.rangeid 
+					AND a.rangeid=c.rangeid AND b.typeid=1),1=1) 
+	</select>
+	<select id="checkMac" parameterType="com.zonekey.disrec.vo.DeviceView" resultType="int">
+		select count(*) from zonekey_device where deleteflag = '0' and mac = #{mac}
+		<if test="id != null">
+			and id != #{id}
+		</if> 
+	</select>
+	<!-- 同一教室下只有录播机只能有一个 -->
+	<select id="checkType" parameterType="com.zonekey.disrec.vo.DeviceView" resultType="int">
+		select count(*) from zonekey_device where deleteflag = '0' and areaid = #{areaid} and typeid=#{typeid}
+		
+	</select>
+	<!-- 根据mac查教室id -->
+	<select id="findDeviceByMac" parameterType="string" resultType="com.zonekey.disrec.vo.DeviceView">
+		select areaid,ip from zonekey_device where deleteflag = '0' and mac = #{mac}
+	</select>
+	<!-- 根据areaid或innerid查录播机mac -->
+	<select id="getMacById" parameterType="map" resultType="string">
+		select a.mac from zonekey_device a,zonekey_area b where a.deleteflag = '0' and a.areaid=b.id and a.mostly='0'
+		<if test="typeid != null ">
+			and a.typeid = #{typeid}
+		</if> 
+		<if test="areaid != null ">
+			and a.areaid = #{areaid}
+		</if> 
+		<if test="innerid != null ">
+			and b.innerid = #{innerid}
+		</if> 
+	</select>
+	<!-- 根据innerid集合查录播机mac -->
+	<select id="getMacByInnerId"  resultType="map">
+		select a.mac,b.innerid,b.name className from zonekey_device a,zonekey_area b where a.deleteflag = '0' and a.areaid=b.id 
+		and a.typeid = #{typeid}
+		and b.innerid in 
+		<foreach collection="innerids" open="(" close=")" item="innerid" separator=",">
+			#{innerid}
+		</foreach>
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="map">
+		update zonekey_device set
+		deleteflag='1',modifyuser=#{modifyuser},modifydate=sysDate()
+		where id =#{id} and deleteflag='0'
+		<!-- in 
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+		#{map.id}
+		</foreach> -->
+		
+	</update>
+	<update id="deleteBy" parameterType="com.zonekey.disrec.vo.AreaView">
+		update zonekey_device set
+		deleteflag='1',modifyuser=#{modifyuser},modifydate=sysDate()
+		where areaid =#{id}
+	</update>
+
+	<insert id="insert" parameterType="com.zonekey.disrec.vo.DeviceView">
+		insert into zonekey_device (id, parentid, areaid,
+		name, typeid, MAC, IP,
+		createtime, createuser,  mostly,camera)
+		values (#{id}, #{parentid},
+		#{areaid},
+		#{name}, #{typeid}, #{mac},
+		#{ip},sysDate(), #{createuser}, #{mostly,jdbcType=CHAR} ,#{camera})
+	</insert>
+	<update id="update" parameterType="com.zonekey.disrec.vo.DeviceView">
+		update zonekey_device
+		<set>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=CHAR},
+			</if>
+			<if test="parentid == null">
+			parentid = null,
+			</if>
+			<if test="areaid != null">
+				areaid = #{areaid,jdbcType=CHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				typeid = #{typeid,jdbcType=CHAR},
+			</if>
+			<if test="mac != null">
+				MAC = #{mac,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				IP = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="mostly != null">
+				mostly = #{mostly,jdbcType=CHAR},
+			</if>
+			<if test="camera != null">
+				camera = #{camera},
+			</if>
+			modifydate = sysDate(),
+			modifyuser = #{modifyuser}
+		</set>
+		where id = #{id}
+	</update>
+	<select id="getDeviceView" parameterType="String" resultType="com.zonekey.disrec.vo.DeviceView">
+		select a.* from zonekey_device a,zonekey_area b where a.deleteflag = '0' and a.areaid=b.id 
+		and a.areaid = #{areaid}
+	</select>
+		<select id="findDeviceControl" parameterType="map" resultType="com.zonekey.disrec.vo.DeviceView">
+		SELECT * from zonekey_device  where 
+		id not in (SELECT deviceid from zonekey_device_server where deleteflag = '0')
+		and typeid = '2' 
+		and deleteflag = '0'
+		<if test="name != null and name != ''">
+			and ip like concat('%',#{name},'%')
+		</if> 
+	</select>
+	
+</mapper>

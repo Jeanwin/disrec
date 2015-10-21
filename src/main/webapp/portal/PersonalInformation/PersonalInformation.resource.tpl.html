@@ -1,0 +1,273 @@
+<div class="container-fluid" id="myResource">
+    <div class="modal-body">
+        <div>
+            <div style="height: 24px;width: 8px;background-color: #fcb750"></div>
+            <div style="margin-left: 20px;margin-top: -30px;font-size: 24px">我的资源</div>
+        </div>
+        <div class="pull-right" style="color: #8e8e8e">
+            <span class="upload-resource margin-right-20" ng-click="uploadResource()"> 
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>上传</span>
+            </span>
+            <span class="new-folder" ng-click="newFolder()">
+                <i class="icon-my-library-add"></i>
+                <span>新建文件夹</span>
+            </span>
+            
+        </div>
+        <div class="row form-inline margin-left-none margin-right-none"
+             style="margin-top: 30px;
+             background-color: #f2f2f2;
+             border: solid 1px #cecece;padding-bottom:15px;
+             border-radius: 3px">
+            <div class="col-xs-5" style="padding-top: 20px">
+                <input class="form-control" style="width: 100%;border: solid 1px #c1c1c1" placeholder="资源名称">
+            </div>
+            <div class="col-xs-3" style="padding-top: 22px">
+                <select class="noselectborderB">
+                    <option>录播教室</option>
+                </select>
+            </div>
+            <div class="col-xs-2" style="padding-top: 22px">
+                <select class="noselectborderB">
+                    <option>未发布</option>
+                </select>
+            </div>
+            <div class="col-xs-1" style="padding-top:18px">
+                <button class="btn btn-primary">查询</button>
+            </div>
+        </div>
+        <div style="margin-top: 40px">
+            <table class="table" style="color: #8e8e8e;">
+                <thead ng-if="resource.checked!==true" style="border: solid 1px #cecece;border-radius: 5px">
+                <tr style="text-align: left;vertical-align: middle">
+                    <td>
+                        <input type="checkbox" ng-model="checkAll" ng-click="checkAllFacilitys()">
+                    </td>
+                    <td>资源名称</td>
+                    <td>创建时间</td>
+                    <td>类型</td>
+                    <td>来源</td>
+                    <td>作者</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <thead ng-if="resource.checked===true" style="border: solid 1px #cecece;border-radius: 5px">
+                <tr style="text-align: left;vertical-align: middle">
+                    <td>
+                        <input type="checkbox" ng-model="checkAll1" ng-click="checkAllFacilitys()">
+                    </td>
+                    <td>一选中一个文件/文件夹</td>
+                    <td>                        
+                        <i class="blue-color icon-publish_yes"></i>
+                        <a href ng-click="ResourseShare()">分享</a>
+                    </td>
+                    <td>
+                        <i class="blue-color  icon-cloud-download"></i> 
+                        <a href ng-click="downLoadResourse">下载</a>
+                    </td>
+                    <td>
+                        <i class="blue-color  icon-file_move"></i> 
+                        <a href ng-click="pleaceChange()">移动到</a>
+                    </td>
+                    <td></td>
+                    <td>
+                        <i class="red-color  icon-delete"></i> 
+                        <a href ng-click="delResourse(del)"> 删除</a>
+                    </td>
+                </tr>
+                </thead>
+                <tbody style="border-bottom: solid 1px #d1d1d1">
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <!-- <input ng-model="resource.checked" type="checkbox"
+                                   ng-show="showbutton === 1 || false"
+                                   ng-change="oneCheck()"> -->
+                            <!-- <a href ng-show="showbutton === 1 || true"
+
+                               ng-click="showbutton === false;oneCheck()">
+                               <i class="icon-check"></i>                            
+                            </a> -->
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                                <i class="blue-color icon-Word"></i>
+                                <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>课件</td>
+                        <td>录播教室</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                                <i class="blue-color icon-Word"></i>
+                                <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>教案</td>
+                        <td>分享</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                                <i class="blue-color icon-Word"></i>
+                                <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>试题</td>
+                        <td>上传</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                                <i class="blue-color icon-Word"></i>
+                                <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>课件</td>
+                        <td>录播教室</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                                <i class="blue-color icon-Word"></i>
+                                <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>教案</td>
+                        <td>分享</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                            
+                         <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                                <i class="blue-color icon-Word"></i>
+                                <span> 20141126东302-004</span>    
+                            </a>
+                        
+                        </td>                           
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>试题</td>
+                        <td>上传</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                            <i class="blue-color icon-Word"></i>
+                            <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>课件</td>
+                        <td>录播教室</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                            <i class="blue-color icon-Word"></i>
+                            <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>教案</td>
+                        <td>分享</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>
+                    <tr  style="text-align: left">
+                        <td style="width: 53px;height: 53px">
+                            <input ng-model="resource.checked" type="checkbox">
+                        </td>
+                        <td>
+                            <a class="domBrow" ng-href="#/DocumentShow" href="">
+                            <i class="blue-color icon-Word"></i>
+                            <span> 20141126东302-004</span>
+                            </a>                     
+                        </td>
+                        <td>2014-11-26</td>
+                        <td>试题</td>
+                        <td>上传</td>                    
+                        <td>刘梅</td>
+                        <td>
+                            <a href ng-click="EditResource()">设置</a>
+                        </td>
+                    </tr>              
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <pagination
+            class="pagination-sm pull-right"
+            total-items="pagination.totalItems"
+            page="pagination.pageIndex"
+            items-per-page="pagination.pageSize"
+            max-size="pagination.maxSize"
+            previous-text="{{pagination.previousText}}"
+            next-text="{{pagination.nextText}}"
+            first-text="{{pagination.firstText}}"
+            last-text="{{pagination.lastText}}"
+            class="pagination-small"
+            boundary-links="true"
+            on-select-page="onSelectPage(page)">
+    </pagination>
+</div>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.VoiceCallLogMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.VoiceCallLog" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="caller_person" property="callerPerson" jdbcType="VARCHAR" />
+    <result column="called_person" property="calledPerson" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="start_talk_time" property="startTalkTime" jdbcType="VARCHAR" />
+    <result column="end_talk_time" property="endTalkTime" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="createuser" property="createuser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') time, caller_person, called_person, state, start_talk_time, end_talk_time,createdate, createuser
+  </sql>
+  <sql id="bindLoginname">
+	<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    id, time, caller_person callerPerson, called_person calledPerson, state, time_format(timediff(end_talk_time, start_talk_time),'%Hh%im%ss') time
+    from sys_log_voice_call
+    where id = #{id,jdbcType=CHAR}
+  </select>
+ 
+  <select id="count" parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		select count(*) from  sys_log_voice_call a  where  1=1 
+		<if test="keywords != null">
+			<if test="keywords.startTime != null and keywords.startTime!= ''">
+				<![CDATA[   and a.time>=  #{keywords.startTime}  ]]>
+			</if>
+			<if test="keywords.endTime != null and keywords.endTime!= ''">
+				<![CDATA[   and  #{keywords.endTime} >= a.time ]]>
+			 </if>
+			<if test="keywords.callerPerson != null and keywords.callerPerson != ''">and a.caller_person like concat('%', #{keywords.callerPerson},'%')</if>
+			<if test="keywords.calledPerson != null and keywords.calledPerson != ''">and a.called_person like concat('%',#{keywords.calledPerson},'%') </if>
+		</if>
+	</select>
+	
+	<select id="findByPage" parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.entity.VoiceCallLog">
+		 select 
+    	id, DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') time, caller_person callerPerson, called_person calledPerson, state, time_format(timediff(end_talk_time, start_talk_time),'%H-%i-%s') talkTime
+    	from  sys_log_voice_call  a where 1=1 
+		<if test="keywords != null">
+			<if test="keywords.startTime != null and keywords.startTime!= ''">
+				<![CDATA[   and a.time>=  #{keywords.startTime}  ]]>
+			</if>
+			<if test="keywords.endTime != null and keywords.endTime!= ''">
+				<![CDATA[   and  #{keywords.endTime} >= a.time ]]>
+			 </if>
+			<if test="keywords.callerPerson != null and keywords.callerPerson != ''">and a.caller_person like concat('%', #{keywords.callerPerson},'%')</if>
+			<if test="keywords.calledPerson != null and keywords.calledPerson != ''">and a.called_person like concat('%',#{keywords.calledPerson},'%') </if>
+		</if>
+		order by a.createdate desc
+		<if test="page != null and page.offset != null and page.limit!=null">
+			limit  #{page.offset} ,#{page.limit}
+		</if>
+	</select>
+	
+  <insert id="saveVoiceCallLog" parameterType="com.zonekey.disrec.entity.VoiceCallLog" >
+   <include refid="bindLoginname"/>
+    insert into sys_log_voice_call (id, time, caller_person, 
+      called_person, state, start_talk_time,end_talk_time, 
+      createdate, createuser,mac)
+    values (#{id,jdbcType=CHAR},sysDate(), #{callerPerson,jdbcType=VARCHAR}, 
+      #{calledPerson,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{startTalkTime,jdbcType=TIMESTAMP}, 
+      #{endTalkTime,jdbcType=TIMESTAMP},sysDate(), #{_loginname},#{mac})
+  </insert>
+  
+  <update id="updateCallTime" parameterType="com.zonekey.disrec.entity.VoiceCallLog" >
+  <include refid="bindLoginname"/>
+    update sys_log_voice_call
+    <set >
+      <!-- <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callerPerson != null" >
+        caller_person = #{callerPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="calledPerson != null" >
+        called_person = #{calledPerson,jdbcType=VARCHAR},
+      </if> -->
+      <if test="state != null" >
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="state =='0'.toString()">
+     	start_talk_time = sysDate(),
+      </if>
+       <if test="state == '3'.toString() and startTalkTime==''">
+      		end_talk_time = sysDate(),
+      	</if>
+      	modifydate = sysDate(),
+        modifyuser = #{_loginname,jdbcType=VARCHAR}
+    </set>
+    where mac = #{mac} and time = (select t.ti from (select MAX(time) ti from sys_log_voice_call ) t ) 
+  </update>
+  
+  <select id="findStartTime" resultType="java.lang.String" parameterType="java.lang.String" >
+    select 
+    DATE_FORMAT(start_talk_time,'%Y-%m-%d %H:%i:%s')
+    from sys_log_voice_call
+    where mac=#{mac}  and time = (select t.ti from (select MAX(time) ti from sys_log_voice_call ) t ) 
+  </select>
+  
+</mapper>

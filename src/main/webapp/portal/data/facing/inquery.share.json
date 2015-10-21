@@ -1,0 +1,36 @@
+[
+    {
+        "riskUnitNo":"1",
+        "plyEdrComShares": [
+            {
+                "reinsType":"临分",
+                "riComCode":"R0001",
+                "riComName":"接受人1",
+                "riFComCode":"001",
+                "riFComName":"最终接收人",
+                "shareRate":10.000000,
+                "fShareRate":"最终接受比例30%",
+                "currency":"CNY",
+                "amount":110100000.00,
+                "premium":10100.00,
+                "oriAmount":11000000000,
+                "oriPremium":10000.00,
+                "chgAmount":100000.00,
+                "chgPremium":100.00
+            }
+        ],
+        "plyEdrXComShares":[
+            {
+                "reinsType":"临分",
+                "layerNo":"层号2",
+                "currency":"人民币",
+                "excessLoss":"起赔点0.1",
+                "stopLimit":"止陪点1.2",
+                "layerQuota":"赔偿限额01111",
+                "layerChgPremium":"层保费变化量123",
+                "layerPremium":"层最新保费1234",
+                "layerOriPremium":"原层保费123443"
+            }
+        ]
+    }
+]

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.LectureChildrenMapper" >
+
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.LectureChildren" >
+	   <id column="id" property="id" jdbcType="CHAR" />
+	   <id column="parentid" property="parentid" jdbcType="CHAR" />
+	   <id column="childKey" property="childKey" jdbcType="VARCHAR" />
+	   <id column="childValue" property="childValue" jdbcType="VARCHAR" />
+	   <id column="sort" property="sort" jdbcType="INTEGER" />
+	   <id column="deleteflag" property="deleteflag" jdbcType="CHAR" />
+  </resultMap>
+
+	<select id="findAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from zonekey_lecture_children
+		where parentid = #{parentid,jdbcType=CHAR} and deleteflag ='0'
+		order by sort
+	</select>
+	<select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from zonekey_lecture_children
+		where id = #{id,jdbcType=CHAR} and deleteflag ='0'
+	</select>
+	<!-- 逻辑删除 -->
+	<update id="delete">
+		update zonekey_lecture_children set
+		deleteflag='1'
+		where parentid =#{id,jdbcType=CHAR} 
+	</update>
+	
+ <insert id="insert" parameterType="com.zonekey.disrec.entity.LectureChildren" >
+    insert into zonekey_lecture_children (id,parentid, childKey, childValue, sort, deleteflag)
+    values (#{id,jdbcType=CHAR}, #{parentid,jdbcType=CHAR},#{childKey,jdbcType=VARCHAR}, #{childValue,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER}, #{deleteflag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zonekey.disrec.entity.LectureChildren">
+    insert into zonekey_lecture_children
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+       <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="childKey != null" >
+        childKey,
+      </if>
+      <if test="childValue != null" >
+        childValue,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+         <if test="parentid != null" >
+        #{parentid,jdbcType=CHAR},
+      </if>
+      <if test="childKey != null" >
+        #{childKey,jdbcType=VARCHAR},
+      </if>
+      <if test="childValue != null" >
+        #{childValue,jdbcType=VARCHAR},
+      </if>
+       <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=CHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateSelective" parameterType="com.zonekey.disrec.entity.LectureChildren">
+    update zonekey_lecture_children
+   <set>
+       <if test="parentid != null" >
+        parentid= #{parentid,jdbcType=CHAR},
+      </if>
+      <if test="childKey != null" >
+        childKey=#{childKey,jdbcType=VARCHAR},
+      </if>
+      <if test="childValue != null" >
+        childValue=#{childValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort=#{sort,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflag != null" >
+        deleteflag= #{deleteflag,jdbcType=CHAR}
+      </if>
+    </set>
+		where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

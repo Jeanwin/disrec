@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.ManualVideoMapper" >
+  <resultMap id="BaseResultMap" type="com.zonekey.disrec.entity.ManualVideo" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="area_id" property="areaId" jdbcType="CHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+   <!-- sql绑定用户名 -->
+  <sql id="bindLoginname">
+		<bind name="_loginname" value="@com.zonekey.disrec.service.auth.ShiroDbRealm@getCurrentLoginName()"/>
+	</sql>
+	
+	 <select id="count"  resultType="long">
+		select count(*) from zonekey_curriculum_manual_video a,zonekey_area b,sys_user c where a.area_id=b.id and a.user_id=c.loginname	and a.deleteflag='0'
+	</select>
+	
+  <select id="findByPage" resultType="com.zonekey.disrec.entity.ManualVideo" parameterType="com.zonekey.disrec.vo.PageBean" >
+    select a.id,a.title,a.user_id userId,a.area_id areaId, DATE_FORMAT(a.start_time,'%Y-%m-%d %H:%i:%s') startTime, DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i:%s') endTime,b.name areaName,c.name userName from 
+    zonekey_curriculum_manual_video a,zonekey_area b,sys_user c where a.area_id=b.id and a.user_id=c.id and a.deleteflag='0'
+	order by a.start_time desc
+	
+	<if test="page != null and page.offset != null and page.limit!=null">
+		limit  #{page.offset} ,#{page.limit}
+	</if>
+  </select>
+  
+  <insert id="saveManualVideo" parameterType="com.zonekey.disrec.entity.ManualVideo" >
+   <include refid="bindLoginname"/>
+    insert into zonekey_curriculum_manual_video (id, start_time, createuser,area_id, 
+      title, user_id,folder_name,ftp_path,upload_way,live_model)
+    values (#{id,jdbcType=CHAR}, sysdate(), #{_loginname}, #{areaId,jdbcType=CHAR}, 
+      #{title,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{folderName,jdbcType=VARCHAR},
+      #{ftpPath,jdbcType=VARCHAR},'0',#{modelValue})
+  </insert>
+
+  <update id="updateEndTime" parameterType="String" >
+   <include refid="bindLoginname"/>
+    update zonekey_curriculum_manual_video
+    set
+      end_time = sysdate(),
+      modifyuser = #{_loginname},
+      modifydate = sysdate()
+    <!-- where id = #{id,jdbcType=CHAR} -->
+    where id in (select a.id from (select id from zonekey_curriculum_manual_video 
+    where area_id=#{id,jdbcType=CHAR} and (end_time  is NULL or DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s')='0000-00-00 00:00:00')
+     ORDER BY start_time desc ) a )
+  </update>
+  
+  <update id="updateVideoState" parameterType="String" >
+   <include refid="bindLoginname"/>
+    update zonekey_curriculum_manual_video
+    set
+      state = '1',
+      modifyuser = #{_loginname},
+      modifydate = sysdate()
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  
+   <select id="getManualVideoByAreaId" resultType="com.zonekey.disrec.entity.ManualVideo" parameterType="String" >
+    select a.id,a.title,a.user_id userId,a.area_id areaId,DATE_FORMAT(a.start_time,'%Y-%m-%d %H:%i:%s') startTime,DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i:%s') endTime,b.name areaName,c.name userName,a.folder_name folderName,
+	a.ftp_path ftpPath,sc.modelName,sc.modelValue  from 
+    zonekey_curriculum_manual_video a,zonekey_area b,sys_user c,(select a.`NAME` modelName,a.value modelValue from sys_code a,sys_code b where a.parentid=b.id and b.value='livemodel' ) sc
+   where a.area_id=b.id and a.user_id=c.loginname and a.area_id=#{areaId} and  sc.modelValue=a.live_model
+   and (a.end_time is NULL or DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i:%s')='0000-00-00 :00:00:00') 
+   and a.start_time = (select t.ti from (select MAX(start_time) ti from zonekey_curriculum_manual_video ) t ) 
+  </select>
+  <update id="deleteManualVideo">
+		update zonekey_curriculum_manual_video set
+		deleteflag='1' where id in
+		<foreach collection="list" open="(" close=")" separator="," item="map">
+			#{map.id}
+		</foreach>
+	</update>
+	<delete id="delManualVideoById" parameterType="String">
+		delete from zonekey_curriculum_manual_video  where id =#{id}
+	</delete>
+		 <update id="updateManualVideouploadismanual" parameterType="com.zonekey.disrec.entity.ManualVideo">
+		update
+		zonekey_curriculum set
+		upload_is_manual = 'Y'
+		where folder_name = #{folderName}
+	</update>
+</mapper>

@@ -1,0 +1,30 @@
+﻿[
+    {
+        "id": "01",
+        "termname": "2014-2015第二学期",
+        "startday": "2014-0901",
+        "weeks": "8",
+        "is_current": "1"
+    },
+    {
+        "id": "02",
+        "termname": "2014-2015第一学期",
+        "startday": "2014-0304",
+        "weeks": "9",
+        "is_current": "0"
+    },
+    {
+        "id": "03",
+        "termname": "2013-2014第二学期",
+        "startday": "2013-0911",
+        "weeks": "10",
+        "is_current": "0"
+    },
+    {
+        "id": "04",
+        "termname": "2013-2014第一学期",
+        "startday": "2013-0301",
+        "weeks": "6",
+        "is_current": "0"
+    }
+]

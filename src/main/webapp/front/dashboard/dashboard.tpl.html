@@ -1,0 +1,41 @@
+<div class="pull-right" style="padding: 32px">
+    <p>上次登录时间：{{global.user.logindate}}</p>
+</div>
+
+<div style="height:50%;text-align:center;">
+    <img src="{{logoInfo.uintPictureurl}}" style="margin-top:200px;margin-left:-200px">
+    <p style="margin-top:-127px;font-size:50px;color:#2a6496">Welcome!</p>
+</div>
+
+<div class="dashborder"  ng-class="{'default-body':choose==='1','yellow-body':choose==='2','blue-body':choose==='3','deepGreen-body':choose==='4'}" >
+    <span style="font-size:22px;color:#fff" >
+        欢迎使用{{logoInfo.desktopName}}
+    </span>
+</div>
+
+<!--<script>-->
+    <!--//打开窗口-->
+    <!--$("#ok").click(function(){-->
+        <!--$("#ok1").css({ display:"block"});-->
+        <!--$("#ok2").css({ display:"block"});-->
+    <!--});-->
+    <!--$("#closemodel").click(function(){-->
+        <!--$(".closemodel1").css({ display:"none"});-->
+        <!--$(".closemodel2").css({ display:"none"});-->
+    <!--});-->
+
+<!--</script>-->
+<!--<button id="ok">ok</button>-->
+<!--<div id="ok1" class="closemodel1"-->
+     <!--style="background-color: #f0ad4e; opacity: 0.5; z-index: 999901;-->
+     <!--display:none;width: 1349px;height:700px;margin-top: -141px;-->
+     <!--position: relative;"></div>-->
+<!--<div id="ok2" class="closemodel2" style="height: 401px;width: 420px; z-index: 999999;-->
+     <!--background-color: #fff;display:none;-->
+     <!--margin-top: -480px;margin-left: 400px;-->
+     <!--position: relative;">-->
+    <!--填写内容-->
+    <!--<a href type="button" id="closemodel">-->
+        <!--<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>-->
+    <!--</a>-->
+<!--</div>-->

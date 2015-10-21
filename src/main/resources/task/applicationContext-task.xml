@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:task="http://www.springframework.org/schema/task" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task-4.0.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 定期执行的业务类 -->
+	<bean id="jdkExecutorJob" class="com.zonekey.disrec.service.scheduling.JdkTimerJob" lazy-init="false">
+		<!-- 每次执行间隔180秒 -->
+		<property name="period" value="180" />
+		<!-- 首次执行延期1秒 -->
+		<property name="initialDelay" value="1" />
+		<!-- shutdown时等待任务完成, 最多等待20秒 -->
+		<property name="shutdownTimeout" value="20" />
+	</bean>
+	
+	<!-- namespace 方式 的便捷版 -->
+	<task:scheduler id="springScheduler" pool-size="2"/>
+	
+	<task:scheduled-tasks scheduler="springScheduler">
+		<!-- timer -->
+	    <task:scheduled ref="springScheduledService" method="executeBySpringTimerByXml" fixed-rate="60000"/>
+	    <!-- cron -->
+	    <task:scheduled ref="springScheduledService" method="executeBySpringCronByXml" cron="5,25,45 * * * * ?"/>
+	</task:scheduled-tasks>
+	
+	<!-- coding 方式的加強版 -->
+	<bean id="springCronJob" class="com.zonekey.disrec.service.scheduling.SpringCronJob" lazy-init="false">
+		<!--property name="cronExpression" value="* 15 9-17 * * MON-FRI"/!-->
+		<property name="cronExpression" value="0,10,20,30,40,50 * * * * ?" />
+		<property name="shutdownTimeout" value="20" />
+	</bean>
+		
+	<!--  定时器开关  开始-->
+	<!--task:annotation-driven/!-->
+	<!--  定时器开关  结束--> 
+	
+	<!--task:scheduled-tasks> 
+		<task:scheduled ref="chartsService" method="executeBySpringCronByJava" cron="0,10,20,30,40,50 * * * * ?"/> 
+	</task:scheduled-tasks!-->
+	
+	<bean id="springScheduledService" class="com.zonekey.disrec.service.scheduling.SpringScheduledService">
+	</bean>
+</beans>

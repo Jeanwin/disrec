@@ -1,0 +1,50 @@
+[
+    {
+        "id": "0001",
+        "classname":  "第一节",
+        "weekday": "1",
+	"subject": "语文",
+        "deptname": "初三(1)",
+	"username": "张霞",
+	"date": "20140908",
+	"live": "0",
+	"record": "1",
+	"isresource" :"1"
+    },
+    {
+        "id": "0002",
+        "classname":  "第二节",
+        "weekday": "1",
+	"subject": "数学",
+        "deptname": "初三(2)",
+	"username": "张花",
+	"date": "20140909",
+	"live": "0",
+	"record": "1",
+	"resource" :"1"
+    },
+    {
+        "id": "0003",
+        "classname":  "第三节",
+        "weekday": "3",
+	"subject": "英语",
+        "deptname": "初三(3)",
+	"username": "刘磊",
+	"date": "20140910",
+	"live": "1",
+	"record": "0",
+	"resource" :"1"
+    },
+    {
+        "id": "0004",
+        "classname":  "第四节",
+        "weekday": "4",
+	"subject": "地理",
+        "deptname": "初二(1)",
+	"username": "张红",
+	"date": "20140908",
+	"live": "1",
+	"record": "1",
+	"resource" :"1"
+    }
+]

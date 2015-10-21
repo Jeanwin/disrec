@@ -1,0 +1,38 @@
+<div class="login-wrapper" ng-controller="UserLoginCtrl">
+
+    <!--<div class="btn-group btn-group-xs">-->
+        <!--<button type="button" class="btn btn-default" ng-click="changeLanguage('cn')" ng-model="global.lang" btn-radio="'cn'">中文</button>-->
+        <!--<button type="button" class="btn btn-default" ng-click="changeLanguage('en')" ng-model="global.lang" btn-radio="'en'">English</button>-->
+    <!--</div>-->
+
+    <div class="login-window">
+        <div class="header">{{app.client}}{{app.name}}</div>
+        <div>{{message}}</div>
+        <form name="frmLogin">
+            <div>
+                <span class="glyphicon user"></span>
+                <select id="org" class="form-control" ng-required="true" >
+                    <option value="">机构</option>
+                    <option value="BJ">北京分公司</option>
+                </select>
+            </div>
+            <div>
+                <span class="glyphicon user"></span>
+                <input id="userId" class="form-control" placeholder="用户名" ng-required="true" autofocus="true" />
+            </div>
+            <div>
+                <span class="glyphicon key"></span>
+                <input id="loginPassword" type="password" class="form-control" placeholder="密码" ng-required="true" />
+            </div>
+        </form>
+        <!--<div>-->
+            <!--<span><input type="checkbox" />记住我的用户名</span>-->
+        <!--</div>-->
+        <div>
+            <button ng-hide="isBusy" ng-click="login()" class="btn btn-primary btn-lg btn-block">{{ 'BUTTON_LOGIN_TITLE' | translate }}</button>
+            <button ng-show="isBusy" class="btn btn-primary btn-lg btn-block"><i class="loading" />正在登录...</button>
+        </div>
+    </div>
+</div>
+
+

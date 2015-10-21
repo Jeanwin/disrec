@@ -1,0 +1,28 @@
+﻿[
+    {
+        "id": "d07c05d193214bd586e2493fe4963d4d",
+        "termname": "2014-2015第二学期",
+        "startday": "2015-03-14",
+        "endday": null,
+        "weeks": "20",
+        "createdate": null,
+        "createuser": null,
+        "modifydate": null,
+        "modifyuser": null,
+        "deleteflag": null,
+        "iscurrent": null
+    },
+    {
+        "id": "44c25254d14f43d6b4d1e3a76966ce2a",
+        "termname": "2014-2015第一学期",
+        "startday": "2014-09-01",
+        "endday": null,
+        "weeks": "20",
+        "createdate": null,
+        "createuser": null,
+        "modifydate": null,
+        "modifyuser": null,
+        "deleteflag": null,
+        "iscurrent": "1"
+    }
+]

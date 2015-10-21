@@ -1,0 +1,68 @@
+[
+    {
+        "treatyNo": "OPS20140001",
+        "temTreatyNo": "20141",
+        "sectionNo": "A",
+        "fhxLayerViewVoList": [
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 1,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 100,
+                "layerPremium": 100,
+                "rwp": 200.02,
+                "sectionNo": "A"
+            },
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 22,
+                "currency": "aCNY",
+                "egnpi": 210000,
+                "gnpi": 2100,
+                "rate": 21,
+                "mdp": 1200,
+                "layerPremium": 1020,
+                "rwp": 2002.47,
+                "sectionNo": "A"
+            }
+        ]
+    },
+    {
+        "treatyNo": "OPS20140001",
+        "temTreatyNo": "20141",
+        "sectionNo": "B",
+        "fhxLayerViewVoList": [
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 1,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 100,
+                "layerPremium": 100,
+                "rwp": 200,
+                "sectionNo": "B"
+            },
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 2,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 200,
+                "layerPremium": 100,
+                "rwp": 400,
+                "sectionNo": "B"
+            }
+        ]
+    }
+]

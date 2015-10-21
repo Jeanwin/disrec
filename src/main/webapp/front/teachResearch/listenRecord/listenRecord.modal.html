@@ -1,0 +1,51 @@
+<style type="text/css">
+	.modal-dialog {
+		width: 1000px;
+	}
+	.modal-header{border:none;border-top: 5px solid #0071b7;}
+	.modal-title{
+		height: 21px;
+	    width: 28px;
+	    background: #0071b7;
+	    display: block;
+	    border-radius: 4px;
+	    text-align: center;
+	    float: right;
+	    margin-top: -16px;
+	    color: #fff;
+	}
+</style>
+<div class="modal-header">
+        <span class="modal-title">
+        	<span ng-click="cancel()" class="glyphicon glyphicon-remove"></span>
+        </span>
+</div>
+<div class="modal-body">
+	<div class="recordHeader row">
+		<div class="col-xs-3">
+			<h3 style="font-weight:600;color:#0071b7">听课本</h3>
+			<span>2015-5-23 14-23创建</span>
+		</div>
+		<div class="col-xs-4 pull-right">
+			<span class="col-xs-12 margin-bottom-5">
+				<span class="col-xs-5 text-right">课程</span><span class="margin-left-15">{{listencontent.subjectname}}</span>
+			</span>
+			<span class="col-xs-12 margin-bottom-5">
+				<span class="col-xs-5 text-right">主题</span><span class="margin-left-15">{{listencontent.subjectattribute}}</span>
+			</span>
+			<span class="col-xs-12 margin-bottom-5">
+				<span class="col-xs-5 text-right">主讲教师</span><span class="margin-left-15">{{listencontent.username}}</span>
+			</span>
+			<span class="col-xs-12 margin-bottom-5">
+				<span class="col-xs-5 text-right">单位</span><span class="margin-left-15">{{listencontent.deptname}}</span>
+			</span>
+		</div>
+	</div>
+	<div class="recordContent" style="overflow-y: scroll;max-height: 400px;">
+		<div class="scheduleContent row" ng-repeat="p in listencontent.properties">
+			<div class="title"><i class="icon-check orange-color"></i><span class="titlefont">{{p.childKey}}</span></div>
+			<div class="col-xs-12 margin-top-20">{{p.score}}</div>
+		</div>
+		
+	</div>
+</div

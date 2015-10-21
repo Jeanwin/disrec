@@ -1,0 +1,26 @@
+[
+{
+    "id": "1",
+    "name": "高一2班",
+    "code":"254",
+    "parentid": "4",
+    "attribute": "班级",
+    "parentname": "东教",
+    "sort": "23",
+    "state": "可用",
+    "areaId":"23",
+    "areaName":"101教室"
+},
+{
+    "id": "1",
+    "name": "高一2班",
+    "code":"254",
+    "parentid": "4",
+    "attribute": "班级",
+    "parentname": "东教",
+    "sort": "23",
+    "state": "可用",
+    "areaId":"23",
+    "areaName":"101教室"
+}
+]

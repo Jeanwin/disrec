@@ -1,0 +1,110 @@
+[
+    {
+        "objTypeCode": "0000",
+        "objTypeDesc": "其他"
+    },
+    {
+        "objTypeCode": "0001",
+        "objTypeDesc": "半导体"
+    },
+    {
+        "objTypeCode": "0002",
+        "objTypeDesc": "沾水工程"
+    },
+    {
+        "objTypeCode": "0003",
+        "objTypeDesc": "原型机电厂"
+    },
+    {
+        "objTypeCode": "0004",
+        "objTypeDesc": "燃气轮机"
+    },
+    {
+        "objTypeCode": "0005",
+        "objTypeDesc": "地下采矿"
+    },
+    {
+        "objTypeCode": "0006",
+        "objTypeDesc": "地铁"
+    },
+    {
+        "objTypeCode": "0007",
+        "objTypeDesc": "地下工程"
+    },
+    {
+        "objTypeCode": "0008",
+        "objTypeDesc": "美加地区"
+    },
+    {
+        "objTypeCode": "0009",
+        "objTypeDesc": "ACE全球业务"
+    },
+    {
+        "objTypeCode": "0010",
+        "objTypeDesc": "食品药品血液制品的产品责任险"
+    },
+    {
+        "objTypeCode": "0011",
+        "objTypeDesc": "15万千瓦以上的联合循环电厂"
+    },
+    {
+        "objTypeCode": "0012",
+        "objTypeDesc": "输变电线路"
+    },
+    {
+        "objTypeCode": "0013",
+        "objTypeDesc": "蒙迪艾尔业务"
+    },
+    {
+        "objTypeCode": "0014",
+        "objTypeDesc": "FRONTING业务"
+    },
+    {
+        "objTypeCode": "0015",
+        "objTypeDesc": "珠宝、艺术品"
+    },
+    {
+        "objTypeCode": "0016",
+        "objTypeDesc": "禁运国家"
+    },
+    {
+        "objTypeCode": "0017",
+        "objTypeDesc": "分入"
+    },
+    {
+        "objTypeCode": "0018",
+        "objTypeDesc": "投连产品"
+    },
+    {
+        "objTypeCode": "0019",
+        "objTypeDesc": "其他溢额合同除外"
+    },
+    {
+        "objTypeCode": "0020",
+        "objTypeDesc": "其他预约合同除外"
+    },
+    {
+        "objTypeCode": "0021",
+        "objTypeDesc": "工期超60月"
+    },
+    {
+        "objTypeCode": "0022",
+        "objTypeDesc": "工期超72月"
+    },
+    {
+        "objTypeCode": "0023",
+        "objTypeDesc": "其他成数合同除外"
+    },
+    {
+        "objTypeCode": "0024",
+        "objTypeDesc": "D&O成数合同除外"
+    },
+    {
+        "objTypeCode": "0025",
+        "objTypeDesc": "EPL成数合同除外"
+    },
+    {
+        "objTypeCode": "0026",
+        "objTypeDesc": "EPL与中再成数除外"
+    }
+]

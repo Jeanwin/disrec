@@ -1,0 +1,27 @@
+{
+    "total": 22,
+    "data": [
+        {
+            "parentName": "设备类型",
+            "name": "003",
+            "sort": "0",
+            "state": "有效"
+        },{
+            "parentName": "设备类型",
+            "name": "003",
+            "sort": "1",
+            "state": "有效"
+        },{
+            "parentName": "设备类型",
+            "name": "003",
+            "sort": "2",
+            "state": "有效"
+        },{
+            "parentName": "设备类型",
+            "name": "003",
+            "sort": "3",
+            "state": "有效"
+        }
+
+    ]
+}

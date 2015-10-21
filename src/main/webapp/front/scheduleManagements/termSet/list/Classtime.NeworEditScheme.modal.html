@@ -1,0 +1,121 @@
+<div style="background-color: #fff;width: 720px">
+    <div class="modal-header">
+        <span ng-if="!editingMode">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </button>
+            <h3>添加节次方案</h3>
+        </span>
+        <span ng-if="editingMode">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </button>
+            <h3>编辑节次方案</h3>
+        </span>
+    </div>
+    <div class="modal-body padding-bottom-none">
+        <form class="form-horizontal" novalidate name="frmEditSchedule">
+            <div class="form-group">
+                <label class="col-xs-2 control-label">方案名称</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" ng-change="methodSchemeName()" placeholder="请输入方案名称" ng-model="Classtime.classtype" required>
+                    <span ng-show="showSchemeNameError">
+                          <div style="color: red;margin-left: 40px">*名称不能重复</div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label">有效时间</label>
+                <div class="col-xs-4">
+                	<span ng-if="NotChrome">
+                		<input type="text" class="form-control" ng-model="Classtime.datebegin" ng-change="methodSchemeName()" required datepicker2 ng-readonly="true">
+                    </span>
+                    <span ng-if="!NotChrome">
+                    	<input type="date" class="form-control" ng-change="methodSchemeName()" ng-model="Classtime.datebegin" required style="line-height:20px;"> 
+                    </span>
+                </div>
+                <div class="col-xs-1">
+                    至
+                </div>
+                <div class="col-xs-5">
+                	<span ng-if="NotChrome">
+                		<input type="text" class="form-control" ng-model="Classtime.dateend" ng-change="methodSchemeName()" required datepicker2 ng-readonly="true">
+                    </span>
+                    <span ng-if="!NotChrome">
+                       <input type="date" class="form-control" ng-change="methodSchemeName()" ng-model="Classtime.dateend" required style="line-height:20px;"> 
+					</span>
+                </div>
+            </div>
+
+            <span ng-show="showDateModel">
+                <div style="color: red;margin-left: 200px">*结束的时间不能小于开始的时间</div>
+            </span>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            节次设置
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="btn-group btn-group-sm">
+                                <button ng-click="AddTime()" class="btn btn-default">增加节次</button>
+                                <button ng-if="termtimeList.length>0" ng-click="DelTime()" class="btn btn-default">删除末节</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group" style="max-height:280px;overflow: scroll">
+                    <li class="list-group-item" ng-repeat="Time in termtimeList">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                第{{$index+1}}节
+                            </div>
+                            <div class="col-xs-1">
+                                <img src="assets/img/lemon-pages.png">
+                            </div>
+                            <div class="col-xs-4">
+                                <input type="time" class="form-control" ng-change="CompareStartTime($index,Time)" ng-model="Time.starttime" required>
+                            </div>
+                            <div class="col-xs-1">
+                                至
+                            </div>
+                            <div class="col-xs-4">
+                                <input type="time" class="form-control" ng-change="CompareEndTime($index,Time)" ng-model="Time.endtime" required>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+            <span ng-show="showCorrectTime">
+                <div style="color: red;margin-left: 200px">
+                    <!--<span style="color: #0000ff">第{{$index+1}}节课</span>*结束的时间不能小于开始的时间-->
+                    *该节课的结束的时间不能小于开始的时间
+                </div>
+            </span>
+            <span ng-if="!showCorrectTime" ng-show="showCorrectClassTime">
+                <div style="color: red;margin-left: 200px">
+                    <!--<span style="color: #0000ff">第{{$index+2}}节课</span>开始的时间不能小于<span style="color: #0000ff">第{{$index+1}}节课</span>结束的时间-->
+                    <span style="color: #ff1489">*该节课的开始的时间不能小于上一节课的结束的时间</span>
+                </div>
+            </span>
+            <span ng-if="!showCorrectTime" ng-show="showCorrectDownTime">
+                <div style="color: red;margin-left: 200px">
+                    <!--<span style="color: #0000ff">第{{$index+2}}节课</span>开始的时间不能小于<span style="color: #0000ff">第{{$index+1}}节课</span>结束的时间-->
+                    <span style="color: #ff9418">*该节课的结束的时间不能大于下一节课的开始的时间</span>
+                </div>
+            </span>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <!--{{termChange}}-->
+        <button class="btn btn-primary"
+                ng-disabled="(frmEditSchedule.$pristine || frmEditSchedule.$invalid) && !termChange || showDateModel || showCorrectTime || showCorrectClassTime || showCorrectDownTime"
+                style="width: 120px"
+                ng-click="saveClassTime()">保存
+        </button>
+        <button class="btn btn-default" style="width: 120px"  ng-click="cancel()">取消</button>
+    </div>
+</div>

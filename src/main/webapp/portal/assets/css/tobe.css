@@ -1,0 +1,153 @@
+/* 0715 */
+ 
+* {
+    margin: 0;  /* 0.左上角开始 */
+    padding: 0;
+}
+
+/* 经验1.重复定位导致hover事件失效 */
+/*.wrap-header { */
+/*	position:absolute; /* 1.菜单居中 */
+/*	margin-left:50%; */
+/*	left: -683px;  */
+/*	width: 1366px; */
+/*	height:36px; */
+/*	background:black; */
+/*	color:white; */
+/*} */
+
+/* 
+	3.悬浮菜单
+ */
+.wrap-header {
+	background:center center no-repeat fixed #333;
+	position:fixed; /* 必须与width:100%连用才可以使布局固定 */
+	width:100%;
+	z-index:9999999; /*有点小奴了。去掉px就可以了。*/
+}
+
+/* 
+	1.菜单居中
+*/
+.inner-header {
+	position:relative;
+	margin-left:50%;
+	left: -500px;
+	width: 1000px;
+	height:36px;
+	text-align:center;
+}
+
+/* 
+	2.一行显示
+	4.菜单位置
+*/
+.inner-header ul li {
+	display:inline-block; /* 2. li一行显示 */
+	margin:5px 0px 10px 20px;
+	font-size:14px;
+	
+	color: rgb(187, 182, 182);
+}
+
+/* 
+	4.菜单样式
+*/
+.inner-header ul li:hover{
+	color:white;
+	cursor:pointer;
+}
+
+#active {
+	color:white;
+}
+
+/* 
+	1.Main模块中居左显示
+ */
+ 
+ 
+/* 
+	1.内容居中
+*/
+.wrap-container {
+	position:absolute;
+	left:-500px;
+	margin-left:50%;
+	width:1000px;
+	height:2560px;
+}
+
+/* 
+	1.内容左边左浮动，为内容右边做准备
+*/
+.inner-aside {
+	width:235px;
+	heigth:50px;
+	float:left;
+}
+ 
+.inner-aside ul {
+	margin-top:50px;
+}
+
+a {
+	text-decoration: none;	
+	color:black;
+}
+
+.inner-aside ul li {
+	margin-top:1px;
+	background: rgb(241, 241, 241);
+	list-style-type: none;
+	line-height: 30px;
+	font-size: 14px;
+	color: #333;
+	padding: 0 10px;
+}
+
+
+.inner-aside ul li:hover{
+	background-color: #0078e7;
+	color: white;
+	cursor:pointer;
+}
+
+.inner-aside ul li a:hover {
+	background-color: #0078e7;
+	color: white;
+}
+
+/* 
+	1.Main模块中居右显示
+ */
+
+/* 
+	经验2. 内容右边左浮动（如果左边内容没有做浮动的话，右边内容布局会出现在左边内容的下面）
+*/
+.inner-main {
+	width:765px;
+	heigth:50px;
+	float:left;
+	position:relative;
+	top:50px;
+	left:40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,40 @@
+<div>
+    <div class="whiteframe shadow" style="margin:32px auto; width:55%;padding:24px;">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>立即刷新</h3>
+
+                <div class="text-center">
+                    <span style="font-size:180px;color:#c0c0c0" class="glyphicon glyphicon-refresh"></span>
+                </div>
+                <div class="text-center" style="margin-top:32px">
+                    <button type="submit" class="btn btn-primary">立即刷新</button>
+                </div>
+            </div>
+            <div class="col-xs-6" style="border-left:solid 1px #c0c0c0; height:304px;">
+
+                <h3>或预约刷新</h3>
+
+                <form class="form-horizontal" name="frmRefresh" role="form">
+                    <div class="form-group" style="margin-top:64px">
+                        <label class="col-sm-3 control-label" for="inputRefreshDate">刷新日期</label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" ng-model="dt" id="inputRefreshDate" max-date="'2015-06-22'" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:64px">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <button class="btn btn-primary" ng-disabled="frmRefresh.$pristine || frmRefresh.$invalid" ng-click="ok()">设置刷新日期</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

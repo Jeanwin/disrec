@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.SysimportinfoMapper" >
+  <!-- 添加新学期 -->
+	<insert id="insertSysimportinfo" parameterType="com.zonekey.disrec.entity.Sysimportinfo">
+		insert into sys_import_info (importid,import_date,status,questionid,excelid,sys_type,knowledgeid,error,type) 
+		values(#{importid},now(),#{status},#{questionid},#{excelid},#{systype},#{knowledgeid},#{error},#{type})
+	</insert>
+  </mapper>

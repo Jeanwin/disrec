@@ -1,0 +1,15 @@
+<nav class="navbar navbar-static-top systemmain" role="navigation">
+    <div class="btn-group btn btn-group-lg nav navbar-nav container-fluid">
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_user_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===0}" href="#" ng-href="#/system/user/{{}}/{{}}" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">用户管理</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_organization_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===1}" href="#" ng-href="#/system/organization" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">机构管理</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_limits_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===2}" ng-href="#/system/limits" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">权限管理</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_scope_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===3}" ng-href="#/system/scope" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">范围管理</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_impower_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===4}" ng-href="#/system/impower" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">授权管理</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_data_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===5}" ng-href="#/system/data" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">数据字典</a>
+        <!-- <a type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===6}" ng-href="#/system/cache" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">缓存管理</a> -->
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_serverConfigure_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===7}" ng-href="#/system/serverConfigure" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">服务器配置</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_system_platform_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===8}" ng-href="#/system/platform" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">平台设置</a>
+
+    </div>
+</nav>
+<div ui-view="main"></div>

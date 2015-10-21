@@ -1,0 +1,57 @@
+<div>
+    <div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3 ng-if="!error">导入卡信息</h3>
+            <h3 ng-if="error">导出结果</h3>
+        </span>
+    </div>
+    <div class="modal-body">
+        <div ng-if="error">
+            <h4>数据存在问题，未完成导入，可能原因为：</h4>
+            <ul>
+                <li>1、数据填写不符合要求。</li>
+                <li>2、数据重复</li>
+                <li>3、其它原因</li>
+            </ul>
+            <span>请导出问题数据，修改后再重新导入</span>
+        </div>
+
+        <div class="col-xs-12" ng-if="!error">
+            <div class="drop-box" ng-file-drop="onFileSelect($files)"
+                 ng-file-drag-over-class="optional-css-class-name-or-function"
+                 >
+
+                <div ng-if="!file" style="padding:32px">
+                    请拖拽卡模板文件到这里<br>
+                    <a href="classrooms/cardTemplate.zip">下载卡模板</a>
+                </div>
+
+                <div ng-if="file" style="padding:32px">
+                    <img src="assets/img/icons/icon-excel.png">
+                    <span class="progress" ng-show="progress > 0">
+                        <div style="width:{{progress}}%">{{progress}}%</div>
+                    </span>
+                    {{file.name}} ({{file.size}}KB)
+                </div>
+            </div>
+            <div>
+                <div class="js-fileapi-wrapper upload-btn">
+                    <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" accept="application/vnd.ms-excel" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-if="!error" data-ng-disabled="!file" ng-click="start()">开始导入</button>
+        <button class="btn btn-primary" ng-if="importerror && !error" data-ng-disabled="!file" ng-click="start()">重试</button>
+        <!--<button class="btn btn-primary" ng-if="error" data-ng-disabled="!file" ng-click="ExportData()">导出数据</button>-->
+        <a class="btn btn-primary" ng-if="error" data-ng-disabled="!file" href="../card/exportErrorCard?excelbatch={{ErrorNum}}">导出数据</a>
+        <a class="btn btn-default" ng-if="error" ng-click="close()">关闭</a>
+        <button class="btn btn-primary" ng-if="numerror" data-ng-disabled="!file" ng-click="Import()">重试</button>
+        <button class="btn btn-default" ng-if="!error" ng-click="cancel()">取消</button>
+    </div>
+</div>

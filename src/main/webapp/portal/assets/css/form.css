@@ -1,0 +1,214 @@
+form.readonly input, form.readonly .currency-preview, form.readonly .percentage-preview, form.readonly .year-preview {
+    border:none;
+    border-bottom: dashed 1px #c0c0c0
+}
+
+form.readonly .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: not-allowed;
+    background: none;
+    opacity: 1;
+    -webkit-box-shadow: none;
+}
+
+form.readonly .input-group-addon{
+    background:none;
+    border:none;
+}
+
+form label{
+    color: #6a7483;
+    margin-top:8px;
+    font-weight:normal;
+}
+
+form label[required]{
+    color:#428bca;
+}
+
+form h4 {
+    color: #428bca;
+    font-weight:normal;
+    display:inline-block;
+}
+
+
+input.ng-dirty.ng-valid {
+    /*background-color: #EEFDE8;*/
+    /*border: solid 1px #3BD579;*/
+}
+
+form.ng-pristine input.ng-invalid-required{
+    /*border:solid 2px rgb(245, 201, 90);*/
+}
+
+form.ng-dirty input[type='text'].ng-invalid-required{
+    /*border:solid 1px red;*/
+}
+
+form input[type='text'].ng-invalid + span:before {
+    position: absolute;
+    padding: 5px 9px;
+    color: #fff;
+    background-color: #89857c;
+    top: 5px;
+    bottom: 5px;
+    right: 20px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+form .input-group input[type='text'].ng-invalid + span:before {
+    right: 44px;
+}
+
+form [type='number'].ng-invalid-number + span:before {
+     content: '请输入数字';
+     display: block;
+     position: absolute;
+     padding: 8px;
+     color: #fff;
+     background-color:rgb(250, 132, 54);
+     top:0;
+     bottom: 0;
+     right:0;
+     z-index: 2;
+}
+
+form [type='text'].ng-invalid-year + span:before {
+    content: '年度格式错误';
+    display: block;
+    position: absolute;
+    padding: 8px;
+    color: #fff;
+    background-color:rgb(250, 132, 54);
+    top:0;
+    bottom: 0;
+    right:0;
+    z-index: 2;
+}
+
+form input[type='text'].ng-invalid-nonnegtive + span:before {
+    content: '格式错误';
+
+    /*z-index: 2;*/
+}
+
+form [currency].ng-invalid-currency + span:before {
+    content: '货币格式错误';
+    display: block;
+    position: absolute;
+    padding: 8px;
+    color: #fff;
+    background-color:rgb(250, 132, 54);
+    top:0;
+    bottom: 0;
+    right:0;
+    z-index: 2;
+}
+
+form [currency].ng-invalid-currency-over + span:before {
+    content: '金额过高';
+    display: block;
+    position: absolute;
+    padding: 8px;
+    color: #fff;
+    background-color:rgb(250, 132, 54);
+    top:0;
+    bottom: 0;
+    right:0;
+    z-index: 2;
+}
+
+form [type='text'].ng-invalid-percentage + span:before {
+    content: '百分比格式错误';
+    display: block;
+    position: absolute;
+    padding: 8px;
+    color: #fff;
+    background-color:rgb(250, 132, 54);
+    top:0;
+    bottom: 0;
+    right:0;
+    z-index: 2;
+}
+
+form [type='text'].ng-invalid-percentage-over + span:before {
+    content: '比例过高';
+    display: block;
+    position: absolute;
+    padding: 8px;
+    color: #fff;
+    background-color:rgb(250, 132, 54);
+    top:0;
+    bottom: 0;
+    right:0;
+    z-index: 2;
+}
+
+form input[type='text'].ng-invalid-required + span:before {
+    content: '必填';
+}
+
+form input[type='text'].ng-dirty.ng-invalid + span:before {
+    background-color: #DD4343;
+    animation: flash 2s linear infinite;
+    -webkit-animation: flash 2s linear infinite;
+}
+
+@keyframes flash{
+    0% {
+        background-color: #DD4343;
+    }
+    50%{
+        background-color: #fff;
+    }
+    100%{
+        background-color: #DD4343;
+    }
+}
+
+@-webkit-keyframes flash{
+    0% {
+        background-color: #DD4343;
+    }
+    50%{
+        background-color: #fff;
+    }
+    100%{
+        background-color: #DD4343;
+    }
+}
+
+
+form .ng-dirty.ng-invalid-maxlength + span:before {
+     content: '过长';
+     display: block;
+     position: absolute;
+     padding: 8px;
+     color: #fff;
+     background-color: red;
+     top: 0;
+     bottom: 0;
+     right: 0;
+     z-index: 2;
+}
+
+form .ng-dirty.ng-invalid-minlength + span:before {
+    content: '过短';
+    display: block;
+    position: absolute;
+    padding: 8px;
+    color: #fff;
+    background-color: red;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.currency-preview, .percentage-preview, .year-preview, .nonnegtive-preview {
+    border: solid 1px #c0c0c0;
+    padding: 6px 11px;
+    border-radius: 4px;
+    height: 34px;
+}

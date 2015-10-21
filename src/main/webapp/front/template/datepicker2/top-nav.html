@@ -1,0 +1,25 @@
+<nav class="navbar navbar-mundwrt" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header" style="display: flex">
+            <button class="navbar-toggle" ng-click="toggleMobileMen()" ng-if="topLeft=='toggle'">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div style="float: left" ng-if="topLeft=='go'">
+                <a style="font-size: 25px;" ng-click="goback()"> < </a>
+            </div>
+            <div style="margin-left: 37%;font-size:14px;margin-top: 5px">
+                <label>{{title}}</label>
+            </div>
+            <div style="right: 0;position: fixed;margin-top: -25px;"  class="navbar-toggle">
+                <a  style="font-size: 31px;" ng-click="searchMore()" ng-if="topRight=='searchMore'">...</a>
+                <span  style="font-size: 20px;" ng-click="search()" ng-if="topRight=='search'">
+                    <span class="glyphicon glyphicon-search" style="margin-top: 20px"></span>
+                </span>
+                <a  style="font-size: 31px;" ng-click="menu()" ng-if="topRight=='menu'">...</a>
+            </div>
+
+        </div>
+    </div>
+</nav>

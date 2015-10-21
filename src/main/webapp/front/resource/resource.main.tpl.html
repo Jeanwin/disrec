@@ -1,0 +1,13 @@
+
+<nav class="navbar navbar-static-top systemmain" role="navigation">
+    <div class="btn-group btn btn-group-lg container-fluid nav navbar-nav">
+        <a ng-if="global.user.authenticatid.indexOf('auth_resource_upload_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===0}" href="#" ng-href="#/resource/upload" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">录播机资源</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_resource_video_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===1}" href="#" ng-href="#/resource/video" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">资源库</a>
+        <!-- <a ng-if="global.user.authenticatid.indexOf('auth_resource_image_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===2}" href="#" ng-href="#/resource/image" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">图片资源</a>
+         -->
+        <a ng-if="global.user.authenticatid.indexOf('auth_resource_released_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===3}" href="#" ng-href="#/resource/released" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">已发布资源</a>       	
+        <a ng-if="global.user.authenticatid.indexOf('auth_resource_myresource_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===4}" href="#" ng-href="#/resource/myresource" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">我的资源</a>
+        <a ng-if="global.user.authenticatid.indexOf('auth_resource_recycle_url_view')>=0" type="button" class="btn btn-fristprimary btn-nav" ng-class="{'active':active===5}" href="#" ng-href="#/resource/recycle" style="font-family:'微软雅黑';font-size: 14px;color: #ffffff">资源回收站</a>
+    </div>
+</nav>
+<div ui-view="classroom-manage"></div>

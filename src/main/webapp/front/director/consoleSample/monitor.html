@@ -1,0 +1,140 @@
+<div class="panel panel-console">
+    <div style="position: relative;top: 50px;">
+        <input type="hidden" id="videoPreviewObjectUrl" value="{{videoPreviewObject.info.resource1}}"/>
+        <div class="panel-heading">
+            PGM
+            <button class="btn btn-record pull-right"></button>
+        </div>
+        <div class="panel-body no-padding" align="center">
+            <section class="player-wrapper">
+    <!--             <div  id="myVideoId">Loading the player ...</div> -->
+
+                <object id="film_player" name="film_player" width="686" height="386" classid="clsid:B297296B-45A2-4375-AE07-DDB7F9662D91">
+                </object>
+
+                <!-- <form action="" method="" id="displayMovies" style="dispaly:none;">
+                    <input type="button" value="kaishi" onClick="startplay()"/>
+                    <input type="button" value="jieshu" onClick="stopplay()"/>
+
+                </form> -->
+                <!--<img src="img/lemon-pages.jpg">-->
+            </section>
+        </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-xs-2">
+                <section>直播状态：{{String_[0]}}</section>
+                </div>
+                <div class="col-xs-2">
+                <section>录播时间：{{String_[1]}}</section>
+                </div>
+                <div class="col-xs-2">
+                <section>跟踪模式：{{String_[2]}}</section>
+                </div>
+                <div class="col-xs-2">
+                <section>磁盘剩余：{{String_[3]}}GB</section>
+                </div>
+                <div class="col-xs-2 pull-right">
+                <section>刻录制：{{}}小时</section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+	if ((navigator.userAgent.indexOf('MSIE') >= 0) 
+		    && (navigator.userAgent.indexOf('Opera') < 0)){
+
+        var urlParam = document.getElementById("videoPreviewObjectUrl");
+        console.log(urlParam);
+		    alert('你是使用IE');
+		    
+	         var AX=document.getElementById("film_player");
+	         var url = "rtsp://root:root@192.168.12.47:554/session0.mpg";
+	         AX.set_video_url(url);
+		}else if (navigator.userAgent.indexOf('Firefox') >= 0){
+		    alert('你是使用Firefox');
+		}else if (navigator.userAgent.indexOf('Opera') >= 0){
+		    alert('你是使用Opera');
+		}else{
+//		    alert('你是使用其他的浏览器浏览网页！');
+		   /*  $("#displayMovies").css({"display" : "block"}); */
+		}
+	
+    
+	});
+
+function startplay(){
+    var AX=document.getElementById("film_player");
+    var url = "rtsp://root:root@192.168.12.47:554/session0.mpg";
+    AX.set_video_url(url);
+
+}
+</script>
+
+
+
+<script>
+
+//     function startplay(){
+//         var AX=document.getElementById("film_player");
+//         var url = "rtsp://root:root@192.168.12.47:554/session0.mpg";
+//         AX.set_video_url(url);
+
+//     }
+//     function stopplay() {
+//         var AX=document.getElementById("film_player");
+
+
+//         AX.video_stop();
+//     }
+</script>
+
+
+<!--20141124 cancel-->
+<!--<script src="jwplayer.js"></script>-->
+<!--<script type="text/javascript" >-->
+    <!--var VideoUrl='rtsp://root:root@192.168.12.47:554/session0.mpg';-->
+<!--//      var VideoUrl='live/3.mp4';-->
+
+    <!--//"rtmp://192.168.12.56/record/2014-08-26 11.40.25/mp4:TeacherFull.mp4";-->
+        <!--//'video/Student.mp4';-->
+<!--//            'video/predation.mp4'-->
+<!--</script>-->
+
+
+
+<!--<script type="text/javascript">-->
+    <!--jwplayer('myVideoId').setup({-->
+        <!--//skin_key: 'skin/six.xml',-->
+        <!--file:VideoUrl,-->
+        <!--width:'93%',-->
+        <!--height:'360',-->
+        <!--aspectratio:'16:9',-->
+        <!--image:'defaultimage.jpg',-->
+        <!--//primary:'flash',-->
+        <!--atuostart:true,-->
+        <!--repeat:true,-->
+        <!--listbar:{-->
+            <!--postion:'right',-->
+            <!--size:320-->
+        <!--}-->
+    <!--});-->
+
+    <!--jwplayer('myVideoId').onVolume(function(event) {-->
+        <!--//console.log('The volume has changed', event);-->
+        <!--alert('The volume is now:'+event.volume);-->
+    <!--});-->
+
+    <!--//下载-->
+    <!--jwplayer().addButton(-->
+            <!--'download.png',-->
+            <!--'Download Video',-->
+            <!--function(){-->
+                <!--window.location.href = jwplayer().getplaylistItem()['file'];-->
+            <!--},-->
+            <!--'download'-->
+    <!--);-->
+<!--</script>-->

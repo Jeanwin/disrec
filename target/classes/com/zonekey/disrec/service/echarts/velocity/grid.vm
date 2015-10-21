@@ -1,0 +1,168 @@
+<div >
+    <div >
+        <div >
+            <div >
+                <div >
+                    <i class="icon-calendar"></i>
+                    ${functitle}
+                </div>
+                <div class="actions">
+                	<a href="javascript:downloadExcel(${gridindex});" class="btn yellow"><i class="icon-table"></i> Excel</a>
+                </div>
+            </div>
+            <div class="portlet-body" style="padding: 0px;">
+                <div >
+                    <div id="div${gridindex}">
+                        <table id="grid${gridindex}"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe height="0" width="0" style="height:0px;width:0px;display:none;" src="" id="iframe${gridindex}"></iframe>
+<script>
+    
+    function downloadExcel(gridId) {
+    	$("#iframe${gridindex}").attr("src", "/disrec/export?id=" + gridId);
+    }
+    
+    function milliFormat(num) {  
+        num = num + "";  
+        var re = /(-?\d+)(\d{3})/  
+        while(re.test(num)) {  
+            num = num.replace(re,"$1,$2")  
+        }  
+        return num;  
+    }
+    
+    function formatNo(value,row){
+        try{
+            return milliFormat(value);
+        } catch(e){
+        
+        }
+    }
+    
+    function formatFloat(src, pos){
+        return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);
+    }
+    
+    $(function(){
+        
+        var colwidth = parseInt($(window).width() / 10);
+                
+        var formatter = [];
+        
+        var styler = [];
+        
+        var arr_method = [];
+         
+        var widther = [];
+        
+        //回调javascript
+        ${callback}
+        formatter[1] = function(val){
+        
+        	var date = new Date(val);
+   			return date.getFullYear() + '-' + (date.getMonth()+1) + '-' +date.getDate();
+		}
+        var grid = $('#grid${gridindex}');
+        
+        grid.hideColumn = function(columns){
+            if(columns.length){
+                for(i = 0;i < columns.length;i++){
+                    grid.datagrid("hideColumn",columns[i]);
+                }
+            } else {
+                grid.datagrid("hideColumn",columns);
+            }
+            grid.datagrid("fitColumns");
+        }
+        var option = {
+            autoWidth : true,
+            nowrap : true,
+            striped : true,
+            singleSelect : true,
+            iconCls:'icon-search',
+            #if(${titlesLength} <= 16)fitColumns :true,#end
+            autoHeight : true,
+            idField:'id',
+            loadMsg : '加载中，请稍后...',
+            url: "",
+            border:false,
+            columns:[[
+                    #foreach( ${title} in ${titles})
+                        { field:'${title}', title:'${title}', width:#if(${titlesLength} > 16) widther[${velocityCount}] || colwidth #else widther[${velocityCount}] || 25 #end, align: 'center', formatter: formatter[${velocityCount}] || undefined, styler: styler[${velocityCount}] || undefined} 
+                        #if(${velocityCount} < ${titlesLength}),#end
+                    #end
+                ]],
+            rownumbers : true,
+            onLoadSuccess:function(data){
+                $('#grid${gridindex}').datagrid('fitColumns');
+                var $tool = $("#div${gridindex} .panel-tool");
+                
+                //参数格式化
+                ${param_format}
+                
+                #set($isIE='$.browser.msie')
+                var titles = null;
+                var win$ = $;
+                var win = window;
+                var isSubWin = false;
+                
+                var call = function(){
+                    if(!titles){
+                        titles = $("#div${gridindex} .datagrid-view2 > .datagrid-header").clone();
+                        if ($isIE) {
+                            titles.css("position","absolute");
+                            titles.css("top","0");
+                        } else {
+                            titles.css("position","fixed");
+                            titles.css("top", isSubWin ? win$(win).scrollTop() /*- 20*/ : "0");
+                        }
+                        $("#div${gridindex} .datagrid-view2").prepend(titles);
+                        
+                    }
+                    if(win$(win).scrollTop() > ($("#div${gridindex}").position().top + 25)) {
+                        if ($isIE) {
+                            titles.css("position","absolute");
+                            var top = win$(win).scrollTop() - ($("#div${gridindex}").position().top);
+                            top = top - 20;
+                            titles.css("top",isSubWin ? top : win$(win).scrollTop() - ($("#div${gridindex}").position().top));
+                        } else {
+                            titles.css("position","fixed");
+                            titles.css("top", isSubWin ? win$(win).scrollTop() /*- 20*/ : "0");
+                        }
+                        titles.fadeIn(400);
+                    } else {
+                        if ($isIE) {
+                            titles.css("top","0");
+                        } else {
+                            titles.fadeOut(100);
+                        }
+                    }       
+                }
+                
+                win$(win).scroll(call);
+                
+            }
+        }
+        
+        var jsondata = ${jsonData};
+        for(var i = 0; i < arr_method.length;i++){
+            if(arr_method[i]){
+                arr_method[i]($option$,$jsondata$);
+            }
+        }
+        $('#grid${gridindex}').datagrid(option);
+        $('#grid${gridindex}').datagrid("loadData",jsondata);
+        
+    });
+</script>
+#if(!$null.isNull($message) && $message != "")
+<div class="demo-info">
+    <div class="demo-tip icon-tip"></div>
+    <div>$message</div>
+</div>
+#end

@@ -1,0 +1,197 @@
+<div class="resourcereleased">
+<div class="whiteframe">
+    <div style="padding:8px" class="row">
+        <div class="col-xs-4">
+            <div class="btn-group">
+                <!-- <button  ng-disabled="selectedCount===0" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>
+                    下载</button> -->
+                <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openVideoRelease()">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    发布</button>
+                <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openCancelVideoRelease()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    取消发布</button>
+                <!-- <button  ng-disabled="selectedCount===0" class="btn btn-default" ng-click="openDeleteVideoModal()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    删除
+                </button> -->
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="input-group pull-right" style="width:240px" ng-show="hideAdvancedSearch===true">
+                <input  type="text" ng-model="videoResource.resourcename" class="form-control" placeholder="请输入资源名称">
+                <span class="input-group-btn">
+                        <button ng-click="resourcevideos('1')" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <div class="pull-right">
+                <button ng-show="hideAdvancedSearch===true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">详细查询<span class="glyphicon glyphicon-chevron-down"></span></button>
+                <button ng-show="hideAdvancedSearch!==true" class="btn btn-link" ng-click="hideAdvancedSearch=!hideAdvancedSearch">简单查询<span class="glyphicon glyphicon-chevron-up"></span></button>
+            </div>
+        </div>
+    </div>
+<div>
+<div collapse="hideAdvancedSearch" class="advSearchPanel">
+    <!--<div style="border-bottom: solid 1px #c0c0c0;padding:4px 16px">
+        <h4>
+            <span class="glyphicon glyphicon-search"></span>
+            查询条件
+        </h4>
+    </div>-->
+
+    <form class="form-inline" role="form">
+
+        <div class="form-group">
+            <label class="form-label" for="video">创建时间</label>
+            <input ng-model="videoResource.startdate" type="date" id="video" class="form-control" datepicker2 />
+            至
+            <input ng-model="videoResource.enddate" type="date" class="form-control" datepicker2 />
+        </div>
+
+        <!-- <div class="form-group">
+            <label class="form-label" for="video2">教师</label>
+            <input id="video2" class="form-control" placeholder="教师" ng-model="videoResource.username">
+        </div> -->
+        
+                    <div class="form-group">
+                        <label class="form-label" for="released2">作者</label>
+                        <input id="released2" ng-model="videoResource.username" class="form-control" placeholder="作者">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="released3">来源教室</label>
+                        <input id="released3" ng-model="videoResource.areaname" class="form-control" placeholder="来源教室">
+                    </div>
+
+        <button class="btn btn-primary pull-right" ng-click="resourcevideos('1')">
+            <span class="glyphicon glyphicon-search"></span>
+            查询</button>
+
+    </form>
+    <!--<div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-primary pull-right" ng-click="inquire()">
+                <span class="glyphicon glyphicon-search"></span>
+                查询</button>
+        </div>
+    </div>-->
+</div>
+</div>
+    <!--<div class="formheader">-->
+    <div class="panel panel-default">
+        <div class="panel-body padding-0" style="min-height:467px">
+            <table class="table table-striped" style="text-align: center">
+                <thead class="formthead">
+                <!--全选按钮-->
+                <td style="WORD-WRAP: break-word" width="40"><input type="checkbox" ng-model="checkAll" ng-click="checkAllVideo()"></td>
+                <td style="WORD-WRAP: break-word" width="100">资源名称</td>
+                <td>作者</td>
+                <td style="WORD-WRAP: break-word" width="156">视频来源</td>
+                <td>创建时间</td>
+                <td>发布状态</td>
+                <!-- <td>删除状态</td> -->
+                <td>观看数</td>
+                <td>大小(M)</td>
+<!--                 <td>转码</td> -->
+                <td>操作</td>
+                </thead>
+                 <!--遍历数据-->
+                <tr ng-repeat="video in videoList">
+                    <td><input type="checkbox" ng-model="video.checked"></td>
+                    <td ng-if="video.status !== '1'">{{video.resourcename}}</td>
+                    <td ng-if="video.size > 10 && video.status == '1'"><a target="_blank" ng-href="#/resource/resourcename/{{video}}">{{video.resourcename}}</a></td>
+                    <td ng-if="video.size <= 10 && video.status == '1'"><a href="" ng-click="openClickVideo('size')">{{video.resourcename}}</a></td>
+                    <td>{{video.username}}</td>
+                    <td>{{video.areaname}}</td>
+                    <td>{{video.createdate}}</td>
+                    <td ng-if="video.publishstate==='0'">未发布</td>
+                    <td ng-if="video.publishstate==='1'">已发布</td>
+                    <!-- <td>{{video.uploaddeletestatus}}</td> -->
+                    <td>{{video.watchwatchnum}}</td>
+                    <td>{{video.size}}</td>
+<!--                     <td> -->
+<!-- 	                    <span ng-if="video.status == '2'" class="btn btn-link" ng-click="openVideoState(video.status,video.floder,$index)" -->
+<!--                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="开启"> -->
+<!-- 	                        		转码 -->
+<!-- 	                    </span> -->
+<!-- 	                    <span ng-if="video.status == '0'"> -->
+<!-- 	                        		转码中 -->
+<!-- 	                    </span> -->
+<!-- 	                    <span  class="btn  btn-link" -->
+<!--                                 tooltip-placement="top" tooltip-popup-delay="1000" tooltip="播放"> -->
+<!-- 	                        		<a target="_blank" ng-href="#/resource/resourcename/{{video}}">播放</a> -->
+<!-- 	                    </span> -->
+<!--                     </td> -->
+                    <td>
+                      <span  class="btn  btn-link"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="播放">
+	                        		<a target="_blank" ng-href="#/resource/resourcename/{{video}}">播放</a>
+	                    </span>
+                    <span class="btn btn-link" ng-click="openVideoSetModel(video)"
+                                tooltip-placement="top" tooltip-popup-delay="1000" tooltip="设置">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                    </span></td>
+                </tr>
+            </table>
+
+            <button ng-if="pagination.totalItems === 0" class="ondata">
+                <span class="ondatatext">没有找到相关信息！</span>
+                <!-- <a ng-href="#/resource/videoShow">test</a> -->
+            </button>
+
+            <!--<div ng-if="pagination.totalItems === 0" style="margin-left: 320px;margin-top: 400px">
+                <a style="color: #f2f2f2;font-size: 32px;">没有查到任何相关的数据</a>
+            </div>-->
+        </div>
+
+        <div class="panel-footer">
+
+            <div ng-if="pagination.totalItems > 0" class="row">
+
+                <div class="col-xs-3" style="padding-top:8px;">
+                    <span>共{{pagination.totalItems}}条数据，</span>
+                                <span>每页显示
+                                    <select ng-model="pagination.pageSize" ng-change="onSelectPage(pagination.pageIndex)">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>条
+                                </span>
+                </div>
+
+                <div class="col-xs-7" ng-show="pagination.totalItems > pagination.pageSize">
+                    <!-- 分页  -->
+                    <pagination class="pagination-sm pull-right" total-items="pagination.totalItems"
+                                page="pagination.pageIndex"
+                                items-per-page="pagination.pageSize"
+                                max-size="pagination.maxSize"
+                                previous-text="{{pagination.previousText}}"
+                                next-text="{{pagination.nextText}}"
+                                first-text="{{pagination.firstText}}"
+                                last-text="{{pagination.lastText}}"
+                                class="pagination-small"
+                                boundary-links="true"
+                                on-select-page="onSelectPage(page)">
+                    </pagination>
+                </div>
+                <div class="col-xs-2" style="padding-top:8px;" ng-show="pagination.totalItems > pagination.pageSize">
+                    <div class="input-group input-group-sm" style="width: 100px"
+                         tooltip-placement="top" tooltip-popup-delay="1000" tooltip="跳转页面">
+                        <input type="number" ng-model="pageIndex" class="form-control" min="1" max="{{pagesize}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="onSelectPage(pageIndex)">
+                                        Go
+                                    </button>
+                                </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

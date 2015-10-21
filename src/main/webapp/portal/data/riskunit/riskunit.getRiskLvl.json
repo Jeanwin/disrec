@@ -1,0 +1,18 @@
+[
+    {
+        "riskLvl":"风险等级1",
+        "retentAmt":10000
+    },
+    {
+        "riskLvl":"风险等级2",
+        "retentAmt":20000
+    },
+    {
+        "riskLvl":"风险等级3",
+        "retentAmt":30000
+    },
+    {
+        "riskLvl":"风险等级4",
+        "retentAmt":40000
+    }
+]

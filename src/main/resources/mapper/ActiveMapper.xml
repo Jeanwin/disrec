@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zonekey.disrec.dao.ActiveViewMapper" >
+
+  <sql id="Base_Column_List" >
+    id, name, type, picture, date_format(regbegintime,"%Y-%m-%d %H:%m:%s") regbegintime,date_format(regendtime,"%Y-%m-%d %H:%m:%s") regendtime, date_format(conbegintime,"%Y-%m-%d %H:%m:%s") conbegintime, date_format(conendtime,"%Y-%m-%d %H:%m:%s") conendtime, 
+    description, contemplate, model, date_format(createdate,"%Y-%m-%d %H:%m:%s") createdate,
+    (CASE WHEN  <![CDATA[regbegintime < sysDate() and sysDate() < regendtime]]> THEN '报名中' when <![CDATA[conbegintime < sysDate() and sysDate() < conendtime]]> THEN '评审中' when <![CDATA[sysDate() > conendtime]]> THEN '已结束' ELSE '' END) status
+  </sql>
+
+	<select id="findByPage" resultType="com.zonekey.disrec.vo.ActiveView" >
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM study_active
+		where 1=1
+		LIMIT #{offset} ,#{limit}
+	</select>
+
+	<select id="count" resultType="long">
+		SELECT count(*) FROM
+		study_active 
+	</select>
+	 <select id="findCount"  parameterType="com.zonekey.disrec.vo.PageBean" resultType="long">
+		SELECT count(*) FROM
+		study_active where 1=1
+		<if test="keywords != null"> 
+			<if test="keywords.name != null and keywords.name != '' ">and name like concat('%',#{keywords.name},'%')</if> 
+			<if test="keywords.type != null and keywords.type != '' ">and type = #{keywords.type}</if> 
+			<if test="keywords.statusOne != null ">and <![CDATA[regbegintime < sysDate() and sysDate() < regendtime]]></if>
+			<if test="keywords.statusTwo != null ">and <![CDATA[conbegintime < sysDate() and sysDate() < conendtime]]></if>
+			<if test="keywords.statusThree != null ">and <![CDATA[sysDate() > conendtime]]></if>
+
+		</if> 
+	 </select>
+	<select id="findPageByPageBean"  parameterType="com.zonekey.disrec.vo.PageBean" resultType="com.zonekey.disrec.vo.ActiveView">
+		 select r.*,(select a.name from sys_code a,sys_code b where a.deleteflag=0 and b.deleteflag=0 
+		and a.parentid = b.id and a.value =r.type and b.value ='JYActivityType'  ) as typename
+		 from(
+			SELECT
+		<include refid="Base_Column_List" />
+		FROM study_active
+		where 1=1
+	<if test="keywords != null"> 
+			<if test="keywords.name != null and keywords.name != '' ">and name like concat('%',#{keywords.name},'%')</if> 
+			<if test="keywords.type != null and keywords.type != '' ">and type = #{keywords.type}</if> 
+			<if test="keywords.statusOne != null ">and <![CDATA[regbegintime < sysDate() and sysDate() < regendtime]]></if>
+			<if test="keywords.statusTwo != null ">and <![CDATA[conbegintime < sysDate() and sysDate() < conendtime]]></if>
+			<if test="keywords.statusThree != null ">and <![CDATA[sysDate() > conendtime]]></if>
+		</if> 
+		limit  #{page.offset} ,#{page.limit}
+		) r
+	 </select> 
+	<update id="deleteById">
+			delete from study_active where id =#{id,jdbcType=INTEGER}
+	</update>
+	
+	<select id="getWorks" resultType="map">
+		SELECT id  worksid FROM study_works
+		where activeid =#{id,jdbcType=INTEGER}
+	</select>
+	
+	<update id="deleteReviewUserByActiveId">
+			delete from study_review_user where activeId =#{id,jdbcType=INTEGER}
+	</update>
+		<update id="deleteReviewDetailByActiveId">
+			delete from study_review_detail where worksid =#{id,jdbcType=INTEGER}
+	</update>
+	<update id="deleteWorksByActiveId">
+			delete from study_works where activeid =#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

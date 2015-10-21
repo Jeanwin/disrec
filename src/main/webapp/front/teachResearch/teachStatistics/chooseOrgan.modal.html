@@ -1,0 +1,57 @@
+
+<style type="text/css">
+	.modal-dialog {
+		width: 1000px;
+	}
+</style>
+<div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3>选择机构</h3>
+        </span>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal">
+		<div class="searchcontainer col-xs-12">
+		    <div class="col-sm-5">
+		      <select class="form-control">
+		      	<option> 院系</option>
+		      </select>
+		    </div>
+		    <div class="col-sm-5">
+		      <input type="text" placeholder="请输入关键字" ng-model="searchkey" class="form-control">
+		    </div>
+			<button class="btn btn-primary col-xs-2 pull-right" ng-click="GetOrigalList(searchkey)">查询</button>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-12" style="margin-top:10px;max-height: 440px;overflow: auto;">
+		    	<table style="width:100%;">
+		    		<thead style="color: #fac77a;background: none;border-bottom: 1px solid;border-top: 1px solid;line-height: 45px;">
+		    			<tr>
+		    				<td class="text-center">机构编号</td>
+		    				<td class="text-center">机构名称</td>
+		    				<td class="text-center">属性</td>
+		    				<td class="text-center">操作</td>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<tr ng-repeat="orignal in orignalList" style="border-bottom: 1px solid #ccc;line-height: 55px;">
+		    				<td class="text-center">{{orignal.id}}</td>
+		    				<td class="text-center">{{orignal.name}}</td>
+		    				<td class="text-center">{{orignal.attributename}}</td>
+		    				<td class="text-center" style="font-size:25px;"><i  class="icon-my-library-del orange-color" ng-show="cache.get($index)=='checked'" ng-click="delOrignal($index)"></i><i class="icon-my-library-add" ng-show="!(cache.get($index)=='checked')" ng-click="opera = !opera;addOrignal($index)" style="color:rgb(66, 139, 202);"></i></td>
+		    			</tr>	    			
+		    		</tbody>
+		    	</table>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 pull-right">
+		      <button class="btn btn-primary" ng-click="saveselected()">保存</button>
+		      <button class="btn btn-default" ng-click="cancel()">返回</button>
+		    </div>
+		</div>
+	</form>
+</div>

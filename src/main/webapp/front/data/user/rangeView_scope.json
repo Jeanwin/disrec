@@ -1,0 +1,33 @@
+[
+    {
+        "rangeid":"1",
+        "name":"高中部",
+        "scopetype":"2"
+    },
+    {
+        "rangeid":"2",
+        "name":"初中部",
+        "scopetype":"2"
+    },
+    {
+        "rangeid":"1",
+        "name":"东教室",
+        "scopetype":"1"
+    },
+    {
+        "rangeid":"2",
+        "name":"西教室",
+        "scopetype":"1"
+    },
+    {
+        "rangeid":"3",
+        "name":"南教室",
+        "scopetype":"1"
+    },
+    {
+        "rangeid":"4",
+        "name":"北教室",
+        "scopetype":"1"
+    }
+
+]

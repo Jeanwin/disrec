@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html class="no-js" id="ng-app" ng-controller="ConsoleMainCtrl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content ="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>录播系统-导播台</title>
+    <link rel="stylesheet" href="css/bootstrap.3.1.1.css" />
+    <link rel="stylesheet" href="css/bootstrap-olive.css" />
+    <link rel="stylesheet" href="css/console.css" />
+    <link rel="stylesheet" type="text/css" href="css/vedio.css">
+    <link rel="stylesheet" type="text/css" href="../consoleSample/css/icons.css">
+    <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon" />
+    <title>导播台</title>
+</head>
+<body>
+<!--<button ng-click="sendMessage()">WebSocket测试</button>-->
+<div class="container-fluid" ng-show="!directorFighting">
+    <div id="titleTestStyle" class="header row">
+        <div style='float:left'>
+            <!--<span>-->103教室 教师机 刘梅数学高一 （1）班<!--</span>-->
+         </div>
+        <div style='float:right'>
+        	<button class="btn btn-sm btn-primary pull-right" ng-click="backMain()">返回首页</button>
+            <!-- <button class="btn btn-sm btn-primary pull-right">设置</button> -->
+        </div>
+        <div style='float:right;margin-right:20%'>
+            <span class="pull-right">{{today | date}} {{clock}}</span>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <!--<div class="col-md-2">-->
+        <div class="interWrap">
+            <div class="content">
+            <div class="sidebar "  ng-include="'../../director/console/panel-left.html'"></div>
+        <!--</div>-->
+
+        <!--<div class="col-md-8 no-padding">-->
+            <div   class="middle" ng-include="'../../director/console/monitor.html'"></div>
+        <!--</div>-->
+
+        <!--<div class="col-md-2">-->
+            <div class="rightBar"   ng-include="'../../director/console/panel-right.html'"></div>
+        <!--</div>-->
+            </div>
+        </div>
+    </div>
+    <div class="footer" style="min-width:1100px;overflow: scroll;">
+    
+        <!--<div class="col-md-2"  ng-repeat="Video in VideosInformations">-->
+<!--             <div  ng-repeat="Video in VideosInformations" ng-include="'../../director/console/panel-footer1.html'"></div> -->
+        <!--</div>-->
+       <!-- <div class="col-md-2">
+            <div ng-include="'../../director/console/panel-footer2.html'"></div>
+        </div>
+        <div class="col-md-2">
+            <div ng-include="'../../director/console/panel-footer3.html'"></div>
+        </div>
+        <div class="col-md-2">
+            <div ng-include="'../../director/console/panel-footer4.html'"></div>
+        </div>
+        <div class="col-md-2">
+            <div ng-include="'/director/console/panel-footer5.html'"></div>
+        </div>
+        <div class="col-md-2">
+            <div ng-include="'/director/console/panel-footer6.html'"></div>
+        </div>-->
+        <div style="position: absolute;width:1860px;top: 8px;">
+            <div class="col-xs-2" >
+                <div ng-include="'../../director/console/panel-footer1.html'"></div>
+            </div>
+            <div class="col-xs-2">
+                <div ng-include="'../../director/console/panel-footer2.html'"></div>
+            </div>
+            <div class="col-xs-2">
+                <div ng-include="'../../director/console/panel-footer3.html'"></div>
+            </div>
+            <div class="col-xs-2">
+                <div ng-include="'../../director/console/panel-footer4.html'"></div>
+            </div>
+            <div class="col-xs-2">
+                <div ng-include="'../../director/console/panel-footer5.html'"></div>
+            </div>
+            <div class="col-xs-2">
+                <div ng-include="'../../director/console/panel-footer6.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/js/lib/require.js" data-main="../../director/console/main.js?v=1.1"></script>
+<script type="text/javascript" src="swfobject.js"></script>
+</body>
+</html>

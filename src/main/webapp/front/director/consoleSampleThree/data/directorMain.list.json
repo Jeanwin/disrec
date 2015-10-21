@@ -1,0 +1,22 @@
+[
+    {
+        "title":"教师009",
+        "id":"3000",
+        "addressIp":""
+    },
+    {
+        "title":"教室全景",
+        "id":"3001",
+        "addressIp":""
+    },
+    {
+        "title":"学生",
+        "id":"3002",
+        "addressIp":""
+    },
+    {
+        "title":"VGA",
+        "id":"3003",
+        "addressIp":""
+    }
+]

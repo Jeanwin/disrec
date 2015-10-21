@@ -1,0 +1,104 @@
+<style>
+    .setColor{
+        background-color: #afebff;
+    }
+</style>
+
+
+<div>
+    <div class="modal-header">
+        <span class="modal-title" >
+            <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+            </a>
+            <h3>设置直播课表</h3>
+        </span>
+    </div>
+
+    <div class="modal-body">
+        <div class="alert alert-danger" ng-if="error" type="error">封面图片上传失败</div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="drop-box" style="width:168px;height:220px" ng-file-drop="onFileSelect($files)"
+                     ng-file-drag-over-class="optional-css-class-name-or-function">
+
+                    <div ng-if="!file" style="padding-top:96px">
+                       	 封面图片  (<500kb)
+                    </div>
+                    <div ng-if="img">
+                        <img style="width:168px;height:220px;" ng-src="{{img}}">
+                    </div>
+                    <div ng-if="!img">
+                        <img style="position: absolute;left: 15px;top: 16px;width: 168px;height: 220px;" ng-src="{{iptemp+live.imageurl}}">
+                    </div>
+                </div>
+                <div>
+                    <div class="js-fileapi-wrapper upload-btn">
+                        <input id="choose" name="files" type="file" ng-file-select="onFileSelect($files)" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <form class="form-horizontal" name="frmEditSchedule" role="form">
+
+                    <!-- <div class="form-group">
+                        <label for="inputTeacher" class="col-sm-3 control-label">教师名称</label>
+                        <div class="col-sm-9">
+
+                            <div class="input-group">
+                                <input id="inputTeacher" class="form-control" placeholder="请输入教师名称"
+                                       ng-click="searchTeacher('username',schedule.username);toggleTreeUser('')"
+                                       ng-model="live.username"
+                                       typeahead-loading="loading..."
+                                       ng-blur="checkAutoMessageUser('username', live);"
+                                       typeahead="teacher.id +','+ teacher.name as teacher.id +'-'+ teacher.name for teacher in searchTeacher('username',$viewValue)"
+                                       typeahead-wait-ms="500"
+                                       typeahead-on-select="selectTeacher();toggleTreeUser('ImmediatelyCloseUser')"
+                                       >
+                                <span class="input-group-addon" ng-click="searchTeacher('username',schedule.username);toggleTreeUser('')">
+                                    <i class="glyphicon glyphicon-th" popup-placement="right" popup-auto-show="ClassTimePopupIsShown"></i>
+                                </span>
+                            </div>
+                            <div collapse="hideTreeUser" class="dropdown-tree-wrapper">
+                                <div style="cursor: pointer;list-style-type: none;"
+                                     ng-repeat="typeValue in searchimpowerList"
+                                     ng-class="{'setColor' : typeValue.getColor}"
+                                     ng-click="setautoMessageValueUser('username', live, typeValue.name);setColor(typeValue)">
+                                    <span style="margin-left: 15px;">{{typeValue.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span ng-show="frmAreaEditor.username.$error.required">
+                        <div style="color: red">必须输入教师</div>
+                    </span> -->
+
+                    <div class="form-group">
+                        <label for="inputClassName" class="col-sm-3 control-label">课程名称</label>
+                        <div class="col-sm-9">
+                            <input id="inputClassName" class="form-control" placeholder="课程名称" ng-model="live.subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: -16px">
+                        <label class="col-xs-3 control-label" style="padding-top: 24px" for="theme">主题项</label>
+                        <div class="col-xs-9">
+                            　　<input id="theme" class="form-control" placeholder="主题项"  ng-model="live.subjectattribute" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea id="inputCourseDescription" class="form-control" style="height:224px" placeholder="课程描述描述" ng-model="live.coursedesc"></textarea>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button ng-if="!upload" ng-disabled="(!(!frmEditSchedule.$pristine || uploadReadyFlag)) || frmEditSchedule.$invalid" class="btn btn-primary" ng-click="save()">保存</button>
+        <button ng-if="error" class="btn btn-primary" data-ng-disabled="!file" ng-click="save()">重试</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

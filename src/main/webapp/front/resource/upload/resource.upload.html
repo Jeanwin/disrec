@@ -1,0 +1,31 @@
+<div class="modal-header ng-scope">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+    </button>
+    <h3 class="modal-title">上传新视频</h3>
+</div>
+<div class="modal-body ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-body" style="overflow: auto;height: 320px">
+            <div  ng-file-drop="onFileSelect($files)"
+                 ng-file-drag-over-class="optional-css-class-name-or-function">
+            <div class="alert alert-danger" ng-if="error" type="error">上传失败</div>
+            <table align="center">
+                <tr ng-repeat="lists in file">
+                    <td>文件名:</td>
+                    <td>{{lists.name}}</td>
+                    <td>　　　</td>
+                    <td>大小:</td>
+                    <td>{{lists.size/1024}}KB</td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-if="upload && progress < 100 && !error" ng-click="abort()">取消上传</button>
+    <button class="btn btn-primary" ng-if="!upload" data-ng-disabled="!file" ng-click="startUpload()">开始导入</button>
+    <button class="btn btn-primary" ng-if="error" data-ng-disabled="!file" ng-click="startUpload()">重试</button>
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

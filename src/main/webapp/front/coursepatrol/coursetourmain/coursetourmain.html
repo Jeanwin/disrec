@@ -1,0 +1,89 @@
+<style>
+    div[ui-tree] {
+        /* prevent user selection */
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        /* default */
+        font-family: Tahoma;
+        font-size:13px;
+        color: #555;
+        text-decoration: none;
+        border: 1px solid #D3D3D3;
+        background: #f9f9f9;
+        height:360px;
+        overflow:auto;
+        
+    }
+    .modal{
+		overflow: hidden;
+		overflow-y: hidden;
+		top:10%;
+		left:30%;
+		right:inherit;
+	}
+</style>
+<div style="width:100%;padding-top:30px;" class="modal-body ng-scope">
+        <div class="col-xs-4 padding-left-right-none" style="padding-right: 30px;height: 400px">
+            <div style="margin: 0 0 8px 40px;font-size: 16px">选择教室</div>
+            <div>
+                <div ui-tree id="tree-root" data-drag-enabled="false" class="nodes_rendererSelect.html">
+                    <ol ui-tree-nodes ng-model="areaTree">
+                        <li ng-repeat="node in areaTree" ui-tree-node ng-include="'nodes_rendererSelect.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div><span class="courseheader-title">选择机位</span><div class="courseheader-line"></div>
+
+                <div style="margin: 16px 0 16px 0;padding-left:40px;">
+                    <span class="courseheader-type col-xs-4 padding-left-right-none"  ng-repeat="coursetour in reservationList">
+                        <input type="checkbox" ng-model="coursetour.deviceinfoList">　{{coursetour.name}}</span>
+                </div>
+            </div>
+            <div>
+                <span class="courseheader-title">分屏设置</span><div class="courseheader-line"></div>
+                <div class="courseheader-content">
+                    <select style="width: 72px;border-radius: 4px;border:1px solid #a9a9a9;text-align:center;" ng-model="polingset"
+                            ng-options="cour.value as cour.name for cour in coutsetourList">
+                    </select>
+                </div>
+            </div>
+            <div>
+                <span class="courseheader-title">自动翻页</span><div class="courseheader-line"></div>
+                <div class="courseheader-content">间隔　<input style="width: 60px;border-radius: 4px;border:1px solid #a9a9a9;text-align:center;" ng-model="coursetour.polingtime">　秒</div>
+            </div>
+            <div  style="padding-bottom: 65px">
+                <span class="courseheader-title">轮巡模式</span><div class="courseheader-line"></div>
+                <div class="courseheader-content">
+                    <select style="width: 100px;border-radius: 4px;border:1px solid #a9a9a9;text-align:center;" ng-model="roundType"
+                            ng-options="cour.value as cour.name for cour in roundTypeList">
+                    </select>
+                </div>
+            </div>
+        </div>
+    
+</div>
+<div class="courseheader-button">
+    <button class="btn btn-primary btn-fristprimary" ng-click="save(coursetour,roundType,polingset)" style="width: 96px;height: 32px">保存</button>　　　
+    <button class="btn btn-default" ng-click="cancel()" style="width: 96px;height: 32px">取消</button>
+</div>
+
+
+<script type="text/ng-template" id="nodes_rendererSelect.html">
+
+    <span ng-if="node.nodes && node.nodes.length > 0" style="margin-top: -8px;" class="button switch" ng-class="{'roots_close': collapsed, 'roots_open': !collapsed}" treenode_switch="" ng-click="toggle(this)"></span>
+    <span class="tree-node" ng-class="{'tree-node-active':node.id===activeArea.id}">
+
+        <input  ng-init="node.isSelected = isCheckedCourse(node.innerid)"  type="checkbox" ng-model="node.isSelected" ng-click="checkAllTrees(node)">{{node.title}}
+    </span>
+    <ol ui-tree-nodes="" ng-model="node.nodes" class="line" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_rendererSelect.html'">
+        </li>
+    </ol>
+
+</script>

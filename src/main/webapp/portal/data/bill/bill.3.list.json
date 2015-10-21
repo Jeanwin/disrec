@@ -1,0 +1,76 @@
+[
+    {
+        "treatyNo": "OPS20140001",
+        "temTreatyNo": "20141",
+        "sectionNo": "赔付率A",
+        "fhxLayerViewVoList": [
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 1,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 100,
+                "layerPremium": 100,
+                "rwp": 200.02,
+                "sectionNo": "A",
+                "paidRate": 0.3,
+                "paid": 100000
+            },
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 2,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 100,
+                "layerPremium": 100,
+                "rwp": 200.47,
+                "sectionNo": "A",
+                "paidRate": 0.3,
+                "paid": 100000
+            }
+        ]
+    },
+    {
+        "treatyNo": "OPS20140001",
+        "temTreatyNo": "20141",
+        "sectionNo": "赔付率B",
+        "fhxLayerViewVoList": [
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 1,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 100,
+                "layerPremium": 100,
+                "rwp": 200,
+                "sectionNo": "B",
+                "paidRate": 0.3,
+                "paid": 10000
+            },
+            {
+                "treatyNo": "OPS20140001",
+                "tempTreatyNo": "20141",
+                "layerNo": 2,
+                "currency": "CNY",
+                "egnpi": 10000,
+                "gnpi": 100,
+                "rate": 1,
+                "mdp": 200,
+                "layerPremium": 100,
+                "rwp": 400,
+                "sectionNo": "B",
+                "paidRate": 0.3,
+                "paid": 100000
+            }
+        ]
+    }
+]

@@ -1,0 +1,34 @@
+{
+    "treatyType": null,
+    "treatyNo": "OPS20140001",
+    "refNo": "test",
+    "treatyName": "test",
+    "uwYear": null,
+    "stateFlag": null,
+    "accPeriod": null,
+    "sectionDesc": null,
+    "accPeriodQ": [
+        "2014-01Q",
+        "2014-02Q"
+    ],
+    "sectionNos": [
+        "A",
+        "B"
+    ],
+    "accPeriodM": [],
+    "fhxLayerList": null,
+    "startDate": null,
+    "endDate": null,
+    "treatyTypeFlag": null,
+    "treatyNoFlag": null,
+    "refNoFlag": null,
+    "treatyNameFlag": null,
+    "uwYearFlag": null,
+    "stateFlagFlag": null,
+    "pageNo": 0,
+    "pageSize": 0,
+    "prpDuser": null,
+    "opXsbillMainList": null,
+    "xsbillMainList": null,
+    "sectionNo": null
+}

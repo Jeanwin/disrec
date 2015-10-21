@@ -1,0 +1,54 @@
+[
+    {
+        "id": "0001",
+        "classnum":  "1",
+        "weekdate": "1",
+        "subject": "语文",
+        "coursedesc":"春天来了",
+        "deptname": "初三(1)",
+        "username": "张霞",
+        "date": "20140908",
+        "live": "0",
+        "record": "1",
+        "isresource" :"1"
+    },
+    {
+        "id": "0002",
+        "classnum":  "2",
+        "weekdate": "1",
+        "subject": "数学",
+        "coursedesc":"平行线",
+        "deptname": "初三(2)",
+        "username": "张花",
+        "date": "20140909",
+        "live": "0",
+        "record": "1",
+        "resource" :"1"
+    },
+    {
+        "id": "0003",
+        "classnum":  "3",
+        "weekdate": "3",
+        "subject": "英语",
+        "coursedesc":"春天来了",
+        "deptname": "初三(3)",
+        "username": "刘磊",
+        "date": "20140910",
+        "live": "1",
+        "record": "0",
+        "resource" :"1"
+    },
+    {
+        "id": "0004",
+        "classnum":  "4",
+        "weekdate": "4",
+        "subject": "地理",
+        "coursedesc":"春天来了",
+        "deptname": "初二(1)",
+        "username": "张红",
+        "date": "20140908",
+        "live": "1",
+        "record": "1",
+        "resource" :"1"
+    }
+]

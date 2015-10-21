@@ -1,0 +1,27 @@
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3>导入结果</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <h4>导入成功</h4>
+    </div>
+    <div class="modal-body">
+        <h4>部分数据存在问题，未完成导入，可能原因为：</h4>
+        <ul>
+            <li>1、数据填写不符合要求。</li>
+            <li>2、数据重复</li>
+            <li>3、其它原因</li>
+        </ul>
+        <span>请导出问题数据，修改后再重新导入</span>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">导出问题数据</button>
+        <button class="btn btn-primary" ng-click="save()">完成</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

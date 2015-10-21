@@ -1,0 +1,88 @@
+<style>
+    .setColor{
+        background-color: #afebff;
+    }
+</style>
+
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <div class="modal-title">
+            <h3 ng-if="oper">编辑</h3>
+            <h3 ng-if="!oper">发卡</h3>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form name="frmcardNew" class="form-horizontal" role="form">
+           
+            <div class="form-group">
+                <label class="col-sm-2 control-label">编号：</label>
+                <div class="col-sm-6">
+	               <input ng-model="card.cardNumber" ng-change="checkCardNum(card.cardNumber)"  class="form-control" placeholder="请输入卡号" required>
+                </div>
+                <div class="col-sm-4">
+                	<span ng-show="showCardNumRequired">
+                        <div style="color: red">卡编号必须唯一</div>
+                     </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">教师：</label>
+                <div class="col-sm-6">
+	                <!-- <input ng-model="card.cardPerson" class="form-control" placeholder="请输入教师名字" required> -->
+                	<select name="selectd" class="form-control" ng-model="card.Person" value="card.Person"
+                            ng-change="getSelectedHoder()"
+                            ng-options="holder.name +'-'+ holder.loginname as holder.name +'-'+ holder.loginname for holder in holderList"
+                            required>
+                            <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="form-group margin-bottom-8">
+                <label class="col-xs-2 control-label padding-left-none" for="username"><span style="color: red">*</span>教师</label>
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <input id="username" class="form-control"
+                               ng-click="searchTeacher('username',card.cardPerson)"
+                               placeholder="请选择授课老师"
+                               ng-model="card.cardPerson"
+                               typeahead-loading="loading..."
+                               ng-blur="checkAutoMessageUser('username', card);"
+                               typeahead="teacher.id +','+ teacher.name as teacher.name +'-'+ teacher.loginname for teacher in searchTeacher('username',$viewValue)"
+                               typeahead-wait-ms="100"
+                               typeahead-on-select="selectTeacher();toggleTreeUser('ImmediatelyCloseUser')"
+                               required>
+                        <span class="input-group-addon" ng-click="searchTeacher('username',card.cardPerson);toggleTreeUser('')">
+                            <i class="glyphicon glyphicon-th" popup-placement="right" popup-auto-show="ClassTimePopupIsShown"></i>
+                        </span>
+                    </div>
+                    <div collapse="hideTreeUser" class="dropdown-tree-wrapper">
+                        <div ng-repeat="typeValueUser in searchUserList"
+                             style="cursor: pointer;list-style-type: none;"
+                             ng-class="{'setColorUser' : typeValueUser.getColor}"
+                             ng-click="setautoMessageValueUser('username', card, typeValueUser);setColorUser(typeValueUser)">
+                            <span style="margin-left: 15px;">{{typeValueUser.name}}</span>
+                        </div>
+                    </div>
+                </div> 
+            </div>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">卡类型：</label>
+                <div class="col-sm-6">
+                    <div class="btn-group">
+                        <label class="btn btn-default active" ng-model="card.cardType" btn-radio="'1'">特殊卡</label>
+                        <label class="btn btn-default" ng-model="card.cardType" btn-radio="'0'">普通教师卡</label>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button ng-if="!oper" class="btn btn-primary"  ng-click="save()" ng-disabled="frmcardNew.$pristine || frmcardNew.$invalid">发卡</button>
+        <button ng-if="oper == 'edit'" class="btn btn-primary" ng-click="save()" ng-disabled="frmcardNew.$pristine || frmcardNew.$invalid">保存</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

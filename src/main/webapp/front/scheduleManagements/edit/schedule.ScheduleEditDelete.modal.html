@@ -1,0 +1,20 @@
+<div>
+    <div class="modal-header">
+        <a href type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+        </a>
+        <h3>删除数据</h3>
+    </div>
+    <div class="modal-body padding-top-10 padding-bottom-10">
+        <div>
+            <h4><span style="color: #e80000">确认删除以下教室的课表!</span></h4>
+            <div style="max-height:380px;overflow-y:auto;border:1px solid #ccc">
+            	<div ng-repeat="schedules in schedule" style="font-size: 18px"><h4>{{schedules.areaname}}</h4></div>
+       		</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="ok()" focus-me="true">确认</button>
+        <button class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+</div>

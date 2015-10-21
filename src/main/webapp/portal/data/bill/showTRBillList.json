@@ -1,0 +1,125 @@
+{
+    "total": 110,
+    "data": [
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473740",
+            "balance": 388636.61,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "01",
+            "reinsName": "公司",
+            "billNo": "OPD2014220101001000001",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473741",
+            "balance": 737.3,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "01",
+            "reinsName": "公司",
+            "billNo": "OPD2014220103001000001",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "USD"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473742",
+            "balance": 7481255.24,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "105",
+            "reinsName": "Guy Carpenter & Company, Inc.",
+            "billNo": "OPD2014220101001000004",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473743",
+            "balance": 14193.03,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "105",
+            "reinsName": "Guy Carpenter & Company, Inc.",
+            "billNo": "OPD2014220103001000005",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "USD"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473744",
+            "balance": 582954.91,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "320",
+            "reinsName": "公司",
+            "billNo": "OPD2014220101001000009",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473745",
+            "balance": 1105.94,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "320",
+            "reinsName": "公司",
+            "billNo": "OPD2014220103001000011",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "USD"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473746",
+            "balance": 194318.31,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "321",
+            "reinsName": "公司",
+            "billNo": "OPD2014220101001000016",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473747",
+            "balance": 368.65,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "321",
+            "reinsName": "公司",
+            "billNo": "OPD2014220103001000019",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "USD"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473748",
+            "balance": 2040342.32,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "358",
+            "reinsName": "Willis Hong Kong Limited",
+            "billNo": "OPD2014220101001000025",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "CNY"
+        },
+        {
+            "sectionNo": "01",
+            "tmpBillNo": "00473749",
+            "balance": 3870.82,
+            "accPeriod": "2014-01Q",
+            "reinsCode": "358",
+            "reinsName": "Willis Hong Kong Limited",
+            "billNo": "OPD2014220103001000029",
+            "contNo": "OPD201422",
+            "billStatus": "申请审核",
+            "currency": "USD"
+        }
+    ]
+}

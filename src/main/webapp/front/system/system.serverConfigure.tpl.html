@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div style="margin-top: 24px">
+        <div class="col-xs-7 padding-left-none">
+            <div class="container-fluid" style="height: 640px;background-color: #ffffff;">
+                <div class="row" style="margin: 16px 0 16px 0">
+                    <div class="col-xs-4">服务器列表</div>
+                    <div class="col-xs-2 pull-right"><button class="btn btn-primary btn-sm" ng-click="AddServer()">添加服务器</button></div>
+                </div>
+                <div>
+                    <table class="table table-striped" style="text-align: center;">
+                        <thead>
+                        <tr>
+                            <td>服务器名称</td>
+                            <td>类型</td>
+                            <td>地址</td>
+                            <td>操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="server in SelectServerList">
+                            <td>
+                                <a style="text-decoration: none;" href class="btn btn-link" ng-click="selectport(server)">{{server.name}}</a>
+                            </td>
+                            <td>{{initType(server.type)}}</td>
+                            <td>{{server.address}}</td>
+                            <td>
+                                <button ng-click="EditServer(server)" class="btn btn-link" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button ng-click="delServer(server)" class="btn btn-link" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-5 padding-left-right-none">
+            <div style="height: 640px;background-color: #ffffff;">
+                <div class="container-fluid" style="height: 640px;background-color: #ffffff;">
+                    <div class="row" style="margin: 16px 0 16px 0">
+                        <div class="col-xs-3">开放端口</div>
+                        <div class="col-xs-5"></div>
+                        <div class="col-xs-4 text-right"><button class="btn btn-primary btn-sm" ng-click="Addport()">添加端口</button><button class="btn btn-primary btn-sm" ng-click="ApplyConsole()" ng-show="serverType=='9'" style="margin-left:15px;">应用到中控</button></div>
+                    </div>
+                    <div>
+                        <table class="table table-striped" style="text-align: center;">
+                            <thead>
+                            <tr>
+                                <td>端口号</td>
+                                <td>端口名称</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="port in ServerPort.ports">
+                                <td>{{port.port}}</td>
+                                <td>{{port.name}}</td>
+                                <td>
+                                    <button ng-click="Editport(port)" class="btn btn-link" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="编辑">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+
+                                    <button ng-click="Delport(port)" class="btn btn-link" tooltip-placement="top" tooltip-popup-delay="1000" tooltip="删除">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
